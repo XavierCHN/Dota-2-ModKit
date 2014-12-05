@@ -1,18 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+//using System.
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using System.Diagnostics;
 using KVLib;
-using Microsoft.Win32;
 
 namespace D2ModKit
 {
@@ -108,9 +103,17 @@ namespace D2ModKit
             set { addons = value; }
         }
 
+        private ParticleSystem currParticleSystem;
+
+        public ParticleSystem CurrParticleSystem
+        {
+            get { return currParticleSystem; }
+            set { currParticleSystem = value; }
+        }
+
         private ParticleRenameForm pRenameForm;
 
-        public ParticleRenameForm PRenameForm
+        public ParticleRenameForm PRF
         {
             get { return pRenameForm; }
             set { pRenameForm = value; }
@@ -119,7 +122,6 @@ namespace D2ModKit
         public MainForm()
         {
             InitializeComponent();
-            string[] files = Directory.GetFiles(Environment.CurrentDirectory);
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
 
             if (Properties.Settings.Default.UGCPath != "")
@@ -134,12 +136,12 @@ namespace D2ModKit
             if (HasSettings) {
                 // and use that to find the game and content dirs.
                 getAddons();
-                selectCurrentAddon(Properties.Settings.Default.CurrAddon);
             }
             else
             {
                 getUGCPath();
             }
+            selectCurrentAddon(Properties.Settings.Default.CurrAddon);
 
         }
 
@@ -148,7 +150,7 @@ namespace D2ModKit
             while (!HasSettings)
             {
                 // Auto-find the dota_ugc path.
-                RegistryKey regKey = Registry.LocalMachine;
+                Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
                 try
                 {
                     regKey = regKey.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 570");
@@ -219,13 +221,10 @@ namespace D2ModKit
 
         private void newParticles_Click(object sender, EventArgs e)
         {
-            if (!HasSettings)
+            if (Properties.Settings.Default.UGCPath == "")
             {
-                if (!getUGCPath())
-                {
-                    MessageBox.Show("You need to select your dota_ugc path before you can use this.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    return;
-                }
+                MessageBox.Show("You need to select your dota_ugc path before you can use this.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
             }
 
             if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "decompiled_particles")))
@@ -267,7 +266,7 @@ namespace D2ModKit
             DialogResult r = MessageBox.Show("Would you like to change the color of this particle system?", "D2ModKit", MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            bool changeColor = false;
+            bool changeColor = false, rename = false;
             string[] rgb = new string[3];
 
             if (r == DialogResult.Yes)
@@ -276,118 +275,70 @@ namespace D2ModKit
                 rgb = getRGB();
             }
 
+            DialogResult r2 = MessageBox.Show("Would you like to change the name of this particle system?", "D2ModKit", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (r2 == DialogResult.Yes)
+            {
+                rename = true;
+            }
+
+
+
             string folderName = folderPath.Substring(folderPath.LastIndexOf('\\') + 1);
-            int particlesCopied = 0;
-
-            // this is just to make the final output look prettier.
-            string relativePathWin32 = "";
-            bool relativePathWin32Set = false;
-
+            List<Particle> particles = new List<Particle>();
             foreach (string path in particlePaths)
             {
                 bool overwriteAllowed = true;
                 string particleName = path.Substring(path.LastIndexOf('\\') + 1);
-                string targetPath = folderPath + "\\" + particleName;
-                particlesCopied++;
+                string targetPath = Path.Combine(folderPath, particleName);
+
                 try
                 {
                     System.IO.File.Copy(path, targetPath);
                 }
                 catch (IOException overwriteException)
                 {
-                    string warn = "You are about to overwrite " + targetPath + ". Procede?";
-                    DialogResult result = MessageBox.Show(warn, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    string warnMsg = "You are about to overwrite " + targetPath + ". Procede?";
+                    DialogResult result = MessageBox.Show(warnMsg, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (!result.Equals(DialogResult.Yes))
                     {
                         overwriteAllowed = false;
-                        particlesCopied--;
                     }
                 }
 
                 if (overwriteAllowed)
                 {
-                    // fix child refs.
-                    string[] lines = System.IO.File.ReadAllLines(targetPath);
-                    string allText = "";
-                    bool changeParticle = false;
-
-                    for (int i = 0; i < lines.Count(); i++)
-                    {
-                        string line = lines[i];
-                        if (line.Contains("string m_ChildRef = "))
-                        {
-                            changeParticle = true;
-                            // we need to completely overwrite this line.
-                            // get the child specified.
-                            string childParticle = line.Substring(line.LastIndexOf('/') + 1);
-                            Debug.WriteLine("Child particle: " + childParticle);
-
-                            // Get the relative folder path for the child references.
-                            string[] pathArr = folderPath.Split('\\');
-                            string relFolderPath = "";
-                            bool start = false;
-                            for (int j = 0; j < pathArr.Length; j++)
-                            {
-                                if (pathArr[j] == "particles")
-                                {
-                                    start = true;
-                                }
-
-                                if (start)
-                                {
-                                    relFolderPath += pathArr[j] + "/";
-                                }
-                            }
-
-                            // this is just to make the output look prettier.
-                            if (relativePathWin32Set == false)
-                            {
-                                relativePathWin32 += relFolderPath.Replace('/', '\\');
-                                relativePathWin32Set = true;
-                            }
-
-                            string newRef = "string m_ChildRef = \"" + relFolderPath + childParticle + "\n";
-                            //lines[i].Remove(0);
-                            lines[i] = newRef;
-                        }
-                        if (changeColor)
-                        {
-                            if (line.Contains("ColorMin") || line.Contains("ColorMax") || line.Contains("ConstantColor") || line.Contains("TintMin")
-                                || line.Contains("TintMax"))
-                            {
-                                changeParticle = true;
-                                string part1 = line.Substring(0, line.LastIndexOf('=')+2);
-                                string part2 = line.Substring(line.LastIndexOf('=')+2);
-                                //Debug.WriteLine("Part1: " + part1);
-                                //Debug.WriteLine("Part2: " + part2);
-                                part2 = part2.Replace("(","");
-                                part2 = part2.Replace(")","");
-                                string[] nums = part2.Split(',');
-                                string lastNum = nums[3];
-                                string newPart2 = "(" + " " + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + lastNum + " )";
-                                Debug.WriteLine("New part2: " + newPart2);
-                                lines[i] = part1 + newPart2;
-                            }
-                        }
-
-                        allText += lines[i] + "\n";
-                    }
-                    if (changeParticle)
-                    {
-                        // everything in the array is now correct. copy the array to the new file.
-                        System.IO.File.WriteAllText(targetPath, allText);
-                    }
+                    particles.Add(new Particle(targetPath));
                 }
             }
-            if (particlesCopied == 0)
+
+            // fix child refs.
+            CurrParticleSystem = new ParticleSystem(particles);
+            if (changeColor)
             {
-                MessageBox.Show("No particles have been copied over.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CurrParticleSystem.changeColor(rgb);
+            }
+
+            if (rename) // renaming also fixes child refs.
+            {
+                string[] paths = CurrParticleSystem.Paths;
+                PRF = new ParticleRenameForm();
+                PRF.Submit.Click += Submit_Click;
+                DialogResult r3 = PRF.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Particles have been copied to: \\" + relativePathWin32,
-                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }            
+                CurrParticleSystem.fixChildRefs(folderPath);
+            }
+
+            for (int i = 0; i < CurrParticleSystem.Particles.Count(); i++)
+            {
+                Particle p = CurrParticleSystem.Particles.ElementAt(i);
+                System.IO.File.WriteAllText(p.Path, p.ToString());
+            }
+            
+            MessageBox.Show("Particles have been successfully copied.",
+                "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void getAddons()
@@ -436,7 +387,14 @@ namespace D2ModKit
         {
             foreach (Addon a in addons)
             {
-                if (a.Name == name)
+                if (isValidAddon(a) && a.Name == name)
+                {
+                    return a;
+                }
+            }
+            foreach (Addon a in addons)
+            {
+                if (isValidAddon(a))
                 {
                     return a;
                 }
@@ -444,18 +402,18 @@ namespace D2ModKit
             return null;
         }
 
+        private bool isValidAddon(Addon a)
+        {
+            if (Directory.Exists(a.ContentPath) && Directory.Exists(a.GamePath))
+            {
+                return true;
+            }
+            return false;
+        }
+
         void selectCurrentAddon(string addon)
         {
-            if (addon == "")
-            {
-                currAddon = Addons[0];
-
-            }
-            else
-            {
-                currAddon = getAddonFromName(addon);
-            }
-
+            currAddon = getAddonFromName(addon);
             Properties.Settings.Default.CurrAddon = currAddon.Name;
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
@@ -523,32 +481,6 @@ namespace D2ModKit
             Process.Start(currAddon.ContentPath);
         }
 
-        private void changeParticleColor(string path, string[] rgb)
-        {
-            string[] lines = System.IO.File.ReadAllLines(path);
-            string output = "";
-            for (int i = 0; i < lines.Count(); i++)
-            {
-                string line = lines[i];
-                if (line.Contains("ColorMin") || line.Contains("ColorMax") || line.Contains("ConstantColor") || line.Contains("TintMin")
-                    || line.Contains("TintMax"))
-                {
-                    string part1 = line.Substring(0, line.LastIndexOf('=') + 2);
-                    string part2 = line.Substring(line.LastIndexOf('=') + 2);
-                    //Debug.WriteLine("Part1: " + part1);
-                    //Debug.WriteLine("Part2: " + part2);
-                    part2 = part2.Replace("(", "");
-                    part2 = part2.Replace(")", "");
-                    string[] nums = part2.Split(',');
-                    string lastNum = nums[3];
-                    string newPart2 = "(" + " " + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + lastNum + " )";
-                    lines[i] = part1 + newPart2;
-                }
-                output += lines[i] + "\n";
-            }
-            System.IO.File.WriteAllText(path, output);
-        }
-
         private void recolorParticles_Click(object sender, EventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
@@ -559,22 +491,18 @@ namespace D2ModKit
             DialogResult res = fd.ShowDialog();
             if (res == DialogResult.OK)
             {
-                string[] paths = fd.FileNames;
+                ParticleSystem ps = new ParticleSystem(fd.FileNames);
                 string[] rgb = getRGB();
-                for (int i = 0; i < paths.Count(); i++)
+                ps.changeColor(rgb);
+                for (int i = 0; i < ps.Particles.Count(); i++)
                 {
-                    changeParticleColor(paths.ElementAt(i), rgb);
+                    Particle p = ps.Particles.ElementAt(i);
+                    System.IO.File.WriteAllText(p.Path, p.ToString());
                 }
-                MessageBox.Show("Particles successfully recolored.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                string rgb_output = "R: " + rgb[0] + " G: " + rgb[1] + " B: " + rgb[2];
+                MessageBox.Show("Particles successfully recolored to: " + rgb_output, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private string newParticlesName;
-
-        public string NewParticlesName
-        {
-            get { return newParticlesName; }
-            set { newParticlesName = value; }
         }
 
         private void renameParticles_Click(object sender, EventArgs e)
@@ -588,57 +516,27 @@ namespace D2ModKit
             if (res == DialogResult.OK)
             {
                 string[] paths = fd.FileNames;
-                PRenameForm = new ParticleRenameForm(paths);
-                PRenameForm.Submit.Click += Submit_Click;
-                PRenameForm.Paths = paths;
-
-                DialogResult r = PRenameForm.ShowDialog();
-                if (r == DialogResult.Abort || r == DialogResult.Cancel)
+                CurrParticleSystem = new ParticleSystem(paths);
+                PRF = new ParticleRenameForm();
+                PRF.Submit.Click += Submit_Click;
+                DialogResult r = PRF.ShowDialog();
+                for (int i = 0; i < paths.Length; i++)
                 {
-                    return;
+                    Particle p = CurrParticleSystem.Particles[i];
+                    System.IO.File.WriteAllText(p.Path, p.ToString());
                 }
-
-                for (int i = 0; i < paths.Count(); i++)
-                {
-
-                    //System.IO.File.Move()
-                }
-            }
-        }
-
-        private void renameParticles(string[] paths, string newBase)
-        {
-            // the name with the shortest chars will become the base.
-            string currBase = paths[0];
-            for (int i = 0; i < paths.Count(); i++)
-            {
-                string p = paths.ElementAt(i);
-                string currName = p.Substring(p.LastIndexOf('\\') + 1);
-                if (currName.Length < currBase.Length)
-                {
-                    currBase = currName;
-                }
-            }
-            // remove the .vpcf from the base.
-            currBase = currBase.Substring(0, currBase.Length - 5);
-            Debug.WriteLine("Base: " + currBase);
-            for (int i = 0; i < paths.Count(); i++)
-            {
-                string p = paths.ElementAt(i);
-                string currName = p.Substring(p.LastIndexOf('\\') + 1);
-                string newName = currName.Replace(currBase, newBase);
-                //Debug.WriteLine("New name: " + newName);
-                string newPath = Path.Combine(p.Substring(0, p.LastIndexOf('\\')), newName);
-                System.IO.File.Move(paths[i], newPath);
+                MessageBox.Show("Particles successfully renamed with base name: " + PRF.PTextBox.Text, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //PRF.Location = this.Location;
             }
         }
 
         void Submit_Click(object sender, EventArgs e)
         {
-            PRenameForm.Close();
-            string[] paths = PRenameForm.Paths;
-            string newBase = PRenameForm.PTextBox.Text;
-            renameParticles(paths, newBase);
+            PRF.SubmitClicked = true;
+            PRF.Close();
+            string[] paths = CurrParticleSystem.Paths;
+            string newBase = PRF.PTextBox.Text;
+            CurrParticleSystem.rename(newBase);
             Process.Start(paths[0].Substring(0, paths[0].LastIndexOf('\\')));
         }
     }
