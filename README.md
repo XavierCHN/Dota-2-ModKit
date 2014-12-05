@@ -3,12 +3,12 @@
 A GUI comprised of useful tools to help with Dota 2 modding.
 
 ## Features:
-* **Particle Forker**. Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over. Also, you can re-color the whole particle system with just the click of a button!
+* **Particle Forker**. Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
+  * **Easy Re-Coloring and Re-Naming**. Color and rename whole particle systems with just the click of a button!
 * **Tooltips Generator**. Parses all the files in the scripts\npc folder of your addon, and creates tooltips for abilities, items, modifiers, units, and heroes, which you can easily copy over to addon_english.txt or another language file.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder, so it's neatly structured.
 
-![Alt text](http://i.imgur.com/ilZLHSI.png)
-![Alt text](http://i.imgur.com/S4ldj9r.png)
+![Alt text](http://i.imgur.com/nzKKaUv.png)
 
 ## Installation
 
@@ -28,4 +28,4 @@ A GUI comprised of useful tools to help with Dota 2 modding.
 
 ## Notes
 
-Have ideas for new features? Let me know! Best way to contact me is through the Dota 2 modding IRC.
+Have ideas for new features? Let me know! Best way to contact me is through the Dota 2 modding IRC or by email: stephennf@gmail.com.
