@@ -292,8 +292,7 @@ namespace D2ModKit
                         KeyValue child2 = children2.ElementAt(j);
                         if (child2.Key == "override_hero")
                         {
-                            HeroEntry h = new HeroEntry(child2.GetString());
-                            //Debug.WriteLine(h.ToString());
+                            heroesEntries.Add(new HeroEntry(child2.GetString()));
                         }
 
                     }
@@ -315,17 +314,12 @@ namespace D2ModKit
                     unitEntries.Add(new UnitEntry(unit));
                 }
             }
-            for (int i = 0; i < unitEntries.Count(); i++)
-            {
-               // Debug.WriteLine(unitEntries.ElementAt(i).ToString());
-            }
-
         }
 
         public void writeTooltips()
         {
             alreadyHasKeys.Clear();
-            if (Directory.Exists(addonEnglishPath))
+            if (File.Exists(addonEnglishPath))
             {
                 KeyValue[] currAddonEnglish = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(addonEnglishPath));
                 IEnumerable<KeyValue> children = currAddonEnglish[0].Children;
@@ -339,7 +333,7 @@ namespace D2ModKit
                         for (int j = 0; j < children2.Count(); j++)
                         {
                             KeyValue child2 = children2.ElementAt(j);
-                            alreadyHasKeys.Add(child2.Key);
+                            alreadyHasKeys.Add(child2.Key.ToLower());
                         }
                     }
                 }
@@ -359,7 +353,7 @@ namespace D2ModKit
             for (int i = 0; i < heroesEntries.Count(); i++)
             {
                 HeroEntry hero = heroesEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(hero.Hero.Key))
+                if (!alreadyHasKeys.Contains(hero.Hero.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, hero.ToString(), Encoding.Unicode);
 
@@ -371,7 +365,7 @@ namespace D2ModKit
             for (int i = 0; i < unitEntries.Count(); i++)
             {
                 UnitEntry unit = unitEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(unit.Name.Key))
+                if (!alreadyHasKeys.Contains(unit.Name.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, unit.ToString(), Encoding.Unicode);
                 }
@@ -382,7 +376,7 @@ namespace D2ModKit
             for (int i = 0; i < modifierAbilityEntries.Count(); i++)
             {
                 ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(mod.Name.Key))
+                if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, mod.ToString() + "\n", Encoding.Unicode);
 
@@ -394,7 +388,7 @@ namespace D2ModKit
             for (int i = 0; i < modifierItemEntries.Count(); i++)
             {
                 ModifierEntry mod = modifierItemEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(mod.Name.Key))
+                if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, mod.ToString() + "\n", Encoding.Unicode);
                 }
@@ -405,7 +399,7 @@ namespace D2ModKit
             for (int i = 0; i < abilityEntries.Count(); i++)
 			{
                 AbilityEntry abil = abilityEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(abil.Name.Key))
+                if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, abil.ToString() + "\n", Encoding.Unicode);
                 }
@@ -416,7 +410,7 @@ namespace D2ModKit
             for (int i = 0; i < itemEntries.Count(); i++)
             {
                 AbilityEntry item = itemEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(item.Name.Key))
+                if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
                 {
                     System.IO.File.AppendAllText(GeneratedTooltips, item.ToString() + "\n", Encoding.Unicode);
                 }

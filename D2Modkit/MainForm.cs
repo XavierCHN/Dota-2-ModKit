@@ -23,6 +23,8 @@ namespace D2ModKit
         private Addon currAddon;
 
         private string ugcPath = "";
+        private bool procedeWithColorRenaming = true;
+
         private bool hasSettings = false;
 
         private bool HasSettings
@@ -204,6 +206,7 @@ namespace D2ModKit
 
         private string[] getRGB()
         {
+            procedeWithColorRenaming = true;
             string[] rgb = new string[3];
             ColorDialog color = new ColorDialog();
             color.AnyColor = true;
@@ -215,6 +218,10 @@ namespace D2ModKit
                 rgb[0] = picked.R.ToString();
                 rgb[1] = picked.G.ToString();
                 rgb[2] = picked.B.ToString();
+            }
+            else
+            {
+                procedeWithColorRenaming = false;
             }
             return rgb;
         }
@@ -273,6 +280,10 @@ namespace D2ModKit
             {
                 changeColor = true;
                 rgb = getRGB();
+                if (!procedeWithColorRenaming)
+                {
+                    changeColor = false;
+                }
             }
 
             DialogResult r2 = MessageBox.Show("Would you like to change the name of this particle system?", "D2ModKit", MessageBoxButtons.YesNo,
@@ -491,8 +502,13 @@ namespace D2ModKit
             DialogResult res = fd.ShowDialog();
             if (res == DialogResult.OK)
             {
-                ParticleSystem ps = new ParticleSystem(fd.FileNames);
                 string[] rgb = getRGB();
+                // make sure user didn't close the color dialog box.
+                if (!procedeWithColorRenaming)
+                {
+                    return;
+                }
+                ParticleSystem ps = new ParticleSystem(fd.FileNames);
                 ps.changeColor(rgb);
                 for (int i = 0; i < ps.Particles.Count(); i++)
                 {
