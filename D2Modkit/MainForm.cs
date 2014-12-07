@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-//using System.
+using System.Reflection;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -23,7 +23,6 @@ namespace D2ModKit
         private Addon currAddon;
 
         private string ugcPath = "";
-        private bool procedeWithColorRenaming = true;
 
         private bool hasSettings = false;
 
@@ -124,8 +123,9 @@ namespace D2ModKit
         public MainForm()
         {
             InitializeComponent();
+            //sparkle = new Sparkle("");
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-
+            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -206,7 +206,6 @@ namespace D2ModKit
 
         private string[] getRGB()
         {
-            procedeWithColorRenaming = true;
             string[] rgb = new string[3];
             ColorDialog color = new ColorDialog();
             color.AnyColor = true;
@@ -221,7 +220,7 @@ namespace D2ModKit
             }
             else
             {
-                procedeWithColorRenaming = false;
+                return null;
             }
             return rgb;
         }
@@ -280,7 +279,7 @@ namespace D2ModKit
             {
                 changeColor = true;
                 rgb = getRGB();
-                if (!procedeWithColorRenaming)
+                if (rgb == null)
                 {
                     changeColor = false;
                 }
@@ -429,14 +428,8 @@ namespace D2ModKit
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
             currentAddonDropDown.Text = "Addon: " + currAddon.Name;
-
+            //ApplicationAssembly.GetName().Version.ToString()
             this.Text = "D2 ModKit - " + currAddon.Name;
-        }
-
-        private void aboutButton_Click(object sender, EventArgs e)
-        {
-            AboutBox about = new AboutBox();
-            about.Show();
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)
@@ -504,7 +497,7 @@ namespace D2ModKit
             {
                 string[] rgb = getRGB();
                 // make sure user didn't close the color dialog box.
-                if (!procedeWithColorRenaming)
+                if (rgb == null)
                 {
                     return;
                 }
@@ -536,13 +529,19 @@ namespace D2ModKit
                 PRF = new ParticleRenameForm();
                 PRF.Submit.Click += Submit_Click;
                 DialogResult r = PRF.ShowDialog();
+
+                if (!PRF.SubmitClicked)
+                {
+                    return;
+                }
+
                 for (int i = 0; i < paths.Length; i++)
                 {
                     Particle p = CurrParticleSystem.Particles[i];
                     System.IO.File.WriteAllText(p.Path, p.ToString());
                 }
-                MessageBox.Show("Particles successfully renamed with base name: " + PRF.PTextBox.Text, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //PRF.Location = this.Location;
+
+                //MessageBox.Show("Particles successfully renamed with base name: " + PRF.PTextBox.Text, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -554,6 +553,35 @@ namespace D2ModKit
             string newBase = PRF.PTextBox.Text;
             CurrParticleSystem.rename(newBase);
             Process.Start(paths[0].Substring(0, paths[0].LastIndexOf('\\')));
+        }
+
+        private void checkForUpdates_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void diff_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.InitialDirectory = Path.Combine(currAddon.ContentPath, "particles");
+            fd.Title = "First particle:";
+            DialogResult res = fd.ShowDialog();
+            Particle ps1 = null;
+            Particle ps2 = null;
+            if (res == DialogResult.OK)
+            {
+                string path = fd.FileName;
+                ps1 = new Particle(path);
+            }
+
+            fd.Title = "Second particle:";
+            res = fd.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                string path = fd.FileName;
+                ps2 = new Particle(path);
+            }
+            ps1.diff(ps2);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,6 @@ namespace D2ModKit
             set { submit = value; }
         }
 
-        private TextBox pTextBox;
-
         private bool submitClicked;
 
         public bool SubmitClicked
@@ -36,6 +35,8 @@ namespace D2ModKit
             get { return submitClicked; }
             set { submitClicked = value; }
         }
+
+        private TextBox pTextBox;
 
         public TextBox PTextBox
         {
@@ -46,15 +47,16 @@ namespace D2ModKit
         public ParticleRenameForm()
         {
             InitializeComponent();
-            textBox1.TextChanged += particleRenameTextBox_TextChanged;
             Submit = button1;
+            PTextBox.KeyDown += PTextBox_KeyDown;
         }
 
-        void particleRenameTextBox_TextChanged(object sender, EventArgs e)
+        void PTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-           
+            if (e.KeyCode == Keys.Enter)
+            {
+                Submit.PerformClick();
+            }
         }
-        
-
     }
 }

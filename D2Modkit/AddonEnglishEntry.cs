@@ -131,29 +131,22 @@ namespace D2ModKit
 
     public class HeroEntry : AddonEnglishEntry
     {
-        private string heroName;
+        private Pair name;
 
-        public string HeroName
+        public Pair Name
         {
-            get { return heroName; }
-            set { heroName = value; }
-        }
-        private Pair hero;
-
-        public Pair Hero
-        {
-            get { return hero; }
-            set { hero = value; }
+            get { return name; }
+            set { name = value; }
         }
 
         public HeroEntry(string _name)
         {
-            hero = new Pair(_name, "");
+            name = new Pair(_name, "");
         }
 
         public override string ToString()
         {
-            return hero.ToString();
+            return name.ToString();
         }
     }
 

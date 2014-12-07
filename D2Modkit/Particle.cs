@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -159,6 +160,40 @@ namespace D2ModKit
                 str += ParticleArr.ElementAt(i) + "\n";
             }
             return str;
+        }
+
+        public void diff(Particle p2)
+        {
+            string[] arr2 = p2.ParticleArr;
+            Debug.WriteLine("Did not find these in " + this.Name);
+            for (int j = 0; j < arr2.Count(); j++)
+            {
+                string line = arr2[j];
+                line = line.Trim();
+
+                // check if this line is just blank. Also ignore child reference lines.
+                if (line == "" || line.Contains("string m_ChildRef = "))
+                {
+                    continue;
+                }
+
+                if (!containsTrimmed(line))
+                {
+                    Debug.WriteLine(line);
+                }
+            }
+        }
+        private bool containsTrimmed(string line)
+        {
+            for (int i = 0; i < ParticleArr.Count(); i++)
+            {
+                string thisLine = ParticleArr[i];
+                if (thisLine.Trim() == line)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

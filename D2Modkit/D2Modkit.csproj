@@ -67,6 +67,9 @@
     <Reference Include="KVLib">
       <HintPath>..\packages\KVLib.1.0.1\lib\net45\KVLib.dll</HintPath>
     </Reference>
+    <Reference Include="NetSparkle.Net40">
+      <HintPath>..\packages\NetSparkle.1.1.0\lib\net40-full\NetSparkle.Net40.dll</HintPath>
+    </Reference>
     <Reference Include="Sprache">
       <HintPath>..\packages\Sprache.1.10.0.37\lib\net40\Sprache.dll</HintPath>
     </Reference>
@@ -79,12 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddonEnglishEntry.cs" />
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Addon.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleRenameForm.cs">
@@ -102,9 +99,6 @@
     <Compile Include="ParticleSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ParticleRenameForm.resx">
       <DependentUpon>ParticleRenameForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -107,14 +107,11 @@ namespace D2ModKit
                 string p = Particles.ElementAt(i).Path;
                 string currName = p.Substring(p.LastIndexOf('\\') + 1);
                 string newName = currName.Replace(currBase, newBase);
-                //Debug.WriteLine("New name: " + newName);
                 string newPath = Path.Combine(p.Substring(0, p.LastIndexOf('\\')), newName);
                 System.IO.File.Move(p, newPath);
                 Particles[i].Path = newPath;
-                //Particles[i].Name = 
                 Particles[i].fixChildRefs(newPath.Substring(0, newPath.LastIndexOf('\\')), currBase, newBase);
             }
-            //fixChildRefs()
         }
     }
 }

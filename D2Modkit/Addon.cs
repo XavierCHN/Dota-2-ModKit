@@ -18,7 +18,6 @@ namespace D2ModKit
         private string npcPath;
         private string copyPath;
         private string addonEnglishPath;
-        private string generatedTooltips;
         private string abilitiesCustomPath;
         private string itemCustomPath;
         private string unitsCustomPath;
@@ -47,7 +46,6 @@ namespace D2ModKit
             ItemsCustomPath = Path.Combine(GamePath, "scripts", "npc", "npc_items_custom.txt");
             UnitsCustomPath = Path.Combine(GamePath, "scripts", "npc", "npc_units_custom.txt");
             HeroesCustomPath = Path.Combine(GamePath, "scripts", "npc", "npc_heroes_custom.txt");
-            GeneratedTooltips = Path.Combine(GamePath, "resource", "tooltips.txt");
         }
 
         public Addon(string _gamePath)
@@ -81,12 +79,6 @@ namespace D2ModKit
         {
             get { return heroesCustomPath; }
             set { heroesCustomPath = value; }
-        }
-
-        public string GeneratedTooltips
-        {
-            get { return generatedTooltips; }
-            set { generatedTooltips = value; }
         }
 
         public string AddonEnglishPath
@@ -238,7 +230,7 @@ namespace D2ModKit
                                             }
                                         }
                                     }
-                                    // we're done going through all the children of this ability/modifier.
+                                    // we're done going through all the rootChildren of this ability/modifier.
                                     if (modifiers)
                                     {
                                         if (!isHidden)
@@ -318,121 +310,142 @@ namespace D2ModKit
 
         public void writeTooltips()
         {
-            alreadyHasKeys.Clear();
-            if (File.Exists(addonEnglishPath))
-            {
-                KeyValue[] currAddonEnglish = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(addonEnglishPath));
-                IEnumerable<KeyValue> children = currAddonEnglish[0].Children;
+            string[] resourceFiles = Directory.GetFiles(Path.Combine(GamePath, "resource"));
+            List<string> langFiles = new List<string>();
 
-                for (int i = 0; i < children.Count(); i++)
+            // only take the addon_language files
+            for (int i = 0; i < resourceFiles.Count(); i++)
+            {
+                if (resourceFiles[i].Contains("addon_") && resourceFiles[i].EndsWith(".txt"))
                 {
-                    KeyValue child = children.ElementAt(i);
-                    if (child.HasChildren)
+                    langFiles.Add(resourceFiles[i]);
+                }
+            }
+
+            for (int l = 0; l < langFiles.Count(); l++)
+            {
+                string file = langFiles.ElementAt(l);
+
+                string thisLang = file.Substring(file.LastIndexOf('\\') + 1);
+                thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
+                string outputPath = Path.Combine(GamePath, "resource", "tooltips_" + thisLang);
+
+                alreadyHasKeys.Clear();
+
+                KeyValue[] addon_lang = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(file));
+
+                if (addon_lang.Count() > 0) {
+                    IEnumerable<KeyValue> rootChildren = addon_lang[0].Children;
+
+                    for (int k = 0; k < rootChildren.Count(); k++)
                     {
-                        IEnumerable<KeyValue> children2 = child.Children;
-                        for (int j = 0; j < children2.Count(); j++)
+                        KeyValue child = rootChildren.ElementAt(k);
+                        if (child.HasChildren)
                         {
-                            KeyValue child2 = children2.ElementAt(j);
-                            alreadyHasKeys.Add(child2.Key.ToLower());
+                            IEnumerable<KeyValue> children2 = child.Children;
+                            for (int j = 0; j < children2.Count(); j++)
+                            {
+                                KeyValue child2 = children2.ElementAt(j);
+                                alreadyHasKeys.Add(child2.Key.ToLower());
+                            }
                         }
                     }
+                 }
+
+                // WriteAllText will clear the contents of this file first
+                string header =
+                    "// **********************************************************************************************************************\n" +
+                    "// This file contains generated tooltips created from the files in the scripts/npc directory of this mod.\n" +
+                    "// It does not contain tooltips already defined in addon_english.txt, nor modifiers with the property \"IsHidden\" \"1\".\n" +
+                    "// **********************************************************************************************************************\n";
+                System.IO.File.WriteAllText(outputPath, header, Encoding.Unicode);
+
+
+                string head1 = "\n// ******************** HEROES ********************\n";
+                System.IO.File.AppendAllText(outputPath, head1, Encoding.Unicode);
+                for (int i = 0; i < heroesEntries.Count(); i++)
+                {
+                    HeroEntry hero = heroesEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(hero.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, hero.ToString(), Encoding.Unicode);
+
+                    }
                 }
+
+                string head2 = "\n// ******************** UNITS ********************\n";
+                System.IO.File.AppendAllText(outputPath, head2, Encoding.Unicode);
+                for (int i = 0; i < unitEntries.Count(); i++)
+                {
+                    UnitEntry unit = unitEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(unit.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, unit.ToString(), Encoding.Unicode);
+                    }
+                }
+
+                string head3 = "\n// ******************** ABILITY MODIFIERS ********************\n";
+                System.IO.File.AppendAllText(outputPath, head3, Encoding.Unicode);
+                for (int i = 0; i < modifierAbilityEntries.Count(); i++)
+                {
+                    ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+
+                    }
+                }
+
+                string head6 = "\n// ******************** ITEM MODIFIERS ********************\n";
+                System.IO.File.AppendAllText(outputPath, head6, Encoding.Unicode);
+                for (int i = 0; i < modifierItemEntries.Count(); i++)
+                {
+                    ModifierEntry mod = modifierItemEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                    }
+                }
+
+                string head4 = "\n// ******************** ABILITIES ********************\n";
+                System.IO.File.AppendAllText(outputPath, head4, Encoding.Unicode);
+                for (int i = 0; i < abilityEntries.Count(); i++)
+                {
+                    AbilityEntry abil = abilityEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, abil.ToString() + "\n", Encoding.Unicode);
+                    }
+                }
+
+                string head5 = "\n// ******************** ITEMS ********************\n";
+                System.IO.File.AppendAllText(outputPath, head5, Encoding.Unicode);
+                for (int i = 0; i < itemEntries.Count(); i++)
+                {
+                    AbilityEntry item = itemEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
+                    {
+                        System.IO.File.AppendAllText(outputPath, item.ToString() + "\n", Encoding.Unicode);
+                    }
+                }
+
+                /*string head7 = "\n// ******************** HIDDEN MODIFIERS ********************\n";
+                System.IO.File.AppendAllText(outputPath, head7, Encoding.Unicode);
+                for (int i = 0; i < hiddenModifierEntries.Count(); i++)
+                {
+                    ModifierEntry mod = hiddenModifierEntries.ElementAt(i);
+                    if (!alreadyHasKeys.Contains(mod.Name.Key))
+                    {
+                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                    }
+                }*/
+
+                // open the tooltips.txt in a text editor
+                Process.Start(outputPath);
+
+                //MessageBox.Show("Tooltips successfully generated in: " + Path.Combine(gamePath,"resource", "tooltips.txt"), "Success",
+                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            // WriteAllText will clear the contents of this file first
-            string header = 
-                "// **********************************************************************************************************************\n" +
-                "// This file contains generated tooltips created from the files in the scripts/npc directory of this mod.\n" +
-                "// It does not contain tooltips already defined in addon_english.txt, nor modifiers with the property \"IsHidden\" \"1\".\n" +
-                "// **********************************************************************************************************************\n";
-            System.IO.File.WriteAllText(generatedTooltips, header, Encoding.Unicode);
-
-
-            string head1 = "\n// ******************** HEROES ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head1, Encoding.Unicode);
-            for (int i = 0; i < heroesEntries.Count(); i++)
-            {
-                HeroEntry hero = heroesEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(hero.Hero.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, hero.ToString(), Encoding.Unicode);
-
-                }
-            }
-
-            string head2 = "\n// ******************** UNITS ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head2, Encoding.Unicode);
-            for (int i = 0; i < unitEntries.Count(); i++)
-            {
-                UnitEntry unit = unitEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(unit.Name.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, unit.ToString(), Encoding.Unicode);
-                }
-            }
-
-            string head3 = "\n// ******************** ABILITY MODIFIERS ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head3, Encoding.Unicode);
-            for (int i = 0; i < modifierAbilityEntries.Count(); i++)
-            {
-                ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, mod.ToString() + "\n", Encoding.Unicode);
-
-                }
-            }
-
-            string head6 = "\n// ******************** ITEM MODIFIERS ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head6, Encoding.Unicode);
-            for (int i = 0; i < modifierItemEntries.Count(); i++)
-            {
-                ModifierEntry mod = modifierItemEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, mod.ToString() + "\n", Encoding.Unicode);
-                }
-            }
-
-            string head4 = "\n// ******************** ABILITIES ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head4, Encoding.Unicode);
-            for (int i = 0; i < abilityEntries.Count(); i++)
-			{
-                AbilityEntry abil = abilityEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, abil.ToString() + "\n", Encoding.Unicode);
-                }
-			}
-
-            string head5 = "\n// ******************** ITEMS ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head5, Encoding.Unicode);
-            for (int i = 0; i < itemEntries.Count(); i++)
-            {
-                AbilityEntry item = itemEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, item.ToString() + "\n", Encoding.Unicode);
-                }
-            }
-
-            /*string head7 = "\n// ******************** HIDDEN MODIFIERS ********************\n";
-            System.IO.File.AppendAllText(GeneratedTooltips, head7, Encoding.Unicode);
-            for (int i = 0; i < hiddenModifierEntries.Count(); i++)
-            {
-                ModifierEntry mod = hiddenModifierEntries.ElementAt(i);
-                if (!alreadyHasKeys.Contains(mod.Name.Key))
-                {
-                    System.IO.File.AppendAllText(GeneratedTooltips, mod.ToString() + "\n", Encoding.Unicode);
-                }
-            }*/
-
-            // open the tooltips.txt in a text editor
-            Process.Start(Path.Combine(gamePath, "resource", "tooltips.txt"));
-
-            //MessageBox.Show("Tooltips successfully generated in: " + Path.Combine(gamePath,"resource", "tooltips.txt"), "Success",
-            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
     }
 }
