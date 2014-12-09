@@ -2,15 +2,8 @@
 
 namespace D2ModKit
 {
-    public partial class ParticleRenameForm : Form
+    public partial class NewAddonForm : Form 
     {
-        private string[] paths;
-
-        public string[] Paths
-        {
-            get { return paths; }
-            set { paths = value; }
-        }
 
         private Button submit;
 
@@ -28,22 +21,22 @@ namespace D2ModKit
             set { submitClicked = value; }
         }
 
-        private TextBox pTextBox;
+        private TextBox textBox;
 
-        public TextBox PTextBox
+        public TextBox _TextBox
         {
             get { return textBox1; }
-            set { pTextBox = value; }
+            set { textBox = value; }
         }
 
-        public ParticleRenameForm()
+        public NewAddonForm()
         {
             InitializeComponent();
             Submit = button1;
-            PTextBox.KeyDown += PTextBox_KeyDown;
+            _TextBox.KeyDown += TextBox_KeyDown;
         }
 
-        void PTextBox_KeyDown(object sender, KeyEventArgs e)
+        void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {

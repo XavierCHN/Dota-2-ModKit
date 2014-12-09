@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Collections;
 using System.Diagnostics;
-using KVLib;
+using System.Net;
+using System.IO.Compression;
 
 namespace D2ModKit
 {
@@ -106,7 +105,7 @@ namespace D2ModKit
 
         private ParticleSystem currParticleSystem;
 
-        public ParticleSystem CurrParticleSystem
+        public ParticleSystem ps
         {
             get { return currParticleSystem; }
             set { currParticleSystem = value; }
@@ -125,7 +124,7 @@ namespace D2ModKit
             InitializeComponent();
             //sparkle = new Sparkle("");
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + " by Myll";
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -261,59 +260,34 @@ namespace D2ModKit
             browser.Description = "Browse to where the particles will be copied to. They must be placed in the particles directory.";
             DialogResult browserResult = browser.ShowDialog();
 
-            if (browserResult == DialogResult.Cancel || browserResult == DialogResult.Abort)
+            if (browserResult == DialogResult.Cancel)
             {
                 return;
             }
 
-            string folderPath = browser.SelectedPath;
+            string newFolder = browser.SelectedPath;
 
-            // prompt user if he wants to change particle's color
-            DialogResult r = MessageBox.Show("Would you like to change the color of this particle system?", "D2ModKit", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            bool changeColor = false, rename = false;
-            string[] rgb = new string[3];
-
-            if (r == DialogResult.Yes)
-            {
-                changeColor = true;
-                rgb = getRGB();
-                if (rgb == null)
-                {
-                    changeColor = false;
-                }
-            }
-
-            DialogResult r2 = MessageBox.Show("Would you like to change the name of this particle system?", "D2ModKit", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (r2 == DialogResult.Yes)
-            {
-                rename = true;
-            }
-
-
-
-            string folderName = folderPath.Substring(folderPath.LastIndexOf('\\') + 1);
+            string folderName = newFolder.Substring(newFolder.LastIndexOf('\\') + 1);
             List<Particle> particles = new List<Particle>();
             foreach (string path in particlePaths)
             {
                 bool overwriteAllowed = true;
                 string particleName = path.Substring(path.LastIndexOf('\\') + 1);
-                string targetPath = Path.Combine(folderPath, particleName);
+                string targetPath = Path.Combine(newFolder, particleName);
 
                 try
                 {
                     System.IO.File.Copy(path, targetPath);
                 }
-                catch (IOException overwriteException)
+                catch (IOException)
                 {
+                    /*
                     string warnMsg = "You are about to overwrite " + targetPath + ". Procede?";
                     DialogResult result = MessageBox.Show(warnMsg, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (!result.Equals(DialogResult.Yes))
                     {
                         overwriteAllowed = false;
-                    }
+                    }*/
                 }
 
                 if (overwriteAllowed)
@@ -322,33 +296,36 @@ namespace D2ModKit
                 }
             }
 
-            // fix child refs.
-            CurrParticleSystem = new ParticleSystem(particles);
-            if (changeColor)
+            ParticleSystem ps = new ParticleSystem(particles);
+
+            ParticleDesignForm PDF = new ParticleDesignForm(ps);
+            DialogResult r = PDF.ShowDialog();
+            if (!PDF.SubmitClicked)
             {
-                CurrParticleSystem.changeColor(rgb);
+                // User doesn't want to fork particles, so undo what we already did.
+                // Delete the particles that were just copied.
+                for (int i = 0; i < particles.Count(); i++)
+                {
+                    File.Delete(particles.ElementAt(i).Path);
+                }
+
+                return;
             }
 
-            if (rename) // renaming also fixes child refs.
+            // if particle wasn't renamed, fix the child references.
+            if (!PDF.Renamed)
             {
-                string[] paths = CurrParticleSystem.Paths;
-                PRF = new ParticleRenameForm();
-                PRF.Submit.Click += Submit_Click;
-                DialogResult r3 = PRF.ShowDialog();
-            }
-            else
-            {
-                CurrParticleSystem.fixChildRefs(folderPath);
+                ps.fixChildRefs(newFolder);
             }
 
-            for (int i = 0; i < CurrParticleSystem.Particles.Count(); i++)
+            for (int i = 0; i < ps.Particles.Count(); i++)
             {
-                Particle p = CurrParticleSystem.Particles.ElementAt(i);
+                Particle p = ps.Particles.ElementAt(i);
                 System.IO.File.WriteAllText(p.Path, p.ToString());
             }
             
-            MessageBox.Show("Particles have been successfully copied.",
-                "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Particles have been successfully copied.",
+            //    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void getAddons()
@@ -365,9 +342,12 @@ namespace D2ModKit
                         string[] dirs2 = Directory.GetDirectories(dota_addons);
                         foreach (string str2 in dirs2)
 	                    {
+                            // ensure both the game + content dirs exist for this mod.
                             Addon a = new Addon(str2);
                             a.ContentPath = Path.Combine(UGCPath, "content", "dota_addons", a.Name);
-                            addons.Add(a);
+                            if (isValidAddon(a)) {
+                                addons.Add(a);
+                            }
 	                    }
                     }
                 }
@@ -381,7 +361,7 @@ namespace D2ModKit
             foreach (string name in AddonNames)
             {
                 ToolStripItem item = currentAddonDropDown.DropDownItems.Add(name);
-                item.Font = new Font("Segoe UI",12f, FontStyle.Bold, GraphicsUnit.Pixel);
+                item.Font = new Font("Calibri",13f, FontStyle.Bold, GraphicsUnit.Pixel);
             }
         }
 
@@ -470,7 +450,7 @@ namespace D2ModKit
             proc.Start();
             //proc.Close();
 
-            //DialogResult r = MessageBox.Show("Would you like this addon to copy to this location everytime the \"Copy To Folder\" button is clicked?", "D2ModKit",
+            //DialogResult r2 = MessageBox.Show("Would you like this addon to copy to this location everytime the \"Copy To Folder\" button is clicked?", "D2ModKit",
             //    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
         }
@@ -483,76 +463,6 @@ namespace D2ModKit
         private void contentDir_Click(object sender, EventArgs e)
         {
             Process.Start(currAddon.ContentPath);
-        }
-
-        private void recolorParticles_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog fd = new OpenFileDialog();
-            Debug.WriteLine("Current directory: " + Environment.CurrentDirectory);
-            fd.InitialDirectory = Path.Combine(currAddon.ContentPath, "particles");
-            fd.Multiselect = true;
-            fd.Title = "Select particles to recolor";
-            DialogResult res = fd.ShowDialog();
-            if (res == DialogResult.OK)
-            {
-                string[] rgb = getRGB();
-                // make sure user didn't close the color dialog box.
-                if (rgb == null)
-                {
-                    return;
-                }
-                ParticleSystem ps = new ParticleSystem(fd.FileNames);
-                ps.changeColor(rgb);
-                for (int i = 0; i < ps.Particles.Count(); i++)
-                {
-                    Particle p = ps.Particles.ElementAt(i);
-                    System.IO.File.WriteAllText(p.Path, p.ToString());
-                }
-
-                string rgb_output = "R: " + rgb[0] + " G: " + rgb[1] + " B: " + rgb[2];
-                MessageBox.Show("Particles successfully recolored to: " + rgb_output, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void renameParticles_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog fd = new OpenFileDialog();
-            Debug.WriteLine("Current directory: " + Environment.CurrentDirectory);
-            fd.InitialDirectory = Path.Combine(currAddon.ContentPath, "particles");
-            fd.Multiselect = true;
-            fd.Title = "Select particles to rename";
-            DialogResult res = fd.ShowDialog();
-            if (res == DialogResult.OK)
-            {
-                string[] paths = fd.FileNames;
-                CurrParticleSystem = new ParticleSystem(paths);
-                PRF = new ParticleRenameForm();
-                PRF.Submit.Click += Submit_Click;
-                DialogResult r = PRF.ShowDialog();
-
-                if (!PRF.SubmitClicked)
-                {
-                    return;
-                }
-
-                for (int i = 0; i < paths.Length; i++)
-                {
-                    Particle p = CurrParticleSystem.Particles[i];
-                    System.IO.File.WriteAllText(p.Path, p.ToString());
-                }
-
-                //MessageBox.Show("Particles successfully renamed with base name: " + PRF.PTextBox.Text, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        void Submit_Click(object sender, EventArgs e)
-        {
-            PRF.SubmitClicked = true;
-            PRF.Close();
-            string[] paths = CurrParticleSystem.Paths;
-            string newBase = PRF.PTextBox.Text;
-            CurrParticleSystem.rename(newBase);
-            Process.Start(paths[0].Substring(0, paths[0].LastIndexOf('\\')));
         }
 
         private void checkForUpdates_Click(object sender, EventArgs e)
@@ -582,6 +492,144 @@ namespace D2ModKit
                 ps2 = new Particle(path);
             }
             ps1.diff(ps2);
+        }
+
+        private string promptForD2Extract()
+        {
+            MessageBox.Show("Please enter the path to your extracted Dota 2 contents (ex. Extracted Dota 2 from GCFScape))", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            FolderBrowserDialog fd = new FolderBrowserDialog();
+            fd.Description = "Enter the path to your extracted Dota 2 contents (Top-most level)";
+            DialogResult res = fd.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                string path = fd.SelectedPath;
+                Properties.Settings.Default.Dota2ExtractPath = path;
+                return path;
+            }
+            return null;
+        }
+
+        private void overrideSounds_Click(object sender, EventArgs e)
+        {
+            string extract = Properties.Settings.Default.Dota2ExtractPath;
+            if (extract == "")
+            {
+                extract = promptForD2Extract();
+                if (extract == null)
+                {
+                    return;
+                }
+            }
+        }
+
+
+        /*
+         * BAREBONES FORK CODE
+         */
+
+        private BarebonesDLProgress barebonesDLProgressForm;
+
+        public BarebonesDLProgress BarebonesDLProgressForm
+        {
+            get { return barebonesDLProgressForm; }
+            set { barebonesDLProgressForm = value; }
+        }
+
+        NewAddonForm addonForm;
+
+        public NewAddonForm AddonForm
+        {
+            get { return addonForm; }
+            set { addonForm = value; }
+        }
+
+        private void downloadBarebones()
+        {
+            MessageBox.Show("Preparing to download the latest version of Barebones. Download will start in 10 seconds.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            /*BarebonesDLProgressForm = new BarebonesDLProgress();
+            BarebonesDLProgressForm.Show();
+
+            WebClient wc = new WebClient();
+            string path = Path.Combine(Environment.CurrentDirectory, "barebones.zip");
+            wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+            wc.DownloadFileCompleted += wc_DownloadFileCompleted;
+            wc.DownloadFileTaskAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"), path);*/
+            //rewriteBarebones(Path.Combine(Environment.CurrentDirectory, "barebones-source2"));
+            string modName = AddonForm._TextBox.Text;
+            ForkBarebones fork = new ForkBarebones(modName.ToLower());
+            string currLoc = Path.Combine(Environment.CurrentDirectory, modName.ToLower());
+            string game = Path.Combine(currLoc, "game", "dota_addons", modName.ToLower());
+            string content = Path.Combine(currLoc, "content", "dota_addons", modName.ToLower());
+
+            string newContent = Path.Combine(UGCPath, "content", "dota_addons", modName.ToLower());
+            string newGame = Path.Combine(UGCPath, "game", "dota_addons", modName.ToLower());
+            Directory.Move(game, newGame);
+            Directory.Move(content, newContent);
+
+            MessageBox.Show(modName.ToLower() + " has been successfully created.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Addon a = new Addon(newContent, newGame);
+            addons.Add(a);
+            setAddonNames();
+            selectCurrentAddon(a.Name);
+
+        }
+
+        private void forkAddon_Click(object sender, EventArgs e)
+        {
+            AddonForm = new NewAddonForm();
+            AddonForm.Submit.Click += NewAddonSubmit_Click;
+            DialogResult res = AddonForm.ShowDialog();
+
+            if (res == DialogResult.Cancel && !AddonForm.SubmitClicked)
+            {
+                Debug.WriteLine("Returning.");
+                return;
+            }
+        }
+
+        void NewAddonSubmit_Click(object sender, EventArgs e)
+        {
+            AddonForm.SubmitClicked = true;
+            AddonForm.Close();
+            downloadBarebones();
+        }
+
+        void wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            BarebonesDLProgressForm.Close();
+            ForkBarebones fork = new ForkBarebones(AddonForm._TextBox.Text);
+        }
+
+        void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            int currPercentage = BarebonesDLProgressForm.CurrentPercentage;
+            int newPercentage = e.ProgressPercentage;
+            if (newPercentage - currPercentage > 0)
+            {
+                BarebonesDLProgressForm.BarebonesProgressBar.Increment(newPercentage - currPercentage);
+            }
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void particleDesigner_Click(object sender, EventArgs e)
+        {
+            ParticleDesignForm pdf = new ParticleDesignForm(currAddon);
+            if (pdf.FormCanceled)
+            {
+                //user clicked cancel when picking particle files.
+                pdf.Close();
+                return;
+            }
+
+            DialogResult r = pdf.ShowDialog();
+            if (!pdf.SubmitClicked)
+            {
+
+            }
         }
     }
 }

@@ -86,10 +86,44 @@ namespace D2ModKit
                 p.changeColor(rgb);
             }
         }
+        public void resize(int percentage)
+        {
+            for (int i = 0; i < Particles.Count(); i++)
+            {
+                Particle p = Particles.ElementAt(i);
+                p.resize(percentage);
+            }
+        }
+
+
         public void rename(string newBase)
         {
-            // the name with the shortest chars will become the base.
-            string currBase = Particles[0].Name;
+            // Gets the current old base.
+            int ptr = 0;
+            string reference = Particles[0].Name;
+            string oldBase = "";
+            bool found = false;
+            while (!found)
+            {
+                for (int i = 0; i < Particles.Length; i++)
+                {
+                    string currStr = Particles[i].Name;
+                    if (ptr >= currStr.Length || currStr.ElementAt(ptr) != reference[ptr])
+                    {
+                        found = true;
+                        break;
+                    }
+                    else
+                    {
+                        oldBase += reference[ptr];
+                        ptr++;
+                    }
+                }
+            }
+
+            // Old way of finding base name.
+            // the modName with the shortest chars will become the base.
+            /*string currBase = Particles[0].Name;
             for (int i = 0; i < Particles.Count(); i++)
             {
                 string p = Particles.ElementAt(i).Path;
@@ -98,19 +132,20 @@ namespace D2ModKit
                 {
                     currBase = currName;
                 }
-            }
+            }*/
             // remove the .vpcf from the base.
-            currBase = currBase.Substring(0, currBase.Length - 5);
-            Debug.WriteLine("Base: " + currBase);
+            //currBase = currBase.Substring(0, currBase.Length - 5);
+
+            Debug.WriteLine("Base: " + oldBase);
             for (int i = 0; i < Particles.Count(); i++)
             {
                 string p = Particles.ElementAt(i).Path;
                 string currName = p.Substring(p.LastIndexOf('\\') + 1);
-                string newName = currName.Replace(currBase, newBase);
+                string newName = currName.Replace(oldBase, newBase);
                 string newPath = Path.Combine(p.Substring(0, p.LastIndexOf('\\')), newName);
                 System.IO.File.Move(p, newPath);
                 Particles[i].Path = newPath;
-                Particles[i].fixChildRefs(newPath.Substring(0, newPath.LastIndexOf('\\')), currBase, newBase);
+                Particles[i].fixChildRefs(newPath.Substring(0, newPath.LastIndexOf('\\')), oldBase, newBase);
             }
         }
     }

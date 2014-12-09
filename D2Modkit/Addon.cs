@@ -176,7 +176,7 @@ namespace D2ModKit
                     continue;
                 }
                 // NOTE: can't have a blank comment (//) above the ability or else the Key will be blank.
-                //Debug.WriteLine("Abil name: " + ability.Key);
+                //Debug.WriteLine("Abil modName: " + ability.Key);
                 if (ability.HasChildren)
                 {
 
@@ -222,7 +222,7 @@ namespace D2ModKit
                                             }
                                             else // we have a modifier, not ability.
                                             {
-                                                // Map item name to its item specials.
+                                                // Map item modName to its item specials.
                                                 if (child3.Key != "var_type")
                                                 {
                                                     kvs.Add(child3.Key);
@@ -431,9 +431,9 @@ namespace D2ModKit
 
                 /*string head7 = "\n// ******************** HIDDEN MODIFIERS ********************\n";
                 System.IO.File.AppendAllText(outputPath, head7, Encoding.Unicode);
-                for (int i = 0; i < hiddenModifierEntries.Count(); i++)
+                for (int j = 0; j < hiddenModifierEntries.Count(); j++)
                 {
-                    ModifierEntry mod = hiddenModifierEntries.ElementAt(i);
+                    ModifierEntry mod = hiddenModifierEntries.ElementAt(j);
                     if (!alreadyHasKeys.Contains(mod.Name.Key))
                     {
                         System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);

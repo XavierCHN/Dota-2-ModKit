@@ -50,7 +50,8 @@ namespace D2ModKit
             {
                 System.IO.File.Copy(Path, folderName);
             }
-            catch (IOException overwriteException)
+            // overwrite exception.
+            catch (IOException)
             {
                 return false;
             }
@@ -152,6 +153,41 @@ namespace D2ModKit
                 }
             }
         }
+        public void resize(int percentage)
+        {
+            for (int i = 0; i < ParticleArr.Count(); i++)
+            {
+                string l = ParticleArr[i];
+                if (l.Contains("Radius") && l.Contains("="))
+                {
+                    string part1 = l.Substring(0, l.LastIndexOf('=') + 2);
+                    string part2 = l.Substring(l.LastIndexOf('=') + 2);
+
+                    double d = Double.Parse(part2);
+                    if (Double.IsNaN(d))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        // modify floats differently than ints.
+                        if (l.Contains("m_f"))
+                        {
+                            double newVal = d + (percentage / 100.0) * Math.Abs(d);
+                            ParticleArr[i] = part1 + newVal;
+                        }
+                        else if (l.Contains("m_n"))
+                        {
+                            int _d = Convert.ToInt32(d);
+                            int newVal = _d + (percentage / 100) * Math.Abs(_d);
+                            ParticleArr[i] = part1 + newVal;
+                        }
+                    }
+
+                }
+            }
+        }
+
         public override string ToString()
         {
             string str = "";

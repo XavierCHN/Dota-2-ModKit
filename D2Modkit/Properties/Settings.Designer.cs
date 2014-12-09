@@ -46,5 +46,17 @@ namespace D2ModKit.Properties {
                 this["CurrAddon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Dota2ExtractPath {
+            get {
+                return ((string)(this["Dota2ExtractPath"]));
+            }
+            set {
+                this["Dota2ExtractPath"] = value;
+            }
+        }
     }
 }

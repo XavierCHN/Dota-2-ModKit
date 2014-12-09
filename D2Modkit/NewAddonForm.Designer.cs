@@ -1,6 +1,6 @@
 ﻿namespace D2ModKit
 {
-    partial class ParticleRenameForm
+    partial class NewAddonForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParticleRenameForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewAddonForm));
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -78,31 +78,30 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(30, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(277, 26);
+            this.label1.Size = new System.Drawing.Size(238, 26);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Enter base name of particle system (do not include .vpcf).\r\nExample: \'doom_bringe" +
-    "r_doom\'";
+            this.label1.Text = "Enter the name of your new addon in camel-case\r\n(ex. YourAddonName):";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 38);
+            this.textBox1.Location = new System.Drawing.Point(12, 38);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(274, 20);
+            this.textBox1.Size = new System.Drawing.Size(278, 20);
             this.textBox1.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(108, 64);
+            this.button1.Location = new System.Drawing.Point(117, 64);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "OK";
+            this.button1.Text = "Submit";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // ParticleRenameForm
+            // NewAddonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -110,13 +109,12 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ParticleRenameForm";
+            this.Name = "NewAddonForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Rename Particle";
+            this.Text = "Name";
             this.ResumeLayout(false);
             this.PerformLayout();
 
