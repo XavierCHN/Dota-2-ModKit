@@ -5,8 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Net;
-using System.IO.Compression;
 
 namespace D2ModKit
 {

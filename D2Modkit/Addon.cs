@@ -1,12 +1,9 @@
 ﻿using KVLib;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace D2ModKit
 {
@@ -138,7 +135,7 @@ namespace D2ModKit
         public void getCurrentAddonEnglish()
         {
             // Parse addon_english.txt KV
-            KeyValue[] addonEnglishKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(addonEnglishPath));
+            KeyValue[] addonEnglishKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(addonEnglishPath));
             for (int i = 0; i < addonEnglishKeyVals.Length; i++)
             {
                 
@@ -171,10 +168,10 @@ namespace D2ModKit
 
             // Parse abilities_custom.txt KV
 
-            KeyValue[] abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(AbilitiesCustomPath));
+            KeyValue[] abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(AbilitiesCustomPath));
             if (items)
             {
-                abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(ItemsCustomPath));
+                abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(ItemsCustomPath));
             }
 
             IEnumerable<KeyValue> abilityNames = abilitiesCustomKeyVals[0].Children;
@@ -287,7 +284,7 @@ namespace D2ModKit
                 return;
             }
 
-            KeyValue[] heroesKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(heroesCustomPath));
+            KeyValue[] heroesKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(heroesCustomPath));
             IEnumerable<KeyValue> children = heroesKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
             {
@@ -305,7 +302,6 @@ namespace D2ModKit
 
                     }
                 }
-
             }
         }
 
@@ -318,7 +314,7 @@ namespace D2ModKit
                 return;
             }
 
-            KeyValue[] unitsKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(unitsCustomPath));
+            KeyValue[] unitsKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(unitsCustomPath));
             IEnumerable<KeyValue> children = unitsKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
             {
@@ -355,7 +351,7 @@ namespace D2ModKit
 
                 alreadyHasKeys.Clear();
 
-                KeyValue[] addon_lang = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(file));
+                KeyValue[] addon_lang = KVParser.ParseAllKVRootNodes(File.ReadAllText(file));
 
                 if (addon_lang.Count() > 0) {
                     IEnumerable<KeyValue> rootChildren = addon_lang[0].Children;
@@ -381,85 +377,85 @@ namespace D2ModKit
                     "// This file contains generated tooltips created from the files in the scripts/npc directory of this mod.\n" +
                     "// It does not contain tooltips already defined in " + thisLangCopy +", nor modifiers with the property \"IsHidden\" \"1\".\n" +
                     "// **********************************************************************************************************************\n";
-                System.IO.File.WriteAllText(outputPath, header, Encoding.Unicode);
+                File.WriteAllText(outputPath, header, Encoding.Unicode);
 
 
                 string head1 = "\n// ******************** HEROES ********************\n";
-                System.IO.File.AppendAllText(outputPath, head1, Encoding.Unicode);
+                File.AppendAllText(outputPath, head1, Encoding.Unicode);
                 for (int i = 0; i < heroesEntries.Count(); i++)
                 {
                     HeroEntry hero = heroesEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(hero.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, hero.ToString(), Encoding.Unicode);
+                        File.AppendAllText(outputPath, hero.ToString(), Encoding.Unicode);
 
                     }
                 }
 
                 string head2 = "\n// ******************** UNITS ********************\n";
-                System.IO.File.AppendAllText(outputPath, head2, Encoding.Unicode);
+                File.AppendAllText(outputPath, head2, Encoding.Unicode);
                 for (int i = 0; i < unitEntries.Count(); i++)
                 {
                     UnitEntry unit = unitEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(unit.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, unit.ToString(), Encoding.Unicode);
+                        File.AppendAllText(outputPath, unit.ToString(), Encoding.Unicode);
                     }
                 }
 
                 string head3 = "\n// ******************** ABILITY MODIFIERS ********************\n";
-                System.IO.File.AppendAllText(outputPath, head3, Encoding.Unicode);
+                File.AppendAllText(outputPath, head3, Encoding.Unicode);
                 for (int i = 0; i < modifierAbilityEntries.Count(); i++)
                 {
                     ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
 
                     }
                 }
 
                 string head6 = "\n// ******************** ITEM MODIFIERS ********************\n";
-                System.IO.File.AppendAllText(outputPath, head6, Encoding.Unicode);
+                File.AppendAllText(outputPath, head6, Encoding.Unicode);
                 for (int i = 0; i < modifierItemEntries.Count(); i++)
                 {
                     ModifierEntry mod = modifierItemEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
                     }
                 }
 
                 string head4 = "\n// ******************** ABILITIES ********************\n";
-                System.IO.File.AppendAllText(outputPath, head4, Encoding.Unicode);
+                File.AppendAllText(outputPath, head4, Encoding.Unicode);
                 for (int i = 0; i < abilityEntries.Count(); i++)
                 {
                     AbilityEntry abil = abilityEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, abil.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, abil.ToString() + "\n", Encoding.Unicode);
                     }
                 }
 
                 string head5 = "\n// ******************** ITEMS ********************\n";
-                System.IO.File.AppendAllText(outputPath, head5, Encoding.Unicode);
+                File.AppendAllText(outputPath, head5, Encoding.Unicode);
                 for (int i = 0; i < itemEntries.Count(); i++)
                 {
                     AbilityEntry item = itemEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
                     {
-                        System.IO.File.AppendAllText(outputPath, item.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, item.ToString() + "\n", Encoding.Unicode);
                     }
                 }
 
                 /*string head7 = "\n// ******************** HIDDEN MODIFIERS ********************\n";
-                System.IO.File.AppendAllText(outputPath, head7, Encoding.Unicode);
+                File.AppendAllText(outputPath, head7, Encoding.Unicode);
                 for (int j = 0; j < hiddenModifierEntries.Count(); j++)
                 {
                     ModifierEntry mod = hiddenModifierEntries.ElementAt(j);
                     if (!alreadyHasKeys.Contains(mod.Name.Key))
                     {
-                        System.IO.File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
                     }
                 }*/
 

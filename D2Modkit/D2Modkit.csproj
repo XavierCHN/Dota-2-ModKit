@@ -67,9 +67,6 @@
     <Reference Include="KVLib">
       <HintPath>..\packages\KVLib.1.0.1\lib\net45\KVLib.dll</HintPath>
     </Reference>
-    <Reference Include="NetSparkle.Net40">
-      <HintPath>..\packages\NetSparkle.1.1.0\lib\net40-full\NetSparkle.Net40.dll</HintPath>
-    </Reference>
     <Reference Include="Sprache">
       <HintPath>..\packages\Sprache.1.10.0.37\lib\net40\Sprache.dll</HintPath>
     </Reference>
@@ -81,6 +78,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -148,7 +148,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="ParticleForker_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -180,9 +179,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KVLib.dll" />
     <Content Include="Relocate_icon.ico" />
-    <Content Include="Sprache.dll" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="KVLib.dll">
