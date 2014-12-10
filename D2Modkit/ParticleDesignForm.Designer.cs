@@ -187,9 +187,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(13, 33);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(224, 26);
+            this.label8.Size = new System.Drawing.Size(225, 26);
             this.label8.TabIndex = 18;
-            this.label8.Text = "Use the slider to increase or decrease the size\r\nof the particle system.";
+            this.label8.Text = "Use the slider to increase or decrease the radii\r\nof the particle system.";
             // 
             // cancelButton
             // 

@@ -186,7 +186,7 @@ namespace D2ModKit
                 Ps.resize(ResizeValue);
             }
 
-            if (BaseName != "")
+            if (BaseName != "" && BaseName != null)
             {
                 Renamed = true;
                 Ps.rename(BaseName);
