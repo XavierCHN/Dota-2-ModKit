@@ -19,6 +19,14 @@ namespace D2ModKit
             set { newAddonName = value; }
         }
 
+        private string temp;
+
+        public string Temp
+        {
+            get { return temp; }
+            set { temp = value; }
+        }
+
         public ForkBarebones(string newAddonName)
         {
             NewAddonName = newAddonName;
@@ -45,6 +53,13 @@ namespace D2ModKit
                 return;
             }
 
+            // delete the .zip since we don't need it anymore.
+            try
+            {
+                File.Delete(zipPath);
+            }
+            catch (IOException) { }
+
             rewriteBarebones(unZippedPath);
         }
 
@@ -54,6 +69,16 @@ namespace D2ModKit
 
             // first move the root directory.
             string newRoot = unZippedPath.Replace("barebones-source2", NewAddonName.ToLower());
+            if (Directory.Exists(newRoot))
+            {
+                try
+                {
+                    Directory.Delete(newRoot);
+                }
+                catch (IOException) { }
+            }
+
+            Temp = newRoot;
             try
             {
                 Directory.Move(unZippedPath, newRoot);

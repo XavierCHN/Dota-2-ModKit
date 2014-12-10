@@ -111,14 +111,6 @@ namespace D2ModKit
             set { currParticleSystem = value; }
         }
 
-        private ParticleRenameForm pRenameForm;
-
-        public ParticleRenameForm PRF
-        {
-            get { return pRenameForm; }
-            set { pRenameForm = value; }
-        }
-
         public MainForm()
         {
             InitializeComponent();
@@ -526,10 +518,10 @@ namespace D2ModKit
         /*
          * BAREBONES FORK CODE
          */
-
+        /*
         private BarebonesDLProgress barebonesDLProgressForm;
 
-        public BarebonesDLProgress BarebonesDLProgressForm
+        public BarebonesDLProgress BarebonesProgressForm
         {
             get { return barebonesDLProgressForm; }
             set { barebonesDLProgressForm = value; }
@@ -545,33 +537,19 @@ namespace D2ModKit
 
         private void downloadBarebones()
         {
-            MessageBox.Show("Preparing to download the latest version of Barebones. Download will start in 10 seconds.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            /*BarebonesDLProgressForm = new BarebonesDLProgress();
-            BarebonesDLProgressForm.Show();
-
             WebClient wc = new WebClient();
             string path = Path.Combine(Environment.CurrentDirectory, "barebones.zip");
+            // Delete barebones.zip if it exists in this dir.
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
             wc.DownloadProgressChanged += wc_DownloadProgressChanged;
             wc.DownloadFileCompleted += wc_DownloadFileCompleted;
-            wc.DownloadFileTaskAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"), path);*/
-            //rewriteBarebones(Path.Combine(Environment.CurrentDirectory, "barebones-source2"));
-            string modName = AddonForm._TextBox.Text;
-            ForkBarebones fork = new ForkBarebones(modName.ToLower());
-            string currLoc = Path.Combine(Environment.CurrentDirectory, modName.ToLower());
-            string game = Path.Combine(currLoc, "game", "dota_addons", modName.ToLower());
-            string content = Path.Combine(currLoc, "content", "dota_addons", modName.ToLower());
-
-            string newContent = Path.Combine(UGCPath, "content", "dota_addons", modName.ToLower());
-            string newGame = Path.Combine(UGCPath, "game", "dota_addons", modName.ToLower());
-            Directory.Move(game, newGame);
-            Directory.Move(content, newContent);
-
-            MessageBox.Show(modName.ToLower() + " has been successfully created.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Addon a = new Addon(newContent, newGame);
-            addons.Add(a);
-            setAddonNames();
-            selectCurrentAddon(a.Name);
-
+            wc.DownloadFileTaskAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"), path);
+            BarebonesProgressForm = new BarebonesDLProgress();
+            BarebonesProgressForm.ShowDialog();
         }
 
         private void forkAddon_Click(object sender, EventArgs e)
@@ -596,19 +574,45 @@ namespace D2ModKit
 
         void wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            BarebonesDLProgressForm.Close();
-            ForkBarebones fork = new ForkBarebones(AddonForm._TextBox.Text);
+            BarebonesProgressForm.Close();
+            string modName = AddonForm._TextBox.Text;
+            ForkBarebones fork = new ForkBarebones(modName);
+            string currLoc = Path.Combine(Environment.CurrentDirectory, modName.ToLower());
+            string game = Path.Combine(currLoc, "game", "dota_addons", modName.ToLower());
+            string content = Path.Combine(currLoc, "content", "dota_addons", modName.ToLower());
+
+            string newContent = Path.Combine(UGCPath, "content", "dota_addons", modName.ToLower());
+            string newGame = Path.Combine(UGCPath, "game", "dota_addons", modName.ToLower());
+            Directory.Move(game, newGame);
+            Directory.Move(content, newContent);
+
+            // we don't need this dir anymore.
+            if (Directory.Exists(fork.Temp))
+            {
+                try
+                {
+                    Directory.Delete(fork.Temp);
+                }
+                catch (IOException) { }
+            }
+
+            MessageBox.Show(modName.ToLower() + " has been successfully created.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Addon a = new Addon(newContent, newGame);
+            addons.Add(a);
+            setAddonNames();
+            selectCurrentAddon(a.Name);
+
         }
 
         void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            int currPercentage = BarebonesDLProgressForm.CurrentPercentage;
+            int currPercentage = BarebonesProgressForm.CurrentPercentage;
             int newPercentage = e.ProgressPercentage;
             if (newPercentage - currPercentage > 0)
             {
-                BarebonesDLProgressForm.BarebonesProgressBar.Increment(newPercentage - currPercentage);
+                BarebonesProgressForm.BarebonesProgressBar.Increment(newPercentage - currPercentage);
             }
-        }
+        }*/
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
@@ -624,12 +628,7 @@ namespace D2ModKit
                 pdf.Close();
                 return;
             }
-
             DialogResult r = pdf.ShowDialog();
-            if (!pdf.SubmitClicked)
-            {
-
-            }
         }
     }
 }

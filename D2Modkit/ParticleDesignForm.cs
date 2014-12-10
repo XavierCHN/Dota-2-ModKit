@@ -24,14 +24,6 @@ namespace D2ModKit
             set { renamed = value; }
         }
 
-        private ParticleRenameForm pRenameForm;
-
-        public ParticleRenameForm PRenameForm
-        {
-            get { return pRenameForm; }
-            set { pRenameForm = value; }
-        }
-
         private bool resized;
 
         public bool Resized
@@ -62,14 +54,6 @@ namespace D2ModKit
         {
             get { return colorPicked; }
             set { colorPicked = value; }
-        }
-
-        private ParticleResizeForm pResize;
-
-        public ParticleResizeForm PResize
-        {
-            get { return pResize; }
-            set { pResize = value; }
         }
 
         private int resizeValue;
@@ -114,12 +98,44 @@ namespace D2ModKit
                 return;
             }
             InitializeComponent();
+            initiate();
         }
         public ParticleDesignForm(ParticleSystem ps)
         {
             Ps = ps;
-
             InitializeComponent();
+            initiate();
+        }
+
+        private void initiate()
+        {
+            textBox1.TextChanged += textBox1_TextChanged;
+
+            resizeScrollBar.Scroll += resizeScrollBar_Scroll;
+            resizeScrollBar.Maximum = 200 + resizeScrollBar.LargeChange - 1;
+            resizeScrollBar.Minimum = -200;
+            resizeScrollBar.Value = 0;
+            sizeLabel.Text = "Size: +0%";
+        }
+
+        void resizeScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            ResizeValue = e.NewValue;
+            // modify the label at the bottom of the design form.
+            if (ResizeValue >= 0)
+            {
+                sizeLabel.Text = "Size: +" + ResizeValue + "%";
+            }
+            else
+            {
+                sizeLabel.Text = "Size: " + ResizeValue + "%";
+            }
+        }
+
+        void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            BaseName = textBox1.Text;
+            baseNameLabel.Text = "Base name: " + BaseName;
         }
 
         private void recolorButton_Click(object sender, EventArgs e)
@@ -137,56 +153,12 @@ namespace D2ModKit
                 rgb[1] = picked.G.ToString();
                 rgb[2] = picked.B.ToString();
                 Rgb = rgb;
+
                 // print a little label at the bottom of ParticleDesignForm.
                 string rgb_output = "R: " + Rgb[0] + " G: " + Rgb[1] + " B: " + Rgb[2];
                 colorLabel.Text = "Color: " + rgb_output;
                 colorPicked = true;
             }
-        }
-
-        private void resizeButton_Click(object sender, EventArgs e)
-        {
-            PResize = new ParticleResizeForm();
-            PResize.ShowDialog();
-            if (PResize.SubmitClicked)
-            {
-                ResizeValue = PResize.CurrValue;
-                // make the label at the bottom of the design form.
-                if (ResizeValue >= 0)
-                {
-                    sizeLabel.Text = "Size: +" + ResizeValue + "%";
-                }
-                else
-                {
-                    sizeLabel.Text = "Size: " + ResizeValue + "%";
-                }
-
-                Resized = true;
-            }
-        }
-
-        private void renameParticle_Click(object sender, EventArgs e)
-        {
-            // ensure we have a particle system to rename.
-            if (Ps == null)
-            {
-                return;
-            }
-
-            string[] paths = Ps.Paths;
-            PRenameForm = new ParticleRenameForm();
-            PRenameForm.Submit.Click += RenameSubmit_Click;
-            PRenameForm.ShowDialog();
-        }
-
-        void RenameSubmit_Click(object sender, EventArgs e)
-        {
-            PRenameForm.SubmitClicked = true;
-            PRenameForm.Close();
-            BaseName = PRenameForm.PTextBox.Text;
-            baseNameLabel.Text = "Base name: " + BaseName;
-            Renamed = true;
-
         }
 
         private void submitParticle_Click(object sender, EventArgs e)
@@ -207,12 +179,16 @@ namespace D2ModKit
                 string rgb_output = "R: " + Rgb[0] + " G: " + Rgb[1] + " B: " + Rgb[2];
                 output += "Changed color to: " + rgb_output + "\n\n";
             }
-            if (Resized)
+
+            if (ResizeValue != 0)
             {
+                Resized = true;
                 Ps.resize(ResizeValue);
             }
-            if (Renamed)
+
+            if (BaseName != "")
             {
+                Renamed = true;
                 Ps.rename(BaseName);
                 output += "Renamed particle system to: " + BaseName + "\n\n";
             }
@@ -224,18 +200,26 @@ namespace D2ModKit
                 output += i + ". " + p.Path + "\n\n";
             }
 
-            this.Close();
             output += "No errors detected.\n";
-            MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             if (Renamed)
             {
                 // open up a window to where the modified particles are.
                 Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
             }
+            // ending note and close form.
+            MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
 
             /*OutputForm o = new OutputForm();
             o.RTextBox.SelectedText = output;
             o.ShowDialog();*/
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            SubmitClicked = false;
+            this.Close();
         }
     }
 }
