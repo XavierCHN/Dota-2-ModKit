@@ -151,11 +151,21 @@ namespace D2ModKit
             {
                 itemEntries.Clear();
                 modifierItemEntries.Clear();
+
+                if (!File.Exists(itemCustomPath))
+                {
+                    return;
+                }
             }
             else
             {
                 AbilityEntries.Clear();
                 modifierAbilityEntries.Clear();
+
+                if (!File.Exists(abilitiesCustomPath))
+                {
+                    return;
+                }
             }
             //hiddenModifierEntries.Clear();
 
@@ -213,7 +223,7 @@ namespace D2ModKit
                                                 if (child3.Key == "IsHidden")
                                                 {
                                                     // Ensure it's actually hidden.
-                                                    Debug.WriteLine("IsHidden? " + child3.GetString());
+                                                    //Debug.WriteLine("IsHidden? " + child3.GetString());
                                                     if (child3.GetString() == "1")
                                                     {
                                                         isHidden = true;
@@ -271,6 +281,12 @@ namespace D2ModKit
         public void getHeroesTooltips()
         {
             heroesEntries.Clear();
+
+            if (!File.Exists(heroesCustomPath))
+            {
+                return;
+            }
+
             KeyValue[] heroesKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(heroesCustomPath));
             IEnumerable<KeyValue> children = heroesKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
@@ -296,6 +312,12 @@ namespace D2ModKit
         public void getUnitTooltips()
         {
             unitEntries.Clear();
+
+            if (!File.Exists(unitsCustomPath))
+            {
+                return;
+            }
+
             KeyValue[] unitsKeyVals = KVParser.ParseAllKVRootNodes(System.IO.File.ReadAllText(unitsCustomPath));
             IEnumerable<KeyValue> children = unitsKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
@@ -327,6 +349,7 @@ namespace D2ModKit
                 string file = langFiles.ElementAt(l);
 
                 string thisLang = file.Substring(file.LastIndexOf('\\') + 1);
+                string thisLangCopy = thisLang;
                 thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
                 string outputPath = Path.Combine(GamePath, "resource", "tooltips_" + thisLang);
 
@@ -356,7 +379,7 @@ namespace D2ModKit
                 string header =
                     "// **********************************************************************************************************************\n" +
                     "// This file contains generated tooltips created from the files in the scripts/npc directory of this mod.\n" +
-                    "// It does not contain tooltips already defined in addon_english.txt, nor modifiers with the property \"IsHidden\" \"1\".\n" +
+                    "// It does not contain tooltips already defined in " + thisLangCopy +", nor modifiers with the property \"IsHidden\" \"1\".\n" +
                     "// **********************************************************************************************************************\n";
                 System.IO.File.WriteAllText(outputPath, header, Encoding.Unicode);
 
