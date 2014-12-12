@@ -1,10 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace D2ModKit
 {
@@ -21,7 +21,7 @@ namespace D2ModKit
 
         private string ugcPath = "";
 
-        private bool hasSettings = false;
+        private bool hasSettings;
 
         private bool HasSettings
         {
@@ -114,7 +114,8 @@ namespace D2ModKit
             InitializeComponent();
             //sparkle = new Sparkle("");
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + " by Myll";
+            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version +
+                                " by Myll";
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -124,7 +125,8 @@ namespace D2ModKit
                 }
             }
 
-            if (HasSettings) {
+            if (HasSettings)
+            {
                 // and use that to find the game and content dirs.
                 getAddons();
             }
@@ -133,7 +135,6 @@ namespace D2ModKit
                 getUGCPath();
             }
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
-
         }
 
         private bool getUGCPath()
@@ -144,7 +145,9 @@ namespace D2ModKit
                 Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
                 try
                 {
-                    regKey = regKey.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 570");
+                    regKey =
+                        regKey.OpenSubKey(
+                            @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 570");
                     if (regKey != null)
                     {
                         string dir = regKey.GetValue("InstallLocation").ToString();
@@ -169,16 +172,14 @@ namespace D2ModKit
                     string ugc = ugcPath.Substring(ugcPath.LastIndexOf('\\') + 1);
                     if (ugc != "dota_ugc")
                     {
-                        DialogResult res = MessageBox.Show("That is not a path to your dota_ugc folder.", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Hand);
+                        DialogResult res = MessageBox.Show("That is not a path to your dota_ugc folder.", "Error",
+                            MessageBoxButtons.RetryCancel, MessageBoxIcon.Hand);
 
                         if (res == DialogResult.Retry)
                         {
                             continue;
                         }
-                        else
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
 
@@ -218,14 +219,16 @@ namespace D2ModKit
         {
             if (Properties.Settings.Default.UGCPath == "")
             {
-                MessageBox.Show("You need to select your dota_ugc path before you can use this.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("You need to select your dota_ugc path before you can use this.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
 
             if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "decompiled_particles")))
             {
-                MessageBox.Show("No decompiled_particles folder detected. Please place a decompiled_particles folder into the D2ModKit folder before proceding.", 
-                    "D2ModKit",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "No decompiled_particles folder detected. Please place a decompiled_particles folder into the D2ModKit folder before proceding.",
+                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -244,10 +247,11 @@ namespace D2ModKit
             string[] particlePaths = fileDialog.FileNames;
             FolderBrowserDialog browser = new FolderBrowserDialog();
             // let the user see the particles directory first.
-            string initialPath = Path.Combine(currAddon.ContentPath,"particles");
+            string initialPath = Path.Combine(currAddon.ContentPath, "particles");
             browser.SelectedPath = initialPath;
             browser.ShowNewFolderButton = true;
-            browser.Description = "Browse to where the particles will be copied to. They must be placed in the particles directory.";
+            browser.Description =
+                "Browse to where the particles will be copied to. They must be placed in the particles directory.";
             DialogResult browserResult = browser.ShowDialog();
 
             if (browserResult == DialogResult.Cancel)
@@ -267,7 +271,7 @@ namespace D2ModKit
 
                 try
                 {
-                    System.IO.File.Copy(path, targetPath);
+                    File.Copy(path, targetPath);
                 }
                 catch (IOException)
                 {
@@ -311,9 +315,9 @@ namespace D2ModKit
             for (int i = 0; i < ps.Particles.Count(); i++)
             {
                 Particle p = ps.Particles.ElementAt(i);
-                System.IO.File.WriteAllText(p.Path, p.ToString());
+                File.WriteAllText(p.Path, p.ToString());
             }
-            
+
             //MessageBox.Show("Particles have been successfully copied.",
             //    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -331,14 +335,15 @@ namespace D2ModKit
                     {
                         string[] dirs2 = Directory.GetDirectories(dota_addons);
                         foreach (string str2 in dirs2)
-	                    {
+                        {
                             // ensure both the game + content dirs exist for this mod.
                             Addon a = new Addon(str2);
                             a.ContentPath = Path.Combine(UGCPath, "content", "dota_addons", a.Name);
-                            if (isValidAddon(a)) {
+                            if (isValidAddon(a))
+                            {
                                 addons.Add(a);
                             }
-	                    }
+                        }
                     }
                 }
             }
@@ -351,11 +356,11 @@ namespace D2ModKit
             foreach (string name in AddonNames)
             {
                 ToolStripItem item = currentAddonDropDown.DropDownItems.Add(name);
-                item.Font = new Font("Calibri",13f, FontStyle.Bold, GraphicsUnit.Pixel);
+                item.Font = new Font("Calibri", 13f, FontStyle.Bold, GraphicsUnit.Pixel);
             }
         }
 
-        void currentAddonDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void currentAddonDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (AddonNames.Contains(e.ClickedItem.Text))
             {
@@ -391,7 +396,7 @@ namespace D2ModKit
             return false;
         }
 
-        void selectCurrentAddon(string addon)
+        private void selectCurrentAddon(string addon)
         {
             currAddon = getAddonFromName(addon);
             Properties.Settings.Default.CurrAddon = currAddon.Name;
@@ -399,7 +404,7 @@ namespace D2ModKit
             Debug.WriteLine("Current addon: " + currAddon.Name);
             currentAddonDropDown.Text = "Addon: " + currAddon.Name;
             //ApplicationAssembly.GetName().Version.ToString()
-            this.Text = "D2 ModKit - " + currAddon.Name;
+            Text = "D2 ModKit - " + currAddon.Name;
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)
@@ -413,7 +418,6 @@ namespace D2ModKit
             currAddon.writeTooltips();
         }
 
-       
 
         private void copyToFolder_Click(object sender, EventArgs e)
         {
@@ -434,15 +438,17 @@ namespace D2ModKit
             proc.StartInfo.FileName = @"C:\WINDOWS\system32\xcopy.exe";
             Debug.WriteLine("Content: " + currAddon.ContentPath);
             Debug.WriteLine("Path: " + currAddon.CopyPath);
-            proc.StartInfo.Arguments = "\"" + currAddon.ContentPath + "\" \"" + Path.Combine(currAddon.CopyPath, "content") + "\" /D /E /I /Y"; //@"C:\source C:\destination /E /I";
+            proc.StartInfo.Arguments = "\"" + currAddon.ContentPath + "\" \"" +
+                                       Path.Combine(currAddon.CopyPath, "content") + "\" /D /E /I /Y";
+            //@"C:\source C:\destination /E /I";
             proc.Start();
-            proc.StartInfo.Arguments = "\"" + currAddon.GamePath + "\" \"" + Path.Combine(currAddon.CopyPath, "game") + "\" /D /E /I /Y";
+            proc.StartInfo.Arguments = "\"" + currAddon.GamePath + "\" \"" + Path.Combine(currAddon.CopyPath, "game") +
+                                       "\" /D /E /I /Y";
             proc.Start();
             //proc.Close();
 
             //DialogResult r2 = MessageBox.Show("Would you like this addon to copy to this location everytime the \"Copy To Folder\" button is clicked?", "D2ModKit",
             //    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
         }
 
         private void gameDir_Click(object sender, EventArgs e)
@@ -457,7 +463,6 @@ namespace D2ModKit
 
         private void checkForUpdates_Click(object sender, EventArgs e)
         {
-
         }
 
         private void diff_Click(object sender, EventArgs e)
@@ -486,7 +491,9 @@ namespace D2ModKit
 
         private string promptForD2Extract()
         {
-            MessageBox.Show("Please enter the path to your extracted Dota 2 contents (ex. Extracted Dota 2 from GCFScape))", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            MessageBox.Show(
+                "Please enter the path to your extracted Dota 2 contents (ex. Extracted Dota 2 from GCFScape))",
+                "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             FolderBrowserDialog fd = new FolderBrowserDialog();
             fd.Description = "Enter the path to your extracted Dota 2 contents (Top-most level)";
             DialogResult res = fd.ShowDialog();
@@ -507,7 +514,6 @@ namespace D2ModKit
                 extract = promptForD2Extract();
                 if (extract == null)
                 {
-                    return;
                 }
             }
         }
@@ -614,7 +620,6 @@ namespace D2ModKit
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
-
         }
 
         private void particleDesigner_Click(object sender, EventArgs e)
@@ -627,6 +632,15 @@ namespace D2ModKit
                 return;
             }
             DialogResult r = pdf.ShowDialog();
+        }
+
+        private void generateWiki_Click(object sender, EventArgs e)
+        {
+            List<string> langPaths = currAddon.getAddonLangPaths();
+            for (int i = 0; i < langPaths.Count(); i++)
+            {
+                WikiGeneration.Wiki wiki = new WikiGeneration.Wiki(currAddon, langPaths.ElementAt(i));
+            }
         }
     }
 }

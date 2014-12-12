@@ -100,6 +100,7 @@ namespace D2ModKit
             InitializeComponent();
             initiate();
         }
+
         public ParticleDesignForm(ParticleSystem ps)
         {
             Ps = ps;
@@ -118,7 +119,7 @@ namespace D2ModKit
             sizeLabel.Text = "Size: +0%";
         }
 
-        void resizeScrollBar_Scroll(object sender, ScrollEventArgs e)
+        private void resizeScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
             ResizeValue = e.NewValue;
             // modify the label at the bottom of the design form.
@@ -132,7 +133,7 @@ namespace D2ModKit
             }
         }
 
-        void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
             BaseName = textBox1.Text;
             baseNameLabel.Text = "Base name: " + BaseName;
@@ -208,7 +209,8 @@ namespace D2ModKit
                 Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
             }
             // ending note and close form.
-            MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             this.Close();
 
             /*OutputForm o = new OutputForm();

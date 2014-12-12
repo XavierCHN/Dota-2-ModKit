@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace D2ModKit
 {
@@ -31,7 +28,7 @@ namespace D2ModKit
         public string Path
         {
             get { return path; }
-            set 
+            set
             {
                 path = value;
                 name = path.Substring(path.LastIndexOf('\\') + 1);
@@ -41,16 +38,16 @@ namespace D2ModKit
         public Particle(string path)
         {
             Path = path;
-            ParticleArr = System.IO.File.ReadAllLines(path);
+            ParticleArr = File.ReadAllLines(path);
         }
 
         public bool copyToFolder(string folderName)
         {
             try
             {
-                System.IO.File.Copy(Path, folderName);
+                File.Copy(Path, folderName);
             }
-            // overwrite exception.
+                // overwrite exception.
             catch (IOException)
             {
                 return false;
@@ -78,10 +75,7 @@ namespace D2ModKit
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool fixChildRefs(string newFolder, string oldbase, string newbase)
@@ -107,10 +101,7 @@ namespace D2ModKit
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public string getRelativeFolderPath(string newFolder)
@@ -138,14 +129,15 @@ namespace D2ModKit
             for (int i = 0; i < ParticleArr.Count(); i++)
             {
                 string l = ParticleArr[i];
-                if (l.Contains("ColorMin") || l.Contains("ColorMax") || l.Contains("ConstantColor") || l.Contains("TintMin")
+                if (l.Contains("ColorMin") || l.Contains("ColorMax") || l.Contains("ConstantColor") ||
+                    l.Contains("TintMin")
                     || l.Contains("TintMax"))
                 {
                     string part1 = l.Substring(0, l.LastIndexOf('=') + 2);
                     string part2 = l.Substring(l.LastIndexOf('=') + 2);
                     part2 = part2.Replace("(", "");
                     part2 = part2.Replace(")", "");
-                    char[] dels = {',',' '};
+                    char[] dels = {',', ' '};
                     string[] nums = part2.Split(dels);
                     string lastNum = nums[3];
                     string newPart2 = "(" + " " + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + lastNum + " )";
@@ -153,6 +145,7 @@ namespace D2ModKit
                 }
             }
         }
+
         public void resize(int percentage)
         {
             for (int i = 0; i < ParticleArr.Count(); i++)
@@ -166,24 +159,22 @@ namespace D2ModKit
                     double d = Double.Parse(part2);
                     if (Double.IsNaN(d))
                     {
-                        continue;
                     }
                     else
                     {
                         // modify floats differently than ints.
                         if (l.Contains("m_f"))
                         {
-                            double newVal = d + (percentage / 100.0) * Math.Abs(d);
+                            double newVal = d + (percentage/100.0)*Math.Abs(d);
                             ParticleArr[i] = part1 + newVal;
                         }
                         else if (l.Contains("m_n"))
                         {
                             int _d = Convert.ToInt32(d);
-                            int newVal = _d + (percentage / 100) * Math.Abs(_d);
+                            int newVal = _d + (percentage/100)*Math.Abs(_d);
                             ParticleArr[i] = part1 + newVal;
                         }
                     }
-
                 }
             }
         }
@@ -201,7 +192,7 @@ namespace D2ModKit
         public void diff(Particle p2)
         {
             string[] arr2 = p2.ParticleArr;
-            Debug.WriteLine("Did not find these in " + this.Name);
+            Debug.WriteLine("Did not find these in " + Name);
             for (int j = 0; j < arr2.Count(); j++)
             {
                 string line = arr2[j];
@@ -219,6 +210,7 @@ namespace D2ModKit
                 }
             }
         }
+
         private bool containsTrimmed(string line)
         {
             for (int i = 0; i < ParticleArr.Count(); i++)
@@ -231,6 +223,5 @@ namespace D2ModKit
             }
             return false;
         }
-
     }
 }

@@ -1,9 +1,10 @@
-﻿using KVLib;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using KVLib;
 
 namespace D2ModKit
 {
@@ -34,6 +35,7 @@ namespace D2ModKit
             get { return abilityEntries; }
             set { abilityEntries = value; }
         }
+
         private List<string> particlePaths;
 
         private void getMorePaths()
@@ -122,7 +124,7 @@ namespace D2ModKit
 
         public string NPCPath
         {
-            get { return npcPath;  }
+            get { return npcPath; }
             set { npcPath = value; }
         }
 
@@ -138,7 +140,6 @@ namespace D2ModKit
             KeyValue[] addonEnglishKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(addonEnglishPath));
             for (int i = 0; i < addonEnglishKeyVals.Length; i++)
             {
-                
             }
         }
 
@@ -174,7 +175,16 @@ namespace D2ModKit
                 abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(ItemsCustomPath));
             }
 
-            IEnumerable<KeyValue> abilityNames = abilitiesCustomKeyVals[0].Children;
+            IEnumerable<KeyValue> abilityNames = null;
+            try
+            {
+                abilityNames = abilitiesCustomKeyVals[0].Children;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+
             for (int i = 0; i < abilityNames.Count(); i++)
             {
                 KeyValue ability = abilityNames.ElementAt(i);
@@ -183,10 +193,8 @@ namespace D2ModKit
                     continue;
                 }
                 // NOTE: can't have a blank comment (//) above the ability or else the Key will be blank.
-                //Debug.WriteLine("Abil modName: " + ability.Key);
                 if (ability.HasChildren)
                 {
-
                     IEnumerable<KeyValue> children = ability.Children;
                     // Find the abilityspecial stuff.
                     for (int j = 0; j < children.Count(); j++)
@@ -220,7 +228,6 @@ namespace D2ModKit
                                                 if (child3.Key == "IsHidden")
                                                 {
                                                     // Ensure it's actually hidden.
-                                                    //Debug.WriteLine("IsHidden? " + child3.GetString());
                                                     if (child3.GetString() == "1")
                                                     {
                                                         isHidden = true;
@@ -250,10 +257,6 @@ namespace D2ModKit
                                             {
                                                 modifierAbilityEntries.Add(new ModifierEntry(child2.Key));
                                             }
-                                        }
-                                        else
-                                        {
-                                            //hiddenModifierEntries.Add(new ModifierEntry(child2.Key));
                                         }
                                     }
                                 }
@@ -299,7 +302,6 @@ namespace D2ModKit
                         {
                             heroesEntries.Add(new HeroEntry(child2.GetString()));
                         }
-
                     }
                 }
             }
@@ -328,17 +330,7 @@ namespace D2ModKit
 
         public void writeTooltips()
         {
-            string[] resourceFiles = Directory.GetFiles(Path.Combine(GamePath, "resource"));
-            List<string> langFiles = new List<string>();
-
-            // only take the addon_language files
-            for (int i = 0; i < resourceFiles.Count(); i++)
-            {
-                if (resourceFiles[i].Contains("addon_") && resourceFiles[i].EndsWith(".txt"))
-                {
-                    langFiles.Add(resourceFiles[i]);
-                }
-            }
+            List<string> langFiles = getAddonLangPaths();
 
             for (int l = 0; l < langFiles.Count(); l++)
             {
@@ -353,7 +345,8 @@ namespace D2ModKit
 
                 KeyValue[] addon_lang = KVParser.ParseAllKVRootNodes(File.ReadAllText(file));
 
-                if (addon_lang.Count() > 0) {
+                if (addon_lang.Count() > 0)
+                {
                     IEnumerable<KeyValue> rootChildren = addon_lang[0].Children;
 
                     for (int k = 0; k < rootChildren.Count(); k++)
@@ -369,13 +362,14 @@ namespace D2ModKit
                             }
                         }
                     }
-                 }
+                }
 
                 // WriteAllText will clear the contents of this file first
                 string header =
                     "// **********************************************************************************************************************\n" +
                     "// This file contains generated tooltips created from the files in the scripts/npc directory of this mod.\n" +
-                    "// It does not contain tooltips already defined in " + thisLangCopy +", nor modifiers with the property \"IsHidden\" \"1\".\n" +
+                    "// It does not contain tooltips already defined in " + thisLangCopy +
+                    ", nor modifiers with the property \"IsHidden\" \"1\".\n" +
                     "// **********************************************************************************************************************\n";
                 File.WriteAllText(outputPath, header, Encoding.Unicode);
 
@@ -388,7 +382,6 @@ namespace D2ModKit
                     if (!alreadyHasKeys.Contains(hero.Name.Key.ToLower()))
                     {
                         File.AppendAllText(outputPath, hero.ToString(), Encoding.Unicode);
-
                     }
                 }
 
@@ -410,8 +403,7 @@ namespace D2ModKit
                     ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
-
+                        File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);
                     }
                 }
 
@@ -422,7 +414,7 @@ namespace D2ModKit
                     ModifierEntry mod = modifierItemEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);
                     }
                 }
 
@@ -433,7 +425,7 @@ namespace D2ModKit
                     AbilityEntry abil = abilityEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, abil.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, abil + "\n", Encoding.Unicode);
                     }
                 }
 
@@ -444,20 +436,9 @@ namespace D2ModKit
                     AbilityEntry item = itemEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, item.ToString() + "\n", Encoding.Unicode);
+                        File.AppendAllText(outputPath, item + "\n", Encoding.Unicode);
                     }
                 }
-
-                /*string head7 = "\n// ******************** HIDDEN MODIFIERS ********************\n";
-                File.AppendAllText(outputPath, head7, Encoding.Unicode);
-                for (int j = 0; j < hiddenModifierEntries.Count(); j++)
-                {
-                    ModifierEntry mod = hiddenModifierEntries.ElementAt(j);
-                    if (!alreadyHasKeys.Contains(mod.Name.Key))
-                    {
-                        File.AppendAllText(outputPath, mod.ToString() + "\n", Encoding.Unicode);
-                    }
-                }*/
 
                 // open the tooltips.txt in a text editor
                 Process.Start(outputPath);
@@ -465,6 +446,22 @@ namespace D2ModKit
                 //MessageBox.Show("Tooltips successfully generated in: " + Path.Combine(gamePath,"resource", "tooltips.txt"), "Success",
                 //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        public List<string> getAddonLangPaths()
+        {
+            string[] resourceFiles = Directory.GetFiles(Path.Combine(GamePath, "resource"));
+            List<string> langFiles = new List<string>();
+
+            // only take the addon_language files
+            for (int i = 0; i < resourceFiles.Count(); i++)
+            {
+                if (resourceFiles[i].Contains("addon_") && resourceFiles[i].EndsWith(".txt"))
+                {
+                    langFiles.Add(resourceFiles[i]);
+                }
+            }
+            return langFiles;
         }
     }
 }

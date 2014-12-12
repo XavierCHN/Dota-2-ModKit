@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace D2ModKit
 {
@@ -22,7 +19,8 @@ namespace D2ModKit
 
         public string[] Paths
         {
-            get {
+            get
+            {
                 string[] pa = new string[Particles.Count()];
                 for (int i = 0; i < Particles.Count(); i++)
                 {
@@ -78,6 +76,7 @@ namespace D2ModKit
                 p.fixChildRefs(newFolder);
             }
         }
+
         public void changeColor(string[] rgb)
         {
             for (int i = 0; i < Particles.Count(); i++)
@@ -86,6 +85,7 @@ namespace D2ModKit
                 p.changeColor(rgb);
             }
         }
+
         public void resize(int percentage)
         {
             for (int i = 0; i < Particles.Count(); i++)
@@ -113,11 +113,8 @@ namespace D2ModKit
                         found = true;
                         break;
                     }
-                    else
-                    {
-                        oldBase += reference[ptr];
-                        ptr++;
-                    }
+                    oldBase += reference[ptr];
+                    ptr++;
                 }
             }
 
@@ -143,7 +140,7 @@ namespace D2ModKit
                 string currName = p.Substring(p.LastIndexOf('\\') + 1);
                 string newName = currName.Replace(oldBase, newBase);
                 string newPath = Path.Combine(p.Substring(0, p.LastIndexOf('\\')), newName);
-                System.IO.File.Move(p, newPath);
+                File.Move(p, newPath);
                 Particles[i].Path = newPath;
                 Particles[i].fixChildRefs(newPath.Substring(0, newPath.LastIndexOf('\\')), oldBase, newBase);
             }

@@ -43,7 +43,9 @@ namespace D2ModKit
             {
                 ZipFile.ExtractToDirectory(zipPath, Environment.CurrentDirectory);
             }
-            catch (IOException) { }
+            catch (IOException)
+            {
+            }
 
             string unZippedPath = Path.Combine(Environment.CurrentDirectory, "barebones-source2");
             if (!Directory.Exists(unZippedPath))
@@ -56,7 +58,9 @@ namespace D2ModKit
             {
                 File.Delete(zipPath);
             }
-            catch (IOException) { }
+            catch (IOException)
+            {
+            }
 
             rewriteBarebones(unZippedPath);
         }
@@ -73,7 +77,9 @@ namespace D2ModKit
                 {
                     Directory.Delete(newRoot);
                 }
-                catch (IOException) { }
+                catch (IOException)
+                {
+                }
             }
 
             Temp = newRoot;
@@ -81,7 +87,9 @@ namespace D2ModKit
             {
                 Directory.Move(unZippedPath, newRoot);
             }
-            catch (IOException) { }
+            catch (IOException)
+            {
+            }
 
             // next modify subdirectory names.
             string[] dirs = Directory.GetDirectories(newRoot, "*barebones*", SearchOption.AllDirectories);
@@ -126,10 +134,8 @@ namespace D2ModKit
                 {
                     allFiles.Add(foundFiles[j]);
                 }
-
             }
             return allFiles;
         }
-
     }
 }

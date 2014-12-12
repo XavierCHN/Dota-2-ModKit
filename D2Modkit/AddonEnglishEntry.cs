@@ -25,7 +25,7 @@ namespace D2ModKit
             key = _key;
             val = _val;
         }
-        
+
         public override string ToString()
         {
             // determine amount of whitespace
@@ -69,6 +69,7 @@ namespace D2ModKit
             NumPairs = _numPairs;
         }
     }
+
     public class ModifierEntry : AddonEnglishEntry
     {
         private Pair name, description;
@@ -139,6 +140,7 @@ namespace D2ModKit
             get { return name; }
             set { name = value; }
         }
+
         public override string ToString()
         {
             string str = "";
@@ -154,7 +156,7 @@ namespace D2ModKit
 
         public UnitEntry(string _name)
         {
-             name = new Pair(_name, getVal(_name));
+            name = new Pair(_name, getVal(_name));
         }
 
         // tries to auto-generate the value
@@ -202,6 +204,7 @@ namespace D2ModKit
             get { return name; }
             set { name = value; }
         }
+
         public override string ToString()
         {
             return name.ToString();
@@ -309,7 +312,7 @@ namespace D2ModKit
             set { note0 = value; }
         }
 
-        public AbilityEntry(string _name, List<string> keys) : base(keys.Count()+1)
+        public AbilityEntry(string _name, List<string> keys) : base(keys.Count() + 1)
         {
             name = new Pair("DOTA_Tooltip_ability_" + _name, getVal(_name));
             description = new Pair(name.Key + "_Description", "");
@@ -410,5 +413,4 @@ namespace D2ModKit
             return str;
         }
     }
-
 }
