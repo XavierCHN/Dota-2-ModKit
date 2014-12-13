@@ -137,7 +137,7 @@ namespace D2ModKit
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
         }
 
-        private bool getUGCPath()
+        private void getUGCPath()
         {
             while (!HasSettings)
             {
@@ -183,7 +183,14 @@ namespace D2ModKit
                         {
                             continue;
                         }
-                        Environment.Exit(0);
+                        else
+                        {
+                            Environment.Exit(0);
+                        }
+                    }
+                    else
+                    {
+                        HasSettings = true;
                     }
                 }
 
@@ -192,10 +199,7 @@ namespace D2ModKit
 
                 // get the game and content dirs from the ugc path.
                 getAddons();
-                HasSettings = true;
-                return true;
             }
-            return false;
         }
 
         private string[] getRGB()
