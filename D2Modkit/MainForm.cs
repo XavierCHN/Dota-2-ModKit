@@ -153,9 +153,13 @@ namespace D2ModKit
                         string dir = regKey.GetValue("InstallLocation").ToString();
                         UGCPath = Path.Combine(dir, "dota_ugc");
                         Debug.WriteLine("Directory: " + dir);
+                        HasSettings = true;
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
+                { }
+
+                if (!HasSettings)
                 {
                     MessageBox.Show("Please select the path to your dota_ugc folder.", "D2ModKit", MessageBoxButtons.OK);
                     FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -179,7 +183,7 @@ namespace D2ModKit
                         {
                             continue;
                         }
-                        break;
+                        Environment.Exit(0);
                     }
                 }
 
@@ -634,13 +638,13 @@ namespace D2ModKit
             DialogResult r = pdf.ShowDialog();
         }
 
-        private void generateWiki_Click(object sender, EventArgs e)
+        /*private void generateWiki_Click(object sender, EventArgs e)
         {
             List<string> langPaths = currAddon.getAddonLangPaths();
             for (int i = 0; i < langPaths.Count(); i++)
             {
                 WikiGeneration.Wiki wiki = new WikiGeneration.Wiki(currAddon, langPaths.ElementAt(i));
             }
-        }
+        }*/
     }
 }
