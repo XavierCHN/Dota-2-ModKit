@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Relocate_icon.ico</ApplicationIcon>
+    <ApplicationIcon>D2ModKit.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>8541AE9F45C5B93E2DD4BF5ABCDC52C15AEB3FBF</ManifestCertificateThumbprint>
@@ -65,6 +65,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>D2ModKit.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KVLib">
@@ -168,6 +171,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="d2modkit.ico" />
     <Content Include="Relocate_icon.ico" />
   </ItemGroup>
   <ItemGroup>
