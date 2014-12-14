@@ -26,6 +26,7 @@ A GUI comprised of useful tools to help with Dota 2 modding.
 * Thanks to ToraxXx for decompiling all of the particles. https://github.com/toraxxx
 * Thanks to RoyAwesome for making KVLib, which allows easy parsing of Valve KV files. https://github.com/RoyAwesome
 * Thanks to Noya for giving me the idea of a Tooltips generator. https://github.com/MNoya
+* Thanks to penguinwizzard for doing the icon. https://github.com/Penguinwizzard
 
 ## Notes
 
