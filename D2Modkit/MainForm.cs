@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 
 namespace D2ModKit
@@ -114,7 +115,7 @@ namespace D2ModKit
             InitializeComponent();
             //sparkle = new Sparkle("");
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-            versionLabel.Text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version +
+            versionLabel.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version +
                                 " by Myll";
             if (Properties.Settings.Default.UGCPath != "")
             {
@@ -401,6 +402,7 @@ namespace D2ModKit
             {
                 return true;
             }
+            //Debug.WriteLine("Not valid addon.");
             return false;
         }
 
@@ -530,7 +532,7 @@ namespace D2ModKit
         /*
          * BAREBONES FORK CODE
          */
-        /*
+        
         private BarebonesDLProgress barebonesDLProgressForm;
 
         public BarebonesDLProgress BarebonesProgressForm
@@ -547,84 +549,68 @@ namespace D2ModKit
             set { addonForm = value; }
         }
 
-        private void downloadBarebones()
+        private void forkBarebones_Click(object sender, EventArgs e)
         {
-            WebClient wc = new WebClient();
-            string path = Path.Combine(Environment.CurrentDirectory, "barebones.zip");
-            // Delete barebones.zip if it exists in this dir.
-            if (File.Exists(path))
+            // ensure a "barebones" folder is in the current directory, and it has game and content in it.
+            string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
+            if (!Directory.Exists(barebonesDir))
             {
-                File.Delete(path);
+                MessageBox.Show("No 'barebones' directory found. Please download barebones from: https://github.com/bmddota/barebones " +
+                    "and move the 'game' and 'content' directories into a 'barebones' folder in the D2ModKit directory.",
+                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-            wc.DownloadFileCompleted += wc_DownloadFileCompleted;
-            wc.DownloadFileTaskAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"), path);
-            BarebonesProgressForm = new BarebonesDLProgress();
-            BarebonesProgressForm.ShowDialog();
-        }
+            if (Directory.Exists(barebonesDir))
+            {
+                if (!Directory.Exists(Path.Combine(barebonesDir, "game")) || !Directory.Exists(Path.Combine(barebonesDir, "content")))
+                {
+                    MessageBox.Show("Invalid structure in the 'barebones' directory. It must have a 'game' and 'content' folder.",
+                        "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
-        private void forkAddon_Click(object sender, EventArgs e)
-        {
+            // at this point we have a valid 'barebones' directory.
             AddonForm = new NewAddonForm();
             AddonForm.Submit.Click += NewAddonSubmit_Click;
             DialogResult res = AddonForm.ShowDialog();
-
-            if (res == DialogResult.Cancel && !AddonForm.SubmitClicked)
-            {
-                Debug.WriteLine("Returning.");
-                return;
-            }
         }
 
         void NewAddonSubmit_Click(object sender, EventArgs e)
         {
             AddonForm.SubmitClicked = true;
             AddonForm.Close();
-            downloadBarebones();
+            forkBarebones();
         }
 
-        void wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void forkBarebones()
         {
-            BarebonesProgressForm.Close();
             string modName = AddonForm._TextBox.Text;
             ForkBarebones fork = new ForkBarebones(modName);
-            string currLoc = Path.Combine(Environment.CurrentDirectory, modName.ToLower());
-            string game = Path.Combine(currLoc, "game", "dota_addons", modName.ToLower());
-            string content = Path.Combine(currLoc, "content", "dota_addons", modName.ToLower());
 
-            string newContent = Path.Combine(UGCPath, "content", "dota_addons", modName.ToLower());
-            string newGame = Path.Combine(UGCPath, "game", "dota_addons", modName.ToLower());
-            Directory.Move(game, newGame);
-            Directory.Move(content, newContent);
+            // now move the directories to their appropriate places.
+            string lower = modName.ToLower();
 
-            // we don't need this dir anymore.
-            if (Directory.Exists(fork.Temp))
-            {
-                try
-                {
-                    Directory.Delete(fork.Temp);
-                }
-                catch (IOException) { }
-            }
+            string newG = Path.Combine(UGCPath, "game", "dota_addons", lower);
+            string newC = Path.Combine(UGCPath, "content", "dota_addons", lower);
 
-            MessageBox.Show(modName.ToLower() + " has been successfully created.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Addon a = new Addon(newContent, newGame);
+            string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
+            string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
+            Directory.Move(game, newG);
+            Directory.Move(content, newC);
+            // delete the old dir now.
+            Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
+
+            Addon a = new Addon(newC, newG);
             addons.Add(a);
+            // redo the tooltip addon names.
             setAddonNames();
-            selectCurrentAddon(a.Name);
-
+            // make the active addon this one.
+            selectCurrentAddon(lower);
+            MessageBox.Show("The addon " + lower + " was successfully forked from Barebones.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
-
-        void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            int currPercentage = BarebonesProgressForm.CurrentPercentage;
-            int newPercentage = e.ProgressPercentage;
-            if (newPercentage - currPercentage > 0)
-            {
-                BarebonesProgressForm.BarebonesProgressBar.Increment(newPercentage - currPercentage);
-            }
-        }*/
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
@@ -640,6 +626,47 @@ namespace D2ModKit
                 return;
             }
             DialogResult r = pdf.ShowDialog();
+        }
+
+        /*private void removeAddon_Click(object sender, EventArgs e)
+        {
+            RemoveAddonForm raf = new RemoveAddonForm(addons, currAddon);
+            DialogResult r = raf.ShowDialog();
+            if (raf.SubmitClicked)
+            {
+                string a_name = raf.SelectedItem;
+                Addon a = getAddonFromName(a_name);
+            }
+        }*/
+
+        private void removeAddon_Click(object sender, EventArgs e)
+        {
+            DialogResult r = MessageBox.Show("Are you sure you want to delete '" + currAddon.Name + "'? " +
+                "This will permanently delete the 'content' and 'game' directories of this addon.",
+                "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (r == DialogResult.OK)
+            {
+                try
+                {
+                    Directory.Delete(currAddon.GamePath, true);
+                    Directory.Delete(currAddon.ContentPath, true);
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Could not delete this addon. Please close all programs that are using files related to this addon, " +
+                    "and all related Windows Explorer processes.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                addons.Remove(currAddon);
+                MessageBox.Show("The addon '" + currAddon.Name + "' was successfully removed.", 
+                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // reset currAddon.
+                selectCurrentAddon(addons[0].Name);
+                setAddonNames();
+            }
+
         }
 
         /*private void generateWiki_Click(object sender, EventArgs e)

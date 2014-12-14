@@ -78,12 +78,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddonEnglishEntry.cs" />
@@ -95,6 +97,12 @@
       <DependentUpon>BarebonesDLProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="ForkBarebones.cs" />
+    <Compile Include="NewAddonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewAddonForm.Designer.cs">
+      <DependentUpon>NewAddonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OutputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BarebonesDLProgress.resx">
       <DependentUpon>BarebonesDLProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewAddonForm.resx">
+      <DependentUpon>NewAddonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OutputForm.resx">
       <DependentUpon>OutputForm.cs</DependentUpon>
@@ -172,7 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="d2modkit.ico" />
-    <Content Include="Relocate_icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="KVLib.dll">

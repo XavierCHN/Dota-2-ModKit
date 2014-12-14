@@ -28,71 +28,20 @@ namespace D2ModKit
         public ForkBarebones(string newAddonName)
         {
             NewAddonName = newAddonName;
-            unzipBarebones();
+            fork();
         }
 
-        private void unzipBarebones()
+        private void fork()
         {
-            string zipPath = Path.Combine(Environment.CurrentDirectory, "barebones.zip");
-            if (!File.Exists(zipPath))
-            {
-                return;
-            }
-            string extractPath = Path.Combine(Environment.CurrentDirectory);
-            try
-            {
-                ZipFile.ExtractToDirectory(zipPath, Environment.CurrentDirectory);
-            }
-            catch (IOException)
-            {
-            }
+            // we assume we have a valid 'barebones' dir with 'game' and 'content' due to our checks earlier.
 
-            string unZippedPath = Path.Combine(Environment.CurrentDirectory, "barebones-source2");
-            if (!Directory.Exists(unZippedPath))
-            {
-                return;
-            }
-
-            // delete the .zip since we don't need it anymore.
-            try
-            {
-                File.Delete(zipPath);
-            }
-            catch (IOException)
-            {
-            }
-
-            rewriteBarebones(unZippedPath);
-        }
-
-        private void rewriteBarebones(string unZippedPath)
-        {
-            Debug.WriteLine("Rewriting barebones.");
-
-            // first move the root directory.
-            string newRoot = unZippedPath.Replace("barebones-source2", NewAddonName.ToLower());
-            if (Directory.Exists(newRoot))
-            {
-                try
-                {
-                    Directory.Delete(newRoot);
-                }
-                catch (IOException)
-                {
-                }
-            }
-
-            Temp = newRoot;
-            try
-            {
-                Directory.Move(unZippedPath, newRoot);
-            }
-            catch (IOException)
-            {
-            }
+            // first move the root dir.
+            string rootDir = Path.Combine(Environment.CurrentDirectory, "barebones");
+            string newRootDir = rootDir.Replace("barebones", NewAddonName.ToLower());
+            Directory.Move(rootDir, newRootDir);
 
             // next modify subdirectory names.
-            string[] dirs = Directory.GetDirectories(newRoot, "*barebones*", SearchOption.AllDirectories);
+            string[] dirs = Directory.GetDirectories(newRootDir, "*barebones*", SearchOption.AllDirectories);
             for (int i = 0; i < dirs.Count(); i++)
             {
                 string newDir = dirs[i].Replace("barebones", NewAddonName.ToLower());
@@ -100,10 +49,10 @@ namespace D2ModKit
             }
 
             // now modify the files.
-            List<string> files = getFiles(newRoot, "*.txt;*.lua");
+            List<string> files = getFiles(newRootDir, "*.txt;*.lua");
             for (int i = 0; i < files.Count(); i++)
             {
-                // let's change the file modName first, before modifying the contents.
+                // let's change the filename first, before modifying the contents.
                 string newFileName = files[i].Replace("barebones", NewAddonName.ToLower());
                 newFileName = newFileName.Replace("reflex", NewAddonName.ToLower());
 
@@ -113,11 +62,16 @@ namespace D2ModKit
                 string[] lines = File.ReadAllLines(files[i]);
                 for (int j = 0; j < lines.Count(); j++)
                 {
-                    lines[j] = lines[j].Replace("barebones", NewAddonName.ToLower());
-                    lines[j] = lines[j].Replace("BAREBONES", NewAddonName.ToUpper());
-                    lines[j] = lines[j].Replace("Barebones", NewAddonName);
-                    lines[j] = lines[j].Replace("BareBones", NewAddonName);
-                    lines[j] = lines[j].Replace("GameMode", NewAddonName + "GameMode");
+                    string l = lines[j];
+                    l = l.Replace("barebones", NewAddonName.ToLower());
+                    l = l.Replace("BAREBONES", NewAddonName.ToUpper());
+                    l = l.Replace("Barebones", NewAddonName);
+                    l = l.Replace("BareBones", NewAddonName);
+                    if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity"))
+                    {
+                        l = l.Replace("GameMode", NewAddonName + "Game");
+                    }
+                    lines[j] = l;
                 }
                 File.WriteAllLines(files[i], lines);
             }

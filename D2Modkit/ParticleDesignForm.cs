@@ -205,12 +205,17 @@ namespace D2ModKit
 
             if (Renamed)
             {
+                // display ending note.
+                MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 // open up a window to where the modified particles are.
                 Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
             }
-            // ending note and close form.
-            MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            else
+            {
+                MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            //close form.
             this.Close();
 
             /*OutputForm o = new OutputForm();
