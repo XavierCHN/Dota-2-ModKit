@@ -48,6 +48,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.particleDesigner = new System.Windows.Forms.Button();
             this.removeAddonButton = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
@@ -101,17 +102,17 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(331, 26);
+            this.toolStrip1.Size = new System.Drawing.Size(293, 26);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // currentAddonDropDown
             // 
             this.currentAddonDropDown.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.currentAddonDropDown.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.currentAddonDropDown.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentAddonDropDown.ForeColor = System.Drawing.Color.DarkBlue;
             this.currentAddonDropDown.Name = "currentAddonDropDown";
-            this.currentAddonDropDown.Size = new System.Drawing.Size(68, 23);
+            this.currentAddonDropDown.Size = new System.Drawing.Size(72, 23);
             this.currentAddonDropDown.Text = "Addon:";
             // 
             // toolStripDropDownButton1
@@ -136,7 +137,7 @@
             // versionLabel
             // 
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(13, 22);
+            this.versionLabel.Size = new System.Drawing.Size(13, 23);
             this.versionLabel.Text = "v";
             // 
             // newParticles
@@ -145,7 +146,7 @@
             this.newParticles.Location = new System.Drawing.Point(151, 50);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.newParticles.Name = "newParticles";
-            this.newParticles.Size = new System.Drawing.Size(171, 31);
+            this.newParticles.Size = new System.Drawing.Size(134, 40);
             this.newParticles.TabIndex = 8;
             this.newParticles.Text = "Fork Decompiled Particles";
             this.toolTip1.SetToolTip(this.newParticles, "Copy decompiled particles over to this addon, with the \r\noptions to change the pa" +
@@ -156,7 +157,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(12, 122);
+            this.button2.Location = new System.Drawing.Point(12, 157);
             this.button2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 29);
@@ -171,7 +172,6 @@
             this.toolTip1.AutoPopDelay = 10000;
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 100;
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // button1
             // 
@@ -218,9 +218,9 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(151, 87);
+            this.particleDesigner.Location = new System.Drawing.Point(151, 96);
             this.particleDesigner.Name = "particleDesigner";
-            this.particleDesigner.Size = new System.Drawing.Size(171, 29);
+            this.particleDesigner.Size = new System.Drawing.Size(134, 29);
             this.particleDesigner.TabIndex = 20;
             this.particleDesigner.Text = "Particle Designer";
             this.toolTip1.SetToolTip(this.particleDesigner, "Provides options to Re-color, Re-name, \r\nor Re-size a particle system.");
@@ -230,7 +230,7 @@
             // removeAddonButton
             // 
             this.removeAddonButton.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeAddonButton.Location = new System.Drawing.Point(11, 157);
+            this.removeAddonButton.Location = new System.Drawing.Point(12, 192);
             this.removeAddonButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.removeAddonButton.Name = "removeAddonButton";
             this.removeAddonButton.Size = new System.Drawing.Size(134, 29);
@@ -240,12 +240,26 @@
             this.removeAddonButton.UseVisualStyleBackColor = true;
             this.removeAddonButton.Click += new System.EventHandler(this.removeAddon_Click);
             // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(12, 122);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(134, 29);
+            this.button3.TabIndex = 22;
+            this.button3.Text = "Generate Wiki";
+            this.toolTip1.SetToolTip(this.button3, "Generates a wiki based on the scripts/npc files,\r\nfor each language defined in th" +
+        "is addon.\r\n");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.generateWiki_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(206, 28);
+            this.label1.Location = new System.Drawing.Point(189, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -256,7 +270,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(47, 28);
+            this.label2.Location = new System.Drawing.Point(55, 28);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 15;
@@ -277,7 +291,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(331, 194);
+            this.ClientSize = new System.Drawing.Size(293, 228);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.removeAddonButton);
             this.Controls.Add(this.particleDesigner);
             this.Controls.Add(this.button6);
@@ -323,6 +338,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem forkNewAddonFromBarebonesToolStripMenuItem;
         private System.Windows.Forms.Button removeAddonButton;
+        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -90,12 +90,6 @@
   <ItemGroup>
     <Compile Include="AddonEnglishEntry.cs" />
     <Compile Include="Addon.cs" />
-    <Compile Include="BarebonesDLProgress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BarebonesDLProgress.Designer.cs">
-      <DependentUpon>BarebonesDLProgress.cs</DependentUpon>
-    </Compile>
     <Compile Include="ForkBarebones.cs" />
     <Compile Include="NewAddonForm.cs">
       <SubType>Form</SubType>
@@ -125,9 +119,11 @@
     <Compile Include="ParticleSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="BarebonesDLProgress.resx">
-      <DependentUpon>BarebonesDLProgress.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="WikiGeneration\HeroesPage.cs" />
+    <Compile Include="WikiGeneration\ItemsPage.cs" />
+    <Compile Include="WikiGeneration\StartPage.cs" />
+    <Compile Include="WikiGeneration\UnitsPage.cs" />
+    <Compile Include="WikiGeneration\Wiki.cs" />
     <EmbeddedResource Include="NewAddonForm.resx">
       <DependentUpon>NewAddonForm.cs</DependentUpon>
     </EmbeddedResource>

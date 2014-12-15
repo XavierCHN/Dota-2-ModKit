@@ -412,7 +412,7 @@ namespace D2ModKit
             Properties.Settings.Default.CurrAddon = currAddon.Name;
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
-            currentAddonDropDown.Text = "Addon: " + currAddon.Name;
+            currentAddonDropDown.Text = currAddon.Name;
             //ApplicationAssembly.GetName().Version.ToString()
             Text = "D2 ModKit - " + currAddon.Name;
         }
@@ -532,14 +532,6 @@ namespace D2ModKit
         /*
          * BAREBONES FORK CODE
          */
-        
-        private BarebonesDLProgress barebonesDLProgressForm;
-
-        public BarebonesDLProgress BarebonesProgressForm
-        {
-            get { return barebonesDLProgressForm; }
-            set { barebonesDLProgressForm = value; }
-        }
 
         NewAddonForm addonForm;
 
@@ -612,10 +604,6 @@ namespace D2ModKit
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-        }
-
         private void particleDesigner_Click(object sender, EventArgs e)
         {
             ParticleDesignForm pdf = new ParticleDesignForm(currAddon);
@@ -627,17 +615,6 @@ namespace D2ModKit
             }
             DialogResult r = pdf.ShowDialog();
         }
-
-        /*private void removeAddon_Click(object sender, EventArgs e)
-        {
-            RemoveAddonForm raf = new RemoveAddonForm(addons, currAddon);
-            DialogResult r = raf.ShowDialog();
-            if (raf.SubmitClicked)
-            {
-                string a_name = raf.SelectedItem;
-                Addon a = getAddonFromName(a_name);
-            }
-        }*/
 
         private void removeAddon_Click(object sender, EventArgs e)
         {
@@ -669,13 +646,15 @@ namespace D2ModKit
 
         }
 
-        /*private void generateWiki_Click(object sender, EventArgs e)
+        private void generateWiki_Click(object sender, EventArgs e)
         {
             List<string> langPaths = currAddon.getAddonLangPaths();
             for (int i = 0; i < langPaths.Count(); i++)
             {
                 WikiGeneration.Wiki wiki = new WikiGeneration.Wiki(currAddon, langPaths.ElementAt(i));
             }
-        }*/
+            MessageBox.Show("Wikis for '" + currAddon.Name + "' have been successfully generated.",
+                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
