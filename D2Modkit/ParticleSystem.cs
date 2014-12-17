@@ -118,22 +118,10 @@ namespace D2ModKit
                 }
             }
 
-            // Old way of finding base name.
-            // the modName with the shortest chars will become the base.
-            /*string currBase = Particles[0].Name;
-            for (int i = 0; i < Particles.Count(); i++)
-            {
-                string p = Particles.ElementAt(i).Path;
-                string currName = p.Substring(p.LastIndexOf('\\') + 1);
-                if (currName.Length < currBase.Length)
-                {
-                    currBase = currName;
-                }
-            }*/
-            // remove the .vpcf from the base.
-            //currBase = currBase.Substring(0, currBase.Length - 5);
-
+            // ensure we don't include stuff after the period. (.vpcf)
+            oldBase = oldBase.Substring(0, oldBase.LastIndexOf('.'));
             Debug.WriteLine("Base: " + oldBase);
+
             for (int i = 0; i < Particles.Count(); i++)
             {
                 string p = Particles.ElementAt(i).Path;

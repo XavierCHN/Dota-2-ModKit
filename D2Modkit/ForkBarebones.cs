@@ -67,6 +67,9 @@ namespace D2ModKit
                     l = l.Replace("BAREBONES", NewAddonName.ToUpper());
                     l = l.Replace("Barebones", NewAddonName);
                     l = l.Replace("BareBones", NewAddonName);
+                    l = l.Replace("reflex", NewAddonName.ToLower());
+                    l = l.Replace("Reflex", NewAddonName);
+                    l = l.Replace("REFLEX", NewAddonName.ToUpper());
                     if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity"))
                     {
                         l = l.Replace("GameMode", NewAddonName + "Game");

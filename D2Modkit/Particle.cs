@@ -130,8 +130,11 @@ namespace D2ModKit
             {
                 string l = ParticleArr[i];
                 if (l.Contains("ColorMin") || l.Contains("ColorMax") || l.Contains("ConstantColor") ||
-                    l.Contains("TintMin")
-                    || l.Contains("TintMax"))
+                    l.Contains("ColorScale") ||
+                    l.Contains("ColorFade") ||
+                    l.Contains("TintMin") ||
+                    l.Contains("TintMax")
+                    )
                 {
                     string part1 = l.Substring(0, l.LastIndexOf('=') + 2);
                     string part2 = l.Substring(l.LastIndexOf('=') + 2);

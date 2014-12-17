@@ -655,6 +655,8 @@ namespace D2ModKit
             }
             MessageBox.Show("Wikis for '" + currAddon.Name + "' have been successfully generated.",
                     "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Process.Start(Environment.CurrentDirectory);
         }
     }
 }
