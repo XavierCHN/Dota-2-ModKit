@@ -119,7 +119,15 @@ namespace D2ModKit
             }
 
             // ensure we don't include stuff after the period. (.vpcf)
-            oldBase = oldBase.Substring(0, oldBase.LastIndexOf('.'));
+            if (oldBase.Contains('.'))
+            {
+                oldBase = oldBase.Substring(0, oldBase.LastIndexOf('.'));
+            }
+            // If the last char in oldBase is a _ we should not replace it for aesthetics.
+            /*if (oldBase[oldBase.Length - 1] == '_')
+            {
+                oldBase = oldBase.Substring(0, oldBase.Length - 1);
+            }*/
             Debug.WriteLine("Base: " + oldBase);
 
             for (int i = 0; i < Particles.Count(); i++)
