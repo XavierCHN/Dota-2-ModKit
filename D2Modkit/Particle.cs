@@ -35,6 +35,14 @@ namespace D2ModKit
             }
         }
 
+        private string relativeFolderPath;
+
+        public string RelativeFolderPath
+        {
+            get { return relativeFolderPath; }
+            set { relativeFolderPath = value; }
+        }
+
         public Particle(string path)
         {
             Path = path;
@@ -65,7 +73,7 @@ namespace D2ModKit
                 if (l.Contains("string m_ChildRef = "))
                 {
                     fix = true;
-                    string relativeFolderPath = getRelativeFolderPath(newFolder);
+                    relativeFolderPath = getRelativeFolderPath(newFolder);
                     string child = l.Substring(l.LastIndexOf('/') + 1);
                     string newRef = "string m_ChildRef = \"" + relativeFolderPath + child + "\n";
                     ParticleArr[j] = newRef;
@@ -91,7 +99,7 @@ namespace D2ModKit
                         l = l.Replace(oldbase, newbase);
                     }
                     fix = true;
-                    string relativeFolderPath = getRelativeFolderPath(newFolder);
+                    relativeFolderPath = getRelativeFolderPath(newFolder);
                     string child = l.Substring(l.LastIndexOf('/') + 1);
                     string newRef = "string m_ChildRef = \"" + relativeFolderPath + child + "\n";
                     ParticleArr[j] = newRef;
@@ -119,6 +127,33 @@ namespace D2ModKit
                 if (start)
                 {
                     relFolderPath += pathArr[k] + "/";
+                }
+            }
+            return relFolderPath;
+        }
+
+        public string getRelativePath()
+        {
+            //string newFolder = Path.Substring(Path.LastIndexOf('\\') + 1);
+            string[] pathArr = path.Split('\\');
+            string relFolderPath = "";
+            bool start = false;
+            // skip the last element because it's always a /
+            for (int k = 0; k < pathArr.Length; k++)
+            {
+
+                if (pathArr[k] == "particles")
+                {
+                    start = true;
+                }
+
+                if (start)
+                {
+                    relFolderPath += pathArr[k];
+                    if (k != pathArr.Length - 1)
+                    {
+                        relFolderPath += "/";
+                    }
                 }
             }
             return relFolderPath;

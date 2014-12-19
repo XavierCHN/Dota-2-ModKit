@@ -172,7 +172,7 @@ namespace D2ModKit
 
             SubmitClicked = true;
 
-            string output = "Particle Designer Output:\n";
+            string output = "Start of output.\n\n";
 
             if (ColorPicked)
             {
@@ -185,6 +185,16 @@ namespace D2ModKit
             {
                 Resized = true;
                 Ps.resize(ResizeValue);
+
+                if (ResizeValue >= 0)
+                {
+                    output += "Resized to: +" + ResizeValue + "%\n\n";
+                }
+                else
+                {
+                    output += "Resized to: " + ResizeValue + "%\n\n";
+                }
+
             }
 
             if (BaseName != "" && BaseName != null)
@@ -193,34 +203,42 @@ namespace D2ModKit
                 Ps.rename(BaseName);
                 output += "Renamed particle system to: " + BaseName + "\n\n";
             }
-            output += "New particle system:\n";
+            string relPath = "";
+            output += "******* Precache Information *******\n";
             for (int i = 0; i < Ps.Particles.Length; i++)
             {
                 Particle p = ps.Particles[i];
                 System.IO.File.WriteAllText(p.Path, p.ToString());
-                output += i + ". " + p.Path + "\n\n";
+                relPath = p.getRelativePath();
+                output += "PrecacheResource(\"particle\", \"" + relPath + "\", context)\n";
+                //output += i + ". " + p.Path + "\n\n";
             }
-
-            output += "No errors detected.\n";
+            output += "OR:\n";
+            //PrecacheResource("particle_folder", "particles/units/heroes/hero_enigma", context)
+            string justFolder = relPath.Substring(0, relPath.LastIndexOf('/'));
+            output += "PrecacheResource(\"particle_folder\", \"" + justFolder + "\", context)\n\n";
+            output += "******* End of Precache Information *******\n\n";
+            output += "No errors detected.\n\n";
+            output += "End of output.";
 
             if (Renamed)
             {
                 // display ending note.
-                MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // open up a window to where the modified particles are.
                 Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
             }
             else
             {
-                MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             //close form.
             this.Close();
 
-            /*OutputForm o = new OutputForm();
-            o.RTextBox.SelectedText = output;
-            o.ShowDialog();*/
+            OutputForm of = new OutputForm();
+            of.RTextBox.SelectedText = output;
+            of.ShowDialog();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
