@@ -58,5 +58,16 @@ namespace D2ModKit.Properties {
                 this["Dota2ExtractPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection AbilityTemplates {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["AbilityTemplates"]));
+            }
+            set {
+                this["AbilityTemplates"] = value;
+            }
+        }
     }
 }

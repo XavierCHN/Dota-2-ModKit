@@ -115,8 +115,7 @@ namespace D2ModKit
             InitializeComponent();
             //sparkle = new Sparkle("");
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-            versionLabel.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version +
-                                " by Myll";
+            versionLabel.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " by Myll";
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -194,6 +193,8 @@ namespace D2ModKit
                         HasSettings = true;
                     }
                 }
+
+                Properties.Settings.Default.AbilityTemplates = new System.Collections.Specialized.StringCollection();
 
                 Properties.Settings.Default.UGCPath = UGCPath;
                 Properties.Settings.Default.Save();
@@ -657,6 +658,12 @@ namespace D2ModKit
                     "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             Process.Start(Environment.CurrentDirectory);
+        }
+
+        private void templatesButton_Click(object sender, EventArgs e)
+        {
+            TemplatesForm tf = new TemplatesForm();
+            tf.Show();
         }
     }
 }
