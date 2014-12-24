@@ -25,9 +25,16 @@ namespace D2ModKit
         private List<AbilityEntry> itemEntries = new List<AbilityEntry>();
         private List<UnitEntry> unitEntries = new List<UnitEntry>();
         private List<HeroEntry> heroesEntries = new List<HeroEntry>();
-        private List<ModifierEntry> modifierItemEntries = new List<ModifierEntry>();
-        private List<ModifierEntry> modifierAbilityEntries = new List<ModifierEntry>();
-        private List<ModifierEntry> hiddenModifierEntries = new List<ModifierEntry>();
+        // HashSet ensures no duplicate modifier entries.
+        private HashSet<string> modifierItemKeys = new HashSet<string>();
+        private HashSet<string> modifierAbilityKeys = new HashSet<string>();
+        private HashSet<string> hiddenModifierKeys = new HashSet<string>();
+
+        //private List<ModifierEntry> modifierItemEntries = new List<ModifierEntry>();
+        //private List<ModifierEntry> modifierAbilityEntries = new List<ModifierEntry>();
+        //private List<ModifierEntry> hiddenModifierEntries = new List<ModifierEntry>();
+
+        // for storing the addon_language kvs
         private HashSet<string> alreadyHasKeys = new HashSet<string>();
 
         public List<AbilityEntry> AbilityEntries
@@ -137,7 +144,7 @@ namespace D2ModKit
         public void getCurrentAddonEnglish()
         {
             // Parse addon_english.txt KV
-            KeyValue[] addonEnglishKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(addonEnglishPath));
+            KeyValue[] addonEnglishKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(addonEnglishPath));
             for (int i = 0; i < addonEnglishKeyVals.Length; i++)
             {
             }
@@ -148,7 +155,7 @@ namespace D2ModKit
             if (items)
             {
                 itemEntries.Clear();
-                modifierItemEntries.Clear();
+                modifierItemKeys.Clear();
 
                 if (!File.Exists(itemCustomPath))
                 {
@@ -158,7 +165,7 @@ namespace D2ModKit
             else
             {
                 AbilityEntries.Clear();
-                modifierAbilityEntries.Clear();
+                modifierAbilityKeys.Clear();
 
                 if (!File.Exists(abilitiesCustomPath))
                 {
@@ -169,10 +176,10 @@ namespace D2ModKit
 
             // Parse abilities_custom.txt KV
 
-            KeyValue[] abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(AbilitiesCustomPath));
+            KeyValue[] abilitiesCustomKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(AbilitiesCustomPath));
             if (items)
             {
-                abilitiesCustomKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(ItemsCustomPath));
+                abilitiesCustomKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(ItemsCustomPath));
             }
 
             IEnumerable<KeyValue> abilityNames = null;
@@ -195,6 +202,9 @@ namespace D2ModKit
                 // NOTE: can't have a blank comment (//) above the ability or else the Key will be blank.
                 if (ability.HasChildren)
                 {
+                    // added will remain false if ability has no AbilitySpecials.
+                    bool added = false;
+
                     IEnumerable<KeyValue> children = ability.Children;
                     // Find the abilityspecial stuff.
                     for (int j = 0; j < children.Count(); j++)
@@ -251,12 +261,19 @@ namespace D2ModKit
                                         {
                                             if (items)
                                             {
-                                                modifierItemEntries.Add(new ModifierEntry(child2.Key));
+                                                if (!modifierItemKeys.Contains(child2.Key))
+                                                {
+                                                    modifierItemKeys.Add(child2.Key);
+                                                }
                                             }
                                             else
                                             {
-                                                modifierAbilityEntries.Add(new ModifierEntry(child2.Key));
+                                                if (!modifierAbilityKeys.Contains(child2.Key))
+                                                {
+                                                    modifierAbilityKeys.Add(child2.Key);
+                                                }
                                             }
+                                            added = true;
                                         }
                                     }
                                 }
@@ -268,10 +285,23 @@ namespace D2ModKit
                                     }
                                     else
                                     {
-                                        AbilityEntries.Add(new AbilityEntry(ability.Key, kvs));
+                                        abilityEntries.Add(new AbilityEntry(ability.Key, kvs));
                                     }
+                                    added = true;
                                 }
                             }
+                        }
+                    }
+                    // this ability has no AbilitySpecials.
+                    if (!added)
+                    {
+                        if (items)
+                        {
+                            itemEntries.Add(new AbilityEntry(ability.Key, null));
+                        }
+                        else
+                        {
+                            abilityEntries.Add(new AbilityEntry(ability.Key, null));
                         }
                     }
                 }
@@ -287,7 +317,7 @@ namespace D2ModKit
                 return;
             }
 
-            KeyValue[] heroesKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(heroesCustomPath));
+            KeyValue[] heroesKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(heroesCustomPath));
             IEnumerable<KeyValue> children = heroesKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
             {
@@ -316,7 +346,7 @@ namespace D2ModKit
                 return;
             }
 
-            KeyValue[] unitsKeyVals = KVParser.ParseAllKVRootNodes(File.ReadAllText(unitsCustomPath));
+            KeyValue[] unitsKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(unitsCustomPath));
             IEnumerable<KeyValue> children = unitsKeyVals[0].Children;
             for (int i = 0; i < children.Count(); i++)
             {
@@ -343,7 +373,7 @@ namespace D2ModKit
 
                 alreadyHasKeys.Clear();
 
-                KeyValue[] addon_lang = KVParser.ParseAllKVRootNodes(File.ReadAllText(file));
+                KeyValue[] addon_lang = KVParser.KV1.ParseAll(File.ReadAllText(file));
 
                 if (addon_lang.Count() > 0)
                 {
@@ -398,9 +428,9 @@ namespace D2ModKit
 
                 string head3 = "\n// ******************** ABILITY MODIFIERS ********************\n";
                 File.AppendAllText(outputPath, head3, Encoding.Unicode);
-                for (int i = 0; i < modifierAbilityEntries.Count(); i++)
+                for (int i = 0; i < modifierAbilityKeys.Count(); i++)
                 {
-                    ModifierEntry mod = modifierAbilityEntries.ElementAt(i);
+                    ModifierEntry mod = new ModifierEntry(modifierAbilityKeys.ElementAt(i));
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
                         File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);
@@ -409,9 +439,10 @@ namespace D2ModKit
 
                 string head6 = "\n// ******************** ITEM MODIFIERS ********************\n";
                 File.AppendAllText(outputPath, head6, Encoding.Unicode);
-                for (int i = 0; i < modifierItemEntries.Count(); i++)
+                for (int i = 0; i < modifierItemKeys.Count(); i++)
                 {
-                    ModifierEntry mod = modifierItemEntries.ElementAt(i);
+                    //ModifierEntry mod = modifierItemEntries.ElementAt(i);
+                    ModifierEntry mod = new ModifierEntry(modifierItemKeys.ElementAt(i));
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
                         File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);

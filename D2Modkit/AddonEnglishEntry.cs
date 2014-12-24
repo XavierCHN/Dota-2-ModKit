@@ -83,14 +83,17 @@ namespace D2ModKit
         public ModifierEntry(string _name)
         {
             // prevent modifier_modifier names
-            name = new Pair("DOTA_Tooltip_modifier_" + _name, getVal(_name));
-            if (_name.Length > 8)
+            name = new Pair("DOTA_Tooltip_" + _name, getVal(_name));
+
+            // Noya says modifier tooltips are like this DOTA_Tooltip_some_modifier
+            /*if (_name.Length > 8)
             {
                 if (_name.Substring(0, 8) == "modifier")
                 {
                     name = new Pair("DOTA_Tooltip_" + _name, getVal(_name));
                 }
-            }
+            }*/
+
             description = new Pair(name.Key + "_Description", "");
         }
 
@@ -312,18 +315,21 @@ namespace D2ModKit
             set { note0 = value; }
         }
 
-        public AbilityEntry(string _name, List<string> keys) : base(keys.Count() + 1)
+        public AbilityEntry(string _name, List<string> keys)
         {
             name = new Pair("DOTA_Tooltip_ability_" + _name, getVal(_name));
             description = new Pair(name.Key + "_Description", "");
             note0 = new Pair(name.Key + "_Note0", "");
             lore = new Pair(name.Key + "_Lore", "");
-            AbilitySpecials = new List<Pair>(keys.Count());
 
-            for (int i = 0; i < keys.Count(); i++)
+            if (keys != null)
             {
-                string abilSpecial = keys.ElementAt(i);
-                AbilitySpecials.Add(new Pair(name.Key + "_" + abilSpecial, getAbilSpecialVal(abilSpecial)));
+                AbilitySpecials = new List<Pair>(keys.Count());
+                for (int i = 0; i < keys.Count(); i++)
+                {
+                    string abilSpecial = keys.ElementAt(i);
+                    AbilitySpecials.Add(new Pair(name.Key + "_" + abilSpecial, getAbilSpecialVal(abilSpecial)));
+                }
             }
         }
 
