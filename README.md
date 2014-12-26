@@ -36,6 +36,7 @@ I hope you find every feature in D2ModKit intuitive and easy to use. I will outl
 * Thanks to [RoyAwesome](https://github.com/RoyAwesome) for making KVLib, which allows easy parsing of Valve KV files.
 * Thanks to [Noya](https://github.com/MNoya) for giving me the idea of a Tooltips generator.
 * Thanks to [penguinwizzard](https://github.com/Penguinwizzard) for doing the icon.
+* Thanks to [SebRut](https://github.com/sebrut) for ideas and C# tips.
 
 ## Notes
 
