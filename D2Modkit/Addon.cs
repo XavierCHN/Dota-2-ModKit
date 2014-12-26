@@ -30,10 +30,6 @@ namespace D2ModKit
         private HashSet<string> modifierAbilityKeys = new HashSet<string>();
         private HashSet<string> hiddenModifierKeys = new HashSet<string>();
 
-        //private List<ModifierEntry> modifierItemEntries = new List<ModifierEntry>();
-        //private List<ModifierEntry> modifierAbilityEntries = new List<ModifierEntry>();
-        //private List<ModifierEntry> hiddenModifierEntries = new List<ModifierEntry>();
-
         // for storing the addon_language kvs
         private HashSet<string> alreadyHasKeys = new HashSet<string>();
 

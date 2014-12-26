@@ -9,71 +9,104 @@ namespace D2ModKit
 {
     public partial class TemplatesForm : Form
     {
-        private string templatesDir;
-        private string[] lines;
-        private Dictionary<string, string> map = new Dictionary<string, string>();
-        private string currentTemplate;
+        private static string[] templateNames = 
+            { "ability", 
+              "item", 
+              "unit",
+              "hero",
+              "modifier",
+            };
+
+        private Template currentTemplate;
+        private Template.Entry currTemplateEntry;
+        private Dictionary<string, Template.Entry> currentMap;
+        private string keyBeingEdited = "";
+        private Dictionary<string, Template> templates = new Dictionary<string, Template>();
 
         public TemplatesForm()
         {
             InitializeComponent();
+
             // make the file structure if we don't have it.
             string dir = Path.Combine(Environment.CurrentDirectory, "Templates");
-            templatesDir = dir;
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            if (!File.Exists(Path.Combine(dir, "ability_templates.txt")))
-            {
-                File.Create(Path.Combine(dir, "ability_templates.txt")).Close();
-            }
 
-            if (!File.Exists(Path.Combine(dir, "item_templates.txt")))
+            for (int i = 0; i < templateNames.Length; i++)
             {
-                File.Create(Path.Combine(dir, "item_templates.txt")).Close();
-            }
-
-            if (!File.Exists(Path.Combine(dir, "unit_templates.txt")))
-            {
-                File.Create(Path.Combine(dir, "unit_templates.txt")).Close();
-            }
-
-            if (!File.Exists(Path.Combine(dir, "hero_templates.txt")))
-            {
-                File.Create(Path.Combine(dir, "hero_templates.txt")).Close();
+                templates.Add(templateNames[i], new Template(templateNames[i]));
             }
 
             copyLabel.Text = "";
 
             // set hooks
-            listBox1.SelectedValueChanged += listBox1_SelectedValueChanged;
+            listView1.ItemSelectionChanged += listView1_ItemSelectionChanged;
+            listView1.AfterLabelEdit += listView1_AfterLabelEdit;
+            this.FormClosing += TemplatesForm_FormClosing;
 
             // load the ability templates first
-            if (load("ability"))
-            {
+            load("ability");
+        }
 
-            }
-            else
-            {
+        private void load(string templateName)
+        {
+            currentTemplate = templates[templateName];
+            currentMap = currentTemplate.Map;
 
+            resetList();
+        }
+
+        void TemplatesForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // we need to rewrite the templates so changes are saved.
+            /*for (int i = 0; i < templates.Count; i++)
+            {
+                KeyValuePair<string, Template> t = templates.ElementAt(i);
+                t.Value.write();
+            }*/
+
+        }
+
+        private void rename()
+        {
+            if (listView1.SelectedItems.Count > 0 && keyBeingEdited == "")
+            {
+                keyBeingEdited = listView1.SelectedItems[0].Text;
+                listView1.SelectedItems[0].BeginEdit();
             }
         }
 
-        void listBox1_SelectedValueChanged(object sender, EventArgs e)
+        void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if (listBox1.SelectedItem == null)
+            // ensure the user didn't press the rename button and not rename it.
+            if (e.Label != null)
             {
-                return;
-            }
+                if (currentMap.ContainsKey(e.Label))
+                {
+                    keyBeingEdited = "";
+                    e.CancelEdit = true;
+                    return;
+                }
 
+                Template.Entry old = currentMap[keyBeingEdited];
+                Template.Entry entry = new Template.Entry(old.Key, old.Val);
+                currentMap.Add(e.Label, entry);
+                currentMap.Remove(old.Key);
+            }
+            keyBeingEdited = "";
+        }
+
+        void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
             copyLabel.Text = "";
 
-            string item = (string)listBox1.SelectedItem;
-            if (map.ContainsKey(item))
+            string item = e.Item.Text;
+            if (currentMap.ContainsKey(item))
             {
-                richTextBox1.Text = map[item];
-                currentTemplate = richTextBox1.Text;
+                richTextBox1.Text = currentMap[item].Val;
+                currTemplateEntry = currentMap[item];
             }
         }
 
@@ -109,76 +142,24 @@ namespace D2ModKit
             load("unit");
         }
 
-        private bool load(string template)
+        private void modifierTemplates_Click(object sender, EventArgs e)
         {
-            // expects template to be 'unit', 'ability', 'item', or 'hero'.
-            string fileName = template + "_templates.txt";
-            string path = Path.Combine(templatesDir, fileName);
-            try
-            {
-                lines = File.ReadAllLines(path);
-            }
-            catch (IOException)
-            {
-                // the user must have this file opened.
-                Debug.WriteLine("IOException");
-                return false;
-            }
-
-            map.Clear();
-
-            string content = "";
-            string templateName = "";
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("//+Template"))
-                {
-                    // save the current template.
-                    if (templateName != "" && content != "")
-                    {
-                        map.Add(templateName, content);
-                        templateName = "";
-                        content = "";
-                    }
-                    continue;
-                }
-
-                // Check if we're at the end of the file.
-                if (i == lines.Length - 1)
-                {
-                    content += lines[i];
-                    // save the current template.
-                    if (templateName != "" && content != "")
-                    {
-                        map.Add(templateName, content);
-                    }
-                    resetList();
-                    return true;
-                }
-
-                // check if the name has been defined yet.
-                if (templateName == "")
-                {
-                    templateName = lines[i];
-                    content += lines[i] + "\n";
-                    templateName = templateName.Replace("\"", "");
-                    templateName = templateName.Trim();
-                    continue;
-                }
-
-                content += lines[i] + "\n";
-
-            }
-            return true;
+            load("modifier");
         }
 
         private void resetList()
         {
-            listBox1.Items.Clear();
-            for (int i = 0; i < map.Count; i++)
+            listView1.Items.Clear();
+            for (int i = 0; i < currentMap.Count(); i++)
             {
-                KeyValuePair<string, string> entry = map.ElementAt(i);
-                listBox1.Items.Add(entry.Key);
+                KeyValuePair<string, Template.Entry> entry = currentMap.ElementAt(i);
+                listView1.Items.Add(entry.Key);
+            }
+            // Auto-select the first item.
+            if (listView1.Items.Count > 0)
+            {
+                listView1.Select();
+                listView1.Items[0].Selected = true;
             }
         }
 
@@ -189,18 +170,29 @@ namespace D2ModKit
 
         private void copyButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Clipboard.SetText(currentTemplate);
+            System.Windows.Forms.Clipboard.SetText(currTemplateEntry.Val);
             copyLabel.Text = "Template copied to\nthe clipboard.";
         }
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            Process.Start(templatesDir);
+            Process.Start(Path.Combine(Environment.CurrentDirectory, "Templates"));
         }
 
         private void closeButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        private void renameButton_Click(object sender, EventArgs e)
+        {
+            rename();
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rename();
+        }
+
     }
 }

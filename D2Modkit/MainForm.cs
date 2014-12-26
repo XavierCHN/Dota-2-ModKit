@@ -548,10 +548,22 @@ namespace D2ModKit
             string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
             if (!Directory.Exists(barebonesDir))
             {
-                MessageBox.Show("No 'barebones' directory found. Please download barebones from: https://github.com/bmddota/barebones " +
+                DialogResult res = MessageBox.Show("No 'barebones' directory found in the D2ModKit folder. Download barebones?",
+                    "D2ModKit",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if (res != DialogResult.OK)
+                {
+                    return;
+                }
+
+                BarebonesDLForm dl = new BarebonesDLForm();
+                dl.ShowDialog();
+
+
+                /*MessageBox.Show("No 'barebones' directory found. Please download barebones from: https://github.com/bmddota/barebones " +
                     "and move the 'game' and 'content' directories into a 'barebones' folder in the D2ModKit directory.",
-                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
             }
 
             if (Directory.Exists(barebonesDir))
@@ -567,7 +579,7 @@ namespace D2ModKit
             // at this point we have a valid 'barebones' directory.
             AddonForm = new NewAddonForm();
             AddonForm.Submit.Click += NewAddonSubmit_Click;
-            DialogResult res = AddonForm.ShowDialog();
+            AddonForm.ShowDialog();
         }
 
         void NewAddonSubmit_Click(object sender, EventArgs e)
