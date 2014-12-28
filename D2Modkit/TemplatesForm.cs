@@ -46,6 +46,9 @@ namespace D2ModKit
             listView1.AfterLabelEdit += listView1_AfterLabelEdit;
             this.FormClosing += TemplatesForm_FormClosing;
 
+            // load the metadata
+
+
             // load the ability templates first
             load("ability");
         }
@@ -60,13 +63,20 @@ namespace D2ModKit
 
         void TemplatesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // we need to rewrite the templates so changes are saved.
-            /*for (int i = 0; i < templates.Count; i++)
+            // re-write the metadata file so the custom template info is saved.
+            string metadataPath = Path.Combine(Environment.CurrentDirectory, "Templates", "metadata.txt");
+            if (!File.Exists(metadataPath))
             {
-                KeyValuePair<string, Template> t = templates.ElementAt(i);
-                t.Value.write();
-            }*/
-
+                File.Create(metadataPath).Close();
+            }
+            
+            string str = "";
+            for (int i = 0; i < templates.Count; i++)
+            {
+                KeyValuePair<string, Template> kv = templates.ElementAt(i);
+                str += kv.Value.getData();
+            }
+            File.WriteAllText(metadataPath, str);
         }
 
         private void rename()
@@ -81,7 +91,7 @@ namespace D2ModKit
         void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             // ensure the user didn't press the rename button and not rename it.
-            if (e.Label != null)
+            if (e.Label != null && e.Label != "")
             {
                 if (currentMap.ContainsKey(e.Label))
                 {
@@ -93,7 +103,7 @@ namespace D2ModKit
                 Template.Entry old = currentMap[keyBeingEdited];
                 Template.Entry entry = new Template.Entry(old.Key, old.Val);
                 currentMap.Add(e.Label, entry);
-                currentMap.Remove(old.Key);
+                currentMap.Remove(keyBeingEdited);
             }
             keyBeingEdited = "";
         }

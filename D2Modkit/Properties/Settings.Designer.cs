@@ -61,12 +61,24 @@ namespace D2ModKit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection AbilityTemplates {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpdateRequired {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["AbilityTemplates"]));
+                return ((bool)(this["UpdateRequired"]));
             }
             set {
-                this["AbilityTemplates"] = value;
+                this["UpdateRequired"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection TemplateData {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["TemplateData"]));
+            }
+            set {
+                this["TemplateData"] = value;
             }
         }
     }

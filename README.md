@@ -11,7 +11,7 @@ A GUI comprised of useful tools to help with Dota 2 modding.
 * **Wiki Generator**. Generate wikis for your addon, for every language you've defined, based off the scripts/npc files. Currently incomplete.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
 
-![Alt text](http://i.imgur.com/XrRY5HO.png)
+![Alt text](http://i.imgur.com/2tYo5Qi.png)
 ![Alt text](http://i.imgur.com/Zerrlb3.png)
 
 ## Installation

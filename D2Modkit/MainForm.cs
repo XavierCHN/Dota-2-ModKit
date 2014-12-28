@@ -1,10 +1,12 @@
-﻿using System;
+﻿using D2ModKit.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace D2ModKit
@@ -112,10 +114,19 @@ namespace D2ModKit
 
         public MainForm()
         {
+            // Check for updates.
+            if (Settings.Default.UpdateRequired)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.UpdateRequired = false;
+                Settings.Default.Save();
+            }
+
             InitializeComponent();
-            //sparkle = new Sparkle("");
+
             currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
-            versionLabel.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " by Myll";
+
+            this.Text = "D2 ModKit - " + "v" + Assembly.GetExecutingAssembly().GetName().Version;
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -156,8 +167,7 @@ namespace D2ModKit
                         HasSettings = true;
                     }
                 }
-                catch (Exception)
-                { }
+                catch (Exception) { }
 
                 if (!HasSettings)
                 {
@@ -193,8 +203,6 @@ namespace D2ModKit
                         HasSettings = true;
                     }
                 }
-
-                Properties.Settings.Default.AbilityTemplates = new System.Collections.Specialized.StringCollection();
 
                 Properties.Settings.Default.UGCPath = UGCPath;
                 Properties.Settings.Default.Save();
@@ -236,12 +244,16 @@ namespace D2ModKit
 
             if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "decompiled_particles")))
             {
-                MessageBox.Show(
-                    "No decompiled_particles folder detected. Please place a decompiled_particles folder into the D2ModKit folder before proceding.",
-                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult result = MessageBox.Show(
+                    "No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
+                    "D2ModKit", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Yes)
+                {
+                    Process.Start("https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M");
+                }
                 return;
             }
-
 
             OpenFileDialog fileDialog = new OpenFileDialog();
             Debug.WriteLine("Current directory: " + Environment.CurrentDirectory);
@@ -283,16 +295,7 @@ namespace D2ModKit
                 {
                     File.Copy(path, targetPath);
                 }
-                catch (IOException)
-                {
-                    /*
-                    string warnMsg = "You are about to overwrite " + targetPath + ". Procede?";
-                    DialogResult result = MessageBox.Show(warnMsg, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (!result.Equals(DialogResult.Yes))
-                    {
-                        overwriteAllowed = false;
-                    }*/
-                }
+                catch (IOException) { }
 
                 if (overwriteAllowed)
                 {
@@ -327,9 +330,6 @@ namespace D2ModKit
                 Particle p = ps.Particles.ElementAt(i);
                 File.WriteAllText(p.Path, p.ToString());
             }
-
-            //MessageBox.Show("Particles have been successfully copied.",
-            //    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void getAddons()
@@ -403,7 +403,6 @@ namespace D2ModKit
             {
                 return true;
             }
-            //Debug.WriteLine("Not valid addon.");
             return false;
         }
 
@@ -414,14 +413,10 @@ namespace D2ModKit
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
             currentAddonDropDown.Text = currAddon.Name;
-            //ApplicationAssembly.GetName().Version.ToString()
-            Text = "D2 ModKit - " + currAddon.Name;
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)
         {
-            //first take the existing addon_english and store the keys and values, so we don't override the ones already defined.
-            //currAddon.getCurrentAddonEnglish();
             currAddon.getAbilityTooltips(false);
             currAddon.getAbilityTooltips(true);
             currAddon.getUnitTooltips();
@@ -449,17 +444,10 @@ namespace D2ModKit
             proc.StartInfo.FileName = @"C:\WINDOWS\system32\xcopy.exe";
             Debug.WriteLine("Content: " + currAddon.ContentPath);
             Debug.WriteLine("Path: " + currAddon.CopyPath);
-            proc.StartInfo.Arguments = "\"" + currAddon.ContentPath + "\" \"" +
-                                       Path.Combine(currAddon.CopyPath, "content") + "\" /D /E /I /Y";
-            //@"C:\source C:\destination /E /I";
+            proc.StartInfo.Arguments = "\"" + currAddon.ContentPath + "\" \"" + Path.Combine(currAddon.CopyPath, "content") + "\" /D /E /I /Y";
             proc.Start();
-            proc.StartInfo.Arguments = "\"" + currAddon.GamePath + "\" \"" + Path.Combine(currAddon.CopyPath, "game") +
-                                       "\" /D /E /I /Y";
+            proc.StartInfo.Arguments = "\"" + currAddon.GamePath + "\" \"" + Path.Combine(currAddon.CopyPath, "game") + "\" /D /E /I /Y";
             proc.Start();
-            //proc.Close();
-
-            //DialogResult r2 = MessageBox.Show("Would you like this addon to copy to this location everytime the \"Copy To Folder\" button is clicked?", "D2ModKit",
-            //    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
         private void gameDir_Click(object sender, EventArgs e)
@@ -517,19 +505,6 @@ namespace D2ModKit
             return null;
         }
 
-        private void overrideSounds_Click(object sender, EventArgs e)
-        {
-            string extract = Properties.Settings.Default.Dota2ExtractPath;
-            if (extract == "")
-            {
-                extract = promptForD2Extract();
-                if (extract == null)
-                {
-                }
-            }
-        }
-
-
         /*
          * BAREBONES FORK CODE
          */
@@ -559,11 +534,6 @@ namespace D2ModKit
 
                 BarebonesDLForm dl = new BarebonesDLForm();
                 dl.ShowDialog();
-
-
-                /*MessageBox.Show("No 'barebones' directory found. Please download barebones from: https://github.com/bmddota/barebones " +
-                    "and move the 'game' and 'content' directories into a 'barebones' folder in the D2ModKit directory.",
-                    "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
             }
 
             if (Directory.Exists(barebonesDir))
@@ -674,8 +644,35 @@ namespace D2ModKit
 
         private void templatesButton_Click(object sender, EventArgs e)
         {
+            if (CheckOpened("Templates"))
+            {
+                return;
+            }
             TemplatesForm tf = new TemplatesForm();
             tf.Show();
         }
+
+        // check if form is already opened.
+        private bool CheckOpened(string name)
+        {
+            FormCollection fc = Application.OpenForms;
+
+            foreach (Form frm in fc)
+            {
+                if (frm.Text == name)
+                {
+                    frm.BringToFront();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void aboutButton_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
+
     }
 }

@@ -72,7 +72,7 @@ namespace D2ModKit
                     l = l.Replace("REFLEX", NewAddonName.ToUpper());
                     if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity"))
                     {
-                        l = l.Replace("GameMode", NewAddonName + "Game");
+                        l = l.Replace("GameMode", NewAddonName);
                     }
                     lines[j] = l;
                 }

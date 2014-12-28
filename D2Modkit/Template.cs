@@ -21,13 +21,6 @@ namespace D2ModKit
                 get { return key; }
                 set { key = value; }
             }
-            /*private string originalName;
-
-            public string OriginalName
-            {
-                get { return originalName; }
-                set { originalName = value; }
-            }*/
 
             private string val;
 
@@ -70,6 +63,56 @@ namespace D2ModKit
             }
 
             load();
+            getMetaData();
+        }
+
+        private void getMetaData()
+        {
+            string metadataPath = Path.Combine(Environment.CurrentDirectory, "Templates", "metadata.txt");
+            if (!File.Exists(metadataPath))
+            {
+                // no metadata, so return.
+                return;
+            }
+            string[] lines = File.ReadAllLines(metadataPath);
+            bool found = false;
+            string baseName = "";
+            string customName = "";
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                line = line.Trim();
+                if (line.Contains(name))
+                {
+                    found = true;
+                    continue;
+                }
+                if (found)
+                {
+                    if (line.Contains("TEMPLATE") || i == lines.Length-1)
+                    {
+                        // we got all the info.
+                        break;
+                    }
+
+                    if (line.Contains("BaseName="))
+                    {
+                        baseName = line.Substring(line.LastIndexOf('=') + 1);
+                    }
+                    else if (line.Contains("CustomName="))
+                    {
+                        customName = line.Substring(line.LastIndexOf('=') + 1);
+
+                        // this is also the end of the entry.
+                        if (baseName != customName)
+                        {
+                            Entry val = map[baseName];
+                            map.Remove(baseName);
+                            map.Add(customName, val);
+                        }
+                    }
+                }
+            }
         }
 
         private bool load()
@@ -134,7 +177,7 @@ namespace D2ModKit
 
         internal void write()
         {
-            string str = "";
+            string str = "*TEMPLATE*\n";
             for (int i = 0; i < map.Count; i++)
             {
                 KeyValuePair<string, Entry> kv = map.ElementAt(i);
@@ -146,6 +189,21 @@ namespace D2ModKit
                 str += e.Val + "\n";
             }
             File.WriteAllText(path, str);
+        }
+
+        internal string getData()
+        {
+            string str = "TEMPLATE: ";
+            str += this.name + "\n\n";
+            for (int i = 0; i < map.Count; i++)
+            {
+                KeyValuePair<string, Entry> kv = map.ElementAt(i);
+                str += "BaseName=" + kv.Value.Key + "\n";
+                str += "CustomName=" + kv.Key + "\n";
+                str += "\n";
+                //kv.Value.
+            }
+            return str;
         }
     }
 }
