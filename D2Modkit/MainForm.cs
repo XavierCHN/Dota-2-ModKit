@@ -268,6 +268,8 @@ namespace D2ModKit
             }
             string[] particlePaths = fileDialog.FileNames;
             FolderBrowserDialog browser = new FolderBrowserDialog();
+            // RootFolder needs to be defined for auto-scrolling to work apparently.
+            browser.RootFolder = Environment.SpecialFolder.ProgramFilesX86;
             // let the user see the particles directory first.
             string initialPath = Path.Combine(currAddon.ContentPath, "particles");
             browser.SelectedPath = initialPath;
