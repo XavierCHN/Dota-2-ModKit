@@ -103,7 +103,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(292, 26);
+            this.toolStrip1.Size = new System.Drawing.Size(278, 26);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -158,10 +158,10 @@
             // newParticles
             // 
             this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(150, 48);
+            this.newParticles.Location = new System.Drawing.Point(143, 48);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.newParticles.Name = "newParticles";
-            this.newParticles.Size = new System.Drawing.Size(134, 29);
+            this.newParticles.Size = new System.Drawing.Size(127, 29);
             this.newParticles.TabIndex = 8;
             this.newParticles.Text = "&Fork Particles";
             this.toolTip1.SetToolTip(this.newParticles, "Copy decompiled particles over to this addon, with the \r\noptions to change the pa" +
@@ -175,7 +175,7 @@
             this.button2.Location = new System.Drawing.Point(11, 118);
             this.button2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 29);
+            this.button2.Size = new System.Drawing.Size(127, 29);
             this.button2.TabIndex = 10;
             this.button2.Text = "Copy To Folder";
             this.toolTip1.SetToolTip(this.button2, "Copies the game and content directories of this addon into a specified folder.");
@@ -194,7 +194,7 @@
             this.button1.Location = new System.Drawing.Point(11, 83);
             this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 29);
+            this.button1.Size = new System.Drawing.Size(127, 29);
             this.button1.TabIndex = 11;
             this.button1.Text = "Generate Tooltips";
             this.toolTip1.SetToolTip(this.button1, "Creates tooltips from the scripts\\npc files of this mod.");
@@ -210,7 +210,7 @@
             this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.Location = new System.Drawing.Point(11, 48);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(65, 29);
+            this.button5.Size = new System.Drawing.Size(62, 29);
             this.button5.TabIndex = 16;
             this.button5.Text = "&Game";
             this.toolTip1.SetToolTip(this.button5, "Go to this addon\'s game directory.");
@@ -221,9 +221,9 @@
             // 
             this.button6.BackColor = System.Drawing.SystemColors.Info;
             this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(80, 48);
+            this.button6.Location = new System.Drawing.Point(76, 48);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(65, 29);
+            this.button6.Size = new System.Drawing.Size(62, 29);
             this.button6.TabIndex = 17;
             this.button6.Text = "&Content";
             this.toolTip1.SetToolTip(this.button6, "Go to this addon\'s content directory.");
@@ -233,9 +233,9 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(150, 83);
+            this.particleDesigner.Location = new System.Drawing.Point(143, 83);
             this.particleDesigner.Name = "particleDesigner";
-            this.particleDesigner.Size = new System.Drawing.Size(134, 29);
+            this.particleDesigner.Size = new System.Drawing.Size(127, 29);
             this.particleDesigner.TabIndex = 20;
             this.particleDesigner.Text = "&Particle Designer";
             this.toolTip1.SetToolTip(this.particleDesigner, "Provides options to Re-color, Re-name, \r\nor Re-size a particle system.");
@@ -248,7 +248,7 @@
             this.removeAddonButton.Location = new System.Drawing.Point(11, 153);
             this.removeAddonButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.removeAddonButton.Name = "removeAddonButton";
-            this.removeAddonButton.Size = new System.Drawing.Size(134, 29);
+            this.removeAddonButton.Size = new System.Drawing.Size(127, 29);
             this.removeAddonButton.TabIndex = 21;
             this.removeAddonButton.Text = "Remove Addon";
             this.toolTip1.SetToolTip(this.removeAddonButton, "Deletes the game and content directories of this addon.");
@@ -260,7 +260,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(189, 26);
+            this.label1.Location = new System.Drawing.Point(172, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -271,7 +271,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(46, 26);
+            this.label2.Location = new System.Drawing.Point(45, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 15;
@@ -292,7 +292,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(292, 191);
+            this.ClientSize = new System.Drawing.Size(278, 190);
             this.Controls.Add(this.removeAddonButton);
             this.Controls.Add(this.particleDesigner);
             this.Controls.Add(this.button6);

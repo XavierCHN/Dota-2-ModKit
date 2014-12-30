@@ -51,11 +51,11 @@
             // 
             // recolorButton
             // 
-            this.recolorButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recolorButton.ForeColor = System.Drawing.Color.DarkViolet;
-            this.recolorButton.Location = new System.Drawing.Point(259, 12);
+            this.recolorButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recolorButton.ForeColor = System.Drawing.Color.DarkOrchid;
+            this.recolorButton.Location = new System.Drawing.Point(266, 12);
             this.recolorButton.Name = "recolorButton";
-            this.recolorButton.Size = new System.Drawing.Size(169, 75);
+            this.recolorButton.Size = new System.Drawing.Size(155, 67);
             this.recolorButton.TabIndex = 4;
             this.recolorButton.Text = "Re-Color Particle System";
             this.recolorButton.UseVisualStyleBackColor = true;
@@ -70,7 +70,7 @@
             // 
             this.submitParticle.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.submitParticle.ForeColor = System.Drawing.Color.Navy;
-            this.submitParticle.Location = new System.Drawing.Point(192, 260);
+            this.submitParticle.Location = new System.Drawing.Point(201, 248);
             this.submitParticle.Name = "submitParticle";
             this.submitParticle.Size = new System.Drawing.Size(94, 33);
             this.submitParticle.TabIndex = 7;
@@ -84,9 +84,9 @@
             this.colorLabel,
             this.baseNameLabel,
             this.sizeLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 296);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 287);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(441, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(433, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -194,7 +194,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(127, 260);
+            this.cancelButton.Location = new System.Drawing.Point(136, 248);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(59, 33);
             this.cancelButton.TabIndex = 19;
@@ -207,7 +207,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(441, 318);
+            this.ClientSize = new System.Drawing.Size(433, 309);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
