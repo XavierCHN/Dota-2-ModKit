@@ -114,6 +114,9 @@ namespace D2ModKit
 
         public MainForm()
         {
+            // Check if application is already running.
+            if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
+
             // Check for updates.
             if (Settings.Default.UpdateRequired)
             {

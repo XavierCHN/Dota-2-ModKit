@@ -51,11 +51,11 @@
             // 
             // recolorButton
             // 
-            this.recolorButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recolorButton.ForeColor = System.Drawing.Color.DarkOrchid;
-            this.recolorButton.Location = new System.Drawing.Point(266, 12);
+            this.recolorButton.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recolorButton.ForeColor = System.Drawing.Color.Indigo;
+            this.recolorButton.Location = new System.Drawing.Point(263, 12);
             this.recolorButton.Name = "recolorButton";
-            this.recolorButton.Size = new System.Drawing.Size(155, 67);
+            this.recolorButton.Size = new System.Drawing.Size(158, 67);
             this.recolorButton.TabIndex = 4;
             this.recolorButton.Text = "Re-Color Particle System";
             this.recolorButton.UseVisualStyleBackColor = true;

@@ -103,7 +103,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(278, 26);
+            this.toolStrip1.Size = new System.Drawing.Size(279, 26);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -292,7 +292,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(278, 190);
+            this.ClientSize = new System.Drawing.Size(279, 190);
             this.Controls.Add(this.removeAddonButton);
             this.Controls.Add(this.particleDesigner);
             this.Controls.Add(this.button6);
