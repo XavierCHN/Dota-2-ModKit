@@ -126,8 +126,7 @@ namespace D2ModKit
             }
 
             InitializeComponent();
-
-            currentAddonDropDown.DropDownItemClicked += currentAddonDropDown_DropDownItemClicked;
+            addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
 
             this.Text = "D2 ModKit - " + "v" + Assembly.GetExecutingAssembly().GetName().Version;
             if (Properties.Settings.Default.UGCPath != "")
@@ -149,6 +148,15 @@ namespace D2ModKit
                 getUGCPath();
             }
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
+        }
+
+        void addonDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string text = addonDropDown.GetItemText(addonDropDown.SelectedItem);
+            if (AddonNames.Contains(text))
+            {
+                selectCurrentAddon(text);
+            }
         }
 
         private void getUGCPath()
@@ -367,19 +375,10 @@ namespace D2ModKit
 
         private void setAddonNames()
         {
-            currentAddonDropDown.DropDownItems.Clear();
+            addonDropDown.Items.Clear();
             foreach (string name in AddonNames)
             {
-                ToolStripItem item = currentAddonDropDown.DropDownItems.Add(name);
-                item.Font = new Font("Calibri", 13f, FontStyle.Bold, GraphicsUnit.Pixel);
-            }
-        }
-
-        private void currentAddonDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            if (AddonNames.Contains(e.ClickedItem.Text))
-            {
-                selectCurrentAddon(e.ClickedItem.Text);
+                addonDropDown.Items.Add(name);
             }
         }
 
@@ -417,7 +416,7 @@ namespace D2ModKit
             Properties.Settings.Default.CurrAddon = currAddon.Name;
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
-            currentAddonDropDown.Text = currAddon.Name;
+            addonDropDown.Text = currAddon.Name;
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)

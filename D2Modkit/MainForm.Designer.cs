@@ -36,10 +36,7 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.currentAddonDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.templatesButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.forkNewAddonFromBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.newParticles = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -52,6 +49,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.addonDropDown = new System.Windows.Forms.ComboBox();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,25 +97,15 @@
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.currentAddonDropDown,
+            this.toolStripDropDownButton2,
             this.templatesButton,
-            this.toolStripDropDownButton1,
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(279, 26);
+            this.toolStrip1.Size = new System.Drawing.Size(280, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // currentAddonDropDown
-            // 
-            this.currentAddonDropDown.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.currentAddonDropDown.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentAddonDropDown.ForeColor = System.Drawing.Color.DarkBlue;
-            this.currentAddonDropDown.Name = "currentAddonDropDown";
-            this.currentAddonDropDown.Size = new System.Drawing.Size(72, 23);
-            this.currentAddonDropDown.Text = "Addon:";
             // 
             // templatesButton
             // 
@@ -122,28 +113,9 @@
             this.templatesButton.Image = ((System.Drawing.Image)(resources.GetObject("templatesButton.Image")));
             this.templatesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.templatesButton.Name = "templatesButton";
-            this.templatesButton.Size = new System.Drawing.Size(66, 23);
+            this.templatesButton.Size = new System.Drawing.Size(66, 22);
             this.templatesButton.Text = "Templates";
             this.templatesButton.Click += new System.EventHandler(this.templatesButton_Click);
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.forkNewAddonFromBarebonesToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(62, 23);
-            this.toolStripDropDownButton1.Text = "Options";
-            // 
-            // forkNewAddonFromBarebonesToolStripMenuItem
-            // 
-            this.forkNewAddonFromBarebonesToolStripMenuItem.Name = "forkNewAddonFromBarebonesToolStripMenuItem";
-            this.forkNewAddonFromBarebonesToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.forkNewAddonFromBarebonesToolStripMenuItem.Text = "Fork New Addon From Barebones";
-            this.forkNewAddonFromBarebonesToolStripMenuItem.ToolTipText = "Create a new addon based on BMD\'s Barebones.";
-            this.forkNewAddonFromBarebonesToolStripMenuItem.Click += new System.EventHandler(this.forkBarebones_Click);
             // 
             // toolStripButton2
             // 
@@ -151,14 +123,14 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(44, 23);
+            this.toolStripButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripButton2.Text = "About";
             this.toolStripButton2.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // newParticles
             // 
             this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(143, 48);
+            this.newParticles.Location = new System.Drawing.Point(143, 73);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.newParticles.Name = "newParticles";
             this.newParticles.Size = new System.Drawing.Size(127, 29);
@@ -172,7 +144,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(11, 118);
+            this.button2.Location = new System.Drawing.Point(11, 143);
             this.button2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 29);
@@ -191,7 +163,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(11, 83);
+            this.button1.Location = new System.Drawing.Point(11, 108);
             this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 29);
@@ -208,7 +180,7 @@
             this.button5.Cursor = System.Windows.Forms.Cursors.Default;
             this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(11, 48);
+            this.button5.Location = new System.Drawing.Point(11, 73);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(62, 29);
             this.button5.TabIndex = 16;
@@ -221,7 +193,7 @@
             // 
             this.button6.BackColor = System.Drawing.SystemColors.Info;
             this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(76, 48);
+            this.button6.Location = new System.Drawing.Point(76, 73);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(62, 29);
             this.button6.TabIndex = 17;
@@ -233,7 +205,7 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(143, 83);
+            this.particleDesigner.Location = new System.Drawing.Point(143, 108);
             this.particleDesigner.Name = "particleDesigner";
             this.particleDesigner.Size = new System.Drawing.Size(127, 29);
             this.particleDesigner.TabIndex = 20;
@@ -245,7 +217,7 @@
             // removeAddonButton
             // 
             this.removeAddonButton.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeAddonButton.Location = new System.Drawing.Point(11, 153);
+            this.removeAddonButton.Location = new System.Drawing.Point(11, 178);
             this.removeAddonButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.removeAddonButton.Name = "removeAddonButton";
             this.removeAddonButton.Size = new System.Drawing.Size(127, 29);
@@ -260,7 +232,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(172, 26);
+            this.label1.Location = new System.Drawing.Point(177, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -271,7 +243,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(45, 26);
+            this.label2.Location = new System.Drawing.Point(45, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 15;
@@ -286,13 +258,54 @@
             this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
             this.toolStripButton1.Text = "Update";
             // 
+            // addonDropDown
+            // 
+            this.addonDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.addonDropDown.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addonDropDown.FormattingEnabled = true;
+            this.addonDropDown.Location = new System.Drawing.Point(72, 23);
+            this.addonDropDown.Name = "addonDropDown";
+            this.addonDropDown.Size = new System.Drawing.Size(166, 26);
+            this.addonDropDown.TabIndex = 23;
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newAddonFromBarebonesToolStripMenuItem1});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
+            this.toolStripDropDownButton2.Text = "New";
+            // 
+            // newAddonFromBarebonesToolStripMenuItem1
+            // 
+            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
+            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
+            this.newAddonFromBarebonesToolStripMenuItem1.Text = "Addon From Barebones";
+            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label3.Location = new System.Drawing.Point(7, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 19);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Addon:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(279, 190);
+            this.ClientSize = new System.Drawing.Size(280, 217);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.addonDropDown);
             this.Controls.Add(this.removeAddonButton);
             this.Controls.Add(this.particleDesigner);
             this.Controls.Add(this.button6);
@@ -324,7 +337,6 @@
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Button newParticles;
-        private System.Windows.Forms.ToolStripDropDownButton currentAddonDropDown;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button1;
@@ -334,11 +346,13 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripSplitButton toolStripButton1;
         private System.Windows.Forms.Button particleDesigner;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem forkNewAddonFromBarebonesToolStripMenuItem;
         private System.Windows.Forms.Button removeAddonButton;
         private System.Windows.Forms.ToolStripButton templatesButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
+        private System.Windows.Forms.ToolStripMenuItem newAddonFromBarebonesToolStripMenuItem1;
+        private System.Windows.Forms.ComboBox addonDropDown;
+        private System.Windows.Forms.Label label3;
     }
 }
 

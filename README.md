@@ -3,16 +3,16 @@
 A GUI comprised of useful tools to help with Dota 2 modding.
 
 ## Features:
-* **Particle Forker**. Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
-  * **Easy Re-Coloring, Re-Naming, and Re-Sizing**. Color, rename, and/or resize whole particle systems at just the click of a button!
+* **Particle Forker & Designer**. Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
+  * Re-color, rename, and/or resize whole particle systems at just the click of a button!
 * **Tooltips Generator**. Parses all the files in the scripts\npc folder of your addon, and creates tooltips for abilities, items, modifiers, units, and heroes, which you can easily copy over to addon_english.txt or another language file.
 * **Templates**. Create templates for commonly used abilities, items, heroes, and units, which you can easily copy into your addon.
 * **Fork Addon From Barebones**. Create your own unique addon based off of BMD's Barebones (https://github.com/bmddota/barebones).
 * **Wiki Generator**. Generate wikis for your addon, for every language you've defined, based off the scripts/npc files. Currently incomplete.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
 
-![Alt text](http://i.imgur.com/2tYo5Qi.png)
-![Alt text](http://i.imgur.com/Zerrlb3.png)
+![Alt text](http://i.imgur.com/RDT7lnk.png)
+![Alt text](http://i.imgur.com/9fY29sS.png)
 
 ## Installation
 
