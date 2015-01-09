@@ -99,23 +99,32 @@ namespace D2ModKit
         public void rename(string newBase)
         {
             // Gets the current old base.
-            int ptr = 0;
             string reference = Particles[0].Name;
             string oldBase = "";
-            bool found = false;
-            while (!found)
+
+            while (reference.Length > 1)
             {
                 for (int i = 0; i < Particles.Length; i++)
                 {
                     string currStr = Particles[i].Name;
-                    if (ptr >= currStr.Length || currStr.ElementAt(ptr) != reference[ptr])
+                    if (!currStr.StartsWith(reference))
                     {
-                        found = true;
+                        reference = reference.Substring(0, reference.Length - 1);
+                        // start the whole for loop over again
                         break;
                     }
-                    oldBase += reference[ptr];
-                    ptr++;
+                    else if (i == Particles.Length - 1)
+                    {
+                        oldBase = reference;
+                        reference = ""; // stop the while loop
+                    }
                 }
+            }
+
+            // preserve the last _ if there is one.
+            if (oldBase[oldBase.Length - 1] == '_')
+            {
+                oldBase = oldBase.Substring(0, oldBase.Length - 1);
             }
 
             // ensure we don't include stuff after the period. (.vpcf)
