@@ -132,11 +132,6 @@ namespace D2ModKit
             {
                 oldBase = oldBase.Substring(0, oldBase.LastIndexOf('.'));
             }
-            // If the last char in oldBase is a _ we should not replace it for aesthetics.
-            /*if (oldBase[oldBase.Length - 1] == '_')
-            {
-                oldBase = oldBase.Substring(0, oldBase.Length - 1);
-            }*/
             Debug.WriteLine("Base: " + oldBase);
 
             for (int i = 0; i < Particles.Count(); i++)
@@ -145,6 +140,11 @@ namespace D2ModKit
                 string currName = p.Substring(p.LastIndexOf('\\') + 1);
                 string newName = currName.Replace(oldBase, newBase);
                 string newPath = Path.Combine(p.Substring(0, p.LastIndexOf('\\')), newName);
+                // overwrite particles.
+                if (File.Exists(newPath))
+                {
+                    File.Delete(newPath);
+                }
                 File.Move(p, newPath);
                 Particles[i].Path = newPath;
                 Particles[i].fixChildRefs(newPath.Substring(0, newPath.LastIndexOf('\\')), oldBase, newBase);

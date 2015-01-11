@@ -193,25 +193,28 @@ namespace D2ModKit
                 {
                     string part1 = l.Substring(0, l.LastIndexOf('=') + 2);
                     string part2 = l.Substring(l.LastIndexOf('=') + 2);
-
-                    double d = Double.Parse(part2);
-                    if (Double.IsNaN(d))
+                    double d = 0;
+                    try
                     {
+                        d = Double.Parse(part2);
                     }
-                    else
+                    catch (Exception)
                     {
-                        // modify floats differently than ints.
-                        if (l.Contains("m_f"))
-                        {
-                            double newVal = d + (percentage/100.0)*Math.Abs(d);
-                            ParticleArr[i] = part1 + newVal;
-                        }
-                        else if (l.Contains("m_n"))
-                        {
-                            int _d = Convert.ToInt32(d);
-                            int newVal = _d + (percentage/100)*Math.Abs(_d);
-                            ParticleArr[i] = part1 + newVal;
-                        }
+                        // couldn't parse this as a double.
+                        continue;
+                    }
+
+                    // modify floats differently than ints.
+                    if (l.Contains("m_f"))
+                    {
+                        double newVal = d + (percentage / 100.0) * Math.Abs(d);
+                        ParticleArr[i] = part1 + newVal;
+                    }
+                    else if (l.Contains("m_n"))
+                    {
+                        int _d = Convert.ToInt32(d);
+                        int newVal = _d + (percentage / 100) * Math.Abs(_d);
+                        ParticleArr[i] = part1 + newVal;
                     }
                 }
             }

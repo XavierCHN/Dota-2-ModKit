@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace D2ModKit
@@ -112,12 +113,16 @@ namespace D2ModKit
             set { currParticleSystem = value; }
         }
 
+        private string vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public MainForm()
         {
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
-            // Check for updates.
+
+
+            // Check for settings updates.
             if (Settings.Default.UpdateRequired)
             {
                 Settings.Default.Upgrade();
@@ -126,9 +131,15 @@ namespace D2ModKit
             }
 
             InitializeComponent();
+
+            ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
+            Console.WriteLine("In Main: Creating the Child thread");
+            Thread childThread = new Thread(childref);
+            childThread.Start();
+
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
 
-            this.Text = "D2 ModKit - " + "v" + Assembly.GetExecutingAssembly().GetName().Version;
+            this.Text = "D2 ModKit - " + "v" + vers;
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -148,6 +159,50 @@ namespace D2ModKit
                 getUGCPath();
             }
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
+        }
+
+        private void CheckForUpdatesThread()
+        {
+            Debug.WriteLine("Child thread starts");
+            // ghetto way of checking for new vers
+            string[] numStrings = vers.Split('.');
+            int hundreds = Int32.Parse(numStrings[0]) * 100;
+            int tens = Int32.Parse(numStrings[1]) * 10;
+            int ones = Int32.Parse(numStrings[2]);
+            int num = hundreds + tens + ones + 1;
+            Debug.WriteLine("new num: " + num);
+            int newHundreds = num / 100;
+            int newTens = (num - newHundreds * 100) / 10;
+            int newOnes = num - newHundreds * 100 - newTens * 10;
+            string newVers = newHundreds + "." + newTens + "." + newOnes;
+            Debug.WriteLine("New vers would be: " + newVers);
+            // check for a new version
+            string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+            url += newVers + "/D2ModKit.zip";
+
+            // remember to keep the version naming consistent!
+            // i.e. 1.3.8, 1.3.9, 1.4.0
+
+            WebClient wc = new WebClient();
+            try {
+                Byte[] responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
+                string source = System.Text.Encoding.ASCII.GetString(responseBytes);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("No new vers available.");
+                return;
+            }
+            DialogResult r = MessageBox.Show("Version " + vers + " of D2ModKit is now available. Would you like to update now?", "New version available",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (r == DialogResult.Yes)
+            {
+                // hide the mainform.
+                //this.Hide();
+                Debug.WriteLine("Url: " + url);
+                UpdateForm uf = new UpdateForm(url, newVers);
+                uf.ShowDialog();
+            }
         }
 
         void addonDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -676,6 +731,50 @@ namespace D2ModKit
         {
             AboutBox ab = new AboutBox();
             ab.ShowDialog();
+        }
+
+        /// <summary>
+        /// This method will check a url to see that it does not return server or protocol errors
+        /// </summary>
+        /// <param name="url">The path to check</param>
+        /// <returns></returns>
+        public bool isUrlValid(string url)
+        {
+            try
+            {
+                HttpWebRequest request = HttpWebRequest.Create(url) as HttpWebRequest;
+                request.Timeout = 5000; //set the timeout to 5 seconds to keep the user from waiting too long for the page to load
+                request.Method = "HEAD"; //Get only the header information -- no need to download any content
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode >= 100 && statusCode < 400) //Good requests
+                {
+                    return true;
+                }
+                else if (statusCode >= 500 && statusCode <= 510) //Server Errors
+                {
+                    Debug.WriteLine(String.Format("The remote server has thrown an internal error. Url is not valid: {0}", url));
+                    return false;
+                }
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError) //400 errors
+                {
+                    return false;
+                }
+                else
+                {
+                    Debug.WriteLine(String.Format("Unhandled status [{0}] returned for url: {1}", ex.Status, url), ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(String.Format("Could not test url {0}.", url), ex);
+            }
+            return false;
         }
 
     }

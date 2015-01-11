@@ -168,7 +168,6 @@ namespace D2ModKit
                     return;
                 }
             }
-            //hiddenModifierEntries.Clear();
 
             // Parse abilities_custom.txt KV
 
@@ -195,7 +194,6 @@ namespace D2ModKit
                 {
                     continue;
                 }
-                // NOTE: can't have a blank comment (//) above the ability or else the Key will be blank.
                 if (ability.HasChildren)
                 {
                     // added will remain false if ability has no AbilitySpecials.
@@ -453,6 +451,19 @@ namespace D2ModKit
                     if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
                     {
                         File.AppendAllText(outputPath, abil + "\n", Encoding.Unicode);
+                    }
+                    else
+                    {
+                        // the addon_language already has this ability. but let's check
+                        // if there are any new AbilitySpecials.
+                        foreach (Pair p in abil.AbilitySpecials)
+                        {
+                            if (!alreadyHasKeys.Contains(p.Key))
+                            {
+                                // the addon_language doesn't contain this abil special.
+
+                            }
+                        }
                     }
                 }
 
