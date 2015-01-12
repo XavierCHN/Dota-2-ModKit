@@ -458,12 +458,13 @@ namespace D2ModKit
                         // if there are any new AbilitySpecials.
                         foreach (Pair p in abil.AbilitySpecials)
                         {
-                            if (!alreadyHasKeys.Contains(p.Key))
+                            if (!alreadyHasKeys.Contains(p.Key.ToLower()))
                             {
                                 // the addon_language doesn't contain this abil special.
-
+                                File.AppendAllText(outputPath, p.ToString(), Encoding.Unicode);
                             }
                         }
+                        File.AppendAllText(outputPath, "\n", Encoding.Unicode);
                     }
                 }
 

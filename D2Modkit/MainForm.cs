@@ -113,6 +113,8 @@ namespace D2ModKit
             set { currParticleSystem = value; }
         }
 
+        private bool displayChangelog = false;
+
         private string vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public MainForm()
@@ -120,7 +122,8 @@ namespace D2ModKit
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
-
+            string changelog = vers + " Changelog:\n\n" +
+                "Tooltips generator now checks if an ability has new AbilitySpecials.\n";
 
             // Check for settings updates.
             if (Settings.Default.UpdateRequired)
@@ -128,15 +131,27 @@ namespace D2ModKit
                 Settings.Default.Upgrade();
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
+                displayChangelog = true;
             }
 
             InitializeComponent();
 
+            // check if changelog should be displayed.
+            if (displayChangelog)
+            {
+                OutputForm of = new OutputForm();
+                of.RTextBox.Text = changelog;
+                //of.RTextBox.SelectionFont
+                of.ShowDialog();
+            }
+
+            // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
             Console.WriteLine("In Main: Creating the Child thread");
             Thread childThread = new Thread(childref);
             childThread.Start();
 
+            // hook for when user selects a different addon.
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
 
             this.Text = "D2 ModKit - " + "v" + vers;
