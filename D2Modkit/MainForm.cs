@@ -195,6 +195,10 @@ namespace D2ModKit
             string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
             url += newVers + "/D2ModKit.zip";
 
+            // use these to test version updater.
+            //newVers = "1.3.2";
+            //url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v1.3.2/D2ModKit.zip";
+
             // remember to keep the version naming consistent!
             // i.e. 1.3.8, 1.3.9, 1.4.0
 

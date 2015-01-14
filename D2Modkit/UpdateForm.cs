@@ -38,18 +38,20 @@ namespace D2ModKit
 
         void wc_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            // delete the nested D2ModKit folder if it exists.
-            if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "D2ModKit")))
+            // delete the nested D2ModKit_temp folder if it exists.
+            if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp")))
             {
-                Directory.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit"), true);
+                Directory.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp"), true);
             }
 
             // extract it now
             string zipPath = Path.Combine(Environment.CurrentDirectory, "D2ModKit.zip");
-            ZipFile.ExtractToDirectory(zipPath, Environment.CurrentDirectory);
+            ZipFile.ExtractToDirectory(zipPath, Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp"));
+            //TODO: need to fix this. it's extracting the Templates directory, and gives an
+            // error if Templates directory already exists.
 
-            // move D2ModKit.exe over to the main folder.
-            string path = Path.Combine(Environment.CurrentDirectory, "D2ModKit", "D2ModKit.exe");
+            // get the new D2ModKit.exe.
+            string path = Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp", "D2ModKit.exe");
 
             // delete D2ModKit_new.exe if it exists.
             if (File.Exists(Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe")))
@@ -57,11 +59,12 @@ namespace D2ModKit
                 File.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe"));
             }
 
+            // move the new d2modkit.exe to the main folder, and rename it.
             File.Move(path, Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe"));
 
             //delete other (nested) D2ModKit folder.
             try {
-                Directory.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit"), true);
+                Directory.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp"), true);
                 // delete .zip
                 File.Delete(zipPath);
             }
@@ -88,7 +91,6 @@ namespace D2ModKit
                 sw.WriteLine("start d2modkit.exe");
                 sw.WriteLine("DEL /Q updater.bat");
             }
-            //this.Close();
             Process.Start(batPath);
         }
 
