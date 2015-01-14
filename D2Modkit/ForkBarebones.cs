@@ -76,7 +76,7 @@ namespace D2ModKit
                     }
                     lines[j] = l;
                 }
-                File.WriteAllLines(files[i], lines);
+                File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
             }
         }
 
