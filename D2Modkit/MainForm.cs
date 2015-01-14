@@ -212,7 +212,7 @@ namespace D2ModKit
                 Debug.WriteLine("No new vers available.");
                 return;
             }
-            DialogResult r = MessageBox.Show("Version " + vers + " of D2ModKit is now available. Would you like to update now?", "New version available",
+            DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?", "New version available",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (r == DialogResult.Yes)
             {
