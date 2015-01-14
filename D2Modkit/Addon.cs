@@ -477,13 +477,24 @@ namespace D2ModKit
                     {
                         File.AppendAllText(outputPath, item + "\n", Encoding.Unicode);
                     }
+                    else
+                    {
+                        // the addon_language already has this ability. but let's check
+                        // if there are any new AbilitySpecials.
+                        foreach (Pair p in item.AbilitySpecials)
+                        {
+                            if (!alreadyHasKeys.Contains(p.Key.ToLower()))
+                            {
+                                // the addon_language doesn't contain this abil special.
+                                File.AppendAllText(outputPath, p.ToString(), Encoding.Unicode);
+                            }
+                        }
+                        File.AppendAllText(outputPath, "\n", Encoding.Unicode);
+                    }
                 }
 
                 // open the tooltips.txt in a text editor
                 Process.Start(outputPath);
-
-                //MessageBox.Show("Tooltips successfully generated in: " + Path.Combine(gamePath,"resource", "tooltips.txt"), "Success",
-                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

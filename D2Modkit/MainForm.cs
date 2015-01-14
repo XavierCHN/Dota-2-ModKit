@@ -123,7 +123,7 @@ namespace D2ModKit
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
             string changelog = vers + " Changelog:\n\n" +
-                "Tooltips generator now checks if an ability has new AbilitySpecials.\n";
+                "Forgot to add the latest feature to items too. Tooltips generator now checks if an item has new AbilitySpecials.\n";
 
             // Check for settings updates.
             if (Settings.Default.UpdateRequired)
