@@ -122,8 +122,8 @@ namespace D2ModKit
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
-            string changelog = vers + " Changelog:\n\n" +
-                "Forgot to add the latest feature to items too. Tooltips generator now checks if an item has new AbilitySpecials.\n";
+            //string changelog = vers + " Changelog:\n\n" +
+            //    "Fixed barebones forking not\n";
 
             // Check for settings updates.
             if (Settings.Default.UpdateRequired)
@@ -131,19 +131,19 @@ namespace D2ModKit
                 Settings.Default.Upgrade();
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
-                displayChangelog = true;
+                //displayChangelog = true;
             }
 
             InitializeComponent();
 
             // check if changelog should be displayed.
-            if (displayChangelog)
+            /*if (displayChangelog)
             {
                 OutputForm of = new OutputForm();
                 of.RTextBox.Text = changelog;
                 //of.RTextBox.SelectionFont
                 of.ShowDialog();
-            }
+            }*/
 
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
@@ -701,8 +701,8 @@ namespace D2ModKit
                     "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // reset currAddon.
-                selectCurrentAddon(addons[0].Name);
                 setAddonNames();
+                selectCurrentAddon(addons[0].Name);
             }
 
         }

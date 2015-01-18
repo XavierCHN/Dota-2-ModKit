@@ -76,7 +76,14 @@ namespace D2ModKit
                     }
                     lines[j] = l;
                 }
-                File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+                if (files[i].EndsWith(".lua"))
+                {
+                    File.WriteAllLines(files[i], lines);
+                }
+                else
+                {
+                    File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+                }
             }
         }
 
