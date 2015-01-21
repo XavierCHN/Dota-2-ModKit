@@ -50,12 +50,12 @@ namespace D2ModKit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Dota2ExtractPath {
+        public string S2DotaExtractPath {
             get {
-                return ((string)(this["Dota2ExtractPath"]));
+                return ((string)(this["S2DotaExtractPath"]));
             }
             set {
-                this["Dota2ExtractPath"] = value;
+                this["S2DotaExtractPath"] = value;
             }
         }
         
@@ -79,6 +79,18 @@ namespace D2ModKit.Properties {
             }
             set {
                 this["TemplateData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string S1DotaExtractPath {
+            get {
+                return ((string)(this["S1DotaExtractPath"]));
+            }
+            set {
+                this["S1DotaExtractPath"] = value;
             }
         }
     }

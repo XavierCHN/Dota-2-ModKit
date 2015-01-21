@@ -62,7 +62,29 @@ namespace D2ModKit
             // move the new d2modkit.exe to the main folder, and rename it.
             File.Move(path, Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe"));
 
-            //delete other (nested) D2ModKit folder.
+            // add other files and folders if they're not already in the main folder.
+            string[] files = Directory.GetFiles(path);
+            for (int i = 0; i < files.Length; i++)
+            {
+                string name = files[i].Substring(files[i].LastIndexOf('\\')+1);
+                try
+                {
+                    File.Move(path, Path.Combine(Environment.CurrentDirectory, name));
+                }
+                catch (Exception) {}
+            }
+            string[] dirs = Directory.GetDirectories(path);
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                string name = dirs[i].Substring(dirs[i].LastIndexOf('\\')+1);
+                try
+                {
+                    Directory.Move(path, Path.Combine(Environment.CurrentDirectory, name));
+                }
+                catch (Exception) {}
+            }
+
+            //delete the D2ModKit_temp folder.
             try {
                 Directory.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp"), true);
                 // delete .zip

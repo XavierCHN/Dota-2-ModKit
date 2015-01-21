@@ -1,4 +1,5 @@
 ﻿using D2ModKit.Properties;
+using KVLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -212,12 +213,13 @@ namespace D2ModKit
                 Debug.WriteLine("No new vers available.");
                 return;
             }
-            DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?", "New version available",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?" +
+                "Changelog: https://github.com/Myll/Dota-2-ModKit/releases",
+                "D2ModKit",
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Information);
             if (r == DialogResult.Yes)
             {
-                // hide the mainform.
-                //this.Hide();
                 Debug.WriteLine("Url: " + url);
                 UpdateForm uf = new UpdateForm(url, newVers);
                 uf.ShowDialog();
@@ -354,7 +356,7 @@ namespace D2ModKit
             string[] particlePaths = fileDialog.FileNames;
             FolderBrowserDialog browser = new FolderBrowserDialog();
             // RootFolder needs to be defined for auto-scrolling to work apparently.
-            browser.RootFolder = Environment.SpecialFolder.ProgramFilesX86;
+            browser.RootFolder = Environment.SpecialFolder.MyComputer;
             // let the user see the particles directory first.
             string initialPath = Path.Combine(currAddon.ContentPath, "particles");
             browser.SelectedPath = initialPath;
@@ -577,7 +579,7 @@ namespace D2ModKit
             if (res == DialogResult.OK)
             {
                 string path = fd.SelectedPath;
-                Properties.Settings.Default.Dota2ExtractPath = path;
+                Properties.Settings.Default.S2DotaExtractPath = path;
                 return path;
             }
             return null;
@@ -752,49 +754,165 @@ namespace D2ModKit
             ab.ShowDialog();
         }
 
-        /// <summary>
-        /// This method will check a url to see that it does not return server or protocol errors
-        /// </summary>
-        /// <param name="url">The path to check</param>
-        /// <returns></returns>
-        public bool isUrlValid(string url)
+        private void overrideParticlesToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            if (Properties.Settings.Default.S2DotaExtractPath == "")
             {
-                HttpWebRequest request = HttpWebRequest.Create(url) as HttpWebRequest;
-                request.Timeout = 5000; //set the timeout to 5 seconds to keep the user from waiting too long for the page to load
-                request.Method = "HEAD"; //Get only the header information -- no need to download any content
-
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-
-                int statusCode = (int)response.StatusCode;
-                if (statusCode >= 100 && statusCode < 400) //Good requests
+                DialogResult r = MessageBox.Show("No Source 2 Dota 2 Extract path defined. Set the path now?",
+                        "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                if (r == DialogResult.Cancel)
                 {
-                    return true;
+                    return;
                 }
-                else if (statusCode >= 500 && statusCode <= 510) //Server Errors
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                // let the user see the particles directory first.
+                fbd.Description =
+                    "Browse to your Extracted Dota 2 path.";
+                DialogResult fbd_res = fbd.ShowDialog();
+                if (fbd_res == DialogResult.OK)
                 {
-                    Debug.WriteLine(String.Format("The remote server has thrown an internal error. Url is not valid: {0}", url));
-                    return false;
-                }
-            }
-            catch (WebException ex)
-            {
-                if (ex.Status == WebExceptionStatus.ProtocolError) //400 errors
-                {
-                    return false;
+                    Properties.Settings.Default.S2DotaExtractPath = fbd.SelectedPath;
+                    Settings.Default.Save();
                 }
                 else
                 {
-                    Debug.WriteLine(String.Format("Unhandled status [{0}] returned for url: {1}", ex.Status, url), ex);
+                    return;
                 }
             }
-            catch (Exception ex)
+            // get the null particle contents.
+            string nullParticlePath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_particle.vpcf");
+            string nullParticleContents = "";
+            if (File.Exists(nullParticlePath))
             {
-                Debug.WriteLine(String.Format("Could not test url {0}.", url), ex);
+                nullParticleContents = File.ReadAllText(nullParticlePath);
             }
-            return false;
-        }
 
+            string extractPath = Properties.Settings.Default.S2DotaExtractPath;
+            // We need a particle system to work with.
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.InitialDirectory = Path.Combine(extractPath, "particles");
+            fd.Multiselect = true;
+            fd.Title = "Select Particles To Override";
+            DialogResult res = fd.ShowDialog();
+            ParticleSystem Ps = null;
+
+            if (res == DialogResult.OK)
+            {
+                Ps = new ParticleSystem(fd.FileNames);
+            }
+            else
+            {
+                return;
+            }
+            Particle[] particles = Ps.Particles;
+            string path = particles[0].Path;
+            int len = path.LastIndexOf('\\') - path.IndexOf("particles");
+            string folderStructure = path.Substring(path.IndexOf("particles"), len);
+            //folderStructure = folderStructure.Replace("\\", ".");
+            string[] folds = folderStructure.Split('\\');
+            // starting at 1 to forget about the first string, which is "particles"
+            string path2 = Path.Combine(CurrentAddon.ContentPath, "particles");
+            for (int i = 1; i < folds.Length; i++)
+            {
+                path2 = Path.Combine(path2, folds[i]);
+            }
+            if (!Directory.Exists(path2))
+            {
+                Directory.CreateDirectory(path2);
+            }
+            for (int i = 0; i < particles.Count(); i++)
+            {
+                Particle p = particles[i];
+                p.Name = p.Name.Replace(".vpcf_c", ".vpcf");
+                string newPath = Path.Combine(path2, p.Name);
+                File.Copy(p.Path, newPath);
+                File.WriteAllText(newPath, nullParticleContents);
+            }
+            Process.Start(path2);
+        }
+        /*
+        private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.S1DotaExtractPath == "")
+            {
+                DialogResult r = MessageBox.Show("No Source 1 Dota 2 Extract path defined. Set the path now?",
+                        "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                if (r == DialogResult.Cancel)
+                {
+                    return;
+                }
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                // let the user see the particles directory first.
+                fbd.Description =
+                    "Browse to your Extracted Dota 2 path.";
+                DialogResult fbd_res = fbd.ShowDialog();
+                if (fbd_res == DialogResult.OK)
+                {
+                    Properties.Settings.Default.S1DotaExtractPath = fbd.SelectedPath;
+                    Settings.Default.Save();
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            // get the null particle contents.
+            string nullSoundPath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_sound.vsndevts");
+            string[] nullSoundContents = null;
+            if (File.Exists(nullSoundPath))
+            {
+                nullSoundContents = File.ReadAllLines(nullSoundPath);
+            }
+
+            string extractPath = Properties.Settings.Default.S1DotaExtractPath;
+            // We need a particle system to work with.
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.InitialDirectory = Path.Combine(extractPath, "scripts");
+            fd.Multiselect = true;
+            fd.Title = "Select Sound Scripts To Override";
+            DialogResult res = fd.ShowDialog();
+            string[] fileNames = null;
+
+            if (res == DialogResult.OK)
+            {
+                fileNames = fd.FileNames;
+            }
+            else
+            {
+                return;
+            }
+
+            for (int i = 0; i < fileNames.Length; i++)
+			{
+                string path = fileNames[i];
+                // for this file we need the folder structure.
+                int len = path.LastIndexOf('\\') - path.IndexOf("scripts");
+                string folderStructure = path.Substring(path.IndexOf("scripts"), len);
+                //folderStructure = folderStructure.Replace("\\", ".");
+                string[] folds = folderStructure.Split('\\');
+                // starting at 1 to forget about the first string, which is "scripts"
+                string path2 = Path.Combine(CurrentAddon.ContentPath, "soundevents");
+                for (int j = 1; j < folds.Length; j++)
+                {
+                    path2 = Path.Combine(path2, folds[j]);
+                }
+                if (!Directory.Exists(path2))
+                {
+                    Directory.CreateDirectory(path2);
+                }
+                string soundFileName = path.Substring(path.LastIndexOf('\\') + 1);
+                soundFileName = soundFileName.Replace(".txt", ".vsndevts");
+                string newPath = Path.Combine(path2, soundFileName);
+                File.Create(newPath).Close();
+                KeyValue[] rootKVs = KVParser.KV1.ParseAll(File.ReadAllText(path));
+                for (int j = 0; j < rootKVs.Length; j++)
+                {
+                    string soundName = rootKVs[j].Key;
+                    nullSoundContents[0] = "\"" + soundName + "\"";
+                    File.AppendAllLines(newPath, nullSoundContents);
+                }
+			}
+        }*/
     }
 }

@@ -36,7 +36,11 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.templatesButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.overrideParticlesToBeNullToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.newParticles = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -50,8 +54,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.addonDropDown = new System.Windows.Forms.ComboBox();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -99,13 +101,32 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton2,
             this.templatesButton,
+            this.toolStripButton3,
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(280, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(279, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newAddonFromBarebonesToolStripMenuItem1});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
+            this.toolStripDropDownButton2.Text = "New";
+            // 
+            // newAddonFromBarebonesToolStripMenuItem1
+            // 
+            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
+            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
+            this.newAddonFromBarebonesToolStripMenuItem1.Text = "Addon From Barebones";
+            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
             // 
             // templatesButton
             // 
@@ -116,6 +137,24 @@
             this.templatesButton.Size = new System.Drawing.Size(66, 22);
             this.templatesButton.Text = "Templates";
             this.templatesButton.Click += new System.EventHandler(this.templatesButton_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.overrideParticlesToBeNullToolStripMenuItem});
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(50, 22);
+            this.toolStripButton3.Text = "Other";
+            // 
+            // overrideParticlesToBeNullToolStripMenuItem
+            // 
+            this.overrideParticlesToBeNullToolStripMenuItem.Name = "overrideParticlesToBeNullToolStripMenuItem";
+            this.overrideParticlesToBeNullToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.overrideParticlesToBeNullToolStripMenuItem.Text = "Override particles to be null";
+            this.overrideParticlesToBeNullToolStripMenuItem.Click += new System.EventHandler(this.overrideParticlesToBeNullToolStripMenuItem_Click);
             // 
             // toolStripButton2
             // 
@@ -268,24 +307,6 @@
             this.addonDropDown.Size = new System.Drawing.Size(166, 26);
             this.addonDropDown.TabIndex = 23;
             // 
-            // toolStripDropDownButton2
-            // 
-            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newAddonFromBarebonesToolStripMenuItem1});
-            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
-            this.toolStripDropDownButton2.Text = "New";
-            // 
-            // newAddonFromBarebonesToolStripMenuItem1
-            // 
-            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
-            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.newAddonFromBarebonesToolStripMenuItem1.Text = "Addon From Barebones";
-            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -303,7 +324,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(280, 217);
+            this.ClientSize = new System.Drawing.Size(279, 215);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.addonDropDown);
             this.Controls.Add(this.removeAddonButton);
@@ -353,6 +374,8 @@
         private System.Windows.Forms.ToolStripMenuItem newAddonFromBarebonesToolStripMenuItem1;
         private System.Windows.Forms.ComboBox addonDropDown;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripButton3;
+        private System.Windows.Forms.ToolStripMenuItem overrideParticlesToBeNullToolStripMenuItem;
     }
 }
 
