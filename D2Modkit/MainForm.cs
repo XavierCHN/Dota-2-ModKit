@@ -114,6 +114,8 @@ namespace D2ModKit
             set { currParticleSystem = value; }
         }
 
+        private Thread autoUpdateThread;
+
         private bool displayChangelog = false;
 
         private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -122,9 +124,6 @@ namespace D2ModKit
         {
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
-
-            //string changelog = Vers + " Changelog:\n\n" +
-            //    "Fixed barebones forking not\n";
 
             // Check for settings updates.
             if (Settings.Default.UpdateRequired)
@@ -150,11 +149,13 @@ namespace D2ModKit
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
             Console.WriteLine("In Main: Creating the Child thread");
-            Thread childThread = new Thread(childref);
-            childThread.Start();
+            autoUpdateThread = new Thread(childref);
+            autoUpdateThread.Start();
 
             // hook for when user selects a different addon.
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
+
+            this.FormClosed += MainForm_FormClosed;
 
             this.Text = "D2 ModKit - " + "v" + Vers;
             if (Properties.Settings.Default.UGCPath != "")
@@ -179,6 +180,11 @@ namespace D2ModKit
             }
 
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
+        }
+
+        void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void ensureSameDrives()
@@ -578,10 +584,6 @@ namespace D2ModKit
             Process.Start(currAddon.ContentPath);
         }
 
-        private void checkForUpdates_Click(object sender, EventArgs e)
-        {
-        }
-
         private void diff_Click(object sender, EventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
@@ -840,8 +842,8 @@ namespace D2ModKit
             string folderStructure = path.Substring(path.IndexOf("decompiled_particles"), len);
             //folderStructure = folderStructure.Replace("\\", ".");
             string[] folds = folderStructure.Split('\\');
-            // starting at 1 to forget about the first string, which is "particles"
-            string path2 = Path.Combine(CurrentAddon.ContentPath, "decompiled_particles");
+            // starting at 1 to forget about the first string, which is "decompiled_particles"
+            string path2 = Path.Combine(CurrentAddon.ContentPath, "particles");
             for (int i = 1; i < folds.Length; i++)
             {
                 path2 = Path.Combine(path2, folds[i]);
@@ -863,20 +865,29 @@ namespace D2ModKit
 
         private void vscriptsDir_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "vscripts"));
+            string path = Path.Combine(currAddon.GamePath, "scripts", "vscripts");
+            if (Directory.Exists(path))
+            {
+                Process.Start(path);
+            }
         }
 
         private void npcDir_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt"));
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt"));
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt"));
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt"));
+            string path = Path.Combine(currAddon.GamePath, "scripts", "npc");
+            if (Directory.Exists(path))
+            {
+                Process.Start(path);
+            }
         }
 
         private void flash3Dir_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(currAddon.GamePath, "resource", "flash3"));
+            string path = Path.Combine(currAddon.GamePath, "resource", "flash3");
+            if (Directory.Exists(path))
+            {
+                Process.Start(path);
+            }
         }
 
         public static long GetDirectorySize(string p)
