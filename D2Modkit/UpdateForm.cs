@@ -47,11 +47,10 @@ namespace D2ModKit
             // extract it now
             string zipPath = Path.Combine(Environment.CurrentDirectory, "D2ModKit.zip");
             ZipFile.ExtractToDirectory(zipPath, Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp"));
-            //TODO: need to fix this. it's extracting the Templates directory, and gives an
-            // error if Templates directory already exists.
 
             // get the new D2ModKit.exe.
-            string path = Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp", "D2ModKit.exe");
+            string tempDir = Path.Combine(Environment.CurrentDirectory, "D2ModKit_temp");
+            string path = Path.Combine(tempDir, "D2ModKit.exe");
 
             // delete D2ModKit_new.exe if it exists.
             if (File.Exists(Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe")))
@@ -63,23 +62,25 @@ namespace D2ModKit
             File.Move(path, Path.Combine(Environment.CurrentDirectory, "D2ModKit_new.exe"));
 
             // add other files and folders if they're not already in the main folder.
-            string[] files = Directory.GetFiles(path);
+            string[] files = Directory.GetFiles(tempDir);
             for (int i = 0; i < files.Length; i++)
             {
                 string name = files[i].Substring(files[i].LastIndexOf('\\')+1);
+                // it will raise an exception if file is already there.
                 try
                 {
-                    File.Move(path, Path.Combine(Environment.CurrentDirectory, name));
+                    File.Move(files[i], Path.Combine(Environment.CurrentDirectory, name));
                 }
                 catch (Exception) {}
             }
-            string[] dirs = Directory.GetDirectories(path);
+            string[] dirs = Directory.GetDirectories(tempDir);
             for (int i = 0; i < dirs.Length; i++)
             {
                 string name = dirs[i].Substring(dirs[i].LastIndexOf('\\')+1);
+                // it will raise an exception if dir is already there.
                 try
                 {
-                    Directory.Move(path, Path.Combine(Environment.CurrentDirectory, name));
+                    Directory.Move(dirs[i], Path.Combine(Environment.CurrentDirectory, name));
                 }
                 catch (Exception) {}
             }

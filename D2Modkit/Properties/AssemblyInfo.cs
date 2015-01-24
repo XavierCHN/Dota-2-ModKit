@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("D2 ModKit")]
-[assembly: AssemblyDescription("Developer: Myll\r\nVisit https://github.com/Myll/Dota-2-ModKit for the latest updates.")]
+[assembly: AssemblyDescription("Developer: Myll\r\n\r\nVisit https://github.com/Myll/Dota-2-ModKit for the latest updates.\r\n\r\nIf you would like to donate, I would surely appreciate it! My paypal is stephenf.bme@gmail.com")]
 [assembly: AssemblyConfiguration("1.0")]
 [assembly: AssemblyCompany("D2ModKit")]
 [assembly: AssemblyProduct("D2ModKit")]
@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.3.6.0")]
+[assembly: AssemblyVersion("1.3.7.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

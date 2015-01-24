@@ -116,14 +116,14 @@ namespace D2ModKit
 
         private bool displayChangelog = false;
 
-        private string vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public MainForm()
         {
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
-            //string changelog = vers + " Changelog:\n\n" +
+            //string changelog = Vers + " Changelog:\n\n" +
             //    "Fixed barebones forking not\n";
 
             // Check for settings updates.
@@ -132,7 +132,8 @@ namespace D2ModKit
                 Settings.Default.Upgrade();
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
-                //displayChangelog = true;
+                // open up changelog
+                Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, false));
             }
 
             InitializeComponent();
@@ -155,7 +156,7 @@ namespace D2ModKit
             // hook for when user selects a different addon.
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
 
-            this.Text = "D2 ModKit - " + "v" + vers;
+            this.Text = "D2 ModKit - " + "v" + Vers;
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -168,29 +169,38 @@ namespace D2ModKit
             if (HasSettings)
             {
                 // and use that to find the game and content dirs.
+                ensureSameDrives();
                 getAddons();
             }
             else
             {
                 getUGCPath();
+                ensureSameDrives();
             }
+
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
+        }
+
+        private void ensureSameDrives()
+        {
+            // D2ModKit must be ran from the same drive as dota or else things will break.
+            char modkitDrive = Environment.CurrentDirectory[0];
+            char ugcDrive = UGCPath[0];
+            if (modkitDrive != ugcDrive)
+            {
+                DialogResult res = MessageBox.Show("D2ModKit must be ran from the same drive as Dota 2 or else errors will occur. " +
+                    " Please move D2ModKit to Drive " + ugcDrive + " and create a shortcut to it.",
+                    "D2ModKit",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Hand);
+                Environment.Exit(0);
+            }
         }
 
         private void CheckForUpdatesThread()
         {
             Debug.WriteLine("Child thread starts");
-            // ghetto way of checking for new vers
-            string[] numStrings = vers.Split('.');
-            int hundreds = Int32.Parse(numStrings[0]) * 100;
-            int tens = Int32.Parse(numStrings[1]) * 10;
-            int ones = Int32.Parse(numStrings[2]);
-            int num = hundreds + tens + ones + 1;
-            Debug.WriteLine("new num: " + num);
-            int newHundreds = num / 100;
-            int newTens = (num - newHundreds * 100) / 10;
-            int newOnes = num - newHundreds * 100 - newTens * 10;
-            string newVers = newHundreds + "." + newTens + "." + newOnes;
+            string newVers = convertVers(Vers, true);
             Debug.WriteLine("New vers would be: " + newVers);
             // check for a new version
             string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
@@ -208,13 +218,12 @@ namespace D2ModKit
                 Byte[] responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
                 string source = System.Text.Encoding.ASCII.GetString(responseBytes);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.WriteLine("No new vers available.");
                 return;
             }
-            DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?" +
-                "Changelog: https://github.com/Myll/Dota-2-ModKit/releases",
+            DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?",
                 "D2ModKit",
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Information);
@@ -226,6 +235,26 @@ namespace D2ModKit
             }
         }
 
+        string convertVers(string vers, bool getNextVers)
+        {
+            // ghetto way of checking for new Vers
+            string[] numStrings = vers.Split('.');
+            int hundreds = Int32.Parse(numStrings[0]) * 100;
+            int tens = Int32.Parse(numStrings[1]) * 10;
+            int ones = Int32.Parse(numStrings[2]);
+            int num = hundreds + tens + ones;
+            if (getNextVers)
+            {
+                num = hundreds + tens + ones + 1;
+            }
+            Debug.WriteLine("new num: " + num);
+            int newHundreds = num / 100;
+            int newTens = (num - newHundreds * 100) / 10;
+            int newOnes = num - newHundreds * 100 - newTens * 10;
+            string newVers = newHundreds + "." + newTens + "." + newOnes;
+            return newVers;
+        }
+        
         void addonDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             string text = addonDropDown.GetItemText(addonDropDown.SelectedItem);
@@ -274,7 +303,7 @@ namespace D2ModKit
                     if (ugc != "dota_ugc")
                     {
                         DialogResult res = MessageBox.Show("That is not a path to your dota_ugc folder.", "Error",
-                            MessageBoxButtons.RetryCancel, MessageBoxIcon.Hand);
+                            MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
 
                         if (res == DialogResult.Retry)
                         {
@@ -333,7 +362,9 @@ namespace D2ModKit
             {
                 DialogResult result = MessageBox.Show(
                     "No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
-                    "D2ModKit", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    "D2ModKit", 
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Hand);
 
                 if (result == DialogResult.Yes)
                 {
@@ -493,6 +524,13 @@ namespace D2ModKit
             Properties.Settings.Default.Save();
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
+            calculateSize();
+        }
+
+        private void calculateSize()
+        {
+            long totalSize = GetDirectorySize(currAddon.GamePath) + GetDirectorySize(currAddon.ContentPath);
+            totalSizeLabel.Text = "Total Size: " + totalSize / 1000000 + " MB";
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)
@@ -756,29 +794,22 @@ namespace D2ModKit
 
         private void overrideParticlesToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.S2DotaExtractPath == "")
+            string extractPath = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
+            if (!Directory.Exists(extractPath))
             {
-                DialogResult r = MessageBox.Show("No Source 2 Dota 2 Extract path defined. Set the path now?",
-                        "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
-                if (r == DialogResult.Cancel)
+                DialogResult result = MessageBox.Show(
+                    "No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
+                    "D2ModKit",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Hand);
+
+                if (result == DialogResult.Yes)
                 {
-                    return;
+                    Process.Start("https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M");
                 }
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-                // let the user see the particles directory first.
-                fbd.Description =
-                    "Browse to your Extracted Dota 2 path.";
-                DialogResult fbd_res = fbd.ShowDialog();
-                if (fbd_res == DialogResult.OK)
-                {
-                    Properties.Settings.Default.S2DotaExtractPath = fbd.SelectedPath;
-                    Settings.Default.Save();
-                }
-                else
-                {
-                    return;
-                }
+                return;
             }
+
             // get the null particle contents.
             string nullParticlePath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_particle.vpcf");
             string nullParticleContents = "";
@@ -787,10 +818,9 @@ namespace D2ModKit
                 nullParticleContents = File.ReadAllText(nullParticlePath);
             }
 
-            string extractPath = Properties.Settings.Default.S2DotaExtractPath;
             // We need a particle system to work with.
             OpenFileDialog fd = new OpenFileDialog();
-            fd.InitialDirectory = Path.Combine(extractPath, "particles");
+            fd.InitialDirectory = extractPath;
             fd.Multiselect = true;
             fd.Title = "Select Particles To Override";
             DialogResult res = fd.ShowDialog();
@@ -806,12 +836,12 @@ namespace D2ModKit
             }
             Particle[] particles = Ps.Particles;
             string path = particles[0].Path;
-            int len = path.LastIndexOf('\\') - path.IndexOf("particles");
-            string folderStructure = path.Substring(path.IndexOf("particles"), len);
+            int len = path.LastIndexOf('\\') - path.IndexOf("decompiled_particles");
+            string folderStructure = path.Substring(path.IndexOf("decompiled_particles"), len);
             //folderStructure = folderStructure.Replace("\\", ".");
             string[] folds = folderStructure.Split('\\');
             // starting at 1 to forget about the first string, which is "particles"
-            string path2 = Path.Combine(CurrentAddon.ContentPath, "particles");
+            string path2 = Path.Combine(CurrentAddon.ContentPath, "decompiled_particles");
             for (int i = 1; i < folds.Length; i++)
             {
                 path2 = Path.Combine(path2, folds[i]);
@@ -830,6 +860,52 @@ namespace D2ModKit
             }
             Process.Start(path2);
         }
+
+        private void vscriptsDir_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "vscripts"));
+        }
+
+        private void npcDir_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt"));
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt"));
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt"));
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt"));
+        }
+
+        private void flash3Dir_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.Combine(currAddon.GamePath, "resource", "flash3"));
+        }
+
+        public static long GetDirectorySize(string p)
+        {
+            // 1.
+            // Get array of all file names.
+            string[] a = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
+
+            // 2.
+            // Calculate total bytes of all files in a loop.
+            long b = 0;
+            foreach (string name in a)
+            {
+                // 3.
+                // Use FileInfo to get length of each file.
+                FileInfo info = new FileInfo(name);
+                b += info.Length;
+            }
+            // 4.
+            // Return total size
+            return b;
+        }
+
+        private void totalSize_Click(object sender, EventArgs e)
+        {
+            //Debug.WriteLine("Calc size.");
+            calculateSize();
+        }
+
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {

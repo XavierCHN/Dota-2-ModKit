@@ -172,13 +172,13 @@ namespace D2ModKit
 
             SubmitClicked = true;
 
-            string output = "Start of output.\n\n";
+            string output = "";
 
             if (ColorPicked)
             {
                 Ps.changeColor(Rgb);
                 string rgb_output = "R: " + Rgb[0] + " G: " + Rgb[1] + " B: " + Rgb[2];
-                output += "Changed color to: " + rgb_output + "\n\n";
+                output += "Changed color to: " + rgb_output + "\n";
             }
 
             if (ResizeValue != 0)
@@ -188,11 +188,11 @@ namespace D2ModKit
 
                 if (ResizeValue >= 0)
                 {
-                    output += "Resized to: +" + ResizeValue + "%\n\n";
+                    output += "Resized to: +" + ResizeValue + "%\n";
                 }
                 else
                 {
-                    output += "Resized to: " + ResizeValue + "%\n\n";
+                    output += "Resized to: " + ResizeValue + "%\n";
                 }
 
             }
@@ -201,7 +201,7 @@ namespace D2ModKit
             {
                 Renamed = true;
                 Ps.rename(BaseName);
-                output += "Renamed particle system to: " + BaseName + "\n\n";
+                output += "Renamed particle system to: " + BaseName + "\n";
             }
             string relPath = "";
             output += "******* Precache Information *******\n";
@@ -217,21 +217,15 @@ namespace D2ModKit
             //PrecacheResource("particle_folder", "particles/units/heroes/hero_enigma", context)
             string justFolder = relPath.Substring(0, relPath.LastIndexOf('/'));
             output += "PrecacheResource(\"particle_folder\", \"" + justFolder + "\", context)\n\n";
-            output += "******* End of Precache Information *******\n\n";
-            output += "No errors detected.\n\n";
+            //output += "******* End of Precache Information *******\n\n";
+            output += "Note: You may have to restart the Workshop Tools for the forked particles to display correctly in the asset browser.\n";
+            //output += "No errors detected.\n\n";
             output += "End of output.";
 
             if (Renamed)
             {
-                // display ending note.
-                //MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 // open up a window to where the modified particles are.
                 Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
-            }
-            else
-            {
-                //MessageBox.Show("Particle system successfully modified.", "Particle Designer", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             //close form.
             this.Close();
