@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -393,7 +394,7 @@ namespace D2ModKit
             string[] particlePaths = fileDialog.FileNames;
             FolderBrowserDialog browser = new FolderBrowserDialog();
             // RootFolder needs to be defined for auto-scrolling to work apparently.
-            browser.RootFolder = Environment.SpecialFolder.MyComputer;
+            browser.RootFolder = getRootFolder();
             // let the user see the particles directory first.
             string initialPath = Path.Combine(currAddon.ContentPath, "particles");
             browser.SelectedPath = initialPath;
@@ -915,6 +916,142 @@ namespace D2ModKit
         {
             //Debug.WriteLine("Calc size.");
             calculateSize();
+        }
+
+        private void breakKVFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.InitialDirectory = Path.Combine(currAddon.GamePath, "scripts", "npc");
+            fd.Title = "Select KV File To Break Up";
+            DialogResult res = fd.ShowDialog();
+            if (res != DialogResult.OK)
+            {
+                return;
+            }
+            string file = fd.FileName;
+            string folderName = file.Substring(file.LastIndexOf('\\')+1);
+            // get rid of extension.
+            folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
+            string folderPath = Path.Combine(file.Substring(0, file.LastIndexOf('\\')), folderName);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(File.ReadAllText(file));
+            foreach (KeyValue kv in kvs)
+            {
+                if (kv.Key == "DOTAAbilities" || kv.Key == "DOTAHeroes" || kv.Key == "DOTAUnits")
+                {
+                    // skip this first key, go straight to children.
+                    if (kv.HasChildren)
+                    {
+                        IEnumerable<KeyValue> kvs2 = kv.Children;
+                        foreach (KeyValue kv2 in kvs2)
+                        {
+                            if (kv2.Key == "Version")
+                            {
+                                continue;
+                            }
+                            // this overwrites files.
+                            string filePath = Path.Combine(folderPath, kv2.Key + ".txt");
+                            File.Create(filePath).Close();
+                            File.WriteAllText(filePath, kv2.ToString(), Encoding.Unicode);
+                        }
+                    }
+                }
+                else
+                {
+                    // this overwrites files.
+                    string filePath = Path.Combine(folderPath, kv.Key + ".txt");
+                    File.Create(filePath).Close();
+                    File.WriteAllText(filePath, kv.ToString(), Encoding.Unicode);
+                }
+            }
+            Process.Start(folderPath);
+        }
+
+        private void combineKVFiles_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            // RootFolder needs to be defined for auto-scrolling to work apparently.
+            fbd.RootFolder = getRootFolder();
+            // let the user see the particles directory first.
+            string npcPath = Path.Combine(currAddon.GamePath, "scripts", "npc");
+            fbd.SelectedPath = npcPath;
+            fbd.ShowNewFolderButton = true;
+            fbd.Description =
+                "Select the folder that holds the KV files.";
+            DialogResult res = fbd.ShowDialog();
+
+            if (res == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            string fold = fbd.SelectedPath;
+            string foldName = fold.Substring(fold.LastIndexOf('\\')+1);
+            string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
+            string bigKVPath = Path.Combine(parentFolder, foldName + ".txt");
+            if (File.Exists(bigKVPath))
+            {
+                // back it up
+                File.Move(bigKVPath, Path.Combine(parentFolder, foldName + "_backup.txt"));
+                File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
+            }
+            else if (File.Exists(Path.Combine(parentFolder, foldName + ".kv")))
+            {
+                // back it up
+                bigKVPath = Path.Combine(parentFolder, foldName + ".kv");
+                File.Move(bigKVPath, Path.Combine(parentFolder, foldName + "_backup.kv"));
+            }
+            else
+            {
+                // create it
+                File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
+            }
+            // so now we have the big KV file created and ready to be populated.
+            
+            string[] files = Directory.GetFiles(fold);
+            KeyValue beginKV = new KeyValue("KVs");
+            if (foldName == "npc_abilities_custom") 
+            {
+                beginKV = new KeyValue("DOTAAbilities");
+                //KeyValue vers = new KeyValue("Version");
+                //vers.AddChild(new KeyValue("1"));
+                //beginKV.AddChild(vers);
+            }
+            else if (foldName == "npc_items_custom")
+            {
+                beginKV = new KeyValue("DOTAAbilities");
+            }
+            else if (foldName == "npc_heroes_custom")
+            {
+                beginKV = new KeyValue("DOTAHeroes");
+            }
+            else if (foldName == "npc_units_custom")
+            {
+                beginKV = new KeyValue("DOTAUnits");
+            }
+            foreach (string file in files)
+            {
+                KeyValue kv = KVParser.KV1.Parse(File.ReadAllText(file));
+                beginKV.AddChild(kv);
+            }
+            File.WriteAllText(bigKVPath, beginKV.ToString(), Encoding.Unicode);
+            Process.Start(bigKVPath);
+        }
+
+        public static Environment.SpecialFolder getRootFolder()
+        {
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)))
+            {
+                return Environment.SpecialFolder.ProgramFilesX86;
+            }
+            else if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)))
+            {
+                return Environment.SpecialFolder.ProgramFiles;
+            }
+            return Environment.SpecialFolder.MyComputer;
         }
 
         /*
