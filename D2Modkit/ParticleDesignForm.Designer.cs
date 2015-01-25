@@ -51,7 +51,7 @@
             // 
             // recolorButton
             // 
-            this.recolorButton.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recolorButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recolorButton.ForeColor = System.Drawing.Color.Indigo;
             this.recolorButton.Location = new System.Drawing.Point(263, 12);
             this.recolorButton.Name = "recolorButton";
