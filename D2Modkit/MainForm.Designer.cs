@@ -393,6 +393,7 @@
             // kvFileCheckbox
             // 
             this.kvFileCheckbox.CheckOnClick = true;
+            this.kvFileCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.kvFileCheckbox.FormattingEnabled = true;
             this.kvFileCheckbox.Items.AddRange(new object[] {
             "Abilities",
@@ -401,7 +402,7 @@
             "Heroes"});
             this.kvFileCheckbox.Location = new System.Drawing.Point(76, 163);
             this.kvFileCheckbox.Name = "kvFileCheckbox";
-            this.kvFileCheckbox.Size = new System.Drawing.Size(68, 64);
+            this.kvFileCheckbox.Size = new System.Drawing.Size(68, 68);
             this.kvFileCheckbox.TabIndex = 32;
             // 
             // label4
@@ -417,10 +418,10 @@
             // 
             // combineBtn
             // 
-            this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(150, 192);
+            this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.combineBtn.Location = new System.Drawing.Point(150, 199);
             this.combineBtn.Name = "combineBtn";
-            this.combineBtn.Size = new System.Drawing.Size(75, 23);
+            this.combineBtn.Size = new System.Drawing.Size(71, 32);
             this.combineBtn.TabIndex = 34;
             this.combineBtn.Text = "Combine";
             this.combineBtn.UseVisualStyleBackColor = true;
@@ -428,10 +429,10 @@
             // 
             // breakUpBtn
             // 
-            this.breakUpBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.breakUpBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.breakUpBtn.Location = new System.Drawing.Point(150, 163);
             this.breakUpBtn.Name = "breakUpBtn";
-            this.breakUpBtn.Size = new System.Drawing.Size(75, 23);
+            this.breakUpBtn.Size = new System.Drawing.Size(71, 32);
             this.breakUpBtn.TabIndex = 35;
             this.breakUpBtn.Text = "Break Up";
             this.breakUpBtn.UseVisualStyleBackColor = true;

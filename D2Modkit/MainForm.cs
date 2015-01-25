@@ -1131,23 +1131,26 @@ namespace D2ModKit
                 string itemStr = items[i].ToString();
 
                 string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt");
+                string folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
                 if (itemStr == "Items")
                 {
                     file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt");
+                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
                 }
                 else if (itemStr == "Heroes")
                 {
                     file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt");
+                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
                 }
                 else if (itemStr == "Units")
                 {
                     file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt");
+                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
                 }
 
                 string folderName = file.Substring(file.LastIndexOf('\\') + 1);
                 // get rid of extension.
                 folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
-                string folderPath = Path.Combine(file.Substring(0, file.LastIndexOf('\\')), folderName);
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
@@ -1235,18 +1238,18 @@ namespace D2ModKit
             {
                 string itemStr = items[i].ToString();
 
-                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom");
+                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
                 if (itemStr == "Items")
                 {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom");
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
                 }
                 else if (itemStr == "Heroes")
                 {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom");
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
                 }
                 else if (itemStr == "Units")
                 {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom");
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
                 }
 
                 if (!Directory.Exists(fold))
