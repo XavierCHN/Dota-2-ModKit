@@ -138,6 +138,13 @@ namespace D2ModKit
 
             InitializeComponent();
 
+            // check stuff in the checkbox
+            var items = kvFileCheckbox.Items;
+            for (int i = 0; i < items.Count; i++)
+            {
+                kvFileCheckbox.SetItemChecked(i, true);
+            }
+
             // check if changelog should be displayed.
             /*if (displayChangelog)
             {
@@ -536,8 +543,10 @@ namespace D2ModKit
 
         private void calculateSize()
         {
-            long totalSize = GetDirectorySize(currAddon.GamePath) + GetDirectorySize(currAddon.ContentPath);
-            totalSizeLabel.Text = "Total Size: " + totalSize / 1000000 + " MB";
+            long gameSize = GetDirectorySize(currAddon.GamePath);
+            long contentSize = GetDirectorySize(currAddon.ContentPath);
+            gameSizeLabel.Text = "Game Size: " + gameSize / 1000000 + " MB";
+            contentSizeLabel.Text = "Content Size: " + contentSize / 1000000 + " MB";
         }
 
         private void generateAddonEnglish_Click(object sender, EventArgs e)
@@ -882,9 +891,9 @@ namespace D2ModKit
             }
         }
 
-        private void flash3Dir_Click(object sender, EventArgs e)
+        private void resourceDir_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(currAddon.GamePath, "resource", "flash3");
+            string path = Path.Combine(currAddon.GamePath, "resource");
             if (Directory.Exists(path))
             {
                 Process.Start(path);
@@ -937,34 +946,73 @@ namespace D2ModKit
             {
                 Directory.CreateDirectory(folderPath);
             }
-            KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(File.ReadAllText(file));
+            string allText = File.ReadAllText(file);
+            KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
             foreach (KeyValue kv in kvs)
             {
                 if (kv.Key == "DOTAAbilities" || kv.Key == "DOTAHeroes" || kv.Key == "DOTAUnits")
                 {
-                    // skip this first key, go straight to children.
+                    // skip this first nextKey, go straight to children.
                     if (kv.HasChildren)
                     {
                         IEnumerable<KeyValue> kvs2 = kv.Children;
-                        foreach (KeyValue kv2 in kvs2)
+                        KeyValue[] kvArr = kvs2.ToArray();
+                        int ptr = 0;
+                        int start = 0;
+                        string nextKey = kvArr[ptr].Key;
+
+                        if (nextKey == "Version")
                         {
-                            if (kv2.Key == "Version")
-                            {
-                                continue;
-                            }
-                            // this overwrites files.
-                            string filePath = Path.Combine(folderPath, kv2.Key + ".txt");
-                            File.Create(filePath).Close();
-                            File.WriteAllText(filePath, kv2.ToString(), Encoding.Unicode);
+                            ptr++;
+                            nextKey = kvArr[ptr].Key;
+                            start = ptr;
                         }
+                        string filePath = Path.Combine(folderPath, nextKey + ".txt");
+                        string[] lines = allText.Split('\n');
+                        string entry = "";
+                        string extraSpace = "";
+                        foreach (string line in lines)
+	                    {
+                            if (line.Trim().StartsWith("\"" + nextKey))
+                            {
+                                // get whitespace.
+                                if (line.StartsWith("\t"))
+                                {
+                                    extraSpace = "\t";
+                                }
+
+                                if (ptr != start)
+                                {
+                                    File.Create(filePath).Close();
+                                    File.WriteAllText(filePath, entry, Encoding.Unicode);
+                                    entry = "";
+                                    ptr++;
+                                    if (ptr == kvArr.Length)
+                                    {
+                                        // no more entries to parse.
+                                        break;
+                                    }
+                                    filePath = Path.Combine(folderPath, nextKey + ".txt");
+                                    nextKey = kvArr[ptr].Key;
+                                }
+                                else
+                                {
+                                    ptr++;
+                                    nextKey = kvArr[ptr].Key;
+                                    //entry = line;
+                                }
+                            }
+                            if (ptr > start)
+                            {
+                                string l = line;
+                                if (extraSpace == "\t" && l.StartsWith("\t"))
+                                {
+                                    l = l.Substring(1);
+                                }
+                                entry += l + "\n";
+                            }
+	                    }
                     }
-                }
-                else
-                {
-                    // this overwrites files.
-                    string filePath = Path.Combine(folderPath, kv.Key + ".txt");
-                    File.Create(filePath).Close();
-                    File.WriteAllText(filePath, kv.ToString(), Encoding.Unicode);
                 }
             }
             Process.Start(folderPath);
@@ -992,21 +1040,42 @@ namespace D2ModKit
             string foldName = fold.Substring(fold.LastIndexOf('\\')+1);
             string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
             string bigKVPath = Path.Combine(parentFolder, foldName + ".txt");
+
+            //create backups dir if doesn't exist.
+            string backupsDir = Path.Combine(parentFolder, "backups");
+            if (!Directory.Exists(backupsDir))
+            {
+                Directory.CreateDirectory(backupsDir);
+            }
+
+            string backupPath = Path.Combine(backupsDir, foldName + ".txt");
             if (File.Exists(bigKVPath))
             {
+                // Delete old backups.
+                if (File.Exists(backupPath))
+                {
+                    File.Delete(backupPath);
+                }
                 // back it up
-                File.Move(bigKVPath, Path.Combine(parentFolder, foldName + "_backup.txt"));
-                File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
+                File.Move(bigKVPath, backupPath);
+                File.Create(bigKVPath).Close();
             }
             else if (File.Exists(Path.Combine(parentFolder, foldName + ".kv")))
             {
+                backupPath = Path.Combine(backupsDir, foldName + ".kv");
+                // Delete old backups.
+                if (File.Exists(backupPath))
+                {
+                    File.Delete(backupPath);
+                }
                 // back it up
                 bigKVPath = Path.Combine(parentFolder, foldName + ".kv");
-                File.Move(bigKVPath, Path.Combine(parentFolder, foldName + "_backup.kv"));
+                File.Move(bigKVPath, backupPath);
+                File.Create(bigKVPath).Close();
             }
             else
             {
-                // create it
+                //no existing file to backup, so just create it
                 File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
             }
             // so now we have the big KV file created and ready to be populated.
@@ -1052,6 +1121,216 @@ namespace D2ModKit
                 return Environment.SpecialFolder.ProgramFiles;
             }
             return Environment.SpecialFolder.MyComputer;
+        }
+
+        private void breakUpBtn_Click(object sender, EventArgs e)
+        {
+            CheckedListBox.CheckedItemCollection items = kvFileCheckbox.CheckedItems;
+            for (int i = 0; i < items.Count; i++)
+            {
+                string itemStr = items[i].ToString();
+
+                string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt");
+                if (itemStr == "Items")
+                {
+                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt");
+                }
+                else if (itemStr == "Heroes")
+                {
+                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt");
+                }
+                else if (itemStr == "Units")
+                {
+                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt");
+                }
+
+                string folderName = file.Substring(file.LastIndexOf('\\') + 1);
+                // get rid of extension.
+                folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
+                string folderPath = Path.Combine(file.Substring(0, file.LastIndexOf('\\')), folderName);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                string allText = File.ReadAllText(file);
+                KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
+                foreach (KeyValue kv in kvs)
+                {
+                    if (kv.Key == "DOTAAbilities" || kv.Key == "DOTAHeroes" || kv.Key == "DOTAUnits")
+                    {
+                        // skip this first nextKey, go straight to children.
+                        if (kv.HasChildren)
+                        {
+                            IEnumerable<KeyValue> kvs2 = kv.Children;
+                            KeyValue[] kvArr = kvs2.ToArray();
+                            int ptr = 0;
+                            int start = 0;
+                            string nextKey = kvArr[ptr].Key;
+
+                            if (nextKey == "Version")
+                            {
+                                ptr++;
+                                nextKey = kvArr[ptr].Key;
+                                start = ptr;
+                            }
+                            string filePath = Path.Combine(folderPath, nextKey + ".txt");
+                            string[] lines = allText.Split('\n');
+                            string entry = "";
+                            string extraSpace = "";
+                            foreach (string line in lines)
+                            {
+                                if (line.Trim().StartsWith("\"" + nextKey))
+                                {
+                                    // get whitespace.
+                                    if (line.StartsWith("\t"))
+                                    {
+                                        extraSpace = "\t";
+                                    }
+
+                                    if (ptr != start)
+                                    {
+                                        File.Create(filePath).Close();
+                                        File.WriteAllText(filePath, entry, Encoding.Unicode);
+                                        entry = "";
+                                        ptr++;
+                                        if (ptr == kvArr.Length)
+                                        {
+                                            // no more entries to parse.
+                                            break;
+                                        }
+                                        filePath = Path.Combine(folderPath, nextKey + ".txt");
+                                        nextKey = kvArr[ptr].Key;
+                                    }
+                                    else
+                                    {
+                                        ptr++;
+                                        nextKey = kvArr[ptr].Key;
+                                        //entry = line;
+                                    }
+                                }
+                                if (ptr > start)
+                                {
+                                    string l = line;
+                                    if (extraSpace == "\t" && l.StartsWith("\t"))
+                                    {
+                                        l = l.Substring(1);
+                                    }
+                                    entry += l + "\n";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (items.Count > 0)
+            {
+                Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc"));
+            }
+        }
+
+        private void combineBtn_Click(object sender, EventArgs e)
+        {
+            CheckedListBox.CheckedItemCollection items = kvFileCheckbox.CheckedItems;
+            for (int i = 0; i < items.Count; i++)
+            {
+                string itemStr = items[i].ToString();
+
+                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom");
+                if (itemStr == "Items")
+                {
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom");
+                }
+                else if (itemStr == "Heroes")
+                {
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom");
+                }
+                else if (itemStr == "Units")
+                {
+                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom");
+                }
+
+                if (!Directory.Exists(fold))
+                {
+                    continue;
+                }
+
+                string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
+                string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
+                string bigKVPath = Path.Combine(parentFolder, foldName + ".txt");
+
+                //create backups dir if doesn't exist.
+                string backupsDir = Path.Combine(parentFolder, "backups");
+                if (!Directory.Exists(backupsDir))
+                {
+                    Directory.CreateDirectory(backupsDir);
+                }
+
+                string backupPath = Path.Combine(backupsDir, foldName + ".txt");
+                if (File.Exists(bigKVPath))
+                {
+                    // Delete old backups.
+                    if (File.Exists(backupPath))
+                    {
+                        File.Delete(backupPath);
+                    }
+                    // back it up
+                    File.Move(bigKVPath, backupPath);
+                    File.Create(bigKVPath).Close();
+                }
+                else if (File.Exists(Path.Combine(parentFolder, foldName + ".kv")))
+                {
+                    backupPath = Path.Combine(backupsDir, foldName + ".kv");
+                    // Delete old backups.
+                    if (File.Exists(backupPath))
+                    {
+                        File.Delete(backupPath);
+                    }
+                    // back it up
+                    bigKVPath = Path.Combine(parentFolder, foldName + ".kv");
+                    File.Move(bigKVPath, backupPath);
+                    File.Create(bigKVPath).Close();
+                }
+                else
+                {
+                    //no existing file to backup, so just create it
+                    File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
+                }
+                // so now we have the big KV file created and ready to be populated.
+
+                string[] files = Directory.GetFiles(fold);
+                string header = "\"DOTAAbilities\"" + "\n{\n";
+                if (foldName == "npc_heroes_custom")
+                {
+                    header = "\"DOTAHeroes\"" + "\n{\n";
+                }
+                else if (foldName == "npc_units_custom")
+                {
+                    header = "\"DOTAUnits\"" + "\n{\n";
+                }
+                string allText = header;
+                foreach (string file in files)
+                {
+                    bool addTab = false;
+                    string[] lines = File.ReadAllLines(file);
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        string line = lines[j];
+                        if (j == 0 && line.StartsWith("\t") == false && line.StartsWith("  ") == false)
+                        {
+                            addTab = true;
+                        }
+                        string newLine = line;
+                        if (addTab)
+                        {
+                            newLine = "\t" + line;
+                        }
+                        allText += newLine + "\n";
+                    }
+                }
+                allText += "\n}";
+                File.WriteAllText(bigKVPath, allText, Encoding.Unicode);
+            }
+            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc"));
         }
 
         /*

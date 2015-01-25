@@ -38,7 +38,7 @@ namespace D2ModKit
                     whitespace += " ";
                 }
             }
-            // the key is really long, so just add some tabs.
+            // the nextKey is really long, so just add some tabs.
             else
             {
                 whitespace += "\t\t";

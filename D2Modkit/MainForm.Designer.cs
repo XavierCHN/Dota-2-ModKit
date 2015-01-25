@@ -53,14 +53,17 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.totalSizeLabel = new System.Windows.Forms.Label();
+            this.gameSizeLabel = new System.Windows.Forms.Label();
+            this.contentSizeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.addonDropDown = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
+            this.kvFileCheckbox = new System.Windows.Forms.CheckedListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.combineBtn = new System.Windows.Forms.Button();
+            this.breakUpBtn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -183,7 +186,7 @@
             // newParticles
             // 
             this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(206, 74);
+            this.newParticles.Location = new System.Drawing.Point(207, 74);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.newParticles.Name = "newParticles";
             this.newParticles.Size = new System.Drawing.Size(127, 29);
@@ -197,7 +200,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(74, 179);
+            this.button2.Location = new System.Drawing.Point(75, 109);
             this.button2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 29);
@@ -216,7 +219,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(74, 74);
+            this.button1.Location = new System.Drawing.Point(75, 74);
             this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 29);
@@ -258,7 +261,7 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(206, 109);
+            this.particleDesigner.Location = new System.Drawing.Point(207, 109);
             this.particleDesigner.Name = "particleDesigner";
             this.particleDesigner.Size = new System.Drawing.Size(127, 29);
             this.particleDesigner.TabIndex = 20;
@@ -295,7 +298,7 @@
             this.button4.Size = new System.Drawing.Size(63, 33);
             this.button4.TabIndex = 27;
             this.button4.Text = "&npc";
-            this.toolTip1.SetToolTip(this.button4, "Open the scripts/npc files of this addon.");
+            this.toolTip1.SetToolTip(this.button4, "Go to this addon\'s scripts/npc directory.");
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.npcDir_Click);
             // 
@@ -310,28 +313,37 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(63, 33);
             this.button7.TabIndex = 28;
-            this.button7.Text = "flash3";
-            this.toolTip1.SetToolTip(this.button7, "Go to this addon\'s flash3 directory.");
+            this.button7.Text = "resource";
+            this.toolTip1.SetToolTip(this.button7, "Go to this addon\'s resource directory.");
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.flash3Dir_Click);
+            this.button7.Click += new System.EventHandler(this.resourceDir_Click);
             // 
-            // totalSizeLabel
+            // gameSizeLabel
             // 
-            this.totalSizeLabel.AutoSize = true;
-            this.totalSizeLabel.Location = new System.Drawing.Point(227, 31);
-            this.totalSizeLabel.Name = "totalSizeLabel";
-            this.totalSizeLabel.Size = new System.Drawing.Size(57, 13);
-            this.totalSizeLabel.TabIndex = 29;
-            this.totalSizeLabel.Text = "Total Size:";
-            this.toolTip1.SetToolTip(this.totalSizeLabel, "Click to refresh");
-            this.totalSizeLabel.Click += new System.EventHandler(this.totalSize_Click);
+            this.gameSizeLabel.AutoSize = true;
+            this.gameSizeLabel.Location = new System.Drawing.Point(227, 26);
+            this.gameSizeLabel.Name = "gameSizeLabel";
+            this.gameSizeLabel.Size = new System.Drawing.Size(61, 13);
+            this.gameSizeLabel.TabIndex = 29;
+            this.gameSizeLabel.Text = "Game Size:";
+            this.toolTip1.SetToolTip(this.gameSizeLabel, "Click to refresh");
+            this.gameSizeLabel.Click += new System.EventHandler(this.totalSize_Click);
+            // 
+            // contentSizeLabel
+            // 
+            this.contentSizeLabel.AutoSize = true;
+            this.contentSizeLabel.Location = new System.Drawing.Point(227, 39);
+            this.contentSizeLabel.Name = "contentSizeLabel";
+            this.contentSizeLabel.Size = new System.Drawing.Size(70, 13);
+            this.contentSizeLabel.TabIndex = 36;
+            this.contentSizeLabel.Text = "Content Size:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(239, 52);
+            this.label1.Location = new System.Drawing.Point(238, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -342,7 +354,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(107, 52);
+            this.label2.Location = new System.Drawing.Point(107, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 15;
@@ -362,7 +374,7 @@
             this.addonDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.addonDropDown.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addonDropDown.FormattingEnabled = true;
-            this.addonDropDown.Location = new System.Drawing.Point(68, 25);
+            this.addonDropDown.Location = new System.Drawing.Point(68, 28);
             this.addonDropDown.Name = "addonDropDown";
             this.addonDropDown.Size = new System.Drawing.Size(153, 26);
             this.addonDropDown.TabIndex = 23;
@@ -372,37 +384,58 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.label3.Location = new System.Drawing.Point(3, 29);
+            this.label3.Location = new System.Drawing.Point(7, 31);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 19);
             this.label3.TabIndex = 24;
             this.label3.Text = "Addon:";
             // 
-            // button8
+            // kvFileCheckbox
             // 
-            this.button8.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(74, 109);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(127, 29);
-            this.button8.TabIndex = 30;
-            this.button8.Text = "Break Up KV File";
-            this.toolTip1.SetToolTip(this.button8, "Copies the game and content directories of this addon into a specified folder.");
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.breakKVFile_Click);
+            this.kvFileCheckbox.CheckOnClick = true;
+            this.kvFileCheckbox.FormattingEnabled = true;
+            this.kvFileCheckbox.Items.AddRange(new object[] {
+            "Abilities",
+            "Items",
+            "Units",
+            "Heroes"});
+            this.kvFileCheckbox.Location = new System.Drawing.Point(76, 163);
+            this.kvFileCheckbox.Name = "kvFileCheckbox";
+            this.kvFileCheckbox.Size = new System.Drawing.Size(68, 64);
+            this.kvFileCheckbox.TabIndex = 32;
             // 
-            // button9
+            // label4
             // 
-            this.button9.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.Location = new System.Drawing.Point(74, 144);
-            this.button9.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(127, 29);
-            this.button9.TabIndex = 31;
-            this.button9.Text = "Combine KV Files";
-            this.toolTip1.SetToolTip(this.button9, "Copies the game and content directories of this addon into a specified folder.");
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.combineKVFiles_Click);
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Maroon;
+            this.label4.Location = new System.Drawing.Point(120, 141);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 19);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "KV Files";
+            // 
+            // combineBtn
+            // 
+            this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.combineBtn.Location = new System.Drawing.Point(150, 192);
+            this.combineBtn.Name = "combineBtn";
+            this.combineBtn.Size = new System.Drawing.Size(75, 23);
+            this.combineBtn.TabIndex = 34;
+            this.combineBtn.Text = "Combine";
+            this.combineBtn.UseVisualStyleBackColor = true;
+            this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
+            // 
+            // breakUpBtn
+            // 
+            this.breakUpBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.breakUpBtn.Location = new System.Drawing.Point(150, 163);
+            this.breakUpBtn.Name = "breakUpBtn";
+            this.breakUpBtn.Size = new System.Drawing.Size(75, 23);
+            this.breakUpBtn.TabIndex = 35;
+            this.breakUpBtn.Text = "Break Up";
+            this.breakUpBtn.UseVisualStyleBackColor = true;
+            this.breakUpBtn.Click += new System.EventHandler(this.breakUpBtn_Click);
             // 
             // MainForm
             // 
@@ -411,9 +444,12 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.ClientSize = new System.Drawing.Size(342, 251);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.totalSizeLabel);
+            this.Controls.Add(this.contentSizeLabel);
+            this.Controls.Add(this.breakUpBtn);
+            this.Controls.Add(this.combineBtn);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.kvFileCheckbox);
+            this.Controls.Add(this.gameSizeLabel);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -470,9 +506,12 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label totalSizeLabel;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label gameSizeLabel;
+        private System.Windows.Forms.CheckedListBox kvFileCheckbox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button combineBtn;
+        private System.Windows.Forms.Button breakUpBtn;
+        private System.Windows.Forms.Label contentSizeLabel;
     }
 }
 
