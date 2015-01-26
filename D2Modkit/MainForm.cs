@@ -117,8 +117,6 @@ namespace D2ModKit
 
         private Thread autoUpdateThread;
 
-        private bool displayChangelog = false;
-
         private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public MainForm()
@@ -133,7 +131,7 @@ namespace D2ModKit
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
                 // open up changelog
-                Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, false));
+                Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, 0));
             }
 
             InitializeComponent();
@@ -214,33 +212,111 @@ namespace D2ModKit
         private void CheckForUpdatesThread()
         {
             Debug.WriteLine("Child thread starts");
-            string newVers = convertVers(Vers, true);
-            Debug.WriteLine("New vers would be: " + newVers);
+            //string newVers = convertVers(Vers, 1);
+            //Debug.WriteLine("New vers would be: " + newVers);
             // check for a new version
-            string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
-            url += newVers + "/D2ModKit.zip";
+            //string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+            //url += newVers + "/D2ModKit.zip";
 
             // use these to test version updater.
             //newVers = "1.3.2";
             //url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v1.3.2/D2ModKit.zip";
 
             // remember to keep the version naming consistent!
-            // i.e. 1.3.8, 1.3.9, 1.4.0
+            //  you can go from 1.3.4.4 to 1.3.5.0, OR 1.3.4.0 to 1.3.5.0
 
-            WebClient wc = new WebClient();
-            try {
-                Byte[] responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
-                string source = System.Text.Encoding.ASCII.GetString(responseBytes);
+            int count = 1;
+            string url = "";
+            string newVers = "";
+            bool newVersFound = false;
+            bool checkOtherFormat = false;
+            bool checkOtherFormat2 = false;
+            int j = 0;
+            while (true)
+            {
+                newVers = convertVers(Vers, count+j);
+                url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+                url += newVers + "/D2ModKit.zip";
+
+                WebClient wc = new WebClient();
+                try
+                {
+                    Byte[] responseBytes = null;
+                    string source = null;
+
+                    if (checkOtherFormat2)
+                    {
+                        string otherFormatVers = newVers.Substring(0, 5);
+                        checkOtherFormat2 = false;
+                        responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + otherFormatVers);
+                        source = System.Text.Encoding.ASCII.GetString(responseBytes);
+                    }
+                    else
+                    {
+                        if (newVers.EndsWith("0"))
+                        {
+                            checkOtherFormat = true;
+                        }
+                        else
+                        {
+                            checkOtherFormat = false;
+                        }
+                        responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
+                        source = System.Text.Encoding.ASCII.GetString(responseBytes);
+                    }
+                }
+                catch (Exception)
+                {
+                    if (checkOtherFormat)
+                    {
+                        checkOtherFormat2 = true;
+                        checkOtherFormat = false;
+                        continue;
+                    }
+                    if (j < 10)
+                    {
+                        j++;
+                        //count++;
+                        continue;
+                    }
+                    break;
+                }
+                newVersFound = true;
+                count += j + 1;
+                j = 0;
             }
-            catch (Exception)
+            if (!newVersFound)
             {
                 Debug.WriteLine("No new vers available.");
                 return;
             }
+            newVers = convertVers(Vers, count-1);
+            url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+            url += newVers + "/D2ModKit.zip";
+
+            if (newVers.EndsWith("0"))
+            {
+                Byte[] responseBytes = null;
+                string source = null;
+                string otherFormatVers = newVers.Substring(0, 5);
+                WebClient wc = new WebClient();
+                try
+                {
+                    responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
+                    source = System.Text.Encoding.ASCII.GetString(responseBytes);
+                }
+                catch (Exception)
+                {
+                    url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+                    url += otherFormatVers + "/D2ModKit.zip";
+                }
+            }
+
             DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?",
                 "D2ModKit",
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Information);
+
             if (r == DialogResult.Yes)
             {
                 Debug.WriteLine("Url: " + url);
@@ -249,23 +325,24 @@ namespace D2ModKit
             }
         }
 
-        string convertVers(string vers, bool getNextVers)
+        string convertVers(string vers, int add)
         {
-            // ghetto way of checking for new Vers
+            //Debug.WriteLine("input: " + vers);
+            // check for new Vers
             string[] numStrings = vers.Split('.');
-            int hundreds = Int32.Parse(numStrings[0]) * 100;
-            int tens = Int32.Parse(numStrings[1]) * 10;
-            int ones = Int32.Parse(numStrings[2]);
-            int num = hundreds + tens + ones;
-            if (getNextVers)
-            {
-                num = hundreds + tens + ones + 1;
-            }
-            Debug.WriteLine("new num: " + num);
-            int newHundreds = num / 100;
-            int newTens = (num - newHundreds * 100) / 10;
-            int newOnes = num - newHundreds * 100 - newTens * 10;
-            string newVers = newHundreds + "." + newTens + "." + newOnes;
+            int thousands = Int32.Parse(numStrings[0]) * 1000;
+            int hundreds = Int32.Parse(numStrings[1]) * 100;
+            int tens = Int32.Parse(numStrings[2]) * 10;
+            int ones = Int32.Parse(numStrings[3]);
+            int num = thousands + hundreds + tens + ones + add;
+
+            //Debug.WriteLine("new num: " + num);
+            int newThousands = num / 1000;
+            int newHundreds = (num - newThousands * 1000) / 100;
+            int newTens = (num - newThousands*1000-newHundreds*100)/10;
+            int newOnes = num-newThousands*1000-newHundreds*100-newTens*10;
+            string newVers = newThousands + "." + newHundreds + "." + newTens + "." + newOnes;
+            Debug.WriteLine("New vers: " + newVers);
             return newVers;
         }
         
@@ -1010,7 +1087,7 @@ namespace D2ModKit
                                     if (ptr != start)
                                     {
                                         File.Create(filePath).Close();
-                                        File.WriteAllText(filePath, entry, Encoding.Unicode);
+                                        File.WriteAllText(filePath, entry);
                                         entry = "";
                                         ptr++;
                                         if (ptr == kvArr.Length)
@@ -1148,7 +1225,7 @@ namespace D2ModKit
                     }
                 }
                 allText += "\n}";
-                File.WriteAllText(bigKVPath, allText, Encoding.Unicode);
+                File.WriteAllText(bigKVPath, allText);
             }
             Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc"));
         }
