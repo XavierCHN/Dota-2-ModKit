@@ -59,11 +59,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.addonDropDown = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.kvFileCheckbox = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.combineBtn = new System.Windows.Forms.Button();
             this.breakUpBtn = new System.Windows.Forms.Button();
+            this.kvLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,7 +116,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(342, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(344, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -321,7 +322,7 @@
             // gameSizeLabel
             // 
             this.gameSizeLabel.AutoSize = true;
-            this.gameSizeLabel.Location = new System.Drawing.Point(227, 26);
+            this.gameSizeLabel.Location = new System.Drawing.Point(232, 28);
             this.gameSizeLabel.Name = "gameSizeLabel";
             this.gameSizeLabel.Size = new System.Drawing.Size(61, 13);
             this.gameSizeLabel.TabIndex = 29;
@@ -332,7 +333,7 @@
             // contentSizeLabel
             // 
             this.contentSizeLabel.AutoSize = true;
-            this.contentSizeLabel.Location = new System.Drawing.Point(227, 39);
+            this.contentSizeLabel.Location = new System.Drawing.Point(232, 41);
             this.contentSizeLabel.Name = "contentSizeLabel";
             this.contentSizeLabel.Size = new System.Drawing.Size(70, 13);
             this.contentSizeLabel.TabIndex = 36;
@@ -343,7 +344,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(238, 55);
+            this.label1.Location = new System.Drawing.Point(242, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -374,21 +375,10 @@
             this.addonDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.addonDropDown.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addonDropDown.FormattingEnabled = true;
-            this.addonDropDown.Location = new System.Drawing.Point(68, 28);
+            this.addonDropDown.Location = new System.Drawing.Point(73, 28);
             this.addonDropDown.Name = "addonDropDown";
             this.addonDropDown.Size = new System.Drawing.Size(153, 26);
             this.addonDropDown.TabIndex = 23;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.label3.Location = new System.Drawing.Point(7, 31);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 19);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Addon:";
             // 
             // kvFileCheckbox
             // 
@@ -438,13 +428,35 @@
             this.breakUpBtn.UseVisualStyleBackColor = true;
             this.breakUpBtn.Click += new System.EventHandler(this.breakUpBtn_Click);
             // 
+            // kvLabel
+            // 
+            this.kvLabel.AutoSize = true;
+            this.kvLabel.Location = new System.Drawing.Point(147, 234);
+            this.kvLabel.Name = "kvLabel";
+            this.kvLabel.Size = new System.Drawing.Size(35, 13);
+            this.kvLabel.TabIndex = 37;
+            this.kvLabel.Text = "label5";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Khaki;
+            this.label3.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Navy;
+            this.label3.Location = new System.Drawing.Point(9, 31);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 21);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Addon:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(342, 251);
+            this.ClientSize = new System.Drawing.Size(344, 254);
+            this.Controls.Add(this.kvLabel);
             this.Controls.Add(this.contentSizeLabel);
             this.Controls.Add(this.breakUpBtn);
             this.Controls.Add(this.combineBtn);
@@ -500,7 +512,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
         private System.Windows.Forms.ToolStripMenuItem newAddonFromBarebonesToolStripMenuItem1;
         private System.Windows.Forms.ComboBox addonDropDown;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripDropDownButton toolStripButton3;
         private System.Windows.Forms.ToolStripMenuItem overrideParticlesToBeNullToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeAddonToolStripMenuItem;
@@ -513,6 +524,8 @@
         private System.Windows.Forms.Button combineBtn;
         private System.Windows.Forms.Button breakUpBtn;
         private System.Windows.Forms.Label contentSizeLabel;
+        private System.Windows.Forms.Label kvLabel;
+        private System.Windows.Forms.Label label3;
     }
 }
 

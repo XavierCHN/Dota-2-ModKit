@@ -29,10 +29,36 @@ namespace D2ModKit
             set { textBox = value; }
         }
 
+        private CheckBox _commentCheckBox;
+
+        public CheckBox CommentCheckBox
+        {
+            get { return _commentCheckBox; }
+            set { _commentCheckBox = value; }
+        }
+        private CheckBox _removeHeroesCheckBox;
+
+        public CheckBox RemoveHeroesCheckBox
+        {
+            get { return _removeHeroesCheckBox; }
+            set { _removeHeroesCheckBox = value; }
+        }
+
+        private CheckBox _removeItemsCheckbox;
+
+        public CheckBox RemoveItemsCheckbox
+        {
+            get { return _removeItemsCheckbox; }
+            set { _removeItemsCheckbox = value; }
+        }
+
         public NewAddonForm()
         {
             InitializeComponent();
             Submit = button1;
+            CommentCheckBox = commentCheckBox;
+            RemoveHeroesCheckBox = removeHeroesCheckBox;
+            RemoveItemsCheckbox = removeItemsCheckBox;
             _TextBox.KeyDown += TextBox_KeyDown;
         }
 

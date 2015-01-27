@@ -143,14 +143,7 @@ namespace D2ModKit
                 kvFileCheckbox.SetItemChecked(i, true);
             }
 
-            // check if changelog should be displayed.
-            /*if (displayChangelog)
-            {
-                OutputForm of = new OutputForm();
-                of.RTextBox.Text = changelog;
-                //of.RTextBox.SelectionFont
-                of.ShowDialog();
-            }*/
+            kvLabel.Text = "";
 
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
@@ -342,7 +335,7 @@ namespace D2ModKit
             int newTens = (num - newThousands*1000-newHundreds*100)/10;
             int newOnes = num-newThousands*1000-newHundreds*100-newTens*10;
             string newVers = newThousands + "." + newHundreds + "." + newTens + "." + newOnes;
-            Debug.WriteLine("New vers: " + newVers);
+            //Debug.WriteLine("New vers: " + newVers);
             return newVers;
         }
         
@@ -756,20 +749,27 @@ namespace D2ModKit
             // at this point we have a valid 'barebones' directory.
             AddonForm = new NewAddonForm();
             AddonForm.Submit.Click += NewAddonSubmit_Click;
+            AddonForm.CommentCheckBox.Checked = true;
+            AddonForm.RemoveItemsCheckbox.Checked = true;
+            AddonForm.RemoveHeroesCheckBox.Checked = true;
             AddonForm.ShowDialog();
         }
 
         void NewAddonSubmit_Click(object sender, EventArgs e)
         {
+            Dictionary<string, bool> parameters = new Dictionary<string, bool>();
             AddonForm.SubmitClicked = true;
             AddonForm.Close();
-            forkBarebones();
+            parameters.Add("remove_print", AddonForm.CommentCheckBox.Checked);
+            parameters.Add("remove_heroes", AddonForm.RemoveHeroesCheckBox.Checked);
+            parameters.Add("remove_items", AddonForm.RemoveItemsCheckbox.Checked);
+            forkBarebones(parameters);
         }
 
-        void forkBarebones()
+        void forkBarebones(Dictionary<string, bool> parameters)
         {
             string modName = AddonForm._TextBox.Text;
-            ForkBarebones fork = new ForkBarebones(modName);
+            ForkBarebones fork = new ForkBarebones(modName, parameters);
 
             // now move the directories to their appropriate places.
             string lower = modName.ToLower();
@@ -790,7 +790,7 @@ namespace D2ModKit
             setAddonNames();
             // make the active addon this one.
             selectCurrentAddon(lower);
-            MessageBox.Show("The addon " + lower + " was successfully forked from Barebones.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
 
@@ -1115,6 +1115,9 @@ namespace D2ModKit
                                     entry += l + "\n";
                                 }
                             }
+                            // do the last entry.
+                            File.Create(filePath).Close();
+                            File.WriteAllText(filePath, entry);
                         }
                     }
                 }
@@ -1162,7 +1165,7 @@ namespace D2ModKit
                     Directory.CreateDirectory(backupsDir);
                 }
 
-                string backupPath = Path.Combine(backupsDir, foldName + ".txt");
+                string backupPath = Path.Combine(backupsDir, "npc_" + foldName + "_custom.txt");
                 if (File.Exists(bigKVPath))
                 {
                     // Delete old backups.
@@ -1173,24 +1176,6 @@ namespace D2ModKit
                     // back it up
                     File.Move(bigKVPath, backupPath);
                     File.Create(bigKVPath).Close();
-                }
-                else if (File.Exists(Path.Combine(parentFolder, foldName + ".kv")))
-                {
-                    backupPath = Path.Combine(backupsDir, foldName + ".kv");
-                    // Delete old backups.
-                    if (File.Exists(backupPath))
-                    {
-                        File.Delete(backupPath);
-                    }
-                    // back it up
-                    bigKVPath = Path.Combine(parentFolder, foldName + ".kv");
-                    File.Move(bigKVPath, backupPath);
-                    File.Create(bigKVPath).Close();
-                }
-                else
-                {
-                    //no existing file to backup, so just create it
-                    File.Create(Path.Combine(Path.Combine(parentFolder, foldName + ".txt"))).Close();
                 }
                 // so now we have the big KV file created and ready to be populated.
 
@@ -1227,7 +1212,17 @@ namespace D2ModKit
                 allText += "\n}";
                 File.WriteAllText(bigKVPath, allText);
             }
-            Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc"));
+            System.Timers.Timer kvLabelTimer = new System.Timers.Timer(1000);
+            kvLabelTimer.SynchronizingObject = this;
+            kvLabelTimer.AutoReset = false;
+            kvLabelTimer.Start();
+            kvLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+            kvLabel.Text = "Combine success";
+        }
+
+        void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            kvLabel.Text = "";
         }
 
         /*
