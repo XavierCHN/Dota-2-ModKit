@@ -141,9 +141,6 @@ namespace D2ModKit
         {
             // Parse addon_english.txt KV
             KeyValue[] addonEnglishKeyVals = KVParser.KV1.ParseAll(File.ReadAllText(addonEnglishPath));
-            for (int i = 0; i < addonEnglishKeyVals.Length; i++)
-            {
-            }
         }
 
         public void getAbilityTooltips(bool items)

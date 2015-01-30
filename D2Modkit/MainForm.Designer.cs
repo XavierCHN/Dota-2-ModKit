@@ -433,9 +433,9 @@
             this.kvLabel.AutoSize = true;
             this.kvLabel.Location = new System.Drawing.Point(147, 234);
             this.kvLabel.Name = "kvLabel";
-            this.kvLabel.Size = new System.Drawing.Size(35, 13);
+            this.kvLabel.Size = new System.Drawing.Size(90, 13);
             this.kvLabel.TabIndex = 37;
-            this.kvLabel.Text = "label5";
+            this.kvLabel.Text = "Combine success";
             // 
             // label3
             // 
