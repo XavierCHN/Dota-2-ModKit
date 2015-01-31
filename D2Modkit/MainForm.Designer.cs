@@ -65,6 +65,7 @@
             this.breakUpBtn = new System.Windows.Forms.Button();
             this.kvLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,6 +125,7 @@
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem,
             this.newAddonFromBarebonesToolStripMenuItem1});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -134,8 +136,9 @@
             // newAddonFromBarebonesToolStripMenuItem1
             // 
             this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
-            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
+            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(272, 22);
             this.newAddonFromBarebonesToolStripMenuItem1.Text = "Addon From Barebones";
+            this.newAddonFromBarebonesToolStripMenuItem1.ToolTipText = "Fork a new addon from BMD\'s Barebones.";
             this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
             // 
             // templatesButton
@@ -449,6 +452,15 @@
             this.label3.TabIndex = 24;
             this.label3.Text = "Addon:";
             // 
+            // addonFromMyllsForkedBarebonesToolStripMenuItem
+            // 
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Addon From Myll\'s Forked Barebones";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
+    "s to BMD\'s\r\nBarebones.";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -526,6 +538,7 @@
         private System.Windows.Forms.Label contentSizeLabel;
         private System.Windows.Forms.Label kvLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem addonFromMyllsForkedBarebonesToolStripMenuItem;
     }
 }
 

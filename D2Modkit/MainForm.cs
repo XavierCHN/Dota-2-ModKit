@@ -717,22 +717,23 @@ namespace D2ModKit
             set { addonForm = value; }
         }
 
-        private void forkBarebones_Click(object sender, EventArgs e)
+        private void forkAddon(bool myllsVersion)
         {
             // ensure a "barebones" folder is in the current directory, and it has game and content in it.
             string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
             if (!Directory.Exists(barebonesDir))
             {
-                DialogResult res = MessageBox.Show("No 'barebones' directory found in the D2ModKit folder. Download barebones?",
+                DialogResult res = MessageBox.Show("No 'barebones' directory found in the D2ModKit folder. Download barebones now?",
                     "D2ModKit",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Information);
 
                 if (res != DialogResult.OK)
                 {
                     return;
                 }
 
-                BarebonesDLForm dl = new BarebonesDLForm();
+                BarebonesDLForm dl = new BarebonesDLForm(myllsVersion);
                 dl.ShowDialog();
             }
 
@@ -741,7 +742,9 @@ namespace D2ModKit
                 if (!Directory.Exists(Path.Combine(barebonesDir, "game")) || !Directory.Exists(Path.Combine(barebonesDir, "content")))
                 {
                     MessageBox.Show("Invalid structure in the 'barebones' directory. It must have a 'game' and 'content' folder.",
-                        "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "D2ModKit", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -755,6 +758,11 @@ namespace D2ModKit
             AddonForm.ShowDialog();
         }
 
+        private void forkBarebones_Click(object sender, EventArgs e)
+        {
+            forkAddon(false);
+        }
+
         void NewAddonSubmit_Click(object sender, EventArgs e)
         {
             Dictionary<string, bool> parameters = new Dictionary<string, bool>();
@@ -763,6 +771,7 @@ namespace D2ModKit
             parameters.Add("remove_print", AddonForm.CommentCheckBox.Checked);
             parameters.Add("remove_heroes", AddonForm.RemoveHeroesCheckBox.Checked);
             parameters.Add("remove_items", AddonForm.RemoveItemsCheckbox.Checked);
+            //parameters.Add("mylls_version", AddonForm.MyllsVersionCheckbox.Checked);
             forkBarebones(parameters);
         }
 
@@ -790,7 +799,10 @@ namespace D2ModKit
             setAddonNames();
             // make the active addon this one.
             selectCurrentAddon(lower);
-            MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit", 
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
 
@@ -1090,19 +1102,19 @@ namespace D2ModKit
                                         File.WriteAllText(filePath, entry);
                                         entry = "";
                                         ptr++;
-                                        if (ptr == kvArr.Length)
-                                        {
-                                            // no more entries to parse.
-                                            break;
-                                        }
                                         filePath = Path.Combine(folderPath, nextKey + ".txt");
-                                        nextKey = kvArr[ptr].Key;
+                                        if (ptr != kvArr.Length)
+                                        {
+                                            nextKey = kvArr[ptr].Key;
+                                        }
                                     }
                                     else
                                     {
                                         ptr++;
-                                        nextKey = kvArr[ptr].Key;
-                                        //entry = line;
+                                        if (ptr != kvArr.Length)
+                                        {
+                                            nextKey = kvArr[ptr].Key;
+                                        }
                                     }
                                 }
                                 if (ptr > start)
@@ -1115,6 +1127,13 @@ namespace D2ModKit
                                     entry += l + "\n";
                                 }
                             }
+                            // remove the last }
+                            entry = entry.TrimEnd();
+                            if (entry.EndsWith("}"))
+                            {
+                                entry = entry.Substring(0, entry.Length - 1);
+                            }
+
                             // do the last entry.
                             File.Create(filePath).Close();
                             File.WriteAllText(filePath, entry);
@@ -1208,8 +1227,9 @@ namespace D2ModKit
                         }
                         allText += newLine + "\n";
                     }
+                    //allText += "\n";
                 }
-                allText += "\n}";
+                allText += "}";
                 File.WriteAllText(bigKVPath, allText);
             }
             System.Timers.Timer kvLabelTimer = new System.Timers.Timer(1000);
@@ -1223,6 +1243,11 @@ namespace D2ModKit
         void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             kvLabel.Text = "";
+        }
+
+        private void addonFromMyllsForkedBarebonesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            forkAddon(true);
         }
 
         /*

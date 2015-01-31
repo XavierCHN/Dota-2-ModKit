@@ -16,7 +16,7 @@ namespace D2ModKit
 {
     public partial class BarebonesDLForm : Form
     {
-        public BarebonesDLForm()
+        public BarebonesDLForm(bool myllsVersion)
         {
             WebClient wc = new WebClient();
             wc.DownloadFileCompleted += wc_DownloadFileCompleted;
@@ -30,9 +30,18 @@ namespace D2ModKit
                 File.Delete(Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
             }
 
-            wc.DownloadFileAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"),
-                Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
+            if (!myllsVersion)
+            {
+                wc.DownloadFileAsync(new Uri("https://github.com/bmddota/barebones/archive/source2.zip"),
+                    Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
+            }
+            else
+            {
+                label1.Text = "Downloading Barebones from:\nhttps://github.com/Myll/barebones/archive/source2.zip";
 
+                wc.DownloadFileAsync(new Uri("https://github.com/Myll/barebones/archive/source2.zip"),
+                    Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
+            }
         }
 
         void wc_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
