@@ -1208,7 +1208,8 @@ namespace D2ModKit
                 {
                     header = "\"DOTAUnits\"" + "\n{\n";
                 }
-                string allText = header;
+                //string allText = header;
+                File.AppendAllText(bigKVPath, header);
                 foreach (string file in files)
                 {
                     bool addTab = false;
@@ -1225,12 +1226,13 @@ namespace D2ModKit
                         {
                             newLine = "\t" + line;
                         }
-                        allText += newLine + "\n";
+                        File.AppendAllText(bigKVPath, newLine + "\n");
+                        //allText += newLine + "\n";
                     }
-                    //allText += "\n";
                 }
-                allText += "}";
-                File.WriteAllText(bigKVPath, allText);
+                File.AppendAllText(bigKVPath, "}");
+                //allText += "}";
+                //File.WriteAllText(bigKVPath, allText);
             }
             System.Timers.Timer kvLabelTimer = new System.Timers.Timer(1000);
             kvLabelTimer.SynchronizingObject = this;
