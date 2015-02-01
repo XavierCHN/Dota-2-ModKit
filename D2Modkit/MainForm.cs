@@ -982,7 +982,7 @@ namespace D2ModKit
 
         private void resourceDir_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(currAddon.GamePath, "resource");
+            string path = Path.Combine(currAddon.GamePath, "resource", "flash3");
             if (Directory.Exists(path))
             {
                 Process.Start(path);
@@ -1253,9 +1253,9 @@ namespace D2ModKit
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.S1DotaExtractPath == "")
+            if (Properties.Settings.Default.S2DotaExtractPath == "")
             {
-                DialogResult r = MessageBox.Show("No Source 1 Dota 2 Extract path defined. Set the path now?",
+                DialogResult r = MessageBox.Show("No Source 2 Dota Extract path defined. Set the path now?",
                         "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 if (r == DialogResult.Cancel)
                 {
@@ -1264,11 +1264,11 @@ namespace D2ModKit
                 FolderBrowserDialog fbd = new FolderBrowserDialog();
                 // let the user see the particles directory first.
                 fbd.Description =
-                    "Browse to your Extracted Dota 2 path.";
+                    "Browse to your Extracted Source 2 Dota path.";
                 DialogResult fbd_res = fbd.ShowDialog();
                 if (fbd_res == DialogResult.OK)
                 {
-                    Properties.Settings.Default.S1DotaExtractPath = fbd.SelectedPath;
+                    Properties.Settings.Default.S2DotaExtractPath = fbd.SelectedPath;
                     Settings.Default.Save();
                 }
                 else
@@ -1277,7 +1277,7 @@ namespace D2ModKit
                 }
             }
 
-            // get the null particle contents.
+            // get the null sound contents.
             string nullSoundPath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_sound.vsndevts");
             string[] nullSoundContents = null;
             if (File.Exists(nullSoundPath))
@@ -1285,8 +1285,8 @@ namespace D2ModKit
                 nullSoundContents = File.ReadAllLines(nullSoundPath);
             }
 
-            string extractPath = Properties.Settings.Default.S1DotaExtractPath;
-            // We need a particle system to work with.
+            string extractPath = Properties.Settings.Default.S2DotaExtractPath;
+
             OpenFileDialog fd = new OpenFileDialog();
             fd.InitialDirectory = Path.Combine(extractPath, "scripts");
             fd.Multiselect = true;

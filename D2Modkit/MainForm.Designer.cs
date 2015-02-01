@@ -37,6 +37,7 @@
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.templatesButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -65,7 +66,6 @@
             this.breakUpBtn = new System.Windows.Forms.Button();
             this.kvLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,7 +117,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(344, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(340, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -132,6 +132,15 @@
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripDropDownButton2.Text = "New";
+            // 
+            // addonFromMyllsForkedBarebonesToolStripMenuItem
+            // 
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Addon From Myll\'s Forked Barebones";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
+    "s to BMD\'s\r\nBarebones.";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
             // 
             // newAddonFromBarebonesToolStripMenuItem1
             // 
@@ -190,8 +199,8 @@
             // newParticles
             // 
             this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(207, 74);
-            this.newParticles.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.newParticles.Location = new System.Drawing.Point(205, 76);
+            this.newParticles.Margin = new System.Windows.Forms.Padding(2);
             this.newParticles.Name = "newParticles";
             this.newParticles.Size = new System.Drawing.Size(127, 29);
             this.newParticles.TabIndex = 8;
@@ -204,8 +213,8 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(75, 109);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.button2.Location = new System.Drawing.Point(74, 109);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 29);
             this.button2.TabIndex = 10;
@@ -223,8 +232,8 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(75, 74);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.button1.Location = new System.Drawing.Point(74, 76);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 29);
             this.button1.TabIndex = 11;
@@ -241,6 +250,7 @@
             this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.Location = new System.Drawing.Point(7, 55);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(63, 33);
             this.button5.TabIndex = 16;
@@ -253,7 +263,8 @@
             // 
             this.button6.BackColor = System.Drawing.SystemColors.Info;
             this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(7, 94);
+            this.button6.Location = new System.Drawing.Point(7, 92);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(63, 33);
             this.button6.TabIndex = 17;
@@ -265,7 +276,8 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(207, 109);
+            this.particleDesigner.Location = new System.Drawing.Point(205, 109);
+            this.particleDesigner.Margin = new System.Windows.Forms.Padding(2);
             this.particleDesigner.Name = "particleDesigner";
             this.particleDesigner.Size = new System.Drawing.Size(127, 29);
             this.particleDesigner.TabIndex = 20;
@@ -281,7 +293,8 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Default;
             this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(7, 133);
+            this.button3.Location = new System.Drawing.Point(7, 129);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(63, 33);
             this.button3.TabIndex = 26;
@@ -297,7 +310,8 @@
             this.button4.Cursor = System.Windows.Forms.Cursors.Default;
             this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(7, 172);
+            this.button4.Location = new System.Drawing.Point(7, 166);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(63, 33);
             this.button4.TabIndex = 27;
@@ -313,12 +327,13 @@
             this.button7.Cursor = System.Windows.Forms.Cursors.Default;
             this.button7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(7, 211);
+            this.button7.Location = new System.Drawing.Point(7, 203);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(63, 33);
             this.button7.TabIndex = 28;
-            this.button7.Text = "resource";
-            this.toolTip1.SetToolTip(this.button7, "Go to this addon\'s resource directory.");
+            this.button7.Text = "flash3";
+            this.toolTip1.SetToolTip(this.button7, "Go to this addon\'s resource/flash3 directory.");
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.resourceDir_Click);
             // 
@@ -347,7 +362,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(242, 55);
+            this.label1.Location = new System.Drawing.Point(236, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -393,7 +408,8 @@
             "Items",
             "Units",
             "Heroes"});
-            this.kvFileCheckbox.Location = new System.Drawing.Point(76, 163);
+            this.kvFileCheckbox.Location = new System.Drawing.Point(74, 161);
+            this.kvFileCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.kvFileCheckbox.Name = "kvFileCheckbox";
             this.kvFileCheckbox.Size = new System.Drawing.Size(68, 68);
             this.kvFileCheckbox.TabIndex = 32;
@@ -403,7 +419,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(120, 141);
+            this.label4.Location = new System.Drawing.Point(109, 140);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 19);
             this.label4.TabIndex = 33;
@@ -412,7 +428,8 @@
             // combineBtn
             // 
             this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(150, 199);
+            this.combineBtn.Location = new System.Drawing.Point(146, 197);
+            this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
             this.combineBtn.Name = "combineBtn";
             this.combineBtn.Size = new System.Drawing.Size(71, 32);
             this.combineBtn.TabIndex = 34;
@@ -423,7 +440,8 @@
             // breakUpBtn
             // 
             this.breakUpBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.breakUpBtn.Location = new System.Drawing.Point(150, 163);
+            this.breakUpBtn.Location = new System.Drawing.Point(146, 161);
+            this.breakUpBtn.Margin = new System.Windows.Forms.Padding(2);
             this.breakUpBtn.Name = "breakUpBtn";
             this.breakUpBtn.Size = new System.Drawing.Size(71, 32);
             this.breakUpBtn.TabIndex = 35;
@@ -434,7 +452,7 @@
             // kvLabel
             // 
             this.kvLabel.AutoSize = true;
-            this.kvLabel.Location = new System.Drawing.Point(147, 234);
+            this.kvLabel.Location = new System.Drawing.Point(127, 231);
             this.kvLabel.Name = "kvLabel";
             this.kvLabel.Size = new System.Drawing.Size(90, 13);
             this.kvLabel.TabIndex = 37;
@@ -446,20 +464,11 @@
             this.label3.BackColor = System.Drawing.Color.Khaki;
             this.label3.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Navy;
-            this.label3.Location = new System.Drawing.Point(9, 31);
+            this.label3.Location = new System.Drawing.Point(8, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 21);
             this.label3.TabIndex = 24;
             this.label3.Text = "Addon:";
-            // 
-            // addonFromMyllsForkedBarebonesToolStripMenuItem
-            // 
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Addon From Myll\'s Forked Barebones";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
-    "s to BMD\'s\r\nBarebones.";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -467,7 +476,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(344, 254);
+            this.ClientSize = new System.Drawing.Size(340, 249);
             this.Controls.Add(this.kvLabel);
             this.Controls.Add(this.contentSizeLabel);
             this.Controls.Add(this.breakUpBtn);
