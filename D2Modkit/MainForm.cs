@@ -1029,110 +1029,111 @@ namespace D2ModKit
             return Environment.SpecialFolder.MyComputer;
         }
 
-        private void breakUpBtn_Click(object sender, EventArgs e)
+        private void breakUp(string itemStr)
         {
-            CheckedListBox.CheckedItemCollection items = kvFileCheckbox.CheckedItems;
-            for (int i = 0; i < items.Count; i++)
+            string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt");
+            string folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
+            if (itemStr == "Items")
             {
-                string itemStr = items[i].ToString();
+                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt");
+                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
+            }
+            else if (itemStr == "Heroes")
+            {
+                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt");
+                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
+            }
+            else if (itemStr == "Units")
+            {
+                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt");
+                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
+            }
 
-                string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt");
-                string folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
-                if (itemStr == "Items")
+            string folderName = file.Substring(file.LastIndexOf('\\') + 1);
+            // get rid of extension.
+            folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            string allText = File.ReadAllText(file);
+            KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
+            foreach (KeyValue kv in kvs)
+            {
+                if (kv.Key == "DOTAAbilities" || kv.Key == "DOTAHeroes" || kv.Key == "DOTAUnits")
                 {
-                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt");
-                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
-                }
-                else if (itemStr == "Heroes")
-                {
-                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt");
-                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
-                }
-                else if (itemStr == "Units")
-                {
-                    file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt");
-                    folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
-                }
-
-                string folderName = file.Substring(file.LastIndexOf('\\') + 1);
-                // get rid of extension.
-                folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-                string allText = File.ReadAllText(file);
-                KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
-                foreach (KeyValue kv in kvs)
-                {
-                    if (kv.Key == "DOTAAbilities" || kv.Key == "DOTAHeroes" || kv.Key == "DOTAUnits")
+                    // skip this first nextKey, go straight to children.
+                    if (kv.HasChildren)
                     {
-                        // skip this first nextKey, go straight to children.
-                        if (kv.HasChildren)
-                        {
-                            IEnumerable<KeyValue> kvs2 = kv.Children;
-                            KeyValue[] kvArr = kvs2.ToArray();
-                            // record start line number and end line number of each Key-Value block
-                            int[] startLineNumber = new int[kvArr.Length];
-                            int[] endLineNumber = new int[kvArr.Length];
+                        IEnumerable<KeyValue> kvs2 = kv.Children;
+                        KeyValue[] kvArr = kvs2.ToArray();
+                        // record start line number and end line number of each Key-Value block
+                        int[] startLineNumber = new int[kvArr.Length];
+                        int[] endLineNumber = new int[kvArr.Length];
                             
-                            // catch the start pointer, ignore all "Version"s
-                            int ptr = 0;
-                            while (kvArr[ptr].Key == "Version" && ptr < kvArr.Length)
-                                ptr++;
+                        // catch the start pointer, ignore all "Version"s
+                        int ptr = 0;
+                        while (kvArr[ptr].Key == "Version" && ptr < kvArr.Length)
+                            ptr++;
                             
-                            // store the start pointer
-                            int startPtr = ptr;
+                        // store the start pointer
+                        int startPtr = ptr;
 
-                            // init the first key
-                            string key = kvArr[ptr].Key;
+                        // init the first key
+                        string key = kvArr[ptr].Key;
                             
-                            // loop over all lines to record the start/end of all kvs
-                            string[] lines = allText.Split('\n');
-                            for(int index = 0; index < lines.Length ; index ++)
+                        // loop over all lines to record the start/end of all kvs
+                        string[] lines = allText.Split('\n');
+                        for(int index = 0; index < lines.Length ; index ++)
+                        {
+                            string line = lines[index];
+                            if(line.Trim().StartsWith("\""+ key))
                             {
-                                string line = lines[index];
-                                if(line.Trim().StartsWith("\""+ key))
+                                int ind = index - 1;
+                                // go back to add all comments/empty lines to this block
+                                while ((lines[ind].Trim() == "" || lines[ind].Trim().StartsWith("//")) && (ind > 0))
+                                    ind--;
+                                startLineNumber[ptr] = ind + 1;
+                                // record the end of the block for last pointer
+                                if (ptr > 0)
+                                    endLineNumber[ptr - 1] = ind;
+                                if (ptr < kvArr.Length - 1)
                                 {
-                                    int ind = index - 1;
-                                    // go back to add all comments/empty lines to this block
-                                    while ((lines[ind].Trim() == "" || lines[ind].Trim().StartsWith("//")) && (ind > 0))
-                                        ind--;
-                                    startLineNumber[ptr] = ind + 1;
-                                    // record the end of the block for last pointer
-                                    if (ptr > 0)
-                                        endLineNumber[ptr - 1] = ind;
-                                    if (ptr < kvArr.Length - 1)
-                                    {
-                                        ptr++;
-                                        key = kvArr[ptr].Key;
-                                    }
+                                    ptr++;
+                                    key = kvArr[ptr].Key;
                                 }
                             }
-                            // deal with very last pointer
-                            int lastInd = lines.Length -1;
-                            while (lastInd > 0 && lines[lastInd].Contains("}") && (lines[lastInd].IndexOf("//") > lines[lastInd].IndexOf("}")))
-                                lastInd--;
-                            endLineNumber[kvArr.Length -1] = lastInd;
+                        }
+                        // deal with very last pointer
+                        int lastInd = lines.Length -1;
+                        while (lastInd > 0 && lines[lastInd].Contains("}") && (lines[lastInd].IndexOf("//") > lines[lastInd].IndexOf("}")))
+                            lastInd--;
+                        endLineNumber[kvArr.Length -1] = lastInd;
 
-                            // generate break-down kv files and write text
-                            for( int p = startPtr; p< kvArr.Length;p++)
+                        // generate break-down kv files and write text
+                        for( int p = startPtr; p< kvArr.Length;p++)
+                        {
+                            string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
+                            File.Create(filePath).Close();
+                            StringBuilder sb = new StringBuilder();
+
+                            for (int p1 = startLineNumber[p]; p1 <= endLineNumber[p]; p1++)
                             {
-                                string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
-                                File.Create(filePath).Close();
-                                StringBuilder sb = new StringBuilder();
-                                
-                                for (int p1 = startLineNumber[p]; p1 <= endLineNumber[p]; p1++)
-                                    sb.AppendLine(lines[p1]);
-                                File.WriteAllText(filePath,sb.ToString());
+                                string line = lines[p1];
+                                // remove first tab
+                                if (line.StartsWith("\t"))
+                                {
+                                    line = line.Substring(1);
+                                }
+                                sb.Append(line);
                             }
+                            string output = sb.ToString();
+                            // remove beginning newline
+                            output = output.TrimStart();
+                            File.WriteAllText(filePath, output);
                         }
                     }
                 }
-            }
-            if (items.Count > 0)
-            {
-                Process.Start(Path.Combine(currAddon.GamePath, "scripts", "npc"));
             }
         }
 
@@ -1159,7 +1160,15 @@ namespace D2ModKit
 
                 if (!Directory.Exists(fold))
                 {
-                    continue;
+                    DialogResult res = MessageBox.Show("npc_" + itemStr.ToLower() + "_custom has not been broken up. Break it up now?",
+                        "D2ModKit",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information);
+                    if (res != DialogResult.OK)
+                    {
+                        continue;
+                    }
+                    breakUp(itemStr);
                 }
 
                 string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
@@ -1188,17 +1197,16 @@ namespace D2ModKit
                 // so now we have the big KV file created and ready to be populated.
 
                 string[] files = Directory.GetFiles(fold);
-                string header = "\"DOTAAbilities\"" + "\n{\n";
+                StringBuilder text = new StringBuilder("\"DOTAAbilities\"" + "\n{\n");
                 if (foldName == "npc_heroes_custom")
                 {
-                    header = "\"DOTAHeroes\"" + "\n{\n";
+                    text = new StringBuilder("\"DOTAHeroes\"" + "\n{\n");
                 }
                 else if (foldName == "npc_units_custom")
                 {
-                    header = "\"DOTAUnits\"" + "\n{\n";
+                    text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
                 }
-                //string allText = header;
-                File.AppendAllText(bigKVPath, header);
+                //File.AppendAllText(bigKVPath, header.ToString());
                 foreach (string file in files)
                 {
                     bool addTab = false;
@@ -1215,15 +1223,15 @@ namespace D2ModKit
                         {
                             newLine = "\t" + line;
                         }
-                        File.AppendAllText(bigKVPath, newLine + "\n");
-                        //allText += newLine + "\n";
+                        //File.AppendAllText(bigKVPath, newLine + "\n");
+                        text.AppendLine(newLine);
                     }
                 }
-                File.AppendAllText(bigKVPath, "}");
-                //allText += "}";
-                //File.WriteAllText(bigKVPath, allText);
+                //File.AppendAllText(bigKVPath, "}");
+                text.Append("}");
+                File.WriteAllText(bigKVPath, text.ToString());
             }
-            System.Timers.Timer kvLabelTimer = new System.Timers.Timer(1000);
+            System.Timers.Timer kvLabelTimer = new System.Timers.Timer(800);
             kvLabelTimer.SynchronizingObject = this;
             kvLabelTimer.AutoReset = false;
             kvLabelTimer.Start();

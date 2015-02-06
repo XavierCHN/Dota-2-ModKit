@@ -11,8 +11,8 @@ A GUI comprised of useful tools to help with Dota 2 modding.
 * **Wiki Generator**. Generate wikis for your addon, for every language you've defined, based off the scripts/npc files. Currently incomplete.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
 
-![Alt text](http://i.imgur.com/MRE7R3E.png)
-![Alt text](http://i.imgur.com/0Ev0Pof.png)
+![Alt text](http://i.imgur.com/piVz19A.png)
+![Alt text](http://i.imgur.com/rjvUrDe.png)
 
 ## Installation
 
@@ -34,9 +34,10 @@ I hope you find every feature in D2ModKit intuitive and easy to use. I will outl
 
 * Thanks to [ToraxXx](https://github.com/toraxxx) for decompiling all of the particles.
 * Thanks to [RoyAwesome](https://github.com/RoyAwesome) for making KVLib, which allows easy parsing of Valve KV files.
-* Thanks to [Noya](https://github.com/MNoya) for giving me the idea of a Tooltips generator.
+* Thanks to [Noya](https://github.com/MNoya) for giving me the idea of a Tooltips generator and helping a lot with testing.
 * Thanks to [penguinwizzard](https://github.com/Penguinwizzard) for doing the icon.
 * Thanks to [SebRut](https://github.com/sebrut) for ideas and C# tips.
+* Thanks to [XavierCHN](https://github.com/XavierCHN) for contributing.
 
 ## Notes
 

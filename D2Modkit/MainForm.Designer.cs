@@ -63,7 +63,6 @@
             this.kvFileCheckbox = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.combineBtn = new System.Windows.Forms.Button();
-            this.breakUpBtn = new System.Windows.Forms.Button();
             this.kvLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
@@ -117,7 +116,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(340, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(341, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -428,31 +427,19 @@
             // combineBtn
             // 
             this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(146, 197);
+            this.combineBtn.Location = new System.Drawing.Point(146, 161);
             this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
             this.combineBtn.Name = "combineBtn";
-            this.combineBtn.Size = new System.Drawing.Size(71, 32);
+            this.combineBtn.Size = new System.Drawing.Size(65, 50);
             this.combineBtn.TabIndex = 34;
             this.combineBtn.Text = "Combine";
             this.combineBtn.UseVisualStyleBackColor = true;
             this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
             // 
-            // breakUpBtn
-            // 
-            this.breakUpBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.breakUpBtn.Location = new System.Drawing.Point(146, 161);
-            this.breakUpBtn.Margin = new System.Windows.Forms.Padding(2);
-            this.breakUpBtn.Name = "breakUpBtn";
-            this.breakUpBtn.Size = new System.Drawing.Size(71, 32);
-            this.breakUpBtn.TabIndex = 35;
-            this.breakUpBtn.Text = "Break Up";
-            this.breakUpBtn.UseVisualStyleBackColor = true;
-            this.breakUpBtn.Click += new System.EventHandler(this.breakUpBtn_Click);
-            // 
             // kvLabel
             // 
             this.kvLabel.AutoSize = true;
-            this.kvLabel.Location = new System.Drawing.Point(127, 231);
+            this.kvLabel.Location = new System.Drawing.Point(143, 213);
             this.kvLabel.Name = "kvLabel";
             this.kvLabel.Size = new System.Drawing.Size(90, 13);
             this.kvLabel.TabIndex = 37;
@@ -476,10 +463,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(340, 249);
+            this.ClientSize = new System.Drawing.Size(341, 247);
             this.Controls.Add(this.kvLabel);
             this.Controls.Add(this.contentSizeLabel);
-            this.Controls.Add(this.breakUpBtn);
             this.Controls.Add(this.combineBtn);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.kvFileCheckbox);
@@ -543,7 +529,6 @@
         private System.Windows.Forms.CheckedListBox kvFileCheckbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button combineBtn;
-        private System.Windows.Forms.Button breakUpBtn;
         private System.Windows.Forms.Label contentSizeLabel;
         private System.Windows.Forms.Label kvLabel;
         private System.Windows.Forms.Label label3;

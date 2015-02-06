@@ -38,7 +38,6 @@
             this.sizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -46,12 +45,13 @@
             this.resizeScrollBar = new System.Windows.Forms.HScrollBar();
             this.label8 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // recolorButton
             // 
-            this.recolorButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recolorButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recolorButton.ForeColor = System.Drawing.Color.Indigo;
             this.recolorButton.Location = new System.Drawing.Point(263, 12);
             this.recolorButton.Name = "recolorButton";
@@ -84,7 +84,7 @@
             this.colorLabel,
             this.baseNameLabel,
             this.sizeLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 287);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 292);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(433, 22);
             this.statusStrip1.TabIndex = 8;
@@ -130,22 +130,11 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Re-Name Particle System";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(248, 52);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Enter the new base name for the particle system\r\n(do not include \".vpcf\"). Leave " +
-    "the textbox blank if \r\nyou don\'t want to rename the particle system.\r\nExample: d" +
-    "oom_bringer_doom";
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 202);
+            this.textBox1.Location = new System.Drawing.Point(16, 222);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(245, 20);
+            this.textBox1.Size = new System.Drawing.Size(219, 20);
             this.textBox1.TabIndex = 12;
             // 
             // label4
@@ -202,12 +191,25 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(16, 151);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(240, 65);
+            this.textBox2.TabIndex = 20;
+            this.textBox2.Text = "Enter the new base name for the particle system (do not include \".vpcf\"). Leave t" +
+    "he textbox blank if you don\'t want to rename the particle system.\r\nExample: blac" +
+    "k_hole_red";
+            // 
             // ParticleDesignForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(433, 309);
+            this.ClientSize = new System.Drawing.Size(433, 314);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
@@ -215,7 +217,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.resizeScrollBar);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.statusStrip1);
@@ -246,7 +247,6 @@
         private System.Windows.Forms.ToolStripStatusLabel sizeLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -254,5 +254,6 @@
         private System.Windows.Forms.HScrollBar resizeScrollBar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
