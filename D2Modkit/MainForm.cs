@@ -1070,24 +1070,24 @@ namespace D2ModKit
                         // record start line number and end line number of each Key-Value block
                         int[] startLineNumber = new int[kvArr.Length];
                         int[] endLineNumber = new int[kvArr.Length];
-                            
+
                         // catch the start pointer, ignore all "Version"s
                         int ptr = 0;
                         while (kvArr[ptr].Key == "Version" && ptr < kvArr.Length)
                             ptr++;
-                            
+
                         // store the start pointer
                         int startPtr = ptr;
 
                         // init the first key
                         string key = kvArr[ptr].Key;
-                            
+
                         // loop over all lines to record the start/end of all kvs
                         string[] lines = allText.Split('\n');
-                        for(int index = 0; index < lines.Length ; index ++)
+                        for (int index = 0; index < lines.Length; index++)
                         {
                             string line = lines[index];
-                            if(line.Trim().StartsWith("\""+ key))
+                            if (line.Trim().StartsWith("\"" + key))
                             {
                                 int ind = index - 1;
                                 // go back to add all comments/empty lines to this block
@@ -1105,13 +1105,13 @@ namespace D2ModKit
                             }
                         }
                         // deal with very last pointer
-                        int lastInd = lines.Length -1;
+                        int lastInd = lines.Length - 1;
                         while (lastInd > 0 && lines[lastInd].Contains("}") && (lines[lastInd].IndexOf("//") > lines[lastInd].IndexOf("}")))
                             lastInd--;
-                        endLineNumber[kvArr.Length -1] = lastInd;
+                        endLineNumber[kvArr.Length - 1] = lastInd;
 
                         // generate break-down kv files and write text
-                        for( int p = startPtr; p< kvArr.Length;p++)
+                        for (int p = startPtr; p < kvArr.Length; p++)
                         {
                             string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
                             File.Create(filePath).Close();
@@ -1249,6 +1249,113 @@ namespace D2ModKit
             forkAddon(true);
         }
 
+        #region vtex
+
+        private void compileVtex_Click(object sender, EventArgs e)
+        {
+            // show dialog to open .tga or .mks file
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "TGA|*.tga|MKS|*.mks";
+
+            // todo: set initial directory to content\dota_addons\CURRENT_ADDON\materials
+            fd.InitialDirectory = contentDirectory;
+            
+            
+            if (!(fd.ShowDialog() == DialogResult.OK))
+                return;
+            
+            string filePath = fd.FileName;
+            
+            // ensure it's inside content path
+            if (!(filePath.Contains("content\\dota_addons")))
+            {
+                MessageBox.Show("Source file should be inside your content path");
+                return;
+            }
+            filePath = filePath.Substring(filePath.IndexOf("content\\dota_addons") + 20);
+            filePath = filePath.Substring(filePath.IndexOf("\\") + 1);
+            filePath = filePath.Replace('\\', '/');
+            // todo: maybe we should put this into some resource text files
+            string[] vtexFileStrings = 
+            {
+                "<!-- dmx encoding keyvalues2_noids 1 format vtex 1 -->",
+                "\"CDmeVtex\"",
+                "{",
+                "	\"m_inputTextureArray\" \"element_array\" ",
+                "	[",
+                "		\"CDmeInputTexture\"",
+                "		{",
+                "			\"m_name\" \"string\" \"0\"",
+                "			\"m_fileName\" \"string\" \"" + filePath + "\"",
+                "			\"m_colorSpace\" \"string\" \"srgb\"",
+                "			\"m_typeString\" \"string\" \"2D\"",
+                "		}",
+                "	]",
+                "	\"m_outputTypeString\" \"string\" \"2D\"",
+                "	\"m_outputFormat\" \"string\" \"DXT5\"",
+                "	\"m_textureOutputChannelArray\" \"element_array\"",
+                "	[",
+                "		\"CDmeTextureOutputChannel\"",
+                "		{",
+                "			\"m_inputTextureArray\" \"string_array\"",
+                "				[",
+                "					\"0\"",
+                "				]",
+                "			\"m_srcChannels\" \"string\" \"rgba\"",
+                "			\"m_dstChannels\" \"string\" \"rgba\"",
+                "			\"m_mipAlgorithm\" \"CDmeImageProcessor\"",
+                "			{",
+                "				\"m_algorithm\" \"string\" \"\"",
+                "				\"m_stringArg\" \"string\" \"\"",
+                "				\"m_vFloat4Arg\" \"vector4\" \"0 0 0 0\"",
+                "			}",
+                "			\"m_outputColorSpace\" \"string\" \"srgb\"",
+                "		}",
+                "	]",
+                "}"
+            };
+
+            // save the vtex file, Workshop Tools will automatic compile it to .vtex_c file when addon start up or change detected
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.AddExtension = true;
+            sfd.DefaultExt = "vtex";
+            sfd.Filter = "VTEX|*.vtex";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = sfd.FileName;
+                File.Create(path).Close();
+                File.WriteAllLines(path, vtexFileStrings);
+                MessageBox.Show("Compile Finished");
+            }
+        }
+
+        private void decompileVtex_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "Valve Texture File(*.vtex_c)|*.vtex_c";
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                string vtexPath = fd.FileName;
+                string vtexDirectory = vtexPath.Remove(vtexPath.LastIndexOf("\\"));
+                
+                System.Diagnostics.Process decompileProc = new System.Diagnostics.Process();
+                decompileProc.StartInfo.FileName = Path.Combine(gameDirectory, "bin", "win64", "resourceinfo.exe");
+                
+                // decompiled .tga files will be saved to working directory of resourceinfo.exe
+                decompileProc.StartInfo.WorkingDirectory = vtexDirectory;
+
+                // -i "D:\****\****\game\materials\test.vtex_c" -debug tga -mip
+                decompileProc.StartInfo.Arguments = "-i \"" + vtexPath + "\" -debug tga -mip";
+                decompileProc.StartInfo.CreateNoWindow = true;
+                decompileProc.Start();
+                decompileProc.WaitForExit();
+                decompileProc.Close();
+                decompileProc.Dispose();
+                Process.Start("explorer.exe", vtexDirectory);
+            }
+        }
+
+        #endregion vtex
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
