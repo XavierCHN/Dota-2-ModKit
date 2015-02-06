@@ -227,7 +227,7 @@ namespace D2ModKit
             int j = 0;
             while (true)
             {
-                newVers = convertVers(Vers, count+j);
+                newVers = convertVers(Vers, count + j);
                 url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
                 url += newVers + "/D2ModKit.zip";
 
@@ -283,7 +283,7 @@ namespace D2ModKit
                 Debug.WriteLine("No new vers available.");
                 return;
             }
-            newVers = convertVers(Vers, count-1);
+            newVers = convertVers(Vers, count - 1);
             url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
             url += newVers + "/D2ModKit.zip";
 
@@ -307,7 +307,7 @@ namespace D2ModKit
 
             DialogResult r = MessageBox.Show("Version " + newVers + " of D2ModKit is now available. Would you like to update now?",
                 "D2ModKit",
-                MessageBoxButtons.YesNo, 
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Information);
 
             if (r == DialogResult.Yes)
@@ -332,13 +332,13 @@ namespace D2ModKit
             //Debug.WriteLine("new num: " + num);
             int newThousands = num / 1000;
             int newHundreds = (num - newThousands * 1000) / 100;
-            int newTens = (num - newThousands*1000-newHundreds*100)/10;
-            int newOnes = num-newThousands*1000-newHundreds*100-newTens*10;
+            int newTens = (num - newThousands * 1000 - newHundreds * 100) / 10;
+            int newOnes = num - newThousands * 1000 - newHundreds * 100 - newTens * 10;
             string newVers = newThousands + "." + newHundreds + "." + newTens + "." + newOnes;
             //Debug.WriteLine("New vers: " + newVers);
             return newVers;
         }
-        
+
         void addonDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             string text = addonDropDown.GetItemText(addonDropDown.SelectedItem);
@@ -446,7 +446,7 @@ namespace D2ModKit
             {
                 DialogResult result = MessageBox.Show(
                     "No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
-                    "D2ModKit", 
+                    "D2ModKit",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Hand);
 
@@ -742,8 +742,8 @@ namespace D2ModKit
                 if (!Directory.Exists(Path.Combine(barebonesDir, "game")) || !Directory.Exists(Path.Combine(barebonesDir, "content")))
                 {
                     MessageBox.Show("Invalid structure in the 'barebones' directory. It must have a 'game' and 'content' folder.",
-                        "D2ModKit", 
-                        MessageBoxButtons.OK, 
+                        "D2ModKit",
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
@@ -799,7 +799,7 @@ namespace D2ModKit
             setAddonNames();
             // make the active addon this one.
             selectCurrentAddon(lower);
-            MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit", 
+            MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
@@ -838,7 +838,7 @@ namespace D2ModKit
                     return;
                 }
                 addons.Remove(currAddon);
-                MessageBox.Show("The addon '" + currAddon.Name + "' was successfully removed.", 
+                MessageBox.Show("The addon '" + currAddon.Name + "' was successfully removed.",
                     "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // reset currAddon.
@@ -1072,71 +1072,60 @@ namespace D2ModKit
                         {
                             IEnumerable<KeyValue> kvs2 = kv.Children;
                             KeyValue[] kvArr = kvs2.ToArray();
+                            // record start line number and end line number of each Key-Value block
+                            int[] startLineNumber = new int[kvArr.Length];
+                            int[] endLineNumber = new int[kvArr.Length];
+                            
+                            // catch the start pointer, ignore all "Version"s
                             int ptr = 0;
-                            int start = 0;
-                            string nextKey = kvArr[ptr].Key;
-
-                            if (nextKey == "Version")
-                            {
+                            while (kvArr[ptr].Key == "Version" && ptr < kvArr.Length)
                                 ptr++;
-                                nextKey = kvArr[ptr].Key;
-                                start = ptr;
-                            }
-                            string filePath = Path.Combine(folderPath, nextKey + ".txt");
+                            
+                            // store the start pointer
+                            int startPtr = ptr;
+
+                            // init the first key
+                            string key = kvArr[ptr].Key;
+                            
+                            // loop over all lines to record the start/end of all kvs
                             string[] lines = allText.Split('\n');
-                            string entry = "";
-                            string extraSpace = "";
-                            foreach (string line in lines)
+                            for(int index = 0; index < lines.Length ; index ++)
                             {
-                                if (line.Trim().StartsWith("\"" + nextKey))
+                                string line = lines[index];
+                                if(line.Trim().StartsWith("\""+ key))
                                 {
-                                    // get whitespace.
-                                    if (line.StartsWith("\t"))
-                                    {
-                                        extraSpace = "\t";
-                                    }
-
-                                    if (ptr != start)
-                                    {
-                                        File.Create(filePath).Close();
-                                        File.WriteAllText(filePath, entry);
-                                        entry = "";
-                                        ptr++;
-                                        filePath = Path.Combine(folderPath, nextKey + ".txt");
-                                        if (ptr != kvArr.Length)
-                                        {
-                                            nextKey = kvArr[ptr].Key;
-                                        }
-                                    }
-                                    else
+                                    int ind = index - 1;
+                                    // go back to add all comments/empty lines to this block
+                                    while ((lines[ind].Trim() == "" || lines[ind].Trim().StartsWith("//")) && (ind > 0))
+                                        ind--;
+                                    startLineNumber[ptr] = ind + 1;
+                                    // record the end of the block for last pointer
+                                    if (ptr > 0)
+                                        endLineNumber[ptr - 1] = ind;
+                                    if (ptr < kvArr.Length - 1)
                                     {
                                         ptr++;
-                                        if (ptr != kvArr.Length)
-                                        {
-                                            nextKey = kvArr[ptr].Key;
-                                        }
+                                        key = kvArr[ptr].Key;
                                     }
                                 }
-                                if (ptr > start)
-                                {
-                                    string l = line;
-                                    if (extraSpace == "\t" && l.StartsWith("\t"))
-                                    {
-                                        l = l.Substring(1);
-                                    }
-                                    entry += l + "\n";
-                                }
                             }
-                            // remove the last }
-                            entry = entry.TrimEnd();
-                            if (entry.EndsWith("}"))
-                            {
-                                entry = entry.Substring(0, entry.Length - 1);
-                            }
+                            // deal with very last pointer
+                            int lastInd = lines.Length -1;
+                            while (lastInd > 0 && lines[lastInd].Contains("}") && (lines[lastInd].IndexOf("//") > lines[lastInd].IndexOf("}")))
+                                lastInd--;
+                            endLineNumber[kvArr.Length -1] = lastInd;
 
-                            // do the last entry.
-                            File.Create(filePath).Close();
-                            File.WriteAllText(filePath, entry);
+                            // generate break-down kv files and write text
+                            for( int p = startPtr; p< kvArr.Length;p++)
+                            {
+                                string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
+                                File.Create(filePath).Close();
+                                StringBuilder sb = new StringBuilder();
+                                
+                                for (int p1 = startLineNumber[p]; p1 <= endLineNumber[p]; p1++)
+                                    sb.AppendLine(lines[p1]);
+                                File.WriteAllText(filePath,sb.ToString());
+                            }
                         }
                     }
                 }
