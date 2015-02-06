@@ -183,6 +183,3 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
-.nuget/NuGet.Config
-.nuget/NuGet.exe
-.nuget/NuGet.targets
