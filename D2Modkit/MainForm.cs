@@ -1125,17 +1125,12 @@ namespace D2ModKit
                                 for (int p1 = startLineNumber[p]; p1 <= endLineNumber[p]; p1++)
                                 {
                                     string line = lines[p1];
-                                    // remove last line terminator since AppendLine auto appends one.
-                                    if (line.EndsWith("\r"))
-                                    {
-                                        line = line.Substring(0, line.Length - 1);
-                                    }
                                     // remove first tab
                                     if (line.StartsWith("\t"))
                                     {
                                         line = line.Substring(1);
                                     }
-                                    sb.AppendLine(line);
+                                    sb.Append(line);
                                 }
                                 File.WriteAllText(filePath,sb.ToString());
                             }
@@ -1201,17 +1196,16 @@ namespace D2ModKit
                 // so now we have the big KV file created and ready to be populated.
 
                 string[] files = Directory.GetFiles(fold);
-                string header = "\"DOTAAbilities\"" + "\n{\n";
+                StringBuilder text = new StringBuilder("\"DOTAAbilities\"" + "\n{\n");
                 if (foldName == "npc_heroes_custom")
                 {
-                    header = "\"DOTAHeroes\"" + "\n{\n";
+                    text = new StringBuilder("\"DOTAHeroes\"" + "\n{\n");
                 }
                 else if (foldName == "npc_units_custom")
                 {
-                    header = "\"DOTAUnits\"" + "\n{\n";
+                    text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
                 }
-                //string allText = header;
-                File.AppendAllText(bigKVPath, header);
+                //File.AppendAllText(bigKVPath, header.ToString());
                 foreach (string file in files)
                 {
                     bool addTab = false;
@@ -1228,13 +1222,13 @@ namespace D2ModKit
                         {
                             newLine = "\t" + line;
                         }
-                        File.AppendAllText(bigKVPath, newLine + "\n");
-                        //allText += newLine + "\n";
+                        //File.AppendAllText(bigKVPath, newLine + "\n");
+                        text.AppendLine(newLine);
                     }
                 }
-                File.AppendAllText(bigKVPath, "}");
-                //allText += "}";
-                //File.WriteAllText(bigKVPath, allText);
+                //File.AppendAllText(bigKVPath, "}");
+                text.Append("}");
+                File.WriteAllText(bigKVPath, text.ToString());
             }
             System.Timers.Timer kvLabelTimer = new System.Timers.Timer(1000);
             kvLabelTimer.SynchronizingObject = this;
