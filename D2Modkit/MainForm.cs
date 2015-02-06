@@ -1132,7 +1132,10 @@ namespace D2ModKit
                                     }
                                     sb.Append(line);
                                 }
-                                File.WriteAllText(filePath,sb.ToString());
+                                string output = sb.ToString();
+                                // remove beginning newline
+                                output = output.TrimStart();
+                                File.WriteAllText(filePath, output);
                             }
                         }
                     }
