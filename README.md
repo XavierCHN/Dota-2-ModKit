@@ -12,7 +12,7 @@ A GUI comprised of useful tools to help with Dota 2 modding.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
 
 ![Alt text](http://i.imgur.com/piVz19A.png)
-![Alt text](http://i.imgur.com/0Ev0Pof.png)
+![Alt text](http://i.imgur.com/rjvUrDe.png)
 
 ## Installation
 
