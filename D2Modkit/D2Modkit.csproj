@@ -29,6 +29,8 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>14765718</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -99,6 +101,19 @@
     </Compile>
     <Compile Include="AddonEnglishEntry.cs" />
     <Compile Include="Addon.cs" />
+    <Compile Include="KVEditor\AbilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KVEditor\AbilityForm.Designer.cs">
+      <DependentUpon>AbilityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KVEditor\KVData.cs" />
+    <Compile Include="KVEditor\SingleKVItemView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KVEditor\SingleKVItemView.Designer.cs">
+      <DependentUpon>SingleKVItemView.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +170,12 @@
     <Compile Include="WikiGeneration\Wiki.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KVEditor\AbilityForm.resx">
+      <DependentUpon>AbilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KVEditor\SingleKVItemView.resx">
+      <DependentUpon>SingleKVItemView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
@@ -223,6 +244,25 @@
     <Content Include="FodyWeavers.xml" />
     <Content Include="Libs\KVLib.dll" />
     <Content Include="Libs\Sprache.dll" />
+    <Content Include="Resources\Built_In_Engiene_Ability_Names.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Built_In_Engiene_Hero_Names.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Built_In_Engiene_Item_Names.txt" />
+    <Content Include="Resources\Built_In_Engiene_Modifier_Names.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Built_In_Engiene_Unit_Names.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\error.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\vpk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="KVLib.dll">
@@ -254,7 +294,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.1.26.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.26.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
