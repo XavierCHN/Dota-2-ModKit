@@ -131,7 +131,8 @@ namespace D2ModKit
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
                 // open up changelog
-                Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, 0));
+                //Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, 0));
+                Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
 
             InitializeComponent();
@@ -1127,9 +1128,20 @@ namespace D2ModKit
                                 }
                                 sb.Append(line);
                             }
+
                             string output = sb.ToString();
                             // remove beginning newline
                             output = output.TrimStart();
+
+                            // if last file, we need to remove the last }
+                            if (p == kvArr.Length - 1)
+                            {
+                                output = output.TrimEnd();
+                                if (output.EndsWith("}"))
+                                {
+                                    output = output.Substring(0, output.Length - 1);
+                                }
+                            }
                             File.WriteAllText(filePath, output);
                         }
                     }
@@ -1236,7 +1248,7 @@ namespace D2ModKit
             kvLabelTimer.AutoReset = false;
             kvLabelTimer.Start();
             kvLabelTimer.Elapsed += kvLabelTimer_Elapsed;
-            kvLabel.Text = "Combine success";
+            kvLabel.Text = "Combine\nsuccess";
         }
 
         void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

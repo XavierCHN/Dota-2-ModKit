@@ -53,7 +53,7 @@
             // 
             this.recolorButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recolorButton.ForeColor = System.Drawing.Color.Indigo;
-            this.recolorButton.Location = new System.Drawing.Point(263, 12);
+            this.recolorButton.Location = new System.Drawing.Point(254, 12);
             this.recolorButton.Name = "recolorButton";
             this.recolorButton.Size = new System.Drawing.Size(158, 67);
             this.recolorButton.TabIndex = 4;
@@ -86,7 +86,7 @@
             this.sizeLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 292);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(433, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(425, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -208,7 +208,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(433, 314);
+            this.ClientSize = new System.Drawing.Size(425, 314);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.label8);
