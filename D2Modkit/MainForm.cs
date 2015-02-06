@@ -1121,9 +1121,22 @@ namespace D2ModKit
                                 string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
                                 File.Create(filePath).Close();
                                 StringBuilder sb = new StringBuilder();
-                                
+
                                 for (int p1 = startLineNumber[p]; p1 <= endLineNumber[p]; p1++)
-                                    sb.AppendLine(lines[p1]);
+                                {
+                                    string line = lines[p1];
+                                    // remove last line terminator since AppendLine auto appends one.
+                                    if (line.EndsWith("\r"))
+                                    {
+                                        line = line.Substring(0, line.Length - 1);
+                                    }
+                                    // remove first tab
+                                    if (line.StartsWith("\t"))
+                                    {
+                                        line = line.Substring(1);
+                                    }
+                                    sb.AppendLine(line);
+                                }
                                 File.WriteAllText(filePath,sb.ToString());
                             }
                         }
