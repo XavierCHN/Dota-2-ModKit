@@ -201,7 +201,7 @@
             // newParticles
             // 
             this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(205, 76);
+            this.newParticles.Location = new System.Drawing.Point(204, 76);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2);
             this.newParticles.Name = "newParticles";
             this.newParticles.Size = new System.Drawing.Size(127, 29);
@@ -215,7 +215,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(74, 109);
+            this.button2.Location = new System.Drawing.Point(73, 109);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 29);
@@ -234,7 +234,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(74, 76);
+            this.button1.Location = new System.Drawing.Point(73, 76);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 29);
@@ -251,7 +251,7 @@
             this.button5.Cursor = System.Windows.Forms.Cursors.Default;
             this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(6, 67);
+            this.button5.Location = new System.Drawing.Point(6, 72);
             this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(63, 33);
@@ -265,7 +265,7 @@
             // 
             this.button6.BackColor = System.Drawing.SystemColors.Info;
             this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(6, 104);
+            this.button6.Location = new System.Drawing.Point(6, 109);
             this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(63, 33);
@@ -278,7 +278,7 @@
             // particleDesigner
             // 
             this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(205, 109);
+            this.particleDesigner.Location = new System.Drawing.Point(204, 109);
             this.particleDesigner.Margin = new System.Windows.Forms.Padding(2);
             this.particleDesigner.Name = "particleDesigner";
             this.particleDesigner.Size = new System.Drawing.Size(127, 29);
@@ -295,7 +295,7 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Default;
             this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(6, 141);
+            this.button3.Location = new System.Drawing.Point(6, 146);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(63, 33);
@@ -312,7 +312,7 @@
             this.button4.Cursor = System.Windows.Forms.Cursors.Default;
             this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(6, 178);
+            this.button4.Location = new System.Drawing.Point(6, 183);
             this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(63, 33);
@@ -329,7 +329,7 @@
             this.button7.Cursor = System.Windows.Forms.Cursors.Default;
             this.button7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(6, 215);
+            this.button7.Location = new System.Drawing.Point(6, 220);
             this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(63, 33);
@@ -353,7 +353,7 @@
             // compileVtex
             // 
             this.compileVtex.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compileVtex.Location = new System.Drawing.Point(205, 164);
+            this.compileVtex.Location = new System.Drawing.Point(204, 161);
             this.compileVtex.Margin = new System.Windows.Forms.Padding(2);
             this.compileVtex.Name = "compileVtex";
             this.compileVtex.Size = new System.Drawing.Size(127, 29);
@@ -366,7 +366,7 @@
             // decompileVtex
             // 
             this.decompileVtex.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decompileVtex.Location = new System.Drawing.Point(205, 197);
+            this.decompileVtex.Location = new System.Drawing.Point(204, 192);
             this.decompileVtex.Margin = new System.Windows.Forms.Padding(2);
             this.decompileVtex.Name = "decompileVtex";
             this.decompileVtex.Size = new System.Drawing.Size(127, 29);
@@ -436,7 +436,7 @@
             "Items",
             "Units",
             "Heroes"});
-            this.kvFileCheckbox.Location = new System.Drawing.Point(74, 161);
+            this.kvFileCheckbox.Location = new System.Drawing.Point(73, 161);
             this.kvFileCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.kvFileCheckbox.Name = "kvFileCheckbox";
             this.kvFileCheckbox.Size = new System.Drawing.Size(127, 68);
@@ -456,7 +456,7 @@
             // combineBtn
             // 
             this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(74, 233);
+            this.combineBtn.Location = new System.Drawing.Point(73, 233);
             this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
             this.combineBtn.Name = "combineBtn";
             this.combineBtn.Size = new System.Drawing.Size(127, 29);
@@ -468,7 +468,7 @@
             // kvLabel
             // 
             this.kvLabel.AutoSize = true;
-            this.kvLabel.Location = new System.Drawing.Point(152, 200);
+            this.kvLabel.Location = new System.Drawing.Point(151, 200);
             this.kvLabel.Name = "kvLabel";
             this.kvLabel.Size = new System.Drawing.Size(48, 26);
             this.kvLabel.TabIndex = 37;
@@ -503,7 +503,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(339, 267);
+            this.ClientSize = new System.Drawing.Size(339, 269);
             this.Controls.Add(this.decompileVtex);
             this.Controls.Add(this.compileVtex);
             this.Controls.Add(this.label5);

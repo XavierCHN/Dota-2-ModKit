@@ -1210,11 +1210,11 @@ namespace D2ModKit
 
                 string[] files = Directory.GetFiles(fold);
                 StringBuilder text = new StringBuilder("\"DOTAAbilities\"" + "\n{\n");
-                if (foldName == "npc_heroes_custom")
+                if (foldName == "heroes")
                 {
                     text = new StringBuilder("\"DOTAHeroes\"" + "\n{\n");
                 }
-                else if (foldName == "npc_units_custom")
+                else if (foldName == "units")
                 {
                     text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
                 }
