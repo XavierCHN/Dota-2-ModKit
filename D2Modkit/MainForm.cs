@@ -1218,9 +1218,15 @@ namespace D2ModKit
                 {
                     text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
                 }
-                //File.AppendAllText(bigKVPath, header.ToString());
+                bool hasPrecacheEverything = false;
                 foreach (string file in files)
                 {
+                    if (file.Contains("npc_precache_everything.txt"))
+                    {
+                        // skip this, save it for last
+                        hasPrecacheEverything = true;
+                        continue;
+                    }
                     bool addTab = false;
                     string[] lines = File.ReadAllLines(file);
                     for (int j = 0; j < lines.Length; j++)
@@ -1235,11 +1241,29 @@ namespace D2ModKit
                         {
                             newLine = "\t" + line;
                         }
-                        //File.AppendAllText(bigKVPath, newLine + "\n");
                         text.AppendLine(newLine);
                     }
                 }
-                //File.AppendAllText(bigKVPath, "}");
+                // now do npc_precache_everything.txt
+                if (hasPrecacheEverything)
+                {
+                    bool addTab = false;
+                    string[] lines = File.ReadAllLines(Path.Combine(fold, "npc_precache_everything.txt"));
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        string line = lines[j];
+                        if (j == 0 && line.StartsWith("\t") == false && line.StartsWith("  ") == false)
+                        {
+                            addTab = true;
+                        }
+                        string newLine = line;
+                        if (addTab)
+                        {
+                            newLine = "\t" + line;
+                        }
+                        text.AppendLine(newLine);
+                    }
+                }
                 text.Append("}");
                 File.WriteAllText(bigKVPath, text.ToString());
             }
