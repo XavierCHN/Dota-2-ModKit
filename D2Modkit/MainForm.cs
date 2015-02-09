@@ -16,8 +16,6 @@ namespace D2ModKit
 {
     public partial class MainForm : Form
     {
-        private string gameDirectory;
-        private string contentDirectory;
         private List<string> addonNames;
         private List<string> gameAddonPaths;
         private List<string> contentAddonPaths;
@@ -81,18 +79,6 @@ namespace D2ModKit
         {
             get { return ugcPath; }
             set { ugcPath = value; }
-        }
-
-        public string GameDirectory
-        {
-            get { return gameDirectory; }
-            set { gameDirectory = value; }
-        }
-
-        public string ContentDirectory
-        {
-            get { return contentDirectory; }
-            set { contentDirectory = value; }
         }
 
         public Addon CurrentAddon
@@ -544,8 +530,7 @@ namespace D2ModKit
             {
                 if (str.Contains("game"))
                 {
-                    GameDirectory = str;
-                    string dota_addons = Path.Combine(GameDirectory, "dota_addons");
+                    string dota_addons = Path.Combine(str, "dota_addons");
                     if (Directory.Exists(dota_addons))
                     {
                         string[] dirs2 = Directory.GetDirectories(dota_addons);
@@ -1291,103 +1276,134 @@ namespace D2ModKit
         {
             // show dialog to open .tga or .mks file
             OpenFileDialog fd = new OpenFileDialog();
+            fd.Multiselect = true;
             fd.Filter = "TGA|*.tga|MKS|*.mks";
 
-            // todo: set initial directory to content\dota_addons\CURRENT_ADDON\materials
-            fd.InitialDirectory = contentDirectory;
-            
-            
-            if (!(fd.ShowDialog() == DialogResult.OK))
-                return;
-            
-            string filePath = fd.FileName;
-            
-            // ensure it's inside content path
-            if (!(filePath.Contains("content\\dota_addons")))
+            string materialsPath = Path.Combine(currAddon.ContentPath, "materials");
+            if (!Directory.Exists(materialsPath))
             {
-                MessageBox.Show("Source file should be inside your content path");
-                return;
+                Directory.CreateDirectory(materialsPath);
             }
-            filePath = filePath.Substring(filePath.IndexOf("content\\dota_addons") + 20);
-            filePath = filePath.Substring(filePath.IndexOf("\\") + 1);
-            filePath = filePath.Replace('\\', '/');
-            // todo: maybe we should put this into some resource text files
-            string[] vtexFileStrings = 
-            {
-                "<!-- dmx encoding keyvalues2_noids 1 format vtex 1 -->",
-                "\"CDmeVtex\"",
-                "{",
-                "	\"m_inputTextureArray\" \"element_array\" ",
-                "	[",
-                "		\"CDmeInputTexture\"",
-                "		{",
-                "			\"m_name\" \"string\" \"0\"",
-                "			\"m_fileName\" \"string\" \"" + filePath + "\"",
-                "			\"m_colorSpace\" \"string\" \"srgb\"",
-                "			\"m_typeString\" \"string\" \"2D\"",
-                "		}",
-                "	]",
-                "	\"m_outputTypeString\" \"string\" \"2D\"",
-                "	\"m_outputFormat\" \"string\" \"DXT5\"",
-                "	\"m_textureOutputChannelArray\" \"element_array\"",
-                "	[",
-                "		\"CDmeTextureOutputChannel\"",
-                "		{",
-                "			\"m_inputTextureArray\" \"string_array\"",
-                "				[",
-                "					\"0\"",
-                "				]",
-                "			\"m_srcChannels\" \"string\" \"rgba\"",
-                "			\"m_dstChannels\" \"string\" \"rgba\"",
-                "			\"m_mipAlgorithm\" \"CDmeImageProcessor\"",
-                "			{",
-                "				\"m_algorithm\" \"string\" \"\"",
-                "				\"m_stringArg\" \"string\" \"\"",
-                "				\"m_vFloat4Arg\" \"vector4\" \"0 0 0 0\"",
-                "			}",
-                "			\"m_outputColorSpace\" \"string\" \"srgb\"",
-                "		}",
-                "	]",
-                "}"
-            };
+            fd.InitialDirectory = materialsPath;
 
-            // save the vtex file, Workshop Tools will automatic compile it to .vtex_c file when addon start up or change detected
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.AddExtension = true;
-            sfd.DefaultExt = "vtex";
-            sfd.Filter = "VTEX|*.vtex";
-            if (sfd.ShowDialog() == DialogResult.OK)
+
+            if (!(fd.ShowDialog() == DialogResult.OK))
             {
-                string path = sfd.FileName;
-                File.Create(path).Close();
-                File.WriteAllLines(path, vtexFileStrings);
-                MessageBox.Show("Compile Finished");
+                return;
             }
+
+            string[] filePaths = fd.FileNames;
+
+            foreach (string file in filePaths)
+            {
+                string f = file;
+                // ensure it's inside content path
+                if (!(f.Contains("content\\dota_addons")))
+                {
+                    MessageBox.Show("Source file should be inside your content path",
+                        "D2ModKit",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+                f = f.Substring(f.IndexOf("content\\dota_addons") + 20);
+                f = f.Substring(f.IndexOf("\\") + 1);
+                f = f.Replace('\\', '/');
+                // todo: maybe we should put this into some resource text files
+                string[] vtexFileStrings = 
+                {
+                    "<!-- dmx encoding keyvalues2_noids 1 format vtex 1 -->",
+                    "\"CDmeVtex\"",
+                    "{",
+                    "	\"m_inputTextureArray\" \"element_array\" ",
+                    "	[",
+                    "		\"CDmeInputTexture\"",
+                    "		{",
+                    "			\"m_name\" \"string\" \"0\"",
+                    "			\"m_fileName\" \"string\" \"" + f + "\"",
+                    "			\"m_colorSpace\" \"string\" \"srgb\"",
+                    "			\"m_typeString\" \"string\" \"2D\"",
+                    "		}",
+                    "	]",
+                    "	\"m_outputTypeString\" \"string\" \"2D\"",
+                    "	\"m_outputFormat\" \"string\" \"DXT5\"",
+                    "	\"m_textureOutputChannelArray\" \"element_array\"",
+                    "	[",
+                    "		\"CDmeTextureOutputChannel\"",
+                    "		{",
+                    "			\"m_inputTextureArray\" \"string_array\"",
+                    "				[",
+                    "					\"0\"",
+                    "				]",
+                    "			\"m_srcChannels\" \"string\" \"rgba\"",
+                    "			\"m_dstChannels\" \"string\" \"rgba\"",
+                    "			\"m_mipAlgorithm\" \"CDmeImageProcessor\"",
+                    "			{",
+                    "				\"m_algorithm\" \"string\" \"\"",
+                    "				\"m_stringArg\" \"string\" \"\"",
+                    "				\"m_vFloat4Arg\" \"vector4\" \"0 0 0 0\"",
+                    "			}",
+                    "			\"m_outputColorSpace\" \"string\" \"srgb\"",
+                    "		}",
+                    "	]",
+                    "}"
+                };
+            }
+            //Workshop Tools will automatic compile it to .vtex_c file when addon start up or change detected
+            string dir = filePaths[0];
+            dir = dir.Substring(0,dir.LastIndexOf('\\'));
+            Process.Start(dir);
         }
 
         private void decompileVtex_Click(object sender, EventArgs e)
         {
+            string extract = Path.Combine(UGCPath, "game", "dota_imported", "materials");
+            if (!Directory.Exists(extract))
+            {
+                MessageBox.Show("You must extract the 'materials' folder from " + Path.Combine("dota_ugc", "game", "dota_imported", "pak01_dir.vpk") +
+                    " into " + Path.Combine("dota_ugc", "game", "dota_imported") + " using GCFScape before using this feature.",
+                    "D2ModKit",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
             OpenFileDialog fd = new OpenFileDialog();
+            fd.Multiselect = true;
+            fd.InitialDirectory = Path.Combine(UGCPath, "game", "dota_imported", "materials");
             fd.Filter = "Valve Texture File(*.vtex_c)|*.vtex_c";
             if (fd.ShowDialog() == DialogResult.OK)
             {
-                string vtexPath = fd.FileName;
-                string vtexDirectory = vtexPath.Remove(vtexPath.LastIndexOf("\\"));
-                
-                System.Diagnostics.Process decompileProc = new System.Diagnostics.Process();
-                decompileProc.StartInfo.FileName = Path.Combine(gameDirectory, "bin", "win64", "resourceinfo.exe");
-                
-                // decompiled .tga files will be saved to working directory of resourceinfo.exe
-                decompileProc.StartInfo.WorkingDirectory = vtexDirectory;
-
-                // -i "D:\****\****\game\materials\test.vtex_c" -debug tga -mip
-                decompileProc.StartInfo.Arguments = "-i \"" + vtexPath + "\" -debug tga -mip";
-                decompileProc.StartInfo.CreateNoWindow = true;
-                decompileProc.Start();
-                decompileProc.WaitForExit();
-                decompileProc.Close();
-                decompileProc.Dispose();
-                Process.Start("explorer.exe", vtexDirectory);
+                string[] vtexCPaths = fd.FileNames;
+                foreach (string path in vtexCPaths)
+                {
+                    //resourceinfo.exe -i <your vtex_c file> -debug tga -mip
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                    startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    startInfo.UseShellExecute = true;
+                    startInfo.FileName = "cmd.exe";
+                    startInfo.WorkingDirectory = Path.Combine(Path.Combine(UGCPath, "game"), "bin", "win64");
+                    startInfo.Arguments = "/c resourceinfo.exe -i \"" + path + "\" -debug tga -mip";
+                    Debug.WriteLine(startInfo.Arguments);
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+                }
+                // Prepare to move the tga files to the addon's content dir.
+                string materialsPath = Path.Combine(currAddon.ContentPath, "materials");
+                if (!Directory.Exists(materialsPath))
+                {
+                    Directory.CreateDirectory(materialsPath);
+                }
+                //move the tga files to the addon's content dir.
+                string[] tgaFiles = Directory.GetFiles(Path.Combine(Path.Combine(UGCPath, "game"), "bin", "win64"), "*.tga");
+                foreach (string file in tgaFiles)
+                {
+                    string fileName = file.Remove(0,file.LastIndexOf('\\')+1);
+                    File.Move(file, Path.Combine(materialsPath, fileName));
+                }
+                Process.Start(materialsPath);
             }
         }
 
