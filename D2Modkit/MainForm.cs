@@ -139,7 +139,7 @@ namespace D2ModKit
                 kvFileCheckbox.SetItemChecked(i, true);
             }
 
-            kvLabel.Text = "";
+            combineSuccessLabel.Text = "";
 
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
@@ -753,7 +753,7 @@ namespace D2ModKit
             AddonForm.ShowDialog();
         }
 
-        private void forkBarebones_Click(object sender, EventArgs e)
+        private void bmdBarebones_Click(object sender, EventArgs e)
         {
             forkAddon(false);
         }
@@ -888,7 +888,7 @@ namespace D2ModKit
             ab.ShowDialog();
         }
 
-        private void overrideParticlesToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
+        private void overrideParticlesToBeNull_Click(object sender, EventArgs e)
         {
             string extractPath = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
             if (!Directory.Exists(extractPath))
@@ -975,7 +975,7 @@ namespace D2ModKit
             }
         }
 
-        private void resourceDir_Click(object sender, EventArgs e)
+        private void flash3Dir_Click(object sender, EventArgs e)
         {
             string path = Path.Combine(currAddon.GamePath, "resource", "flash3");
             if (Directory.Exists(path))
@@ -1266,15 +1266,15 @@ namespace D2ModKit
             kvLabelTimer.AutoReset = false;
             kvLabelTimer.Start();
             kvLabelTimer.Elapsed += kvLabelTimer_Elapsed;
-            kvLabel.Text = "Combine\nsuccess";
+            combineSuccessLabel.Text = "Combine\nsuccess";
         }
 
         void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            kvLabel.Text = "";
+            combineSuccessLabel.Text = "";
         }
 
-        private void addonFromMyllsForkedBarebonesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void myllsBarebones_Click(object sender, EventArgs e)
         {
             forkAddon(true);
         }
@@ -1487,6 +1487,11 @@ namespace D2ModKit
                 Settings.Default.Save();
                 //Process.Start(elf.link);
             }
+        }
+
+        private void chineseBarebones_Click(object sender, EventArgs e)
+        {
+
         }
 
         /*

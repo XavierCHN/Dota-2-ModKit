@@ -37,13 +37,15 @@
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.chineseBarebonescomingSoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addonFromBMDsBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addonFromChineseBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.overrideParticlesToBeNullToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeCurrentAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.templatesButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.removeAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.overrideParticlesToBeNullToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.modDotaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,17 +55,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button1 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.particleDesigner = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.gameSizeLabel = new System.Windows.Forms.Label();
             this.compileVtex = new System.Windows.Forms.Button();
             this.decompileVtex = new System.Windows.Forms.Button();
-            this.gdsButton = new System.Windows.Forms.Button();
-            this.steamButton = new System.Windows.Forms.Button();
             this.contentSizeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -71,11 +66,20 @@
             this.kvFileCheckbox = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.combineBtn = new System.Windows.Forms.Button();
-            this.kvLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.combineSuccessLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // BottomToolStripPanel
@@ -121,13 +125,12 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton2,
             this.templatesButton,
-            this.toolStripButton3,
             this.toolStripDropDownButton1,
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(339, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(336, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -135,37 +138,72 @@
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem,
-            this.newAddonFromBarebonesToolStripMenuItem1,
-            this.chineseBarebonescomingSoonToolStripMenuItem});
+            this.newToolStripMenuItem,
+            this.preferencesToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.overrideParticlesToBeNullToolStripMenuItem1,
+            this.removeCurrentAddonToolStripMenuItem});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(83, 22);
-            this.toolStripDropDownButton2.Text = "New Addon";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(38, 22);
+            this.toolStripDropDownButton2.Text = "File";
             // 
-            // addonFromMyllsForkedBarebonesToolStripMenuItem
+            // newToolStripMenuItem
             // 
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Myll\'s Forked Barebones";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
-    "s to BMD\'s\r\nBarebones.";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1,
+            this.addonFromBMDsBarebonesToolStripMenuItem,
+            this.addonFromChineseBarebonesToolStripMenuItem});
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.newToolStripMenuItem.Text = "New Addon";
             // 
-            // newAddonFromBarebonesToolStripMenuItem1
+            // addonFromMyllsForkedBarebonesToolStripMenuItem1
             // 
-            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
-            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(255, 22);
-            this.newAddonFromBarebonesToolStripMenuItem1.Text = "BMD\'s Barebones";
-            this.newAddonFromBarebonesToolStripMenuItem1.ToolTipText = "Fork a new addon from BMD\'s Barebones.";
-            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem1";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(332, 22);
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Text = "Myll\'s Forked Barebones";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.myllsBarebones_Click);
             // 
-            // chineseBarebonescomingSoonToolStripMenuItem
+            // addonFromBMDsBarebonesToolStripMenuItem
             // 
-            this.chineseBarebonescomingSoonToolStripMenuItem.Name = "chineseBarebonescomingSoonToolStripMenuItem";
-            this.chineseBarebonescomingSoonToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.chineseBarebonescomingSoonToolStripMenuItem.Text = "Chinese Barebones (coming soon)";
+            this.addonFromBMDsBarebonesToolStripMenuItem.Name = "addonFromBMDsBarebonesToolStripMenuItem";
+            this.addonFromBMDsBarebonesToolStripMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.addonFromBMDsBarebonesToolStripMenuItem.Text = "BMD\'s Barebones";
+            this.addonFromBMDsBarebonesToolStripMenuItem.Click += new System.EventHandler(this.bmdBarebones_Click);
+            // 
+            // addonFromChineseBarebonesToolStripMenuItem
+            // 
+            this.addonFromChineseBarebonesToolStripMenuItem.Name = "addonFromChineseBarebonesToolStripMenuItem";
+            this.addonFromChineseBarebonesToolStripMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.addonFromChineseBarebonesToolStripMenuItem.Text = "Chinese Barebones by XavierCHN (coming soon)";
+            this.addonFromChineseBarebonesToolStripMenuItem.Click += new System.EventHandler(this.chineseBarebones_Click);
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
+            // 
+            // overrideParticlesToBeNullToolStripMenuItem1
+            // 
+            this.overrideParticlesToBeNullToolStripMenuItem1.Name = "overrideParticlesToBeNullToolStripMenuItem1";
+            this.overrideParticlesToBeNullToolStripMenuItem1.Size = new System.Drawing.Size(219, 22);
+            this.overrideParticlesToBeNullToolStripMenuItem1.Text = "Override particles to be null";
+            this.overrideParticlesToBeNullToolStripMenuItem1.Click += new System.EventHandler(this.overrideParticlesToBeNull_Click);
+            // 
+            // removeCurrentAddonToolStripMenuItem
+            // 
+            this.removeCurrentAddonToolStripMenuItem.Name = "removeCurrentAddonToolStripMenuItem";
+            this.removeCurrentAddonToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.removeCurrentAddonToolStripMenuItem.Text = "Remove current addon";
+            this.removeCurrentAddonToolStripMenuItem.Click += new System.EventHandler(this.removeAddon_Click);
             // 
             // templatesButton
             // 
@@ -176,32 +214,6 @@
             this.templatesButton.Size = new System.Drawing.Size(66, 22);
             this.templatesButton.Text = "Templates";
             this.templatesButton.Click += new System.EventHandler(this.templatesButton_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeAddonToolStripMenuItem,
-            this.overrideParticlesToBeNullToolStripMenuItem});
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(50, 22);
-            this.toolStripButton3.Text = "Other";
-            // 
-            // removeAddonToolStripMenuItem
-            // 
-            this.removeAddonToolStripMenuItem.Name = "removeAddonToolStripMenuItem";
-            this.removeAddonToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.removeAddonToolStripMenuItem.Text = "Remove Selected Addon";
-            this.removeAddonToolStripMenuItem.Click += new System.EventHandler(this.removeAddon_Click);
-            // 
-            // overrideParticlesToBeNullToolStripMenuItem
-            // 
-            this.overrideParticlesToBeNullToolStripMenuItem.Name = "overrideParticlesToBeNullToolStripMenuItem";
-            this.overrideParticlesToBeNullToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.overrideParticlesToBeNullToolStripMenuItem.Text = "Override particles to be null";
-            this.overrideParticlesToBeNullToolStripMenuItem.Click += new System.EventHandler(this.overrideParticlesToBeNullToolStripMenuItem_Click);
             // 
             // toolStripDropDownButton1
             // 
@@ -249,8 +261,8 @@
             // 
             // newParticles
             // 
-            this.newParticles.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newParticles.Location = new System.Drawing.Point(204, 76);
+            this.newParticles.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newParticles.Location = new System.Drawing.Point(200, 75);
             this.newParticles.Margin = new System.Windows.Forms.Padding(2);
             this.newParticles.Name = "newParticles";
             this.newParticles.Size = new System.Drawing.Size(127, 29);
@@ -263,8 +275,8 @@
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(73, 109);
+            this.button2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(69, 108);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 29);
@@ -282,8 +294,8 @@
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(73, 76);
+            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(69, 75);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 29);
@@ -293,41 +305,10 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.generateAddonEnglish_Click);
             // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.SystemColors.Info;
-            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(6, 72);
-            this.button5.Margin = new System.Windows.Forms.Padding(2);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(63, 33);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "&game";
-            this.toolTip1.SetToolTip(this.button5, "Go to this addon\'s game directory.");
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.gameDir_Click);
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.SystemColors.Info;
-            this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(6, 109);
-            this.button6.Margin = new System.Windows.Forms.Padding(2);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(63, 33);
-            this.button6.TabIndex = 17;
-            this.button6.Text = "&content";
-            this.toolTip1.SetToolTip(this.button6, "Go to this addon\'s content directory.");
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.contentDir_Click);
-            // 
             // particleDesigner
             // 
-            this.particleDesigner.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.particleDesigner.Location = new System.Drawing.Point(204, 109);
+            this.particleDesigner.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.particleDesigner.Location = new System.Drawing.Point(200, 108);
             this.particleDesigner.Margin = new System.Windows.Forms.Padding(2);
             this.particleDesigner.Name = "particleDesigner";
             this.particleDesigner.Size = new System.Drawing.Size(127, 29);
@@ -337,61 +318,10 @@
             this.particleDesigner.UseVisualStyleBackColor = true;
             this.particleDesigner.Click += new System.EventHandler(this.particleDesigner_Click);
             // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.SystemColors.Info;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(6, 146);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 33);
-            this.button3.TabIndex = 26;
-            this.button3.Text = "&vscripts";
-            this.toolTip1.SetToolTip(this.button3, "Go to this addon\'s vscripts directory.");
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.vscriptsDir_Click);
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.SystemColors.Info;
-            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(6, 183);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(63, 33);
-            this.button4.TabIndex = 27;
-            this.button4.Text = "&npc";
-            this.toolTip1.SetToolTip(this.button4, "Go to this addon\'s scripts/npc directory.");
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.npcDir_Click);
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.SystemColors.Info;
-            this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(6, 220);
-            this.button7.Margin = new System.Windows.Forms.Padding(2);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(63, 33);
-            this.button7.TabIndex = 28;
-            this.button7.Text = "flash3";
-            this.toolTip1.SetToolTip(this.button7, "Go to this addon\'s resource/flash3 directory.");
-            this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.resourceDir_Click);
-            // 
             // gameSizeLabel
             // 
             this.gameSizeLabel.AutoSize = true;
-            this.gameSizeLabel.Location = new System.Drawing.Point(232, 28);
+            this.gameSizeLabel.Location = new System.Drawing.Point(228, 25);
             this.gameSizeLabel.Name = "gameSizeLabel";
             this.gameSizeLabel.Size = new System.Drawing.Size(61, 13);
             this.gameSizeLabel.TabIndex = 29;
@@ -401,8 +331,8 @@
             // 
             // compileVtex
             // 
-            this.compileVtex.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compileVtex.Location = new System.Drawing.Point(204, 161);
+            this.compileVtex.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compileVtex.Location = new System.Drawing.Point(200, 160);
             this.compileVtex.Margin = new System.Windows.Forms.Padding(2);
             this.compileVtex.Name = "compileVtex";
             this.compileVtex.Size = new System.Drawing.Size(127, 29);
@@ -414,8 +344,8 @@
             // 
             // decompileVtex
             // 
-            this.decompileVtex.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decompileVtex.Location = new System.Drawing.Point(204, 192);
+            this.decompileVtex.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decompileVtex.Location = new System.Drawing.Point(200, 193);
             this.decompileVtex.Margin = new System.Windows.Forms.Padding(2);
             this.decompileVtex.Name = "decompileVtex";
             this.decompileVtex.Size = new System.Drawing.Size(127, 29);
@@ -425,38 +355,10 @@
             this.decompileVtex.UseVisualStyleBackColor = true;
             this.decompileVtex.Click += new System.EventHandler(this.decompileVtex_Click);
             // 
-            // gdsButton
-            // 
-            this.gdsButton.AutoSize = true;
-            this.gdsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gdsButton.Image = global::D2ModKit.Properties.Resources.gds_22;
-            this.gdsButton.Location = new System.Drawing.Point(36, 255);
-            this.gdsButton.Margin = new System.Windows.Forms.Padding(1);
-            this.gdsButton.Name = "gdsButton";
-            this.gdsButton.Size = new System.Drawing.Size(28, 28);
-            this.gdsButton.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.gdsButton, "Open the GetDotaStats page for this addon.");
-            this.gdsButton.UseVisualStyleBackColor = true;
-            this.gdsButton.Click += new System.EventHandler(this.gdsButton_Click);
-            // 
-            // steamButton
-            // 
-            this.steamButton.AutoSize = true;
-            this.steamButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.steamButton.Image = global::D2ModKit.Properties.Resources.Steam_logo_22;
-            this.steamButton.Location = new System.Drawing.Point(6, 255);
-            this.steamButton.Margin = new System.Windows.Forms.Padding(1);
-            this.steamButton.Name = "steamButton";
-            this.steamButton.Size = new System.Drawing.Size(28, 28);
-            this.steamButton.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.steamButton, "Open the Steam Workshop page for this addon.");
-            this.steamButton.UseVisualStyleBackColor = true;
-            this.steamButton.Click += new System.EventHandler(this.steamButton_Click);
-            // 
             // contentSizeLabel
             // 
             this.contentSizeLabel.AutoSize = true;
-            this.contentSizeLabel.Location = new System.Drawing.Point(232, 41);
+            this.contentSizeLabel.Location = new System.Drawing.Point(228, 38);
             this.contentSizeLabel.Name = "contentSizeLabel";
             this.contentSizeLabel.Size = new System.Drawing.Size(70, 13);
             this.contentSizeLabel.TabIndex = 36;
@@ -467,7 +369,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(236, 55);
+            this.label1.Location = new System.Drawing.Point(227, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 14;
@@ -478,7 +380,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(107, 55);
+            this.label2.Location = new System.Drawing.Point(103, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 15;
@@ -489,7 +391,7 @@
             this.addonDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.addonDropDown.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addonDropDown.FormattingEnabled = true;
-            this.addonDropDown.Location = new System.Drawing.Point(73, 28);
+            this.addonDropDown.Location = new System.Drawing.Point(69, 25);
             this.addonDropDown.Name = "addonDropDown";
             this.addonDropDown.Size = new System.Drawing.Size(153, 26);
             this.addonDropDown.TabIndex = 23;
@@ -504,7 +406,7 @@
             "Items",
             "Units",
             "Heroes"});
-            this.kvFileCheckbox.Location = new System.Drawing.Point(73, 161);
+            this.kvFileCheckbox.Location = new System.Drawing.Point(69, 160);
             this.kvFileCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.kvFileCheckbox.Name = "kvFileCheckbox";
             this.kvFileCheckbox.Size = new System.Drawing.Size(127, 68);
@@ -515,7 +417,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(107, 140);
+            this.label4.Location = new System.Drawing.Point(103, 139);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 19);
             this.label4.TabIndex = 33;
@@ -523,8 +425,8 @@
             // 
             // combineBtn
             // 
-            this.combineBtn.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(73, 233);
+            this.combineBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.combineBtn.Location = new System.Drawing.Point(69, 232);
             this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
             this.combineBtn.Name = "combineBtn";
             this.combineBtn.Size = new System.Drawing.Size(127, 29);
@@ -533,33 +435,24 @@
             this.combineBtn.UseVisualStyleBackColor = true;
             this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
             // 
-            // kvLabel
+            // combineSuccessLabel
             // 
-            this.kvLabel.AutoSize = true;
-            this.kvLabel.Location = new System.Drawing.Point(151, 192);
-            this.kvLabel.Name = "kvLabel";
-            this.kvLabel.Size = new System.Drawing.Size(48, 26);
-            this.kvLabel.TabIndex = 37;
-            this.kvLabel.Text = "Combine\r\nsuccess";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Khaki;
-            this.label3.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Navy;
-            this.label3.Location = new System.Drawing.Point(6, 33);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 21);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Addon:";
+            this.combineSuccessLabel.AutoSize = true;
+            this.combineSuccessLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.combineSuccessLabel.ForeColor = System.Drawing.Color.DarkGreen;
+            this.combineSuccessLabel.Location = new System.Drawing.Point(145, 193);
+            this.combineSuccessLabel.Name = "combineSuccessLabel";
+            this.combineSuccessLabel.Size = new System.Drawing.Size(50, 28);
+            this.combineSuccessLabel.TabIndex = 37;
+            this.combineSuccessLabel.Text = "Combine\r\nsuccess";
+            this.combineSuccessLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Maroon;
-            this.label5.Location = new System.Drawing.Point(236, 140);
+            this.label5.Location = new System.Drawing.Point(225, 139);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 19);
             this.label5.TabIndex = 38;
@@ -574,32 +467,141 @@
             this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
             this.toolStripButton1.Text = "Update";
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripButton4,
+            this.toolStripButton5,
+            this.toolStripButton6,
+            this.toolStripButton7,
+            this.toolStripButton8,
+            this.toolStripButton9,
+            this.toolStripButton10});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 25);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(68, 242);
+            this.toolStrip2.TabIndex = 44;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.BackColor = System.Drawing.SystemColors.Info;
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(65, 24);
+            this.toolStripButton4.Text = "Game";
+            this.toolStripButton4.ToolTipText = "Go to this addon\'s game directory.";
+            this.toolStripButton4.Click += new System.EventHandler(this.gameDir_Click);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.BackColor = System.Drawing.SystemColors.Info;
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton5.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(65, 24);
+            this.toolStripButton5.Text = "Content";
+            this.toolStripButton5.ToolTipText = "Go to this addon\'s content directory.";
+            this.toolStripButton5.Click += new System.EventHandler(this.contentDir_Click);
+            // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.BackColor = System.Drawing.SystemColors.Info;
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(65, 24);
+            this.toolStripButton6.Text = "vscripts";
+            this.toolStripButton6.ToolTipText = "Go to this addon\'s vscripts directory.";
+            this.toolStripButton6.Click += new System.EventHandler(this.vscriptsDir_Click);
+            // 
+            // toolStripButton7
+            // 
+            this.toolStripButton7.BackColor = System.Drawing.SystemColors.Info;
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(65, 24);
+            this.toolStripButton7.Text = "npc";
+            this.toolStripButton7.ToolTipText = "Go to this addon\'s scripts/npc directory.";
+            this.toolStripButton7.Click += new System.EventHandler(this.npcDir_Click);
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.BackColor = System.Drawing.SystemColors.Info;
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(65, 24);
+            this.toolStripButton8.Text = "flash3";
+            this.toolStripButton8.ToolTipText = "Go to this addon\'s resource/flash3 directory.";
+            this.toolStripButton8.Click += new System.EventHandler(this.flash3Dir_Click);
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(65, 26);
+            this.toolStripButton9.Text = "toolStripButton9";
+            this.toolStripButton9.Click += new System.EventHandler(this.steamButton_Click);
+            // 
+            // toolStripButton10
+            // 
+            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
+            this.toolStripButton10.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton10.Name = "toolStripButton10";
+            this.toolStripButton10.Size = new System.Drawing.Size(65, 26);
+            this.toolStripButton10.Text = "toolStripButton10";
+            this.toolStripButton10.Click += new System.EventHandler(this.gdsButton_Click);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripLabel1.ForeColor = System.Drawing.Color.Navy;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(65, 20);
+            this.toolStripLabel1.Text = "Addon:";
+            this.toolStripLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(339, 288);
-            this.Controls.Add(this.gdsButton);
-            this.Controls.Add(this.steamButton);
+            this.ClientSize = new System.Drawing.Size(336, 267);
+            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.decompileVtex);
             this.Controls.Add(this.compileVtex);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.kvLabel);
+            this.Controls.Add(this.combineSuccessLabel);
             this.Controls.Add(this.contentSizeLabel);
             this.Controls.Add(this.combineBtn);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.kvFileCheckbox);
             this.Controls.Add(this.gameSizeLabel);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.addonDropDown);
             this.Controls.Add(this.particleDesigner);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -613,6 +615,8 @@
             this.Text = "D2 ModKit";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -632,28 +636,17 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripSplitButton toolStripButton1;
         private System.Windows.Forms.Button particleDesigner;
         private System.Windows.Forms.ToolStripButton templatesButton;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
-        private System.Windows.Forms.ToolStripMenuItem newAddonFromBarebonesToolStripMenuItem1;
         private System.Windows.Forms.ComboBox addonDropDown;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripButton3;
-        private System.Windows.Forms.ToolStripMenuItem overrideParticlesToBeNullToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeAddonToolStripMenuItem;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label gameSizeLabel;
         private System.Windows.Forms.CheckedListBox kvFileCheckbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button combineBtn;
         private System.Windows.Forms.Label contentSizeLabel;
-        private System.Windows.Forms.Label kvLabel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ToolStripMenuItem addonFromMyllsForkedBarebonesToolStripMenuItem;
+        private System.Windows.Forms.Label combineSuccessLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button compileVtex;
         private System.Windows.Forms.Button decompileVtex;
@@ -661,10 +654,24 @@
         private System.Windows.Forms.ToolStripMenuItem modDotaToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem tutorialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iRCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chineseBarebonescomingSoonToolStripMenuItem;
-        private System.Windows.Forms.Button steamButton;
-        private System.Windows.Forms.Button gdsButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton toolStripButton9;
+        private System.Windows.Forms.ToolStripButton toolStripButton10;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addonFromMyllsForkedBarebonesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addonFromBMDsBarebonesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addonFromChineseBarebonesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem overrideParticlesToBeNullToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem removeCurrentAddonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 
