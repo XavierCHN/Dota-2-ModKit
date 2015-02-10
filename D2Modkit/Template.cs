@@ -185,7 +185,6 @@ namespace D2ModKit
                 Entry e = kv.Value;
 
                 str += "//+Template\n";
-                //str += "//+CustomName= " + customName + "\n";
                 str += e.Val + "\n";
             }
             File.WriteAllText(path, str);

@@ -121,6 +121,15 @@ namespace D2ModKit
                 Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
 
+            if (Settings.Default.SteamWorkshopLinks == null)
+            {
+                Settings.Default.SteamWorkshopLinks = new System.Collections.Specialized.StringCollection();
+            }
+            if (Settings.Default.GDSLinks == null)
+            {
+                Settings.Default.GDSLinks = new System.Collections.Specialized.StringCollection();
+            }
+
             InitializeComponent();
 
             // check stuff in the checkbox
@@ -143,7 +152,7 @@ namespace D2ModKit
 
             this.FormClosed += MainForm_FormClosed;
 
-            this.Text = "D2 ModKit - " + "v" + Vers;
+            this.Text = "Dota 2 ModKit - " + "v" + Vers;
             if (Properties.Settings.Default.UGCPath != "")
             {
                 UGCPath = Properties.Settings.Default.UGCPath;
@@ -439,7 +448,7 @@ namespace D2ModKit
 
                 if (result == DialogResult.Yes)
                 {
-                    Process.Start("https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M");
+                    Process.Start("http://moddota.com/resources/decompiled_particles.zip");
                 }
                 return;
             }
@@ -1408,6 +1417,82 @@ namespace D2ModKit
         }
 
         #endregion vtex
+
+        private void modDotaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://moddota.com/forums/");
+        }
+
+        private void tutorialsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("https://moddota.com/forums/tutorial-index");
+        }
+
+        private void iRCToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("https://moddota.com/forums/chat");
+        }
+
+        private void steamButton_Click(object sender, EventArgs e)
+        {
+            System.Collections.Specialized.StringCollection sc = Settings.Default.SteamWorkshopLinks;
+            bool found = false;
+            foreach (string s in sc)
+            {
+                if (s.StartsWith(currAddon.Name))
+                {
+                    string[] parts = s.Split(';');
+                    Process.Start(parts[1]);
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "steam");
+                DialogResult res = elf.ShowDialog();
+                if (res == DialogResult.Cancel)
+                {
+                    return;
+                }
+                sc.Add(currAddon.Name + ";" + elf.link);
+                if (elf.link.StartsWith("http"))
+                {
+                    Process.Start(elf.link);
+                }
+            }
+        }
+
+        private void gdsButton_Click(object sender, EventArgs e)
+        {
+            System.Collections.Specialized.StringCollection sc = Settings.Default.GDSLinks;
+            bool found = false;
+            foreach (string s in sc)
+            {
+                if (s.StartsWith(currAddon.Name))
+                {
+                    string[] parts = s.Split(';');
+                    Process.Start(parts[1]);
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "gds");
+                DialogResult res = elf.ShowDialog();
+                if (res == DialogResult.Cancel)
+                {
+                    return;
+                }
+                sc.Add(currAddon.Name + ";" + elf.link);
+                if (elf.link.StartsWith("http"))
+                {
+                    Process.Start(elf.link);
+                }
+            }
+        }
+
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
