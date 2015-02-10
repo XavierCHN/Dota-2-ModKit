@@ -26,8 +26,15 @@ namespace D2ModKit
         private void OK_Click(object sender, EventArgs e)
         {
             link = textBox1.Text;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (link != null && link != "" && link.StartsWith("http"))
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else 
+            {
+                MessageBox.Show("Invalid link!");
+            }
         }
     }
 }

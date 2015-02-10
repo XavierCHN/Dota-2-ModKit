@@ -36,6 +36,19 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.chineseBarebonescomingSoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.templatesButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.removeAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.overrideParticlesToBeNullToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.modDotaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iRCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.newParticles = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -49,6 +62,8 @@
             this.gameSizeLabel = new System.Windows.Forms.Label();
             this.compileVtex = new System.Windows.Forms.Button();
             this.decompileVtex = new System.Windows.Forms.Button();
+            this.gdsButton = new System.Windows.Forms.Button();
+            this.steamButton = new System.Windows.Forms.Button();
             this.contentSizeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,22 +74,7 @@
             this.kvLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.gdsButton = new System.Windows.Forms.Button();
-            this.steamButton = new System.Windows.Forms.Button();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newAddonFromBarebonesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.chineseBarebonescomingSoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.templatesButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.removeAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.overrideParticlesToBeNullToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.modDotaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iRCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,9 +127,125 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(341, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(339, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem,
+            this.newAddonFromBarebonesToolStripMenuItem1,
+            this.chineseBarebonescomingSoonToolStripMenuItem});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(83, 22);
+            this.toolStripDropDownButton2.Text = "New Addon";
+            // 
+            // addonFromMyllsForkedBarebonesToolStripMenuItem
+            // 
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Myll\'s Forked Barebones";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
+    "s to BMD\'s\r\nBarebones.";
+            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
+            // 
+            // newAddonFromBarebonesToolStripMenuItem1
+            // 
+            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
+            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(255, 22);
+            this.newAddonFromBarebonesToolStripMenuItem1.Text = "BMD\'s Barebones";
+            this.newAddonFromBarebonesToolStripMenuItem1.ToolTipText = "Fork a new addon from BMD\'s Barebones.";
+            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
+            // 
+            // chineseBarebonescomingSoonToolStripMenuItem
+            // 
+            this.chineseBarebonescomingSoonToolStripMenuItem.Name = "chineseBarebonescomingSoonToolStripMenuItem";
+            this.chineseBarebonescomingSoonToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.chineseBarebonescomingSoonToolStripMenuItem.Text = "Chinese Barebones (coming soon)";
+            // 
+            // templatesButton
+            // 
+            this.templatesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.templatesButton.Image = ((System.Drawing.Image)(resources.GetObject("templatesButton.Image")));
+            this.templatesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.templatesButton.Name = "templatesButton";
+            this.templatesButton.Size = new System.Drawing.Size(66, 22);
+            this.templatesButton.Text = "Templates";
+            this.templatesButton.Click += new System.EventHandler(this.templatesButton_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeAddonToolStripMenuItem,
+            this.overrideParticlesToBeNullToolStripMenuItem});
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(50, 22);
+            this.toolStripButton3.Text = "Other";
+            // 
+            // removeAddonToolStripMenuItem
+            // 
+            this.removeAddonToolStripMenuItem.Name = "removeAddonToolStripMenuItem";
+            this.removeAddonToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.removeAddonToolStripMenuItem.Text = "Remove Selected Addon";
+            this.removeAddonToolStripMenuItem.Click += new System.EventHandler(this.removeAddon_Click);
+            // 
+            // overrideParticlesToBeNullToolStripMenuItem
+            // 
+            this.overrideParticlesToBeNullToolStripMenuItem.Name = "overrideParticlesToBeNullToolStripMenuItem";
+            this.overrideParticlesToBeNullToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.overrideParticlesToBeNullToolStripMenuItem.Text = "Override particles to be null";
+            this.overrideParticlesToBeNullToolStripMenuItem.Click += new System.EventHandler(this.overrideParticlesToBeNullToolStripMenuItem_Click);
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modDotaToolStripMenuItem1,
+            this.tutorialsToolStripMenuItem,
+            this.iRCToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.toolStripDropDownButton1.Text = "Help";
+            // 
+            // modDotaToolStripMenuItem1
+            // 
+            this.modDotaToolStripMenuItem1.Name = "modDotaToolStripMenuItem1";
+            this.modDotaToolStripMenuItem1.Size = new System.Drawing.Size(167, 22);
+            this.modDotaToolStripMenuItem1.Text = "ModDota Forums";
+            this.modDotaToolStripMenuItem1.Click += new System.EventHandler(this.modDotaToolStripMenuItem1_Click);
+            // 
+            // tutorialsToolStripMenuItem
+            // 
+            this.tutorialsToolStripMenuItem.Name = "tutorialsToolStripMenuItem";
+            this.tutorialsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.tutorialsToolStripMenuItem.Text = "Tutorials";
+            this.tutorialsToolStripMenuItem.Click += new System.EventHandler(this.tutorialsToolStripMenuItem_Click_1);
+            // 
+            // iRCToolStripMenuItem
+            // 
+            this.iRCToolStripMenuItem.Name = "iRCToolStripMenuItem";
+            this.iRCToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.iRCToolStripMenuItem.Text = "IRC";
+            this.iRCToolStripMenuItem.Click += new System.EventHandler(this.iRCToolStripMenuItem_Click_1);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(44, 22);
+            this.toolStripButton2.Text = "About";
+            this.toolStripButton2.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // newParticles
             // 
@@ -309,6 +425,34 @@
             this.decompileVtex.UseVisualStyleBackColor = true;
             this.decompileVtex.Click += new System.EventHandler(this.decompileVtex_Click);
             // 
+            // gdsButton
+            // 
+            this.gdsButton.AutoSize = true;
+            this.gdsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gdsButton.Image = global::D2ModKit.Properties.Resources.gds_22;
+            this.gdsButton.Location = new System.Drawing.Point(36, 255);
+            this.gdsButton.Margin = new System.Windows.Forms.Padding(1);
+            this.gdsButton.Name = "gdsButton";
+            this.gdsButton.Size = new System.Drawing.Size(28, 28);
+            this.gdsButton.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.gdsButton, "Open the GetDotaStats page for this addon.");
+            this.gdsButton.UseVisualStyleBackColor = true;
+            this.gdsButton.Click += new System.EventHandler(this.gdsButton_Click);
+            // 
+            // steamButton
+            // 
+            this.steamButton.AutoSize = true;
+            this.steamButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.steamButton.Image = global::D2ModKit.Properties.Resources.Steam_logo_22;
+            this.steamButton.Location = new System.Drawing.Point(6, 255);
+            this.steamButton.Margin = new System.Windows.Forms.Padding(1);
+            this.steamButton.Name = "steamButton";
+            this.steamButton.Size = new System.Drawing.Size(28, 28);
+            this.steamButton.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.steamButton, "Open the Steam Workshop page for this addon.");
+            this.steamButton.UseVisualStyleBackColor = true;
+            this.steamButton.Click += new System.EventHandler(this.steamButton_Click);
+            // 
             // contentSizeLabel
             // 
             this.contentSizeLabel.AutoSize = true;
@@ -421,138 +565,6 @@
             this.label5.TabIndex = 38;
             this.label5.Text = "Materials";
             // 
-            // gdsButton
-            // 
-            this.gdsButton.AutoSize = true;
-            this.gdsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gdsButton.Image = global::D2ModKit.Properties.Resources.gds_22;
-            this.gdsButton.Location = new System.Drawing.Point(40, 258);
-            this.gdsButton.Name = "gdsButton";
-            this.gdsButton.Size = new System.Drawing.Size(28, 28);
-            this.gdsButton.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.gdsButton, "Open the GetDotaStats page for this addon.");
-            this.gdsButton.UseVisualStyleBackColor = true;
-            this.gdsButton.Click += new System.EventHandler(this.gdsButton_Click);
-            // 
-            // steamButton
-            // 
-            this.steamButton.AutoSize = true;
-            this.steamButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.steamButton.Image = global::D2ModKit.Properties.Resources.Steam_logo_22;
-            this.steamButton.Location = new System.Drawing.Point(6, 258);
-            this.steamButton.Name = "steamButton";
-            this.steamButton.Size = new System.Drawing.Size(28, 28);
-            this.steamButton.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.steamButton, "Open the Steam Workshop page for this addon.");
-            this.steamButton.UseVisualStyleBackColor = true;
-            this.steamButton.Click += new System.EventHandler(this.steamButton_Click);
-            // 
-            // toolStripDropDownButton2
-            // 
-            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem,
-            this.newAddonFromBarebonesToolStripMenuItem1,
-            this.chineseBarebonescomingSoonToolStripMenuItem});
-            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(83, 22);
-            this.toolStripDropDownButton2.Text = "New Addon";
-            // 
-            // addonFromMyllsForkedBarebonesToolStripMenuItem
-            // 
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Text = "Myll\'s Forked Barebones";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.ToolTipText = "Fork a new addon from Myll\'s Forked Barebones.\r\nContains recommended modification" +
-    "s to BMD\'s\r\nBarebones.";
-            this.addonFromMyllsForkedBarebonesToolStripMenuItem.Click += new System.EventHandler(this.addonFromMyllsForkedBarebonesToolStripMenuItem_Click);
-            // 
-            // newAddonFromBarebonesToolStripMenuItem1
-            // 
-            this.newAddonFromBarebonesToolStripMenuItem1.Name = "newAddonFromBarebonesToolStripMenuItem1";
-            this.newAddonFromBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(255, 22);
-            this.newAddonFromBarebonesToolStripMenuItem1.Text = "BMD\'s Barebones";
-            this.newAddonFromBarebonesToolStripMenuItem1.ToolTipText = "Fork a new addon from BMD\'s Barebones.";
-            this.newAddonFromBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.forkBarebones_Click);
-            // 
-            // chineseBarebonescomingSoonToolStripMenuItem
-            // 
-            this.chineseBarebonescomingSoonToolStripMenuItem.Name = "chineseBarebonescomingSoonToolStripMenuItem";
-            this.chineseBarebonescomingSoonToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.chineseBarebonescomingSoonToolStripMenuItem.Text = "Chinese Barebones (coming soon)";
-            // 
-            // templatesButton
-            // 
-            this.templatesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.templatesButton.Image = ((System.Drawing.Image)(resources.GetObject("templatesButton.Image")));
-            this.templatesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.templatesButton.Name = "templatesButton";
-            this.templatesButton.Size = new System.Drawing.Size(66, 22);
-            this.templatesButton.Text = "Templates";
-            this.templatesButton.Click += new System.EventHandler(this.templatesButton_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeAddonToolStripMenuItem,
-            this.overrideParticlesToBeNullToolStripMenuItem});
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(50, 22);
-            this.toolStripButton3.Text = "Other";
-            // 
-            // removeAddonToolStripMenuItem
-            // 
-            this.removeAddonToolStripMenuItem.Name = "removeAddonToolStripMenuItem";
-            this.removeAddonToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.removeAddonToolStripMenuItem.Text = "Remove Selected Addon";
-            this.removeAddonToolStripMenuItem.Click += new System.EventHandler(this.removeAddon_Click);
-            // 
-            // overrideParticlesToBeNullToolStripMenuItem
-            // 
-            this.overrideParticlesToBeNullToolStripMenuItem.Name = "overrideParticlesToBeNullToolStripMenuItem";
-            this.overrideParticlesToBeNullToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.overrideParticlesToBeNullToolStripMenuItem.Text = "Override particles to be null";
-            this.overrideParticlesToBeNullToolStripMenuItem.Click += new System.EventHandler(this.overrideParticlesToBeNullToolStripMenuItem_Click);
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.modDotaToolStripMenuItem1,
-            this.tutorialsToolStripMenuItem,
-            this.iRCToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
-            this.toolStripDropDownButton1.Text = "Help";
-            // 
-            // modDotaToolStripMenuItem1
-            // 
-            this.modDotaToolStripMenuItem1.Name = "modDotaToolStripMenuItem1";
-            this.modDotaToolStripMenuItem1.Size = new System.Drawing.Size(167, 22);
-            this.modDotaToolStripMenuItem1.Text = "ModDota Forums";
-            this.modDotaToolStripMenuItem1.Click += new System.EventHandler(this.modDotaToolStripMenuItem1_Click);
-            // 
-            // tutorialsToolStripMenuItem
-            // 
-            this.tutorialsToolStripMenuItem.Name = "tutorialsToolStripMenuItem";
-            this.tutorialsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.tutorialsToolStripMenuItem.Text = "Tutorials";
-            this.tutorialsToolStripMenuItem.Click += new System.EventHandler(this.tutorialsToolStripMenuItem_Click_1);
-            // 
-            // iRCToolStripMenuItem
-            // 
-            this.iRCToolStripMenuItem.Name = "iRCToolStripMenuItem";
-            this.iRCToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.iRCToolStripMenuItem.Text = "IRC";
-            this.iRCToolStripMenuItem.Click += new System.EventHandler(this.iRCToolStripMenuItem_Click_1);
-            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -562,23 +574,13 @@
             this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
             this.toolStripButton1.Text = "Update";
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(44, 22);
-            this.toolStripButton2.Text = "About";
-            this.toolStripButton2.Click += new System.EventHandler(this.aboutButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(341, 293);
+            this.ClientSize = new System.Drawing.Size(339, 288);
             this.Controls.Add(this.gdsButton);
             this.Controls.Add(this.steamButton);
             this.Controls.Add(this.decompileVtex);

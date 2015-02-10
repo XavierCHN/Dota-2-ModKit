@@ -1456,10 +1456,8 @@ namespace D2ModKit
                     return;
                 }
                 sc.Add(currAddon.Name + ";" + elf.link);
-                if (elf.link.StartsWith("http"))
-                {
-                    Process.Start(elf.link);
-                }
+                Settings.Default.Save();
+                //Process.Start(elf.link);
             }
         }
 
@@ -1486,10 +1484,8 @@ namespace D2ModKit
                     return;
                 }
                 sc.Add(currAddon.Name + ";" + elf.link);
-                if (elf.link.StartsWith("http"))
-                {
-                    Process.Start(elf.link);
-                }
+                Settings.Default.Save();
+                //Process.Start(elf.link);
             }
         }
 
