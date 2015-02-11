@@ -50,6 +50,7 @@
             this.modDotaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iRCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.newParticles = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -68,16 +69,17 @@
             this.combineBtn = new System.Windows.Forms.Button();
             this.combineSuccessLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.steamButton = new System.Windows.Forms.ToolStripButton();
+            this.gdsButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.rdota2moddingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -219,9 +221,11 @@
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.modDotaToolStripMenuItem1,
             this.tutorialsToolStripMenuItem,
-            this.iRCToolStripMenuItem});
+            this.iRCToolStripMenuItem,
+            this.modDotaToolStripMenuItem1,
+            this.otherToolsToolStripMenuItem,
+            this.rdota2moddingToolStripMenuItem});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -247,7 +251,14 @@
             this.iRCToolStripMenuItem.Name = "iRCToolStripMenuItem";
             this.iRCToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.iRCToolStripMenuItem.Text = "IRC";
-            this.iRCToolStripMenuItem.Click += new System.EventHandler(this.iRCToolStripMenuItem_Click_1);
+            this.iRCToolStripMenuItem.Click += new System.EventHandler(this.ircToolStripMenuItem_Click_1);
+            // 
+            // otherToolsToolStripMenuItem
+            // 
+            this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
+            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.otherToolsToolStripMenuItem.Text = "Tools";
+            this.otherToolsToolStripMenuItem.Click += new System.EventHandler(this.otherToolsToolStripMenuItem_Click);
             // 
             // toolStripButton2
             // 
@@ -458,15 +469,6 @@
             this.label5.TabIndex = 38;
             this.label5.Text = "Materials";
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
-            this.toolStripButton1.Text = "Update";
-            // 
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Left;
@@ -478,13 +480,23 @@
             this.toolStripButton6,
             this.toolStripButton7,
             this.toolStripButton8,
-            this.toolStripButton9,
-            this.toolStripButton10});
+            this.steamButton,
+            this.gdsButton});
             this.toolStrip2.Location = new System.Drawing.Point(0, 25);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(68, 242);
             this.toolStrip2.TabIndex = 44;
             this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripLabel1.ForeColor = System.Drawing.Color.Navy;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(65, 20);
+            this.toolStripLabel1.Text = "Addon:";
+            this.toolStripLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // toolStripButton4
             // 
@@ -551,37 +563,45 @@
             this.toolStripButton8.ToolTipText = "Go to this addon\'s resource/flash3 directory.";
             this.toolStripButton8.Click += new System.EventHandler(this.flash3Dir_Click);
             // 
-            // toolStripButton9
+            // steamButton
             // 
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
-            this.toolStripButton9.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(65, 26);
-            this.toolStripButton9.Text = "toolStripButton9";
-            this.toolStripButton9.Click += new System.EventHandler(this.steamButton_Click);
+            this.steamButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.steamButton.Image = ((System.Drawing.Image)(resources.GetObject("steamButton.Image")));
+            this.steamButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.steamButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.steamButton.Name = "steamButton";
+            this.steamButton.Size = new System.Drawing.Size(65, 26);
+            this.steamButton.Text = "toolStripButton9";
+            this.steamButton.ToolTipText = "Open the Steam Workshop page for this addon.";
+            this.steamButton.Click += new System.EventHandler(this.steamButton_Click);
             // 
-            // toolStripButton10
+            // gdsButton
             // 
-            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
-            this.toolStripButton10.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(65, 26);
-            this.toolStripButton10.Text = "toolStripButton10";
-            this.toolStripButton10.Click += new System.EventHandler(this.gdsButton_Click);
+            this.gdsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.gdsButton.Image = ((System.Drawing.Image)(resources.GetObject("gdsButton.Image")));
+            this.gdsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.gdsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.gdsButton.Name = "gdsButton";
+            this.gdsButton.Size = new System.Drawing.Size(65, 26);
+            this.gdsButton.Text = "toolStripButton10";
+            this.gdsButton.ToolTipText = "Open the GetDotaStats page for this addon.";
+            this.gdsButton.Click += new System.EventHandler(this.gdsButton_Click);
             // 
-            // toolStripLabel1
+            // toolStripButton1
             // 
-            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel1.ForeColor = System.Drawing.Color.Navy;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(65, 20);
-            this.toolStripLabel1.Text = "Addon:";
-            this.toolStripLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
+            this.toolStripButton1.Text = "Update";
+            // 
+            // rdota2moddingToolStripMenuItem
+            // 
+            this.rdota2moddingToolStripMenuItem.Name = "rdota2moddingToolStripMenuItem";
+            this.rdota2moddingToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.rdota2moddingToolStripMenuItem.Text = "/r/dota2modding";
+            this.rdota2moddingToolStripMenuItem.Click += new System.EventHandler(this.rdota2moddingToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -612,7 +632,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainForm";
-            this.Text = "D2 ModKit";
+            this.Text = "Dota 2 ModKit";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
@@ -661,8 +681,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
-        private System.Windows.Forms.ToolStripButton toolStripButton9;
-        private System.Windows.Forms.ToolStripButton toolStripButton10;
+        private System.Windows.Forms.ToolStripButton steamButton;
+        private System.Windows.Forms.ToolStripButton gdsButton;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addonFromMyllsForkedBarebonesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addonFromBMDsBarebonesToolStripMenuItem;
@@ -672,6 +692,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripMenuItem otherToolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rdota2moddingToolStripMenuItem;
     }
 }
 

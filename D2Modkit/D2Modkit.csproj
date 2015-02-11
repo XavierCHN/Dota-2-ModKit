@@ -229,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="d2modkit.ico" />
+    <None Include="donate.png" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Libs\KVLib.dll" />
     <Content Include="Libs\Sprache.dll" />

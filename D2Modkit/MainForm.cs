@@ -1428,7 +1428,7 @@ namespace D2ModKit
             Process.Start("https://moddota.com/forums/tutorial-index");
         }
 
-        private void iRCToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void ircToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Process.Start("https://moddota.com/forums/chat");
         }
@@ -1492,6 +1492,16 @@ namespace D2ModKit
         private void chineseBarebones_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void otherToolsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://moddota.com/forums/tools");
+        }
+
+        private void rdota2moddingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.reddit.com/r/dota2modding/");
         }
 
         /*

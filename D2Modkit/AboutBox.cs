@@ -14,12 +14,13 @@ namespace D2ModKit
         public AboutBox()
         {
             InitializeComponent();
+            //githubLink.link
             this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            //this.labelProductName.Text = AssemblyProduct;
+            this.labelVersion.Text = String.Format("Version: {0}", AssemblyVersion);
+            //this.labelCopyright.Text = AssemblyCopyright;
+            //this.labelCompanyName.Text = AssemblyCompany;
+            //this.textBoxDescription.Text = AssemblyDescription;
         }
 
         #region Assembly Attribute Accessors
@@ -101,5 +102,15 @@ namespace D2ModKit
             }
         }
         #endregion
+
+        private void donate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=stephenf%2ebme%40gmail%2ecom&lc=US&item_name=Dota%202%20ModKit&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
+        }
+
+        private void githubLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Myll/Dota-2-ModKit");
+        }
     }
 }
