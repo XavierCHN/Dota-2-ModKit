@@ -96,23 +96,12 @@ namespace D2ModKit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection SteamWorkshopLinks {
+        public global::System.Collections.Specialized.StringCollection AddonInfos {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["SteamWorkshopLinks"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["AddonInfos"]));
             }
             set {
-                this["SteamWorkshopLinks"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection GDSLinks {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["GDSLinks"]));
-            }
-            set {
-                this["GDSLinks"] = value;
+                this["AddonInfos"] = value;
             }
         }
     }

@@ -93,6 +93,11 @@ namespace D2ModKit
             set { addons = value; }
         }
 
+        public System.Collections.Specialized.StringCollection AddonInfos
+        {
+            get { return Settings.Default.AddonInfos; }
+        }
+
         private ParticleSystem currParticleSystem;
 
         public ParticleSystem ps
@@ -102,6 +107,8 @@ namespace D2ModKit
         }
 
         private Thread autoUpdateThread;
+		private Thread gdsThread;
+		private Dictionary<string, string> modRanks = new Dictionary<string, string>();
 
         private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -121,13 +128,9 @@ namespace D2ModKit
                 Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
 
-            if (Settings.Default.SteamWorkshopLinks == null)
+            if (AddonInfos == null)
             {
-                Settings.Default.SteamWorkshopLinks = new System.Collections.Specialized.StringCollection();
-            }
-            if (Settings.Default.GDSLinks == null)
-            {
-                Settings.Default.GDSLinks = new System.Collections.Specialized.StringCollection();
+                Settings.Default.AddonInfos = new System.Collections.Specialized.StringCollection();
             }
 
             InitializeComponent();
@@ -143,7 +146,6 @@ namespace D2ModKit
 
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
-            Console.WriteLine("In Main: Creating the Child thread");
             autoUpdateThread = new Thread(childref);
             autoUpdateThread.Start();
 
@@ -174,8 +176,47 @@ namespace D2ModKit
                 ensureSameDrives();
             }
 
+			// get the gds ranks for the mods
+			ThreadStart childref2 = new ThreadStart(GetGDSRanks);
+			gdsThread = new Thread(childref2);
+			gdsThread.Start();
+
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
         }
+
+		private void GetGDSRanks() {
+			WebClient wc = new WebClient();
+			try {
+				Byte[] responseBytes = wc.DownloadData("http://getdotastats.com/d2mods/api/popular_mods.php");
+				string source = System.Text.Encoding.ASCII.GetString(responseBytes);
+				foreach (Addon a in addons) {
+					string modID = getVal(a.Name, "gds_modID");
+					a.GDS_modID = modID;
+					if (modID == "") {
+						continue;
+					}
+					string x = source.Substring(source.IndexOf("\"modID\":" + modID));
+					// accomdate for at most 5 digits
+					string x2 = x.Substring(x.IndexOf("\"popularityRank\":"), 17 + 5);
+					string rank = x2.Substring(17, x2.IndexOf(',') - 17);
+					a.GDS_rank = rank;
+				}
+
+			} catch (Exception) { }
+			if (this.InvokeRequired) {
+				m_SetGDSButtonText setGDSButtonText = SetGDSButtonText;
+				Invoke(setGDSButtonText);
+			}
+			gdsThread.Abort();
+		}
+
+		private void SetGDSButtonText() {
+			if (currAddon.GDS_rank != "") {
+				gdsButton.Text = "#" + currAddon.GDS_rank;
+			}
+		}
+
+		delegate void m_SetGDSButtonText();
 
         void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -200,13 +241,6 @@ namespace D2ModKit
 
         private void CheckForUpdatesThread()
         {
-            Debug.WriteLine("Child thread starts");
-            //string newVers = convertVers(Vers, 1);
-            //Debug.WriteLine("New vers would be: " + newVers);
-            // check for a new version
-            //string url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
-            //url += newVers + "/D2ModKit.zip";
-
             // use these to test version updater.
             //newVers = "1.3.2";
             //url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v1.3.2/D2ModKit.zip";
@@ -308,7 +342,7 @@ namespace D2ModKit
 
             if (r == DialogResult.Yes)
             {
-                Debug.WriteLine("Url: " + url);
+                //Debug.WriteLine("Url: " + url);
                 UpdateForm uf = new UpdateForm(url, newVers);
                 uf.ShowDialog();
             }
@@ -556,6 +590,7 @@ namespace D2ModKit
                     }
                 }
             }
+			setAddonInfos();
             setAddonNames();
         }
 
@@ -600,10 +635,15 @@ namespace D2ModKit
         {
             currAddon = getAddonFromName(addon);
             Properties.Settings.Default.CurrAddon = currAddon.Name;
-            Properties.Settings.Default.Save();
+			SaveSettings();
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
             calculateSize();
+			if (currAddon.GDS_rank != "") {
+				gdsButton.Text = "#" + currAddon.GDS_rank;
+			} else {
+				gdsButton.Text = "";
+			}
         }
 
         private void calculateSize()
@@ -792,6 +832,9 @@ namespace D2ModKit
             addons.Add(a);
             // redo the tooltip addon names.
             setAddonNames();
+			// add the addon to the AddonInfos
+			AddonInfos.Add(a.Name.ToLower());
+			SaveSettings();
             // make the active addon this one.
             selectCurrentAddon(lower);
             MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit",
@@ -800,6 +843,10 @@ namespace D2ModKit
 
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
+
+		private void SaveSettings() {
+			Settings.Default.Save();
+		}
 
         private void particleDesigner_Click(object sender, EventArgs e)
         {
@@ -1433,49 +1480,42 @@ namespace D2ModKit
             Process.Start("https://moddota.com/forums/chat");
         }
 
-        private void steamButton_Click(object sender, EventArgs e)
-        {
-            System.Collections.Specialized.StringCollection sc = Settings.Default.SteamWorkshopLinks;
-            bool found = false;
-            foreach (string s in sc)
-            {
-                if (s.StartsWith(currAddon.Name))
-                {
-                    string[] parts = s.Split(';');
-                    Process.Start(parts[1]);
-                    found = true;
-                }
-            }
+		private string getVal(string addonName, string key) {
+			foreach (string s in AddonInfos) {
+				if (s.StartsWith(addonName.ToLower())) {
+					string[] parts = s.Split(';');
+					for (int i = 0; i < parts.Length; i++) {
+						// skip the first and last parts. last parts will be empty, and
+						// first part won't have the = sign, it's addon name.
+						if (i == 0 || i == parts.Length-1) {
+							continue;
+						}
+						string p = parts[i];
+						if (p.Substring(0, p.IndexOf('=')) == key) {
+							return p.Substring(p.IndexOf('=') + 1);
+						}
+					}
+				}
+			}
+			return "";
+		}
 
-            if (!found)
-            {
-                EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "steam");
-                DialogResult res = elf.ShowDialog();
-                if (res == DialogResult.Cancel)
-                {
-                    return;
-                }
-                sc.Add(currAddon.Name + ";" + elf.link);
-                Settings.Default.Save();
-                //Process.Start(elf.link);
-            }
-        }
+		private void add(string addonName, string key, string val) {
+			for (int i = 0; i < AddonInfos.Count; i++) {
+				string s = AddonInfos[i];
+				if (s.StartsWith(addonName.ToLower())) {
+					AddonInfos[i] += key + "=" + val + ";";
+				}
+			}
+		}
 
         private void gdsButton_Click(object sender, EventArgs e)
         {
-            System.Collections.Specialized.StringCollection sc = Settings.Default.GDSLinks;
-            bool found = false;
-            foreach (string s in sc)
-            {
-                if (s.StartsWith(currAddon.Name))
-                {
-                    string[] parts = s.Split(';');
-                    Process.Start(parts[1]);
-                    found = true;
-                }
-            }
-
-            if (!found)
+			string link = getVal(currAddon.Name, "gds_link");
+			if (link != "") {
+				Process.Start(link);
+			}
+            else
             {
                 EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "gds");
                 DialogResult res = elf.ShowDialog();
@@ -1483,10 +1523,51 @@ namespace D2ModKit
                 {
                     return;
                 }
-                sc.Add(currAddon.Name + ";" + elf.link);
-                Settings.Default.Save();
-                //Process.Start(elf.link);
+				link = elf.link;
+                string modID = link.Substring(link.LastIndexOf('=')+1);
+				add(currAddon.Name, "gds_link", link);
+				add(currAddon.Name, "gds_modID", modID);
+				SaveSettings();
             }
+        }
+
+		private void steamButton_Click(object sender, EventArgs e) {
+			string link = getVal(currAddon.Name, "workshop_link");
+			if (link != "") {
+				Process.Start(link);
+			} else {
+				EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "steam");
+				DialogResult res = elf.ShowDialog();
+				if (res == DialogResult.Cancel) {
+					return;
+				}
+				link = elf.link;
+				string workshop_id = link.Substring(link.LastIndexOf('=') + 1);
+				add(currAddon.Name, "workshop_id", workshop_id);
+				add(currAddon.Name, "workshop_link", link);
+				SaveSettings();
+			}
+		}
+
+        private void setAddonInfos()
+        {
+            foreach (Addon a in Addons)
+            {
+				bool found = false;
+                foreach (string s in AddonInfos)
+                {
+                    string[] parts = s.Split(';');
+                    string name = parts[0];
+					if (a.Name.ToLower() == name.ToLower()) {
+						found = true;
+					}
+                }
+				if (!found) {
+					// this is a valid addon but not in AddonInfos
+					AddonInfos.Add(a.Name.ToLower() + ";");
+				}
+            }
+			SaveSettings();
         }
 
         private void chineseBarebones_Click(object sender, EventArgs e)

@@ -105,6 +105,7 @@
     <Compile Include="EnterLinkForm.Designer.cs">
       <DependentUpon>EnterLinkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>

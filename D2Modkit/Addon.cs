@@ -21,6 +21,9 @@ namespace D2ModKit
         private string unitsCustomPath;
         private string heroesCustomPath;
         private string relativeParticlePath;
+		private string gds_modID = "";
+		private string gds_rank = "";
+
         private List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
         private List<AbilityEntry> itemEntries = new List<AbilityEntry>();
         private List<UnitEntry> unitEntries = new List<UnitEntry>();
@@ -64,6 +67,16 @@ namespace D2ModKit
             name = _contentPath.Substring(_contentPath.LastIndexOf('\\') + 1);
             getMorePaths();
         }
+
+		public string GDS_modID {
+			get { return gds_modID; }
+			set { gds_modID = value; }
+		}
+
+		public string GDS_rank {
+			get { return gds_rank; }
+			set { gds_rank = value; }
+		}
 
         public string ItemsCustomPath
         {
