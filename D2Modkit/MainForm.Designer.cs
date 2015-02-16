@@ -132,7 +132,7 @@
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-			this.toolStrip1.Size = new System.Drawing.Size(336, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(335, 25);
 			this.toolStrip1.TabIndex = 6;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -187,6 +187,7 @@
 			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
 			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
 			this.preferencesToolStripMenuItem.Text = "Preferences";
+			this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -491,7 +492,7 @@
             this.gdsButton});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 25);
 			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(68, 242);
+			this.toolStrip2.Size = new System.Drawing.Size(68, 243);
 			this.toolStrip2.TabIndex = 44;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -609,7 +610,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-			this.ClientSize = new System.Drawing.Size(336, 267);
+			this.ClientSize = new System.Drawing.Size(335, 268);
 			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.decompileVtex);
 			this.Controls.Add(this.compileVtex);

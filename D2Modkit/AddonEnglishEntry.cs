@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace D2ModKit
 {
+	//private enum Prefix {TwoTabs = "\t\t"}
+
     public class Pair
     {
         private string key, val;
@@ -44,7 +46,7 @@ namespace D2ModKit
                 whitespace += "\t\t";
             }
 
-            string str = "\"" + key + "\"" + whitespace + "\"" + val + "\"\n";
+            string str = "\t\t\"" + key + "\"" + whitespace + "\"" + val + "\"\n";
             return str;
         }
     }
@@ -147,8 +149,8 @@ namespace D2ModKit
         public override string ToString()
         {
             string str = "";
-            str += Name.ToString();
-            str += Description.ToString();
+			str += Name.ToString();
+			str += Description.ToString();
             return str;
         }
     }
@@ -210,7 +212,7 @@ namespace D2ModKit
 
         public override string ToString()
         {
-            return name.ToString();
+			return name.ToString();
         }
     }
 

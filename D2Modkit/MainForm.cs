@@ -1585,6 +1585,10 @@ namespace D2ModKit
             Process.Start("http://www.reddit.com/r/dota2modding/");
         }
 
+		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
+
+		}
+
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {

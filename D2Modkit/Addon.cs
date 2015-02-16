@@ -398,6 +398,8 @@ namespace D2ModKit
                     }
                 }
 
+				StringBuilder content = new StringBuilder();
+
                 // WriteAllText will clear the contents of this file first
                 string header =
                     "// **********************************************************************************************************************\n" +
@@ -405,105 +407,114 @@ namespace D2ModKit
                     "// It does not contain tooltips already defined in " + thisLangCopy +
                     ", nor modifiers with the property \"IsHidden\" \"1\".\n" +
                     "// **********************************************************************************************************************\n";
-                File.WriteAllText(outputPath, header, Encoding.Unicode);
+				content.Append(header);
 
 
-                string head1 = "\n// ******************** HEROES ********************\n";
-                File.AppendAllText(outputPath, head1, Encoding.Unicode);
+                string head1 = "\n\t\t// ******************** HEROES ********************\n";
+				content.Append(head1);
                 for (int i = 0; i < heroesEntries.Count(); i++)
                 {
                     HeroEntry hero = heroesEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(hero.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, hero.ToString(), Encoding.Unicode);
+						content.Append(hero.ToString());
                     }
                 }
 
-                string head2 = "\n// ******************** UNITS ********************\n";
-                File.AppendAllText(outputPath, head2, Encoding.Unicode);
+                string head2 = "\n\t\t// ******************** UNITS ********************\n";
+				content.Append(head2);
                 for (int i = 0; i < unitEntries.Count(); i++)
                 {
                     UnitEntry unit = unitEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(unit.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, unit.ToString(), Encoding.Unicode);
+						content.Append(unit.ToString());
                     }
                 }
 
-                string head3 = "\n// ******************** ABILITY MODIFIERS ********************\n";
-                File.AppendAllText(outputPath, head3, Encoding.Unicode);
+                string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
+				content.Append(head3);
                 for (int i = 0; i < modifierAbilityKeys.Count(); i++)
                 {
                     ModifierEntry mod = new ModifierEntry(modifierAbilityKeys.ElementAt(i));
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);
+						content.Append(mod + "\n");
                     }
                 }
 
-                string head6 = "\n// ******************** ITEM MODIFIERS ********************\n";
-                File.AppendAllText(outputPath, head6, Encoding.Unicode);
+                string head6 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
+				content.Append(head6);
                 for (int i = 0; i < modifierItemKeys.Count(); i++)
                 {
                     //ModifierEntry mod = modifierItemEntries.ElementAt(i);
                     ModifierEntry mod = new ModifierEntry(modifierItemKeys.ElementAt(i));
                     if (!alreadyHasKeys.Contains(mod.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, mod + "\n", Encoding.Unicode);
+						content.Append(mod + "\n");
                     }
                 }
 
-                string head4 = "\n// ******************** ABILITIES ********************\n";
-                File.AppendAllText(outputPath, head4, Encoding.Unicode);
+                string head4 = "\n\t\t// ******************** ABILITIES ********************\n";
+				content.Append(head4);
                 for (int i = 0; i < abilityEntries.Count(); i++)
                 {
                     AbilityEntry abil = abilityEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(abil.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, abil + "\n", Encoding.Unicode);
+						content.Append(abil + "\n");
                     }
                     else
                     {
                         // the addon_language already has this ability. but let's check
                         // if there are any new AbilitySpecials.
+						bool missingAbilSpecials = false;
                         foreach (Pair p in abil.AbilitySpecials)
                         {
                             if (!alreadyHasKeys.Contains(p.Key.ToLower()))
                             {
                                 // the addon_language doesn't contain this abil special.
-                                File.AppendAllText(outputPath, p.ToString(), Encoding.Unicode);
+								content.Append(p.ToString());
+								missingAbilSpecials = true;
                             }
                         }
-                        File.AppendAllText(outputPath, "\n", Encoding.Unicode);
+						if (missingAbilSpecials) {
+							content.Append("\n");	
+						}
                     }
                 }
 
-                string head5 = "\n// ******************** ITEMS ********************\n";
-                File.AppendAllText(outputPath, head5, Encoding.Unicode);
+                string head5 = "\n\t\t// ******************** ITEMS ********************\n";
+				content.Append(head5);
                 for (int i = 0; i < itemEntries.Count(); i++)
                 {
                     AbilityEntry item = itemEntries.ElementAt(i);
                     if (!alreadyHasKeys.Contains(item.Name.Key.ToLower()))
                     {
-                        File.AppendAllText(outputPath, item + "\n", Encoding.Unicode);
+						content.Append(item + "\n");
                     }
                     else
                     {
                         // the addon_language already has this ability. but let's check
                         // if there are any new AbilitySpecials.
+						bool missingAbilSpecials = false;
                         foreach (Pair p in item.AbilitySpecials)
                         {
                             if (!alreadyHasKeys.Contains(p.Key.ToLower()))
                             {
                                 // the addon_language doesn't contain this abil special.
-                                File.AppendAllText(outputPath, p.ToString(), Encoding.Unicode);
+								content.Append(p.ToString());
+								missingAbilSpecials = true;
                             }
                         }
-                        File.AppendAllText(outputPath, "\n", Encoding.Unicode);
+						if (missingAbilSpecials) {
+							content.Append("\n");
+						}
                     }
                 }
 
                 // open the tooltips.txt in a text editor
+				File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
                 Process.Start(outputPath);
             }
         }
