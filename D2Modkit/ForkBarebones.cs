@@ -133,7 +133,7 @@ namespace D2ModKit
                     lines[j] = l;
                 }
 				// addon_lang files are Unicode
-				if (files[i].StartsWith("addon_") && files[i].EndsWith(".txt"))
+				if (files[i].Contains("addon_") && files[i].EndsWith(".txt"))
 				{
 					File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
 				}
