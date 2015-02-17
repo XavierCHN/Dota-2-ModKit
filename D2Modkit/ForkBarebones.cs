@@ -132,13 +132,14 @@ namespace D2ModKit
                     }
                     lines[j] = l;
                 }
-                if (files[i].EndsWith(".lua"))
-                {
-                    File.WriteAllLines(files[i], lines);
-                }
+				// addon_lang files are Unicode
+				if (files[i].StartsWith("addon_") && files[i].EndsWith(".txt"))
+				{
+					File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+				}
                 else
                 {
-                    File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+                    File.WriteAllLines(files[i], lines);
                 }
             }
         }

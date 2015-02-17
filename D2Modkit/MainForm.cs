@@ -111,6 +111,7 @@ namespace D2ModKit
 		private Dictionary<string, string> modRanks = new Dictionary<string, string>();
 
         private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+		private Dictionary<string, string> libraries = new Dictionary<string, string>();
 
         public MainForm()
         {
@@ -124,9 +125,11 @@ namespace D2ModKit
                 Settings.Default.UpdateRequired = false;
                 Settings.Default.Save();
                 // open up changelog
-                //Process.Start("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + convertVers(Vers, 0));
                 Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
+			
+			// populate libraries dictionary
+			addLibraries();
 
             if (AddonInfos == null)
             {
@@ -184,6 +187,12 @@ namespace D2ModKit
             selectCurrentAddon(Properties.Settings.Default.CurrAddon);
         }
 
+		private void addLibraries() {
+			libraries.Add("buildinghelper.lua", "https://raw.githubusercontent.com/Myll/Dota-2-Building-Helper/master/game/dota_addons/samplerts/scripts/vscripts/buildinghelper.lua");
+			libraries.Add("physics.lua", "https://raw.githubusercontent.com/bmddota/barebones/source2/game/dota_addons/barebones/scripts/vscripts/physics.lua");
+			//libraries.Add("physics.lua", "https://raw.githubusercontent.com/bmddota/barebones/source2/game/dota_addons/barebones/scripts/vscripts/physics.lua");
+		}
+
 		private void GetGDSRanks() {
 			WebClient wc = new WebClient();
 			try {
@@ -207,7 +216,6 @@ namespace D2ModKit
 				m_SetGDSButtonText setGDSButtonText = SetGDSButtonText;
 				Invoke(setGDSButtonText);
 			}
-			gdsThread.Abort();
 		}
 
 		private void SetGDSButtonText() {
@@ -644,7 +652,21 @@ namespace D2ModKit
 			} else {
 				gdsButton.Text = "";
 			}
+			//checkForNewLibraryVersions();
         }
+
+		//TODO:
+		private void checkForNewLibraryVersions() {
+			string vscripts = Path.Combine(currAddon.GamePath, "scripts", "vscripts");
+			string[] luaFiles = Directory.GetFiles(vscripts, "*.lua", SearchOption.AllDirectories);
+			foreach (string luaFile in luaFiles) {
+				if (libraries.ContainsKey(luaFile)) {
+					// this addon uses a known library
+					string url = libraries[luaFile];
+
+				}
+			}
+		}
 
         private void calculateSize()
         {
