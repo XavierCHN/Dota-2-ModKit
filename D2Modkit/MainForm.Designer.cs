@@ -80,6 +80,7 @@
 			this.steamButton = new System.Windows.Forms.ToolStripButton();
 			this.gdsButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
+			this.beginnersBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.SuspendLayout();
@@ -154,6 +155,7 @@
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.beginnersBarebonesToolStripMenuItem,
             this.addonFromMyllsForkedBarebonesToolStripMenuItem1,
             this.addonFromBMDsBarebonesToolStripMenuItem,
             this.addonFromChineseBarebonesToolStripMenuItem});
@@ -165,7 +167,7 @@
 			// 
 			this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Name = "addonFromMyllsForkedBarebonesToolStripMenuItem1";
 			this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Size = new System.Drawing.Size(332, 22);
-			this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Text = "Myll\'s Forked Barebones";
+			this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Text = "Myll\'s Barebones (Advanced)";
 			this.addonFromMyllsForkedBarebonesToolStripMenuItem1.Click += new System.EventHandler(this.myllsBarebones_Click);
 			// 
 			// addonFromBMDsBarebonesToolStripMenuItem
@@ -604,6 +606,14 @@
 			this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
 			this.toolStripButton1.Text = "Update";
 			// 
+			// beginnersBarebonesToolStripMenuItem
+			// 
+			this.beginnersBarebonesToolStripMenuItem.Name = "beginnersBarebonesToolStripMenuItem";
+			this.beginnersBarebonesToolStripMenuItem.Size = new System.Drawing.Size(332, 22);
+			this.beginnersBarebonesToolStripMenuItem.Text = "Noya\'s Barebones (Beginner version)";
+			this.beginnersBarebonesToolStripMenuItem.ToolTipText = "If you\'re a new modder, choose this!";
+			this.beginnersBarebonesToolStripMenuItem.Click += new System.EventHandler(this.beginnersBarebonesToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -695,6 +705,7 @@
         private System.Windows.Forms.ToolStripMenuItem rdota2moddingToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton steamButton;
         private System.Windows.Forms.ToolStripButton gdsButton;
+		private System.Windows.Forms.ToolStripMenuItem beginnersBarebonesToolStripMenuItem;
     }
 }
 

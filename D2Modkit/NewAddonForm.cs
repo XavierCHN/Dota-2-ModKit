@@ -52,13 +52,23 @@ namespace D2ModKit
             set { _removeItemsCheckbox = value; }
         }
 
-        public NewAddonForm()
+		public string Version;
+
+        public NewAddonForm(string version)
         {
             InitializeComponent();
+			Version = version;
             Submit = button1;
             CommentCheckBox = commentCheckBox;
             RemoveHeroesCheckBox = removeHeroesCheckBox;
             RemoveItemsCheckbox = removeItemsCheckBox;
+
+			if (version == "noya") {
+				CommentCheckBox.Visible = false;
+				RemoveHeroesCheckBox.Visible = false;
+				RemoveItemsCheckbox.Visible = false;
+			}
+
             _TextBox.KeyDown += TextBox_KeyDown;
         }
 

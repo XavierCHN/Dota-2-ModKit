@@ -29,22 +29,30 @@ namespace D2ModKit
         private bool remove_items = false;
         private bool remove_heroes = false;
         private string abbrev = "";
+		private string version;
 
-        public ForkBarebones(string newAddonName, Dictionary<string, bool> parameters)
+        public ForkBarebones(string newAddonName, Dictionary<string, string> parameters)
         {
-            bool test;
-            if (parameters.TryGetValue("remove_print", out test))
-            {
-                remove_print = true;
-            }
-            if (parameters.TryGetValue("remove_items", out test))
-            {
-                remove_items = true;
-            }
-            if (parameters.TryGetValue("remove_heroes", out test))
-            {
-                remove_heroes = true;
-            }
+			if (parameters.ContainsKey("remove_print")) {
+				if (parameters["remove_print"] == "true") {
+					remove_print = true;
+				}
+			}
+			if (parameters.ContainsKey("remove_items")) {
+				if (parameters["remove_items"] == "true") {
+					remove_items = true;
+				}
+			}
+			if (parameters.ContainsKey("remove_heroes")) {
+				if (parameters["remove_heroes"] == "true") {
+					remove_heroes = true;
+				}
+			}
+			if (parameters.ContainsKey("version")) {
+				if (parameters["version"] != null) {
+					version = parameters["version"];
+				}
+			}
             NewAddonName = newAddonName;
 
             for (int j = 0; j < newAddonName.Length; j++)
@@ -74,73 +82,67 @@ namespace D2ModKit
                 Directory.Move(dirs[i], newDir);
             }
 
-            // now modify the files.
-            List<string> files = getFiles(newRootDir, "*.txt;*.lua;*.vmap");
-            for (int i = 0; i < files.Count(); i++)
-            {
-                // let's change the filename first, before modifying the contents.
-                string newFileName = files[i].Replace("barebones", NewAddonName.ToLower());
-                newFileName = newFileName.Replace("reflex", NewAddonName.ToLower());
-
-                File.Move(files[i], newFileName);
-                files[i] = newFileName;
-
-                // don't modify contents of these files.
-                if (newFileName.Contains(".vmap"))
-                {
-                    continue;
-                }
-
-
-                string[] lines = File.ReadAllLines(files[i]);
-                for (int j = 0; j < lines.Count(); j++)
-                {
-                    string l = lines[j];
-
-                    // special cases for special files
-                    if (remove_items && newFileName.EndsWith("npc_abilities_override.txt"))
-                    {
-                        l = l.Replace("//\"item_", "\"item_");
-                    }
-                    if (remove_heroes && newFileName.EndsWith("herolist.txt"))
-                    {
-                        if (!l.Contains("npc_dota_hero_ancient_apparition"))
-                        {
-                            l = l.Replace("\"npc_dota_hero_", "//\"npc_dota_hero_");
-                        }
-                    }
-
-                    l = l.Replace("barebones", NewAddonName.ToLower());
-                    l = l.Replace("BAREBONES", NewAddonName.ToUpper());
-                    l = l.Replace("Barebones", NewAddonName);
-                    l = l.Replace("BareBones", NewAddonName);
-                    l = l.Replace("reflex", NewAddonName.ToLower());
-                    l = l.Replace("Reflex", NewAddonName);
-                    l = l.Replace("REFLEX", NewAddonName.ToUpper());
-                    if (newFileName.EndsWith(NewAddonName.ToLower() + ".lua") && remove_print)
-                    {
-                        l = l.Replace("Print", "--Print");
-                        l = l.Replace("print", "--print");
-                    }
-                    if (l.Contains("BASE_LOG_PREFIX = "))
-                    {
-                        l = "BASE_LOG_PREFIX = '[" + abbrev + "]'\n";
-                    }
-                    if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity"))
-                    {
-                        l = l.Replace("GameMode", NewAddonName);
-                    }
-                    lines[j] = l;
-                }
-				// addon_lang files are Unicode
-				if (files[i].Contains("addon_") && files[i].EndsWith(".txt"))
+			// now modify the files.
+			if (version != "noya") {
+				List<string> files = getFiles(newRootDir, "*.txt;*.lua;*.vmap");
+				for (int i = 0; i < files.Count(); i++)
 				{
-					File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+					// let's change the filename first, before modifying the contents.
+					string newFileName = files[i].Replace("barebones", NewAddonName.ToLower());
+					newFileName = newFileName.Replace("reflex", NewAddonName.ToLower());
+					File.Move(files[i], newFileName);
+					files[i] = newFileName;
+
+					// don't modify contents of these files.
+					if (newFileName.Contains(".vmap"))
+					{
+						continue;
+					}
+
+					// now modify file contents
+					string[] lines = File.ReadAllLines(files[i]);
+					for (int j = 0; j < lines.Count(); j++) {
+						string l = lines[j];
+
+						// special cases for special files
+						if (remove_items && newFileName.EndsWith("npc_abilities_override.txt")) {
+							l = l.Replace("//\"item_", "\"item_");
+						}
+						if (remove_heroes && newFileName.EndsWith("herolist.txt")) {
+							if (!l.Contains("npc_dota_hero_ancient_apparition")) {
+								l = l.Replace("\"npc_dota_hero_", "//\"npc_dota_hero_");
+							}
+						}
+
+						l = l.Replace("barebones", NewAddonName.ToLower());
+						l = l.Replace("BAREBONES", NewAddonName.ToUpper());
+						l = l.Replace("Barebones", NewAddonName);
+						l = l.Replace("BareBones", NewAddonName);
+						l = l.Replace("reflex", NewAddonName.ToLower());
+						l = l.Replace("Reflex", NewAddonName);
+						l = l.Replace("REFLEX", NewAddonName.ToUpper());
+						if (newFileName.EndsWith(NewAddonName.ToLower() + ".lua") && remove_print) {
+							string trimmed = l.Trim();
+							if (trimmed.StartsWith("print") || trimmed.StartsWith("Print")) {
+								l = l.Replace("Print", "--Print");
+								l = l.Replace("print", "--print");
+							}
+						}
+						if (l.Contains("BASE_LOG_PREFIX = ")) {
+							l = "BASE_LOG_PREFIX = '[" + abbrev + "]'\n";
+						}
+						if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity")) {
+							l = l.Replace("GameMode", NewAddonName);
+						}
+						lines[j] = l;
+					}
+					// addon_lang files are Unicode
+					if (files[i].Contains("addon_") && files[i].EndsWith(".txt")) {
+						File.WriteAllLines(files[i], lines, System.Text.Encoding.Unicode);
+					} else {
+						File.WriteAllLines(files[i], lines);
+					}
 				}
-                else
-                {
-                    File.WriteAllLines(files[i], lines);
-                }
             }
         }
 

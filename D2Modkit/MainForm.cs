@@ -774,7 +774,7 @@ namespace D2ModKit
             set { addonForm = value; }
         }
 
-        private void forkAddon(bool myllsVersion)
+        private void forkAddon(string version)
         {
             // ensure a "barebones" folder is in the current directory, and it has game and content in it.
             string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
@@ -790,7 +790,7 @@ namespace D2ModKit
                     return;
                 }
 
-                BarebonesDLForm dl = new BarebonesDLForm(myllsVersion);
+                BarebonesDLForm dl = new BarebonesDLForm(version);
                 dl.ShowDialog();
             }
 
@@ -807,7 +807,7 @@ namespace D2ModKit
             }
 
             // at this point we have a valid 'barebones' directory.
-            AddonForm = new NewAddonForm();
+            AddonForm = new NewAddonForm(version);
             AddonForm.Submit.Click += NewAddonSubmit_Click;
             AddonForm.CommentCheckBox.Checked = true;
             AddonForm.RemoveItemsCheckbox.Checked = true;
@@ -817,22 +817,22 @@ namespace D2ModKit
 
         private void bmdBarebones_Click(object sender, EventArgs e)
         {
-            forkAddon(false);
+            forkAddon("bmd");
         }
 
         void NewAddonSubmit_Click(object sender, EventArgs e)
         {
-            Dictionary<string, bool> parameters = new Dictionary<string, bool>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             AddonForm.SubmitClicked = true;
             AddonForm.Close();
-            parameters.Add("remove_print", AddonForm.CommentCheckBox.Checked);
-            parameters.Add("remove_heroes", AddonForm.RemoveHeroesCheckBox.Checked);
-            parameters.Add("remove_items", AddonForm.RemoveItemsCheckbox.Checked);
-            //parameters.Add("mylls_version", AddonForm.MyllsVersionCheckbox.Checked);
+            parameters.Add("remove_print", AddonForm.CommentCheckBox.Checked.ToString().ToLower());
+            parameters.Add("remove_heroes", AddonForm.RemoveHeroesCheckBox.Checked.ToString().ToLower());
+            parameters.Add("remove_items", AddonForm.RemoveItemsCheckbox.Checked.ToString().ToLower());
+			parameters.Add("version", AddonForm.Version);
             forkBarebones(parameters);
         }
 
-        void forkBarebones(Dictionary<string, bool> parameters)
+        void forkBarebones(Dictionary<string, string> parameters)
         {
             string modName = AddonForm._TextBox.Text;
             ForkBarebones fork = new ForkBarebones(modName, parameters);
@@ -1345,7 +1345,7 @@ namespace D2ModKit
 
         private void myllsBarebones_Click(object sender, EventArgs e)
         {
-            forkAddon(true);
+            forkAddon("myll");
         }
 
         #region vtex
@@ -1609,6 +1609,10 @@ namespace D2ModKit
 
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
 
+		}
+
+		private void beginnersBarebonesToolStripMenuItem_Click(object sender, EventArgs e) {
+			forkAddon("noya");
 		}
 
         /*
