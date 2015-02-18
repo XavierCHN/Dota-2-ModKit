@@ -114,7 +114,7 @@ namespace D2ModKit
 
             resizeScrollBar.Scroll += resizeScrollBar_Scroll;
             resizeScrollBar.Maximum = 200 + resizeScrollBar.LargeChange - 1;
-            resizeScrollBar.Minimum = -200;
+            resizeScrollBar.Minimum = -100;
             resizeScrollBar.Value = 0;
             sizeLabel.Text = "Size: +0%";
         }
