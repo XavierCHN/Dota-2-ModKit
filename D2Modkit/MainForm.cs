@@ -1615,6 +1615,23 @@ namespace D2ModKit
 			forkAddon("noya");
 		}
 
+        private void makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string fold = Path.Combine(currAddon.GamePath, "resource");
+            string[] files = Directory.GetFiles(fold, "addon_*.txt");
+
+            foreach (string file in files)
+            {
+                string name = file.Substring(file.LastIndexOf("\\")+1);
+                name = name.Replace(".txt", "");
+                string firstPart = file.Substring(0,file.LastIndexOf("\\"));
+                name += "_utf8.txt";
+                string newPath = Path.Combine(firstPart, name);
+                string content = File.ReadAllText(file);
+                File.WriteAllText(newPath, content, Encoding.UTF8);
+            }
+        }
+
         /*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
