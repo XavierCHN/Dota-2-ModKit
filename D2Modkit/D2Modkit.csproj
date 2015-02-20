@@ -102,7 +102,7 @@
     <Compile Include="EnterLinkForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EnterLinkForm.Designer.cs">
+    <Compile Include="EnterLinkForm.designer.cs">
       <DependentUpon>EnterLinkForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PreferencesForm.cs">

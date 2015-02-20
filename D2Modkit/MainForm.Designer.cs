@@ -44,7 +44,9 @@
             this.addonFromChineseBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overrideParticlesToBeNullToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCurrentAddonToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeCurrentAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.templatesButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -55,7 +57,6 @@
             this.rdota2moddingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.newParticles = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.particleDesigner = new System.Windows.Forms.Button();
@@ -66,10 +67,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.addonDropDown = new System.Windows.Forms.ComboBox();
-            this.kvFileCheckbox = new System.Windows.Forms.CheckedListBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.combineBtn = new System.Windows.Forms.Button();
-            this.combineSuccessLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -81,9 +79,11 @@
             this.steamButton = new System.Windows.Forms.ToolStripButton();
             this.gdsButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.notificationLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // BottomToolStripPanel
@@ -147,6 +147,7 @@
             this.toolStripSeparator1,
             this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem,
             this.overrideParticlesToBeNullToolStripMenuItem1,
+            this.copyCurrentAddonToFolderToolStripMenuItem,
             this.removeCurrentAddonToolStripMenuItem});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -206,12 +207,28 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(296, 6);
             // 
+            // makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem
+            // 
+            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Name = "makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem";
+            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Text = "Make UTF8 copies of addon_language files";
+            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Click += new System.EventHandler(this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem_Click);
+            // 
             // overrideParticlesToBeNullToolStripMenuItem1
             // 
             this.overrideParticlesToBeNullToolStripMenuItem1.Name = "overrideParticlesToBeNullToolStripMenuItem1";
             this.overrideParticlesToBeNullToolStripMenuItem1.Size = new System.Drawing.Size(299, 22);
             this.overrideParticlesToBeNullToolStripMenuItem1.Text = "Override particles to be null";
             this.overrideParticlesToBeNullToolStripMenuItem1.Click += new System.EventHandler(this.overrideParticlesToBeNull_Click);
+            // 
+            // copyCurrentAddonToFolderToolStripMenuItem
+            // 
+            this.copyCurrentAddonToFolderToolStripMenuItem.Name = "copyCurrentAddonToFolderToolStripMenuItem";
+            this.copyCurrentAddonToFolderToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.copyCurrentAddonToFolderToolStripMenuItem.Text = "Copy current addon to another folder";
+            this.copyCurrentAddonToFolderToolStripMenuItem.ToolTipText = "Copies the \'game\' and \'content\' directories of the selected addon\r\nto a specified" +
+    " folder.";
+            this.copyCurrentAddonToFolderToolStripMenuItem.Click += new System.EventHandler(this.copyToFolder_Click);
             // 
             // removeCurrentAddonToolStripMenuItem
             // 
@@ -303,19 +320,6 @@
         "icle system.");
             this.newParticles.UseVisualStyleBackColor = true;
             this.newParticles.Click += new System.EventHandler(this.newParticles_Click);
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(69, 108);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(127, 29);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Copy To Folder";
-            this.toolTip1.SetToolTip(this.button2, "Copies the game and content directories of this addon into a specified folder.");
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.copyToFolder_Click);
             // 
             // toolTip1
             // 
@@ -427,56 +431,17 @@
             this.addonDropDown.Size = new System.Drawing.Size(153, 26);
             this.addonDropDown.TabIndex = 23;
             // 
-            // kvFileCheckbox
-            // 
-            this.kvFileCheckbox.CheckOnClick = true;
-            this.kvFileCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.kvFileCheckbox.FormattingEnabled = true;
-            this.kvFileCheckbox.Items.AddRange(new object[] {
-            "Abilities",
-            "Items",
-            "Units",
-            "Heroes"});
-            this.kvFileCheckbox.Location = new System.Drawing.Point(69, 160);
-            this.kvFileCheckbox.Margin = new System.Windows.Forms.Padding(2);
-            this.kvFileCheckbox.Name = "kvFileCheckbox";
-            this.kvFileCheckbox.Size = new System.Drawing.Size(127, 68);
-            this.kvFileCheckbox.TabIndex = 32;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(105, 139);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 19);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "KV Files";
-            // 
             // combineBtn
             // 
             this.combineBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineBtn.Location = new System.Drawing.Point(69, 232);
+            this.combineBtn.Location = new System.Drawing.Point(69, 108);
             this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
             this.combineBtn.Name = "combineBtn";
             this.combineBtn.Size = new System.Drawing.Size(127, 29);
             this.combineBtn.TabIndex = 34;
-            this.combineBtn.Text = "Combine";
+            this.combineBtn.Text = "Combine KV Files";
             this.combineBtn.UseVisualStyleBackColor = true;
             this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
-            // 
-            // combineSuccessLabel
-            // 
-            this.combineSuccessLabel.AutoSize = true;
-            this.combineSuccessLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combineSuccessLabel.ForeColor = System.Drawing.Color.DarkGreen;
-            this.combineSuccessLabel.Location = new System.Drawing.Point(145, 193);
-            this.combineSuccessLabel.Name = "combineSuccessLabel";
-            this.combineSuccessLabel.Size = new System.Drawing.Size(50, 28);
-            this.combineSuccessLabel.TabIndex = 37;
-            this.combineSuccessLabel.Text = "Combine\r\nsuccess";
-            this.combineSuccessLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label5
             // 
@@ -616,12 +581,24 @@
             this.toolStripButton1.Size = new System.Drawing.Size(61, 22);
             this.toolStripButton1.Text = "Update";
             // 
-            // makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem
+            // toolStrip3
             // 
-            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Name = "makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem";
-            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
-            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Text = "Make UTF8 copies of addon_language files";
-            this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem.Click += new System.EventHandler(this.makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem_Click);
+            this.toolStrip3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notificationLabel});
+            this.toolStrip3.Location = new System.Drawing.Point(68, 243);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(267, 25);
+            this.toolStrip3.TabIndex = 45;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // notificationLabel
+            // 
+            this.notificationLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.notificationLabel.ForeColor = System.Drawing.Color.DarkGreen;
+            this.notificationLabel.Name = "notificationLabel";
+            this.notificationLabel.Size = new System.Drawing.Size(107, 22);
+            this.notificationLabel.Text = "notificationLabel";
             // 
             // MainForm
             // 
@@ -630,22 +607,19 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.ClientSize = new System.Drawing.Size(335, 268);
+            this.Controls.Add(this.toolStrip3);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.decompileVtex);
             this.Controls.Add(this.compileVtex);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.combineSuccessLabel);
             this.Controls.Add(this.contentSizeLabel);
             this.Controls.Add(this.combineBtn);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.kvFileCheckbox);
             this.Controls.Add(this.gameSizeLabel);
             this.Controls.Add(this.addonDropDown);
             this.Controls.Add(this.particleDesigner);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.newParticles);
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -657,6 +631,8 @@
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -671,7 +647,6 @@
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Button newParticles;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
@@ -682,11 +657,8 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
         private System.Windows.Forms.ComboBox addonDropDown;
         private System.Windows.Forms.Label gameSizeLabel;
-        private System.Windows.Forms.CheckedListBox kvFileCheckbox;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button combineBtn;
         private System.Windows.Forms.Label contentSizeLabel;
-        private System.Windows.Forms.Label combineSuccessLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button compileVtex;
         private System.Windows.Forms.Button decompileVtex;
@@ -716,6 +688,9 @@
         private System.Windows.Forms.ToolStripButton gdsButton;
 		private System.Windows.Forms.ToolStripMenuItem beginnersBarebonesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyCurrentAddonToFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripLabel notificationLabel;
     }
 }
 

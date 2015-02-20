@@ -108,24 +108,23 @@ namespace D2ModKit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CreateKVBackups {
-            get {
-                return ((bool)(this["CreateKVBackups"]));
-            }
-            set {
-                this["CreateKVBackups"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool GenNote0Lore {
             get {
                 return ((bool)(this["GenNote0Lore"]));
             }
             set {
                 this["GenNote0Lore"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection KVFiles {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["KVFiles"]));
+            }
+            set {
+                this["KVFiles"] = value;
             }
         }
     }

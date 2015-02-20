@@ -29,11 +29,7 @@ namespace D2ModKit
             }
             string path = fbd.SelectedPath;
             Settings.Default.UGCPath = path;
-        }
-
-        private void createBackupsCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.GenNote0Lore = createBackupsCheckBox.Checked;
+            this.ugcTextBox.Text = path;
         }
 
         private void note0LoreCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -44,7 +40,8 @@ namespace D2ModKit
         private void submitButton_Click(object sender, EventArgs e)
         {
             Settings.Default.Save();
-            
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

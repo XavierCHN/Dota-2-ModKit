@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using D2ModKit.Properties;
 
 namespace D2ModKit
 {
@@ -412,8 +413,11 @@ namespace D2ModKit
             string str = "";
             str += Name.ToString();
             str += Description.ToString();
-            str += Note0.ToString();
-            str += Lore.ToString();
+            if (Properties.Settings.Default.GenNote0Lore)
+            {
+                str += Note0.ToString();
+                str += Lore.ToString();
+            }
             for (int i = 0; i < abilitySpecials.Count(); i++)
             {
                 str += abilitySpecials.ElementAt(i).ToString();

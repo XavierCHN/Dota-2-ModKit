@@ -138,14 +138,7 @@ namespace D2ModKit
 
             InitializeComponent();
 
-            // check stuff in the checkbox
-            var items = kvFileCheckbox.Items;
-            for (int i = 0; i < items.Count; i++)
-            {
-                kvFileCheckbox.SetItemChecked(i, true);
-            }
-
-            combineSuccessLabel.Text = "";
+            notificationLabel.Text = "";
 
             // check for updates in a new thread.
             ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
@@ -1250,6 +1243,7 @@ namespace D2ModKit
                 string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
                 string bigKVPath = Path.Combine(parentFolder, "npc_" + foldName + "_custom.txt");
 
+                /*
                 //create backups dir if doesn't exist.
                 string backupsDir = Path.Combine(parentFolder, "backups");
                 if (!Directory.Exists(backupsDir))
@@ -1269,6 +1263,7 @@ namespace D2ModKit
                     File.Move(bigKVPath, backupPath);
                     File.Create(bigKVPath).Close();
                 }
+                */
                 // so now we have the big KV file created and ready to be populated.
 
                 string[] files = Directory.GetFiles(fold);
@@ -1330,17 +1325,17 @@ namespace D2ModKit
                 text.Append("}");
                 File.WriteAllText(bigKVPath, text.ToString());
             }
-            System.Timers.Timer kvLabelTimer = new System.Timers.Timer(800);
-            kvLabelTimer.SynchronizingObject = this;
-            kvLabelTimer.AutoReset = false;
-            kvLabelTimer.Start();
-            kvLabelTimer.Elapsed += kvLabelTimer_Elapsed;
-            combineSuccessLabel.Text = "Combine\nsuccess";
+            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(800);
+            notificationLabelTimer.SynchronizingObject = this;
+            notificationLabelTimer.AutoReset = false;
+            notificationLabelTimer.Start();
+            notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+            notificationLabel.Text = "Combine success";
         }
 
         void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            combineSuccessLabel.Text = "";
+            notificationLabel.Text = "";
         }
 
         private void myllsBarebones_Click(object sender, EventArgs e)
@@ -1634,6 +1629,30 @@ namespace D2ModKit
                 File.WriteAllText(newPath, content, Encoding.UTF8);
             }
 			Process.Start(fold);
+        }
+
+        private void addKV_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = currAddon.GamePath;
+            DialogResult dr = ofd.ShowDialog();
+
+            if (dr != DialogResult.OK) {
+                return;
+            }
+
+            string path = ofd.FileName;
+            string fileName = path.Substring(path.LastIndexOf("\\") + 1);
+            string fileNameExt = fileName;
+            fileName = fileName.Remove(fileName.LastIndexOf("."));
+            fileName = fileName.Substring(0,1).ToUpper() + fileName.Substring(1);
+            Settings.Default.KVFiles.Add("path=" + path + ";" + "name=" + fileName);
+            SaveSettings();
+
+            MessageBox.Show(fileNameExt + " successfully added.",
+                "D2ModKit",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Asterisk);
         }
 
         /*
