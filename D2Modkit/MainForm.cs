@@ -1608,6 +1608,9 @@ namespace D2ModKit
         }
 
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
+            PreferencesForm pf = new PreferencesForm();
+            DialogResult r = pf.ShowDialog();
+
 
 		}
 

@@ -110,6 +110,7 @@ namespace D2ModKit
 
         private void initiate()
         {
+            this.AcceptButton = submitParticle;
             textBox1.TextChanged += textBox1_TextChanged;
 
             resizeScrollBar.Scroll += resizeScrollBar_Scroll;

@@ -57,6 +57,7 @@ namespace D2ModKit
         public NewAddonForm(string version)
         {
             InitializeComponent();
+            this.AcceptButton = submit;
 			Version = version;
             Submit = button1;
             CommentCheckBox = commentCheckBox;
