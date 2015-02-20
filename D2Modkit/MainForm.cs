@@ -1630,6 +1630,7 @@ namespace D2ModKit
                 string content = File.ReadAllText(file);
                 File.WriteAllText(newPath, content, Encoding.UTF8);
             }
+			Process.Start(fold);
         }
 
         /*
