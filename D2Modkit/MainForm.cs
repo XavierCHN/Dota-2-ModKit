@@ -513,7 +513,7 @@ namespace D2ModKit
             string[] particlePaths = fileDialog.FileNames;
             FolderBrowserDialog browser = new FolderBrowserDialog();
             // RootFolder needs to be defined for auto-scrolling to work apparently.
-            browser.RootFolder = getRootFolder();
+			browser.RootFolder = getRootFolder();
             // let the user see the particles directory first.
             string initialPath = Path.Combine(currAddon.ContentPath, "particles");
             browser.SelectedPath = initialPath;
@@ -1127,17 +1127,22 @@ namespace D2ModKit
             calculateSize();
         }
 
-        public static Environment.SpecialFolder getRootFolder()
+        public Environment.SpecialFolder getRootFolder()
         {
-            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)))
-            {
-                return Environment.SpecialFolder.ProgramFilesX86;
-            }
-            else if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)))
-            {
-                return Environment.SpecialFolder.ProgramFiles;
-            }
-            return Environment.SpecialFolder.MyComputer;
+			string foldPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+			Environment.SpecialFolder specialFold = Environment.SpecialFolder.ProgramFilesX86;
+			if (!Directory.Exists(foldPath)) {
+				foldPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+				specialFold = Environment.SpecialFolder.ProgramFiles;
+			}
+			if (!Directory.Exists(foldPath)) {
+				return Environment.SpecialFolder.MyComputer;
+			}
+			string ugcDrive = UGCPath.Substring(0, UGCPath.IndexOf(':'));
+			if (foldPath.StartsWith(ugcDrive)) {
+				return specialFold;
+			}
+				return Environment.SpecialFolder.MyComputer;
         }
 
         private void breakUp(string itemStr)
@@ -1349,15 +1354,16 @@ namespace D2ModKit
 					Debug.WriteLine("Not overwriting.");
 				}
             }
-            text_notification("Combine success");
+            text_notification("Combine success", Color.Green, 1500);
         }
 
-		private void text_notification(string text) {
-            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(1500);
+		private void text_notification(string text, Color color, int duration) {
+            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
             notificationLabelTimer.SynchronizingObject = this;
             notificationLabelTimer.AutoReset = false;
             notificationLabelTimer.Start();
             notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+			notificationLabel.ForeColor = color;
             notificationLabel.Text = text;
 		}
 
@@ -1592,7 +1598,7 @@ namespace D2ModKit
             string modID = link.Substring(link.LastIndexOf('=')+1);
 			addKV(currAddon.Name, "gds_link", link);
 			addKV(currAddon.Name, "gds_modID", modID);
-			text_notification("Restart ModKit for changes to take effect.");
+			text_notification("Restart ModKit to see GDS rank.", Color.Goldenrod, 2500);
         }
 
 		private void steamButton_Click(object sender, EventArgs e) {
@@ -1615,6 +1621,7 @@ namespace D2ModKit
 			string workshop_id = link.Substring(link.LastIndexOf('=') + 1);
 			addKV(currAddon.Name, "workshop_link", link);
 			addKV(currAddon.Name, "workshop_id", workshop_id);
+			//text_notification("Restart ModKit for changes to take effect.", Color.Goldenrod, 2500);
 		}
 
         private void chineseBarebones_Click(object sender, EventArgs e)
@@ -1636,7 +1643,7 @@ namespace D2ModKit
             PreferencesForm pf = new PreferencesForm(currAddon);
             DialogResult r = pf.ShowDialog();
 			if (r == DialogResult.OK) {
-				text_notification("Settings successfully saved.");
+				text_notification("Settings successfully saved.", Color.Green, 1500);
 			}
 
 		}
@@ -1664,7 +1671,7 @@ namespace D2ModKit
                 string content = File.ReadAllText(file);
                 File.WriteAllText(newPath, content, Encoding.UTF8);
             }
-			text_notification("UTF8 copies successfully made");
+			text_notification("UTF8 copies successfully made", Color.Green, 1500);
         }
 
         /*
