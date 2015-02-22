@@ -150,6 +150,57 @@ namespace D2ModKit
             set { particlePaths = value; }
         }
 
+		public List<CombineKVFile> combineKVFiles = new List<CombineKVFile>();
+
+		public class CombineKVFile {
+			public string path;
+			public bool activated;
+			public string name;
+			public CombineKVFile(string name) {
+				this.name = name;
+			}
+
+		}
+
+		public void getPreferences() {
+			KeyValue pref = null;
+			KeyValue kv_files = null;
+			foreach (KeyValue kv in KVData.Children) {
+				if (kv.Key == "preferences") {
+					pref = kv;
+				}
+			}
+
+			foreach (KeyValue kv in pref.Children) {
+				if (kv.Key == "create_note0_lore") {
+					if (kv.Children.ElementAt(0).Key == "1") {
+						create_note0_lore = true;
+					} else {
+						create_note0_lore = false;
+					}
+				} else if (kv.Key == "kv_files") {
+					kv_files = kv;
+				}
+			}
+
+			foreach (KeyValue kv in kv_files.Children) {
+				CombineKVFile cf = new CombineKVFile(kv.Key);
+				foreach (KeyValue kv2 in kv.Children) {
+					if (kv2.Key == "path") {
+						cf.path = kv2.Children.ElementAt(0).Key;
+					}
+					if (kv2.Key == "activated") {
+						if (kv2.Children.ElementAt(0).Key == "1") {
+							cf.activated = true;
+						} else {
+							cf.activated = false;
+						}
+					}
+				}
+				combineKVFiles.Add(cf);
+			}
+		}
+
         public void getCurrentAddonEnglish()
         {
             // Parse addon_english.txt KV
@@ -534,5 +585,9 @@ namespace D2ModKit
             }
             return langFiles;
         }
-    }
+
+		public KeyValue KVData { get; set; }
+
+		public bool create_note0_lore { get; set; }
+	}
 }

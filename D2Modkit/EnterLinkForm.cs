@@ -8,7 +8,11 @@ namespace D2ModKit
 {
     public partial class EnterLinkForm : Form
     {
-        public string link;
+
+		public TextBox Textbox {
+			get { return textBox1; }
+			set { textBox1 = value; }
+		}
 
         public EnterLinkForm(string addonName, string linkTo)
         {
@@ -25,8 +29,8 @@ namespace D2ModKit
 
         private void OK_Click(object sender, EventArgs e)
         {
-            link = textBox1.Text;
-            if (link != null && link != "" && link.StartsWith("http"))
+			string txt = textBox1.Text;
+            if (txt != null && txt != "" && txt.StartsWith("http"))
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();

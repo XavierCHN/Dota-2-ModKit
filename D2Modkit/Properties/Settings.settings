@@ -20,7 +20,7 @@
     <Setting Name="S1DotaExtractPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AddonInfos" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="AddonData" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="GenNote0Lore" Type="System.Boolean" Scope="User">

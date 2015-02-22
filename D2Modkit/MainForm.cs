@@ -93,10 +93,12 @@ namespace D2ModKit
             set { addons = value; }
         }
 
-        public System.Collections.Specialized.StringCollection AddonInfos
-        {
-            get { return Settings.Default.AddonInfos; }
-        }
+		public string AddonData {
+			get { return Settings.Default.AddonData; }
+			set { Settings.Default.AddonData = value; }
+		}
+
+		private KeyValue AddonDataMasterKV = null;
 
         private ParticleSystem currParticleSystem;
 
@@ -131,10 +133,11 @@ namespace D2ModKit
 			// populate libraries dictionary
 			addLibraries();
 
-            if (AddonInfos == null)
-            {
-                Settings.Default.AddonInfos = new System.Collections.Specialized.StringCollection();
-            }
+			if (AddonData == null || AddonData == "") {
+				AddonData = "\"AddonData\"\n{\n}";
+			}
+
+			AddonDataMasterKV = KVLib.KVParser.KV1.Parse(AddonData);
 
             InitializeComponent();
 
@@ -148,6 +151,7 @@ namespace D2ModKit
             // hook for when user selects a different addon.
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
 
+			// stuff to do when the MainForm closed
             this.FormClosed += MainForm_FormClosed;
 
             this.Text = "Dota 2 ModKit - " + "v" + Vers;
@@ -177,8 +181,14 @@ namespace D2ModKit
 			gdsThread = new Thread(childref2);
 			gdsThread.Start();
 
-            selectCurrentAddon(Properties.Settings.Default.CurrAddon);
+            selectCurrentAddon(Settings.Default.CurrAddon);
         }
+
+		private void addPreference(KeyValue preferences, string key, string val) {
+			KeyValue newKV = new KeyValue(key);
+			newKV.AddChild(new KeyValue(val));
+			preferences.AddChild(newKV);
+		}
 
 		private void addLibraries() {
 			libraries.Add("buildinghelper.lua", "https://raw.githubusercontent.com/Myll/Dota-2-Building-Helper/master/game/dota_addons/samplerts/scripts/vscripts/buildinghelper.lua");
@@ -192,9 +202,9 @@ namespace D2ModKit
 				Byte[] responseBytes = wc.DownloadData("http://getdotastats.com/d2mods/api/popular_mods.php");
 				string source = System.Text.Encoding.ASCII.GetString(responseBytes);
 				foreach (Addon a in addons) {
-					string modID = getVal(a.Name, "gds_modID");
+					string modID = getVal(a.Name, "gds_modID").Children.ElementAt(0).Key;
 					a.GDS_modID = modID;
-					if (modID == "") {
+					if (modID == null || modID == "") {
 						continue;
 					}
 					string x = source.Substring(source.IndexOf("\"modID\":" + modID));
@@ -221,6 +231,8 @@ namespace D2ModKit
 
         void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+			AddonData = AddonDataMasterKV.ToString();
+			Settings.Default.Save();
             Environment.Exit(0);
         }
 
@@ -435,8 +447,7 @@ namespace D2ModKit
                     }
                 }
 
-                Properties.Settings.Default.UGCPath = UGCPath;
-                Properties.Settings.Default.Save();
+                Settings.Default.UGCPath = UGCPath;
 
                 // get the game and content dirs from the ugc path.
                 getAddons();
@@ -591,9 +602,59 @@ namespace D2ModKit
                     }
                 }
             }
-			setAddonInfos();
+			setAddonData();
             setAddonNames();
         }
+
+		private void setAddonData() {
+			if (!AddonDataMasterKV.HasChildren) {
+				return;
+			}
+
+			foreach (Addon a in Addons) {
+				bool found = false;
+				foreach (KeyValue kv in AddonDataMasterKV.Children) {
+					if (kv.Key.ToLower() == a.Name.ToLower()) {
+						a.KVData = kv;
+						//string testtest = a.KVData.ToString();
+						found = true;
+					}
+				}
+				if (!found) {
+					// this is a valid addon but not in AddonData
+					KeyValue newKV = new KeyValue(a.Name.ToLower());
+					// Get the preferences
+					initPreferences(newKV, a);
+					//string test = newKV.ToString();
+					AddonDataMasterKV.AddChild(newKV);
+					a.KVData = newKV;
+				}
+				// deserialize the preferences.
+				a.getPreferences();
+			}
+		}
+
+		// init addon with basic Modkit preferences if it's never been done before.
+		private void initPreferences(KeyValue addonKV, Addon a) {
+			KeyValue pref = new KeyValue("preferences");
+			addPreference(pref, "create_note0_lore", "0");
+			KeyValue kv_files = new KeyValue("kv_files");
+			string[] npcFiles = { "Heroes", "Units", "Items", "Abilities" };
+			foreach (string s in npcFiles) {
+				KeyValue name = new KeyValue(s);
+				string path = Path.Combine(a.GamePath, "scripts", "npc", "npc_" + s.ToLower() + "_custom.txt");
+				KeyValue pathKV = new KeyValue("path");
+				pathKV.AddChild(new KeyValue(path));
+				KeyValue activated = new KeyValue("activated");
+				activated.AddChild(new KeyValue("1"));
+				name.AddChild(pathKV);
+				name.AddChild(activated);
+				kv_files.AddChild(name);
+			}
+
+			pref.AddChild(kv_files);
+			addonKV.AddChild(pref);
+		}
 
         private void setAddonNames()
         {
@@ -635,8 +696,7 @@ namespace D2ModKit
         private void selectCurrentAddon(string addon)
         {
             currAddon = getAddonFromName(addon);
-            Properties.Settings.Default.CurrAddon = currAddon.Name;
-			SaveSettings();
+            Settings.Default.CurrAddon = currAddon.Name;
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
             calculateSize();
@@ -848,8 +908,6 @@ namespace D2ModKit
             // redo the tooltip addon names.
             setAddonNames();
 			// add the addon to the AddonInfos
-			AddonInfos.Add(a.Name.ToLower());
-			SaveSettings();
             // make the active addon this one.
             selectCurrentAddon(lower);
             MessageBox.Show("The addon " + modName + " was successfully forked from Barebones.", "D2ModKit",
@@ -858,10 +916,6 @@ namespace D2ModKit
 
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
-
-		private void SaveSettings() {
-			Settings.Default.Save();
-		}
 
         private void particleDesigner_Click(object sender, EventArgs e)
         {
@@ -1106,6 +1160,11 @@ namespace D2ModKit
                 folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
             }
 
+			// Ensure the npc_ file exists.
+			if (!File.Exists(file)) {
+				return;
+			}
+
             string folderName = file.Substring(file.LastIndexOf('\\') + 1);
             // get rid of extension.
             folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
@@ -1207,24 +1266,11 @@ namespace D2ModKit
 
         private void combineBtn_Click(object sender, EventArgs e)
         {
-            CheckedListBox.CheckedItemCollection items = kvFileCheckbox.CheckedItems;
-            for (int i = 0; i < items.Count; i++)
+			string[] items = { "Heroes", "Units", "Items", "Abilities" };
+            for (int i = 0; i < items.Length; i++)
             {
-                string itemStr = items[i].ToString();
-
-                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
-                if (itemStr == "Items")
-                {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
-                }
-                else if (itemStr == "Heroes")
-                {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
-                }
-                else if (itemStr == "Units")
-                {
-                    fold = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
-                }
+				string itemStr = items[i];
+                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr.ToLower());
 
                 if (!Directory.Exists(fold))
                 {
@@ -1242,28 +1288,8 @@ namespace D2ModKit
                 string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
                 string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
                 string bigKVPath = Path.Combine(parentFolder, "npc_" + foldName + "_custom.txt");
+				string currText = File.ReadAllText(bigKVPath);
 
-                /*
-                //create backups dir if doesn't exist.
-                string backupsDir = Path.Combine(parentFolder, "backups");
-                if (!Directory.Exists(backupsDir))
-                {
-                    Directory.CreateDirectory(backupsDir);
-                }
-
-                string backupPath = Path.Combine(backupsDir, "npc_" + foldName + "_custom.txt");
-                if (File.Exists(bigKVPath))
-                {
-                    // Delete old backups.
-                    if (File.Exists(backupPath))
-                    {
-                        File.Delete(backupPath);
-                    }
-                    // back it up
-                    File.Move(bigKVPath, backupPath);
-                    File.Create(bigKVPath).Close();
-                }
-                */
                 // so now we have the big KV file created and ready to be populated.
 
                 string[] files = Directory.GetFiles(fold);
@@ -1323,15 +1349,26 @@ namespace D2ModKit
                     }
                 }
                 text.Append("}");
-                File.WriteAllText(bigKVPath, text.ToString());
+
+				// check if they're different before writing
+				string txt = text.ToString();
+				if (txt.Trim() != currText.Trim()) {
+					File.WriteAllText(bigKVPath, txt);
+				} else {
+					Debug.WriteLine("Not overwriting.");
+				}
             }
-            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(800);
+            text_notification("Combine success");
+        }
+
+		private void text_notification(string text) {
+            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(1500);
             notificationLabelTimer.SynchronizingObject = this;
             notificationLabelTimer.AutoReset = false;
             notificationLabelTimer.Start();
             notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
-            notificationLabel.Text = "Combine success";
-        }
+            notificationLabel.Text = text;
+		}
 
         void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -1497,95 +1534,97 @@ namespace D2ModKit
             Process.Start("https://moddota.com/forums/chat");
         }
 
-		private string getVal(string addonName, string key) {
-			foreach (string s in AddonInfos) {
-				if (s.StartsWith(addonName.ToLower())) {
-					string[] parts = s.Split(';');
-					for (int i = 0; i < parts.Length; i++) {
-						// skip the first and last parts. last parts will be empty, and
-						// first part won't have the = sign, it's addon name.
-						if (i == 0 || i == parts.Length-1) {
-							continue;
-						}
-						string p = parts[i];
-						if (p.Substring(0, p.IndexOf('=')) == key) {
-							return p.Substring(p.IndexOf('=') + 1);
+		private KeyValue getVal(string addonName, string key) {
+			foreach (KeyValue kv in AddonDataMasterKV.Children) {
+				string name = kv.Key;
+				if (addonName.ToLower() == name.ToLower()) {
+					if (kv.HasChildren) {
+						foreach (KeyValue kv2 in kv.Children) {
+							if (kv2.Key == key) {
+								return kv2;
+							}
 						}
 					}
 				}
 			}
-			return "";
+			return null;
 		}
 
-		private void add(string addonName, string key, string val) {
-			for (int i = 0; i < AddonInfos.Count; i++) {
-				string s = AddonInfos[i];
-				if (s.StartsWith(addonName.ToLower())) {
-					AddonInfos[i] += key + "=" + val + ";";
+		/*private string getValStr(string addonName, string key) {
+			foreach (KeyValue kv in AddonDataMasterKV.Children) {
+				string name = kv.Key;
+				if (addonName.ToLower() == name.ToLower()) {
+					if (kv.HasChildren) {
+						foreach (KeyValue kv2 in kv.Children) {
+							if (kv2.Key == key) {
+								return kv2.Children.ElementAt(0).Key;
+							}
+						}
+					}
+				}
+			}
+			return null;
+		}*/
+
+		private void addKV(string addonName, string key, string val) {
+			foreach (KeyValue kv in AddonDataMasterKV.Children)
+			{
+				string name = kv.Key;
+				if (addonName.ToLower() == name.ToLower()) {
+					KeyValue newKV = new KeyValue(key);
+					newKV.AddChild(new KeyValue(val));
+					kv.AddChild(newKV);
+					break;
 				}
 			}
 		}
 
         private void gdsButton_Click(object sender, EventArgs e)
         {
-			string link = getVal(currAddon.Name, "gds_link");
-			if (link != "") {
-				Process.Start(link);
+			KeyValue kv = getVal(currAddon.Name, "gds_link");
+			string val = null;
+			if (kv != null && kv.HasChildren) {
+				val = kv.Children.ElementAt(0).Key;
 			}
-            else
+			if (val != null) {
+				Process.Start(val);
+				return;
+			}
+
+            EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "gds");
+            DialogResult res = elf.ShowDialog();
+            if (res == DialogResult.Cancel)
             {
-                EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "gds");
-                DialogResult res = elf.ShowDialog();
-                if (res == DialogResult.Cancel)
-                {
-                    return;
-                }
-				link = elf.link;
-                string modID = link.Substring(link.LastIndexOf('=')+1);
-				add(currAddon.Name, "gds_link", link);
-				add(currAddon.Name, "gds_modID", modID);
-				SaveSettings();
+                return;
             }
+			string link = elf.Textbox.Text;
+            string modID = link.Substring(link.LastIndexOf('=')+1);
+			addKV(currAddon.Name, "gds_link", link);
+			addKV(currAddon.Name, "gds_modID", modID);
+			text_notification("Restart ModKit for changes to take effect.");
         }
 
 		private void steamButton_Click(object sender, EventArgs e) {
-			string link = getVal(currAddon.Name, "workshop_link");
-			if (link != "") {
-				Process.Start(link);
-			} else {
-				EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "steam");
-				DialogResult res = elf.ShowDialog();
-				if (res == DialogResult.Cancel) {
-					return;
-				}
-				link = elf.link;
-				string workshop_id = link.Substring(link.LastIndexOf('=') + 1);
-				add(currAddon.Name, "workshop_id", workshop_id);
-				add(currAddon.Name, "workshop_link", link);
-				SaveSettings();
+			KeyValue kv = getVal(currAddon.Name, "workshop_link");
+			string val = null;
+			if (kv != null && kv.HasChildren) {
+				val = kv.Children.ElementAt(0).Key;
 			}
-		}
+			if (val != null) {
+				Process.Start(val);
+				return;
+			}
 
-        private void setAddonInfos()
-        {
-            foreach (Addon a in Addons)
-            {
-				bool found = false;
-                foreach (string s in AddonInfos)
-                {
-                    string[] parts = s.Split(';');
-                    string name = parts[0];
-					if (a.Name.ToLower() == name.ToLower()) {
-						found = true;
-					}
-                }
-				if (!found) {
-					// this is a valid addon but not in AddonInfos
-					AddonInfos.Add(a.Name.ToLower() + ";");
-				}
-            }
-			SaveSettings();
-        }
+			EnterLinkForm elf = new EnterLinkForm(currAddon.Name, "steam");
+			DialogResult res = elf.ShowDialog();
+			if (res == DialogResult.Cancel) {
+				return;
+			}
+			string link = elf.Textbox.Text;
+			string workshop_id = link.Substring(link.LastIndexOf('=') + 1);
+			addKV(currAddon.Name, "workshop_link", link);
+			addKV(currAddon.Name, "workshop_id", workshop_id);
+		}
 
         private void chineseBarebones_Click(object sender, EventArgs e)
         {
@@ -1603,7 +1642,7 @@ namespace D2ModKit
         }
 
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
-            PreferencesForm pf = new PreferencesForm();
+            PreferencesForm pf = new PreferencesForm(currAddon);
             DialogResult r = pf.ShowDialog();
 
 
@@ -1620,6 +1659,10 @@ namespace D2ModKit
 
             foreach (string file in files)
             {
+				// skip the existing utf8 files.
+				if (file.Contains("utf8")) {
+					continue;
+				}
                 string name = file.Substring(file.LastIndexOf("\\")+1);
                 name = name.Replace(".txt", "");
                 string firstPart = file.Substring(0,file.LastIndexOf("\\"));
@@ -1628,31 +1671,7 @@ namespace D2ModKit
                 string content = File.ReadAllText(file);
                 File.WriteAllText(newPath, content, Encoding.UTF8);
             }
-			Process.Start(fold);
-        }
-
-        private void addKV_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = currAddon.GamePath;
-            DialogResult dr = ofd.ShowDialog();
-
-            if (dr != DialogResult.OK) {
-                return;
-            }
-
-            string path = ofd.FileName;
-            string fileName = path.Substring(path.LastIndexOf("\\") + 1);
-            string fileNameExt = fileName;
-            fileName = fileName.Remove(fileName.LastIndexOf("."));
-            fileName = fileName.Substring(0,1).ToUpper() + fileName.Substring(1);
-            Settings.Default.KVFiles.Add("path=" + path + ";" + "name=" + fileName);
-            SaveSettings();
-
-            MessageBox.Show(fileNameExt + " successfully added.",
-                "D2ModKit",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Asterisk);
+			text_notification("UTF8 copies successfully made");
         }
 
         /*
@@ -1739,5 +1758,6 @@ namespace D2ModKit
                 }
 			}
         }*/
-    }
+
+	}
 }

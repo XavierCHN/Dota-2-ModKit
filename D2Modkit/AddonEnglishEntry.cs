@@ -5,8 +5,6 @@ using D2ModKit.Properties;
 
 namespace D2ModKit
 {
-	//private enum Prefix {TwoTabs = "\t\t"}
-
     public class Pair
     {
         private string key, val;
@@ -64,12 +62,6 @@ namespace D2ModKit
 
         public AddonEnglishEntry()
         {
-            NumPairs = 1;
-        }
-
-        public AddonEnglishEntry(int _numPairs)
-        {
-            NumPairs = _numPairs;
         }
     }
 
