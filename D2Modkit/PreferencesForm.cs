@@ -17,6 +17,7 @@ namespace D2ModKit
         {
 			addon = a;
             InitializeComponent();
+			preferencesForLabel.Text = "Preferences for " + a.Name + ":";
 
 			foreach (Addon.CombineKVFile cf in a.combineKVFiles) {
 				int index = kvFileCheckbox.Items.Add(cf.name);
@@ -25,6 +26,7 @@ namespace D2ModKit
 			}
 
 			note0LoreCheckBox.Checked = Settings.Default.GenNote0Lore;
+			checkForUpdatesCheckbox.Checked = Settings.Default.CheckForUpdates;
 
             ugcTextBox.Text = Settings.Default.UGCPath;
             this.AcceptButton = submitButton;
@@ -82,6 +84,10 @@ namespace D2ModKit
 			fileName = fileName.Remove(fileName.LastIndexOf("."));
 			fileName = fileName.Substring(0, 1).ToUpper() + fileName.Substring(1);
 			kvFileCheckbox.Items.Add(fileName);
+		}
+
+		private void checkForUpdatesCheckbox_CheckedChanged(object sender, EventArgs e) {
+			Settings.Default.CheckForUpdates = checkForUpdatesCheckbox.Checked;
 		}
     }
 }

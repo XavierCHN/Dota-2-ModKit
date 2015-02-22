@@ -82,6 +82,13 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolStrip3 = new System.Windows.Forms.ToolStrip();
 			this.notificationLabel = new System.Windows.Forms.ToolStripLabel();
+			this.modKitGfyDemosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.forkingDecompiledParticlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.generatingTooltipsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.decompilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.compilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.creatingNewAddonFromBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.particleDesignerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.toolStrip3.SuspendLayout();
@@ -258,6 +265,7 @@
 			// 
 			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modKitGfyDemosToolStripMenuItem,
             this.tutorialsToolStripMenuItem,
             this.iRCToolStripMenuItem,
             this.modDotaToolStripMenuItem1,
@@ -272,35 +280,35 @@
 			// tutorialsToolStripMenuItem
 			// 
 			this.tutorialsToolStripMenuItem.Name = "tutorialsToolStripMenuItem";
-			this.tutorialsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.tutorialsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
 			this.tutorialsToolStripMenuItem.Text = "Tutorials";
 			this.tutorialsToolStripMenuItem.Click += new System.EventHandler(this.tutorialsToolStripMenuItem_Click_1);
 			// 
 			// iRCToolStripMenuItem
 			// 
 			this.iRCToolStripMenuItem.Name = "iRCToolStripMenuItem";
-			this.iRCToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.iRCToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
 			this.iRCToolStripMenuItem.Text = "IRC";
 			this.iRCToolStripMenuItem.Click += new System.EventHandler(this.ircToolStripMenuItem_Click_1);
 			// 
 			// modDotaToolStripMenuItem1
 			// 
 			this.modDotaToolStripMenuItem1.Name = "modDotaToolStripMenuItem1";
-			this.modDotaToolStripMenuItem1.Size = new System.Drawing.Size(167, 22);
+			this.modDotaToolStripMenuItem1.Size = new System.Drawing.Size(190, 22);
 			this.modDotaToolStripMenuItem1.Text = "ModDota Forums";
 			this.modDotaToolStripMenuItem1.Click += new System.EventHandler(this.modDotaToolStripMenuItem1_Click);
 			// 
 			// otherToolsToolStripMenuItem
 			// 
 			this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
-			this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
 			this.otherToolsToolStripMenuItem.Text = "Tools";
 			this.otherToolsToolStripMenuItem.Click += new System.EventHandler(this.otherToolsToolStripMenuItem_Click);
 			// 
 			// rdota2moddingToolStripMenuItem
 			// 
 			this.rdota2moddingToolStripMenuItem.Name = "rdota2moddingToolStripMenuItem";
-			this.rdota2moddingToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.rdota2moddingToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
 			this.rdota2moddingToolStripMenuItem.Text = "/r/dota2modding";
 			this.rdota2moddingToolStripMenuItem.Click += new System.EventHandler(this.rdota2moddingToolStripMenuItem_Click);
 			// 
@@ -613,6 +621,60 @@
 			this.notificationLabel.Size = new System.Drawing.Size(96, 22);
 			this.notificationLabel.Text = "notificationLabel";
 			// 
+			// modKitGfyDemosToolStripMenuItem
+			// 
+			this.modKitGfyDemosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.forkingDecompiledParticlesToolStripMenuItem,
+            this.particleDesignerToolStripMenuItem,
+            this.creatingNewAddonFromBarebonesToolStripMenuItem,
+            this.generatingTooltipsToolStripMenuItem,
+            this.compilingVTEXToolStripMenuItem,
+            this.decompilingVTEXToolStripMenuItem});
+			this.modKitGfyDemosToolStripMenuItem.Name = "modKitGfyDemosToolStripMenuItem";
+			this.modKitGfyDemosToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+			this.modKitGfyDemosToolStripMenuItem.Text = "ModKit Gfycat Demos";
+			// 
+			// forkingDecompiledParticlesToolStripMenuItem
+			// 
+			this.forkingDecompiledParticlesToolStripMenuItem.Name = "forkingDecompiledParticlesToolStripMenuItem";
+			this.forkingDecompiledParticlesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.forkingDecompiledParticlesToolStripMenuItem.Text = "Forking Decompiled Particles";
+			this.forkingDecompiledParticlesToolStripMenuItem.Click += new System.EventHandler(this.forkingDecompiledParticlesToolStripMenuItem_Click);
+			// 
+			// generatingTooltipsToolStripMenuItem
+			// 
+			this.generatingTooltipsToolStripMenuItem.Name = "generatingTooltipsToolStripMenuItem";
+			this.generatingTooltipsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.generatingTooltipsToolStripMenuItem.Text = "Generating Tooltips";
+			this.generatingTooltipsToolStripMenuItem.Click += new System.EventHandler(this.generatingTooltipsToolStripMenuItem_Click);
+			// 
+			// decompilingVTEXToolStripMenuItem
+			// 
+			this.decompilingVTEXToolStripMenuItem.Name = "decompilingVTEXToolStripMenuItem";
+			this.decompilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.decompilingVTEXToolStripMenuItem.Text = "Decompiling VTEX";
+			this.decompilingVTEXToolStripMenuItem.Click += new System.EventHandler(this.decompilingVTEXToolStripMenuItem_Click);
+			// 
+			// compilingVTEXToolStripMenuItem
+			// 
+			this.compilingVTEXToolStripMenuItem.Name = "compilingVTEXToolStripMenuItem";
+			this.compilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.compilingVTEXToolStripMenuItem.Text = "Compiling VTEX";
+			// 
+			// creatingNewAddonFromBarebonesToolStripMenuItem
+			// 
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Name = "creatingNewAddonFromBarebonesToolStripMenuItem";
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Text = "Creating New Addon From Barebones";
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Click += new System.EventHandler(this.creatingNewAddonFromBarebonesToolStripMenuItem_Click);
+			// 
+			// particleDesignerToolStripMenuItem
+			// 
+			this.particleDesignerToolStripMenuItem.Name = "particleDesignerToolStripMenuItem";
+			this.particleDesignerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.particleDesignerToolStripMenuItem.Text = "Particle Designer";
+			this.particleDesignerToolStripMenuItem.Click += new System.EventHandler(this.particleDesignerToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,6 +767,13 @@
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripLabel notificationLabel;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem modKitGfyDemosToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem forkingDecompiledParticlesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem creatingNewAddonFromBarebonesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem generatingTooltipsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem compilingVTEXToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem decompilingVTEXToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem particleDesignerToolStripMenuItem;
     }
 }
 

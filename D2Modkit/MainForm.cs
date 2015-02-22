@@ -144,9 +144,12 @@ namespace D2ModKit
             notificationLabel.Text = "";
 
             // check for updates in a new thread.
-            ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
-            autoUpdateThread = new Thread(childref);
-            autoUpdateThread.Start();
+			if (Settings.Default.CheckForUpdates) {
+				Debug.WriteLine("CheckForUpdates");
+				ThreadStart childref = new ThreadStart(CheckForUpdatesThread);
+				autoUpdateThread = new Thread(childref);
+				autoUpdateThread.Start();
+			}
 
             // hook for when user selects a different addon.
             addonDropDown.SelectedIndexChanged += addonDropDown_SelectedIndexChanged;
@@ -576,6 +579,7 @@ namespace D2ModKit
                 Particle p = ps.Particles.ElementAt(i);
                 File.WriteAllText(p.Path, p.ToString());
             }
+			//text_notification("Particles successfully forked.", Color.Green, 2000);
         }
 
         private void getAddons()
@@ -1401,6 +1405,24 @@ namespace D2ModKit
 
             string[] filePaths = fd.FileNames;
 
+			// Let user choose where to put the the .vtex files.
+			FolderBrowserDialog browser = new FolderBrowserDialog();
+			// RootFolder needs to be defined for auto-scrolling to work apparently.
+			browser.RootFolder = getRootFolder();
+			// let the user see the particles directory first.
+			string initialPath = Path.Combine(currAddon.ContentPath, "materials");
+			browser.SelectedPath = initialPath;
+			browser.ShowNewFolderButton = true;
+			browser.Description =
+				"Browse to where the VTEX files will be saved to.";
+			DialogResult r = browser.ShowDialog();
+
+			if (r != DialogResult.OK) {
+				return;
+			}
+			string saveFolder = browser.SelectedPath;
+
+			// Start the conversion process
             foreach (string file in filePaths)
             {
                 string f = file;
@@ -1455,11 +1477,14 @@ namespace D2ModKit
                     "	]",
                     "}"
                 };
-            }
-            //Workshop Tools will automatic compile it to .vtex_c file when addon start up or change detected
-            string dir = filePaths[0];
-            dir = dir.Substring(0,dir.LastIndexOf('\\'));
-            Process.Start(dir);
+
+				string name = file.Substring(file.LastIndexOf('\\')+1);
+				name = name.Substring(0,name.IndexOf('.'));
+				string path = Path.Combine(saveFolder, name + ".vtex");
+				File.Create(path).Close();
+				File.WriteAllLines(path, vtexFileStrings);
+			}
+			text_notification("VTEX files successfully created.", Color.Green, 2000);
         }
 
         private void decompileVtex_Click(object sender, EventArgs e)
@@ -1674,7 +1699,32 @@ namespace D2ModKit
 			text_notification("UTF8 copies successfully made", Color.Green, 1500);
         }
 
-        /*
+		#region gfycat demos
+
+		private void forkingDecompiledParticlesToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/PepperyVelvetyCaimanlizard");
+		}
+
+		private void creatingNewAddonFromBarebonesToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/NarrowIncredibleBongo");
+		}
+
+		private void decompilingVTEXToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/AncientEmotionalBrahmanbull");
+		}
+
+		private void generatingTooltipsToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/ImpeccablePassionateFirefly");
+		}
+
+		#endregion gfycat demos
+
+		private void particleDesignerToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
+		}
+
+
+		/*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.S2DotaExtractPath == "")

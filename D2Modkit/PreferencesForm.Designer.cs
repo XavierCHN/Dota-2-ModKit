@@ -40,12 +40,13 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.addKVButton = new System.Windows.Forms.Button();
 			this.preferencesForLabel = new System.Windows.Forms.Label();
+			this.checkForUpdatesCheckbox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// note0LoreCheckBox
 			// 
 			this.note0LoreCheckBox.AutoSize = true;
-			this.note0LoreCheckBox.Location = new System.Drawing.Point(13, 103);
+			this.note0LoreCheckBox.Location = new System.Drawing.Point(13, 134);
 			this.note0LoreCheckBox.Name = "note0LoreCheckBox";
 			this.note0LoreCheckBox.Size = new System.Drawing.Size(170, 17);
 			this.note0LoreCheckBox.TabIndex = 1;
@@ -95,7 +96,7 @@
 			// 
 			this.submitButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.submitButton.ForeColor = System.Drawing.Color.Navy;
-			this.submitButton.Location = new System.Drawing.Point(175, 227);
+			this.submitButton.Location = new System.Drawing.Point(175, 258);
 			this.submitButton.Name = "submitButton";
 			this.submitButton.Size = new System.Drawing.Size(115, 35);
 			this.submitButton.TabIndex = 6;
@@ -108,7 +109,7 @@
 			this.kvFileCheckbox.CheckOnClick = true;
 			this.kvFileCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.kvFileCheckbox.FormattingEnabled = true;
-			this.kvFileCheckbox.Location = new System.Drawing.Point(13, 144);
+			this.kvFileCheckbox.Location = new System.Drawing.Point(13, 175);
 			this.kvFileCheckbox.Margin = new System.Windows.Forms.Padding(2);
 			this.kvFileCheckbox.Name = "kvFileCheckbox";
 			this.kvFileCheckbox.Size = new System.Drawing.Size(106, 68);
@@ -120,7 +121,7 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.Maroon;
-			this.label4.Location = new System.Drawing.Point(59, 123);
+			this.label4.Location = new System.Drawing.Point(59, 154);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(60, 19);
 			this.label4.TabIndex = 34;
@@ -129,7 +130,7 @@
 			// 
 			// addKVButton
 			// 
-			this.addKVButton.Location = new System.Drawing.Point(124, 144);
+			this.addKVButton.Location = new System.Drawing.Point(124, 175);
 			this.addKVButton.Name = "addKVButton";
 			this.addKVButton.Size = new System.Drawing.Size(46, 23);
 			this.addKVButton.TabIndex = 46;
@@ -143,18 +144,30 @@
 			this.preferencesForLabel.AutoSize = true;
 			this.preferencesForLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.preferencesForLabel.ForeColor = System.Drawing.Color.Navy;
-			this.preferencesForLabel.Location = new System.Drawing.Point(107, 70);
+			this.preferencesForLabel.Location = new System.Drawing.Point(107, 101);
 			this.preferencesForLabel.Name = "preferencesForLabel";
 			this.preferencesForLabel.Size = new System.Drawing.Size(262, 25);
 			this.preferencesForLabel.TabIndex = 47;
 			this.preferencesForLabel.Text = "Preferences for addon_name:";
 			this.preferencesForLabel.Visible = false;
 			// 
+			// checkForUpdatesCheckbox
+			// 
+			this.checkForUpdatesCheckbox.AutoSize = true;
+			this.checkForUpdatesCheckbox.Location = new System.Drawing.Point(12, 61);
+			this.checkForUpdatesCheckbox.Name = "checkForUpdatesCheckbox";
+			this.checkForUpdatesCheckbox.Size = new System.Drawing.Size(113, 17);
+			this.checkForUpdatesCheckbox.TabIndex = 48;
+			this.checkForUpdatesCheckbox.Text = "Check for updates";
+			this.checkForUpdatesCheckbox.UseVisualStyleBackColor = true;
+			this.checkForUpdatesCheckbox.CheckedChanged += new System.EventHandler(this.checkForUpdatesCheckbox_CheckedChanged);
+			// 
 			// PreferencesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(458, 272);
+			this.ClientSize = new System.Drawing.Size(451, 305);
+			this.Controls.Add(this.checkForUpdatesCheckbox);
 			this.Controls.Add(this.preferencesForLabel);
 			this.Controls.Add(this.addKVButton);
 			this.Controls.Add(this.label4);
@@ -190,5 +203,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addKVButton;
 		private System.Windows.Forms.Label preferencesForLabel;
+		private System.Windows.Forms.CheckBox checkForUpdatesCheckbox;
     }
 }

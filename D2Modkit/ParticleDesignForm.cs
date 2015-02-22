@@ -202,31 +202,52 @@ namespace D2ModKit
             {
                 Renamed = true;
                 Ps.rename(BaseName);
-                output += "Renamed particle system to: " + BaseName + "\n";
+                output += "Renamed particle system to: " + BaseName + "\n\n";
             }
             string relPath = "";
-            output += "******* Precache Information *******\n";
+			bool parentIsParticles = false;
             for (int i = 0; i < Ps.Particles.Length; i++)
             {
                 Particle p = ps.Particles[i];
                 System.IO.File.WriteAllText(p.Path, p.ToString());
                 relPath = p.getRelativePath();
-                output += "PrecacheResource(\"particle\", \"" + relPath + "\", context)\n";
-                //output += i + ". " + p.Path + "\n\n";
+
+				if (i==0 && relPath.Substring(0, relPath.LastIndexOf('/')) == "particles") {
+					output += "Individual Lua Precache:\n\n";
+					parentIsParticles = true;
+				}
+				if (parentIsParticles) {
+					output += "PrecacheResource(\"particle\", \"" + relPath + "\", context)\n";
+				}
             }
-            output += "OR:\n";
-            //PrecacheResource("particle_folder", "particles/units/heroes/hero_enigma", context)
-            string justFolder = relPath.Substring(0, relPath.LastIndexOf('/'));
-            output += "PrecacheResource(\"particle_folder\", \"" + justFolder + "\", context)\n\n";
+
+			if (parentIsParticles) {
+				output += "\nIndividual DataDriven Precache:\n\n";
+				output += "\"precache\"\n{";
+				foreach (Particle p in Ps.Particles) {
+					relPath = p.getRelativePath();
+					output += "\t\"particle\"\t\t\"" + relPath + "\"\n";
+				}
+				output += "}\n\n";
+			} else {
+				output += "Lua Folder Precache:\n\n";
+				//PrecacheResource("particle_folder", "particles/units/heroes/hero_enigma", context)
+				string justFolder = relPath.Substring(0, relPath.LastIndexOf('/'));
+				output += "PrecacheResource(\"particle_folder\", \"" + justFolder + "\", context)\n\n";
+				output += "DataDriven Folder Precache:\n\n";
+				output += "\"precache\"\n{\n";
+				output += "\t\"particle_folder\"\t\t\"" + justFolder + "\"\n";
+				output += "}\n\n";
+			}
             //output += "******* End of Precache Information *******\n\n";
-            output += "Note: You may have to restart the Workshop Tools for the forked particles to display correctly in the asset browser.\n";
+            output += "Note: You may have to restart the Workshop Tools for the forked particles to display correctly in the asset browser.\n\n";
             //output += "No errors detected.\n\n";
             output += "End of output.";
 
             if (Renamed)
             {
                 // open up a window to where the modified particles are.
-                Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
+                //Process.Start(Ps.Paths[0].Substring(0, Ps.Paths[0].LastIndexOf('\\')));
             }
             //close form.
             this.Close();
