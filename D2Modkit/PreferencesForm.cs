@@ -11,6 +11,7 @@ namespace D2ModKit
     public partial class PreferencesForm : Form
     {
 		Addon addon;
+		private bool needsRestart = false;
 
 		public PreferencesForm(Addon a)
         {
@@ -40,6 +41,7 @@ namespace D2ModKit
             string path = fbd.SelectedPath;
             Settings.Default.UGCPath = path;
             this.ugcTextBox.Text = path;
+			needsRestart = true;
         }
 
         private void note0LoreCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -51,8 +53,18 @@ namespace D2ModKit
         private void submitButton_Click(object sender, EventArgs e)
         {
             Settings.Default.Save();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+
+			if (needsRestart) {
+				MessageBox.Show("D2ModKit needs to be restarted to procede. Quitting.",
+					"D2ModKit",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Information);
+				Environment.Exit(0);
+
+			} else {
+				this.DialogResult = DialogResult.OK;
+				this.Close();
+			}
         }
 
 		private void addKVButton_Click(object sender, EventArgs e) {

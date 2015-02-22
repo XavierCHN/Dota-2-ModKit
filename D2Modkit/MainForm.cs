@@ -1142,23 +1142,8 @@ namespace D2ModKit
 
         private void breakUp(string itemStr)
         {
-            string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_abilities_custom.txt");
-            string folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "abilities");
-            if (itemStr == "Items")
-            {
-                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_items_custom.txt");
-                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "items");
-            }
-            else if (itemStr == "Heroes")
-            {
-                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_heroes_custom.txt");
-                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "heroes");
-            }
-            else if (itemStr == "Units")
-            {
-                file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_units_custom.txt");
-                folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", "units");
-            }
+            string file = Path.Combine(currAddon.GamePath, "scripts", "npc", "npc_" + itemStr + "_custom.txt");
+            string folderPath = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr);
 
 			// Ensure the npc_ file exists.
 			if (!File.Exists(file)) {
@@ -1183,6 +1168,12 @@ namespace D2ModKit
                     {
                         IEnumerable<KeyValue> kvs2 = kv.Children;
                         KeyValue[] kvArr = kvs2.ToArray();
+
+						if (kvArr.Length == 0) {
+							// This kv file is screwed up.
+							break;
+						}
+
                         // record start line number and end line number of each Key-Value block
                         int[] startLineNumber = new int[kvArr.Length];
                         int[] endLineNumber = new int[kvArr.Length];
@@ -1269,12 +1260,12 @@ namespace D2ModKit
 			string[] items = { "Heroes", "Units", "Items", "Abilities" };
             for (int i = 0; i < items.Length; i++)
             {
-				string itemStr = items[i];
-                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr.ToLower());
+				string itemStr = items[i].ToLower();
+                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr);
 
                 if (!Directory.Exists(fold))
                 {
-                    DialogResult res = MessageBox.Show("npc_" + itemStr.ToLower() + "_custom has not been broken up. Break it up now?",
+                    DialogResult res = MessageBox.Show("npc_" + itemStr + "_custom has not been broken up. Break it up now?",
                         "D2ModKit",
                         MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Information);
@@ -1644,7 +1635,9 @@ namespace D2ModKit
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
             PreferencesForm pf = new PreferencesForm(currAddon);
             DialogResult r = pf.ShowDialog();
-
+			if (r == DialogResult.OK) {
+				text_notification("Settings successfully saved.");
+			}
 
 		}
 

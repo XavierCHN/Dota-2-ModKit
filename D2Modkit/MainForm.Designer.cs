@@ -476,7 +476,7 @@
             this.gdsButton});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 25);
 			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(68, 239);
+			this.toolStrip2.Size = new System.Drawing.Size(68, 234);
 			this.toolStrip2.TabIndex = 44;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -599,7 +599,7 @@
 			this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.notificationLabel});
-			this.toolStrip3.Location = new System.Drawing.Point(68, 239);
+			this.toolStrip3.Location = new System.Drawing.Point(68, 234);
 			this.toolStrip3.Name = "toolStrip3";
 			this.toolStrip3.Size = new System.Drawing.Size(274, 25);
 			this.toolStrip3.TabIndex = 45;
@@ -619,7 +619,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-			this.ClientSize = new System.Drawing.Size(342, 264);
+			this.ClientSize = new System.Drawing.Size(342, 259);
 			this.Controls.Add(this.toolStrip3);
 			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.decompileVtex);
