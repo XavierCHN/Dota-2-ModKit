@@ -19,11 +19,16 @@ namespace D2ModKit
             InitializeComponent();
 			preferencesForLabel.Text = "Preferences for " + a.Name + ":";
 
-			foreach (Addon.CombineKVFile cf in a.combineKVFiles) {
-				int index = kvFileCheckbox.Items.Add(cf.name);
-				//kvFileCheckbox.
-				
-			}
+            foreach (Addon.KVFileToCombine kvFileToCombine in a.KVFilesToCombine)
+            {
+                int index = kvFileCheckbox.Items.Add(kvFileToCombine.name);
+   
+            }
+
+            foreach (Addon.ModdingLibrary moddingLibrary in a.moddingLibraries)
+            {
+                listBox1.Items.Add(moddingLibrary.name);
+            }
 
 			note0LoreCheckBox.Checked = Settings.Default.GenNote0Lore;
 			checkForUpdatesCheckbox.Checked = Settings.Default.CheckForUpdates;
@@ -88,6 +93,13 @@ namespace D2ModKit
 
 		private void checkForUpdatesCheckbox_CheckedChanged(object sender, EventArgs e) {
 			Settings.Default.CheckForUpdates = checkForUpdatesCheckbox.Checked;
-		}
+        }
+
+        private void addLibraryBtn_Click(object sender, EventArgs e)
+        {
+            NewLibraryForm nlf = new NewLibraryForm(addon);
+            DialogResult dr = nlf.ShowDialog();
+
+        }
     }
 }

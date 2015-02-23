@@ -502,35 +502,37 @@ namespace D2ModKit
                 return;
             }
 
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            OpenFileDialog fd = new OpenFileDialog();
             Debug.WriteLine("Current directory: " + Environment.CurrentDirectory);
-            fileDialog.InitialDirectory = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
-            fileDialog.Multiselect = true;
-            fileDialog.Title = "Select Particles To Copy";
-            DialogResult res = fileDialog.ShowDialog();
+            fd.InitialDirectory = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
+            fd.Multiselect = true;
+            fd.Filter = "Decompiled particle (.vpcf)|*.vpcf";
+            fd.Title = "Select Particles To Copy. Do SHIFT+Click for multiselect.";
+            DialogResult res = fd.ShowDialog();
             // check if we actually have filenames, or the user closed the box.
             if (res != DialogResult.OK)
             {
                 return;
             }
-            string[] particlePaths = fileDialog.FileNames;
-            FolderBrowserDialog browser = new FolderBrowserDialog();
+            string[] particlePaths = fd.FileNames;
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
             // RootFolder needs to be defined for auto-scrolling to work apparently.
-			browser.RootFolder = getRootFolder();
+			fbd.RootFolder = getRootFolder();
             // let the user see the particles directory first.
             string initialPath = Path.Combine(currAddon.ContentPath, "particles");
-            browser.SelectedPath = initialPath;
-            browser.ShowNewFolderButton = true;
-            browser.Description =
-                "Browse to where the particles will be copied to. They must be placed in the particles directory.";
-            DialogResult browserResult = browser.ShowDialog();
+            fbd.SelectedPath = initialPath;
+            fbd.ShowNewFolderButton = true;
+            fbd.Description =
+                "Browse to where the particles will be copied to. They must be placed in the particles directory " +
+                "of the current addon.";
+            DialogResult browserResult = fbd.ShowDialog();
 
             if (browserResult == DialogResult.Cancel)
             {
                 return;
             }
 
-            string newFolder = browser.SelectedPath;
+            string newFolder = fbd.SelectedPath;
 
             string folderName = newFolder.Substring(newFolder.LastIndexOf('\\') + 1);
             List<Particle> particles = new List<Particle>();
@@ -628,7 +630,9 @@ namespace D2ModKit
 					// this is a valid addon but not in AddonData
 					KeyValue newKV = new KeyValue(a.Name.ToLower());
 					// Get the preferences
-					initPreferences(newKV, a);
+                    KeyValue pref = new KeyValue("preferences");
+                    newKV.AddChild(pref);
+					//initPreferences(newKV, a);
 					//string test = newKV.ToString();
 					AddonDataMasterKV.AddChild(newKV);
 					a.KVData = newKV;
@@ -639,26 +643,11 @@ namespace D2ModKit
 		}
 
 		// init addon with basic Modkit preferences if it's never been done before.
-		private void initPreferences(KeyValue addonKV, Addon a) {
-			KeyValue pref = new KeyValue("preferences");
+		/*private void initPreferences(KeyValue addonKV, Addon a) {
+			
 			addPreference(pref, "create_note0_lore", "0");
-			KeyValue kv_files = new KeyValue("kv_files");
-			string[] npcFiles = { "Heroes", "Units", "Items", "Abilities" };
-			foreach (string s in npcFiles) {
-				KeyValue name = new KeyValue(s);
-				string path = Path.Combine(a.GamePath, "scripts", "npc", "npc_" + s.ToLower() + "_custom.txt");
-				KeyValue pathKV = new KeyValue("path");
-				pathKV.AddChild(new KeyValue(path));
-				KeyValue activated = new KeyValue("activated");
-				activated.AddChild(new KeyValue("1"));
-				name.AddChild(pathKV);
-				name.AddChild(activated);
-				kv_files.AddChild(name);
-			}
-
-			pref.AddChild(kv_files);
 			addonKV.AddChild(pref);
-		}
+		}*/
 
         private void setAddonNames()
         {
@@ -907,7 +896,8 @@ namespace D2ModKit
             // delete the old dir now.
             Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
 
-            Addon a = new Addon(newC, newG);
+            Addon a = new Addon(newG);
+            a.ContentPath = newC;
             addons.Add(a);
             // redo the tooltip addon names.
             setAddonNames();

@@ -105,6 +105,12 @@
     <Compile Include="EnterLinkForm.designer.cs">
       <DependentUpon>EnterLinkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewLibraryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewLibraryForm.Designer.cs">
+      <DependentUpon>NewLibraryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnterLinkForm.resx">
       <DependentUpon>EnterLinkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewLibraryForm.resx">
+      <DependentUpon>NewLibraryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PreferencesForm.resx">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
