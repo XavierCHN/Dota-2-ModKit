@@ -30,7 +30,7 @@ namespace D2ModKit
                 listBox1.Items.Add(moddingLibrary.name);
             }
 
-			note0LoreCheckBox.Checked = Settings.Default.GenNote0Lore;
+			note0LoreCheckBox.Checked = a.create_note0_lore;
 			checkForUpdatesCheckbox.Checked = Settings.Default.CheckForUpdates;
 
             ugcTextBox.Text = Settings.Default.UGCPath;
@@ -53,13 +53,12 @@ namespace D2ModKit
 
         private void note0LoreCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-			Settings.Default.GenNote0Lore = note0LoreCheckBox.Checked;
             addon.create_note0_lore = note0LoreCheckBox.Checked;
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            Settings.Default.Save();
+            //Settings.Default.Save();
 
 			if (needsRestart) {
 				MessageBox.Show("D2ModKit needs to be restarted to procede. Quitting.",

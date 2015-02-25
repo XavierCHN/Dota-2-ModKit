@@ -310,8 +310,11 @@ namespace D2ModKit
             set { note0 = value; }
         }
 
-        public AbilityEntry(string _name, List<string> keys)
+        private Addon addon;
+
+        public AbilityEntry(Addon addon, string _name, List<string> keys)
         {
+            this.addon = addon;
             name = new Pair("DOTA_Tooltip_ability_" + _name, getVal(_name));
             description = new Pair(name.Key + "_Description", "");
             note0 = new Pair(name.Key + "_Note0", "");
@@ -399,13 +402,13 @@ namespace D2ModKit
             }
             return val;
         }
-
+        
         public override string ToString()
         {
             string str = "";
             str += Name.ToString();
             str += Description.ToString();
-            if (Properties.Settings.Default.GenNote0Lore)
+            if (addon.create_note0_lore)
             {
                 str += Note0.ToString();
                 str += Lore.ToString();

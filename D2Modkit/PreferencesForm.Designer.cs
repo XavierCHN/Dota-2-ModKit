@@ -142,7 +142,7 @@
             // preferencesForLabel
             // 
             this.preferencesForLabel.AutoSize = true;
-            this.preferencesForLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.preferencesForLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.preferencesForLabel.ForeColor = System.Drawing.Color.Navy;
             this.preferencesForLabel.Location = new System.Drawing.Point(107, 101);
             this.preferencesForLabel.Name = "preferencesForLabel";

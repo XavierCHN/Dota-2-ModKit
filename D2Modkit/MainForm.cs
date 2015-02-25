@@ -234,6 +234,8 @@ namespace D2ModKit
 
         void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // TODO: Serialize preferences.
+
 			AddonData = AddonDataMasterKV.ToString();
 			Settings.Default.Save();
             Environment.Exit(0);
@@ -556,9 +558,9 @@ namespace D2ModKit
 
             ParticleSystem ps = new ParticleSystem(particles);
 
-            ParticleDesignForm PDF = new ParticleDesignForm(ps);
-            DialogResult r = PDF.ShowDialog();
-            if (!PDF.SubmitClicked)
+            ParticleDesignForm pdf = new ParticleDesignForm(ps);
+            DialogResult r = pdf.ShowDialog();
+            if (!pdf.SubmitClicked)
             {
                 // User doesn't want to fork particles, so undo what we already did.
                 // Delete the particles that were just copied.
@@ -571,7 +573,7 @@ namespace D2ModKit
             }
 
             // if particle wasn't renamed, fix the child references.
-            if (!PDF.Renamed)
+            if (!pdf.Renamed)
             {
                 ps.fixChildRefs(newFolder);
             }

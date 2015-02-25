@@ -178,6 +178,10 @@ namespace D2ModKit
             set { particlePaths = value; }
         }
 
+        public KeyValue KVData { get; set; }
+
+        public bool create_note0_lore = false;
+
         public void getPreferences()
         {
             KeyValue pref = null;
@@ -198,10 +202,6 @@ namespace D2ModKit
                     if (kv.Children.ElementAt(0).Key == "1")
                     {
                         create_note0_lore = true;
-                    }
-                    else
-                    {
-                        create_note0_lore = false;
                     }
                 }
                 else if (kv.Key == "kv_files")
@@ -419,11 +419,11 @@ namespace D2ModKit
                                 {
                                     if (items)
                                     {
-                                        itemEntries.Add(new AbilityEntry(ability.Key, kvs));
+                                        itemEntries.Add(new AbilityEntry(this, ability.Key, kvs));
                                     }
                                     else
                                     {
-                                        abilityEntries.Add(new AbilityEntry(ability.Key, kvs));
+                                        abilityEntries.Add(new AbilityEntry(this, ability.Key, kvs));
                                     }
                                     added = true;
                                 }
@@ -435,11 +435,11 @@ namespace D2ModKit
                     {
                         if (items)
                         {
-                            itemEntries.Add(new AbilityEntry(ability.Key, null));
+                            itemEntries.Add(new AbilityEntry(this, ability.Key, null));
                         }
                         else
                         {
-                            abilityEntries.Add(new AbilityEntry(ability.Key, null));
+                            abilityEntries.Add(new AbilityEntry(this, ability.Key, null));
                         }
                     }
                 }
@@ -668,10 +668,5 @@ namespace D2ModKit
             }
             return langFiles;
         }
-
-		public KeyValue KVData { get; set; }
-
-		public bool create_note0_lore { get; set; }
-
     }
 }
