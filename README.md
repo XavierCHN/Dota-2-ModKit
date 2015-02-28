@@ -3,10 +3,11 @@
 A GUI comprised of useful tools to help with Dota 2 modding.
 
 ### Features:
-* [**Particle Forker & Designer**](http://gfycat.com/IdioticMarvelousBee). Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
+* [**Particle Forker & Designer**](http://gfycat.com/PepperyVelvetyCaimanlizard). Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
   * Re-color, rename, and/or resize whole particle systems at just the click of a button!
 * [**Tooltips Generator**](http://gfycat.com/ImpeccablePassionateFirefly). Parses all the files in the scripts\npc folder of your addon, and creates tooltips for abilities, items, modifiers, units, and heroes, which you can easily copy over to addon_english.txt or another language file.
-* [**Fork Addon From Barebones**](http://gfycat.com/NarrowIncredibleBongo). Create your own unique addon based off of the Barebones template.
+* [**Create New Addon From Barebones**](http://gfycat.com/NarrowIncredibleBongo). Create your own unique addon based off of the Barebones template.
+* **Compile/[Decompile](http://gfycat.com/AncientEmotionalBrahmanbull) VTEX**
 * **Templates**. Create templates for commonly used abilities, items, heroes, and units, which you can easily copy into your addon.
 * **Wiki Generator**. Generate wikis for your addon, for every language you've defined, based off the scripts/npc files. Currently incomplete.
 * **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
