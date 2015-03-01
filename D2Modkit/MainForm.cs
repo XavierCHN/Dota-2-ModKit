@@ -1492,11 +1492,14 @@ namespace D2ModKit
             string extract = Path.Combine(UGCPath, "game", "dota_imported", "materials");
             if (!Directory.Exists(extract))
             {
-                MessageBox.Show("You must extract the 'materials' folder from " + Path.Combine("dota_ugc", "game", "dota_imported", "pak01_dir.vpk") +
-                    " into " + Path.Combine("dota_ugc", "game", "dota_imported") + " using GCFScape before using this feature.",
+				Directory.CreateDirectory(extract);
+				Process.Start(extract);
+
+                MessageBox.Show("Use GCFScape to extract .vtex_c files from the materials folder in " + Path.Combine("dota_ugc", "game", "dota_imported", "pak01_dir.vpk") +
+                    " to the folder that just opened. A demo is available under 'Help' if you don't understand.",
                     "D2ModKit",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBoxIcon.Information);
                 return;
             }
 
@@ -1677,7 +1680,9 @@ namespace D2ModKit
 			forkAddon("noya");
 		}
 
-        private void makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem_Click(object sender, EventArgs e)
+		#region utf8 copies
+
+		private void makeUTF8CopiesOfAddonlanguageFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string fold = Path.Combine(currAddon.GamePath, "resource");
             string[] files = Directory.GetFiles(fold, "addon_*.txt");
@@ -1698,6 +1703,8 @@ namespace D2ModKit
             }
 			text_notification("UTF8 copies successfully made", Color.Green, 1500);
         }
+
+		#endregion utf8 copies
 
 		#region gfycat demos
 
@@ -1723,6 +1730,9 @@ namespace D2ModKit
 			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
 		}
 
+		private void optimizeForWorkshopBtn_Click(object sender, EventArgs e) {
+
+		}
 
 		/*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)

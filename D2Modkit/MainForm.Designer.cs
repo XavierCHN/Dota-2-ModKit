@@ -51,6 +51,13 @@
 			this.removeCurrentAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.templatesButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+			this.modKitGfyDemosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.forkingDecompiledParticlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.particleDesignerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.creatingNewAddonFromBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.generatingTooltipsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.compilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.decompilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.iRCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.modDotaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,13 +89,7 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolStrip3 = new System.Windows.Forms.ToolStrip();
 			this.notificationLabel = new System.Windows.Forms.ToolStripLabel();
-			this.modKitGfyDemosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.forkingDecompiledParticlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.generatingTooltipsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.decompilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.compilingVTEXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.creatingNewAddonFromBarebonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.particleDesignerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optimizeForWorkshopBtn = new System.Windows.Forms.Button();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.toolStrip3.SuspendLayout();
@@ -277,6 +278,60 @@
 			this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
 			this.toolStripDropDownButton1.Text = "Help";
 			// 
+			// modKitGfyDemosToolStripMenuItem
+			// 
+			this.modKitGfyDemosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.forkingDecompiledParticlesToolStripMenuItem,
+            this.particleDesignerToolStripMenuItem,
+            this.creatingNewAddonFromBarebonesToolStripMenuItem,
+            this.generatingTooltipsToolStripMenuItem,
+            this.compilingVTEXToolStripMenuItem,
+            this.decompilingVTEXToolStripMenuItem});
+			this.modKitGfyDemosToolStripMenuItem.Name = "modKitGfyDemosToolStripMenuItem";
+			this.modKitGfyDemosToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+			this.modKitGfyDemosToolStripMenuItem.Text = "ModKit Gfycat Demos";
+			// 
+			// forkingDecompiledParticlesToolStripMenuItem
+			// 
+			this.forkingDecompiledParticlesToolStripMenuItem.Name = "forkingDecompiledParticlesToolStripMenuItem";
+			this.forkingDecompiledParticlesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.forkingDecompiledParticlesToolStripMenuItem.Text = "Forking Decompiled Particles";
+			this.forkingDecompiledParticlesToolStripMenuItem.Click += new System.EventHandler(this.forkingDecompiledParticlesToolStripMenuItem_Click);
+			// 
+			// particleDesignerToolStripMenuItem
+			// 
+			this.particleDesignerToolStripMenuItem.Name = "particleDesignerToolStripMenuItem";
+			this.particleDesignerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.particleDesignerToolStripMenuItem.Text = "Particle Designer";
+			this.particleDesignerToolStripMenuItem.Click += new System.EventHandler(this.particleDesignerToolStripMenuItem_Click);
+			// 
+			// creatingNewAddonFromBarebonesToolStripMenuItem
+			// 
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Name = "creatingNewAddonFromBarebonesToolStripMenuItem";
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Text = "Creating New Addon From Barebones";
+			this.creatingNewAddonFromBarebonesToolStripMenuItem.Click += new System.EventHandler(this.creatingNewAddonFromBarebonesToolStripMenuItem_Click);
+			// 
+			// generatingTooltipsToolStripMenuItem
+			// 
+			this.generatingTooltipsToolStripMenuItem.Name = "generatingTooltipsToolStripMenuItem";
+			this.generatingTooltipsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.generatingTooltipsToolStripMenuItem.Text = "Generating Tooltips";
+			this.generatingTooltipsToolStripMenuItem.Click += new System.EventHandler(this.generatingTooltipsToolStripMenuItem_Click);
+			// 
+			// compilingVTEXToolStripMenuItem
+			// 
+			this.compilingVTEXToolStripMenuItem.Name = "compilingVTEXToolStripMenuItem";
+			this.compilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.compilingVTEXToolStripMenuItem.Text = "Compiling VTEX";
+			// 
+			// decompilingVTEXToolStripMenuItem
+			// 
+			this.decompilingVTEXToolStripMenuItem.Name = "decompilingVTEXToolStripMenuItem";
+			this.decompilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.decompilingVTEXToolStripMenuItem.Text = "Decompiling VTEX";
+			this.decompilingVTEXToolStripMenuItem.Click += new System.EventHandler(this.decompilingVTEXToolStripMenuItem_Click);
+			// 
 			// tutorialsToolStripMenuItem
 			// 
 			this.tutorialsToolStripMenuItem.Name = "tutorialsToolStripMenuItem";
@@ -449,7 +504,7 @@
 			// combineBtn
 			// 
 			this.combineBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.combineBtn.Location = new System.Drawing.Point(73, 108);
+			this.combineBtn.Location = new System.Drawing.Point(73, 160);
 			this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
 			this.combineBtn.Name = "combineBtn";
 			this.combineBtn.Size = new System.Drawing.Size(127, 29);
@@ -621,59 +676,17 @@
 			this.notificationLabel.Size = new System.Drawing.Size(96, 22);
 			this.notificationLabel.Text = "notificationLabel";
 			// 
-			// modKitGfyDemosToolStripMenuItem
+			// optimizeForWorkshopBtn
 			// 
-			this.modKitGfyDemosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.forkingDecompiledParticlesToolStripMenuItem,
-            this.particleDesignerToolStripMenuItem,
-            this.creatingNewAddonFromBarebonesToolStripMenuItem,
-            this.generatingTooltipsToolStripMenuItem,
-            this.compilingVTEXToolStripMenuItem,
-            this.decompilingVTEXToolStripMenuItem});
-			this.modKitGfyDemosToolStripMenuItem.Name = "modKitGfyDemosToolStripMenuItem";
-			this.modKitGfyDemosToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-			this.modKitGfyDemosToolStripMenuItem.Text = "ModKit Gfycat Demos";
-			// 
-			// forkingDecompiledParticlesToolStripMenuItem
-			// 
-			this.forkingDecompiledParticlesToolStripMenuItem.Name = "forkingDecompiledParticlesToolStripMenuItem";
-			this.forkingDecompiledParticlesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.forkingDecompiledParticlesToolStripMenuItem.Text = "Forking Decompiled Particles";
-			this.forkingDecompiledParticlesToolStripMenuItem.Click += new System.EventHandler(this.forkingDecompiledParticlesToolStripMenuItem_Click);
-			// 
-			// generatingTooltipsToolStripMenuItem
-			// 
-			this.generatingTooltipsToolStripMenuItem.Name = "generatingTooltipsToolStripMenuItem";
-			this.generatingTooltipsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.generatingTooltipsToolStripMenuItem.Text = "Generating Tooltips";
-			this.generatingTooltipsToolStripMenuItem.Click += new System.EventHandler(this.generatingTooltipsToolStripMenuItem_Click);
-			// 
-			// decompilingVTEXToolStripMenuItem
-			// 
-			this.decompilingVTEXToolStripMenuItem.Name = "decompilingVTEXToolStripMenuItem";
-			this.decompilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.decompilingVTEXToolStripMenuItem.Text = "Decompiling VTEX";
-			this.decompilingVTEXToolStripMenuItem.Click += new System.EventHandler(this.decompilingVTEXToolStripMenuItem_Click);
-			// 
-			// compilingVTEXToolStripMenuItem
-			// 
-			this.compilingVTEXToolStripMenuItem.Name = "compilingVTEXToolStripMenuItem";
-			this.compilingVTEXToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.compilingVTEXToolStripMenuItem.Text = "Compiling VTEX";
-			// 
-			// creatingNewAddonFromBarebonesToolStripMenuItem
-			// 
-			this.creatingNewAddonFromBarebonesToolStripMenuItem.Name = "creatingNewAddonFromBarebonesToolStripMenuItem";
-			this.creatingNewAddonFromBarebonesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.creatingNewAddonFromBarebonesToolStripMenuItem.Text = "Creating New Addon From Barebones";
-			this.creatingNewAddonFromBarebonesToolStripMenuItem.Click += new System.EventHandler(this.creatingNewAddonFromBarebonesToolStripMenuItem_Click);
-			// 
-			// particleDesignerToolStripMenuItem
-			// 
-			this.particleDesignerToolStripMenuItem.Name = "particleDesignerToolStripMenuItem";
-			this.particleDesignerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.particleDesignerToolStripMenuItem.Text = "Particle Designer";
-			this.particleDesignerToolStripMenuItem.Click += new System.EventHandler(this.particleDesignerToolStripMenuItem_Click);
+			this.optimizeForWorkshopBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.optimizeForWorkshopBtn.Location = new System.Drawing.Point(73, 108);
+			this.optimizeForWorkshopBtn.Margin = new System.Windows.Forms.Padding(2);
+			this.optimizeForWorkshopBtn.Name = "optimizeForWorkshopBtn";
+			this.optimizeForWorkshopBtn.Size = new System.Drawing.Size(127, 48);
+			this.optimizeForWorkshopBtn.TabIndex = 46;
+			this.optimizeForWorkshopBtn.Text = "Optimize For Workshop";
+			this.optimizeForWorkshopBtn.UseVisualStyleBackColor = true;
+			this.optimizeForWorkshopBtn.Click += new System.EventHandler(this.optimizeForWorkshopBtn_Click);
 			// 
 			// MainForm
 			// 
@@ -682,6 +695,7 @@
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
 			this.ClientSize = new System.Drawing.Size(342, 259);
+			this.Controls.Add(this.optimizeForWorkshopBtn);
 			this.Controls.Add(this.toolStrip3);
 			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.decompileVtex);
@@ -774,6 +788,7 @@
 		private System.Windows.Forms.ToolStripMenuItem compilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem decompilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem particleDesignerToolStripMenuItem;
+		private System.Windows.Forms.Button optimizeForWorkshopBtn;
     }
 }
 
