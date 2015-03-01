@@ -19,13 +19,18 @@ namespace D2ModKit
             InitializeComponent();
 			preferencesForLabel.Text = "Preferences for " + a.Name + ":";
 
-			foreach (Addon.CombineKVFile cf in a.combineKVFiles) {
-				int index = kvFileCheckbox.Items.Add(cf.name);
-				//kvFileCheckbox.
-				
-			}
+            foreach (Addon.KVFileToCombine kvFileToCombine in a.KVFilesToCombine)
+            {
+                int index = kvFileCheckbox.Items.Add(kvFileToCombine.name);
+   
+            }
 
-			note0LoreCheckBox.Checked = Settings.Default.GenNote0Lore;
+            foreach (Addon.ModdingLibrary moddingLibrary in a.moddingLibraries)
+            {
+                listBox1.Items.Add(moddingLibrary.name);
+            }
+
+			note0LoreCheckBox.Checked = a.create_note0_lore;
 			checkForUpdatesCheckbox.Checked = Settings.Default.CheckForUpdates;
 
             ugcTextBox.Text = Settings.Default.UGCPath;
@@ -48,13 +53,12 @@ namespace D2ModKit
 
         private void note0LoreCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-			Settings.Default.GenNote0Lore = note0LoreCheckBox.Checked;
             addon.create_note0_lore = note0LoreCheckBox.Checked;
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            Settings.Default.Save();
+            //Settings.Default.Save();
 
 			if (needsRestart) {
 				MessageBox.Show("D2ModKit needs to be restarted to procede. Quitting.",
@@ -88,6 +92,13 @@ namespace D2ModKit
 
 		private void checkForUpdatesCheckbox_CheckedChanged(object sender, EventArgs e) {
 			Settings.Default.CheckForUpdates = checkForUpdatesCheckbox.Checked;
-		}
+        }
+
+        private void addLibraryBtn_Click(object sender, EventArgs e)
+        {
+            NewLibraryForm nlf = new NewLibraryForm(addon);
+            DialogResult dr = nlf.ShowDialog();
+
+        }
     }
 }

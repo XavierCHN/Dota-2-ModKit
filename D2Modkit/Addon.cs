@@ -41,8 +41,43 @@ namespace D2ModKit
             get { return abilityEntries; }
             set { abilityEntries = value; }
         }
-
         private List<string> particlePaths;
+
+        public class KVFileToCombine
+        {
+            public string path;
+            public bool activated;
+            public string name;
+            public KVFileToCombine(string name)
+            {
+                this.name = name;
+            }
+        }
+
+        private List<KVFileToCombine> kvFilesToCombine;
+
+        public List<KVFileToCombine> KVFilesToCombine
+        {
+            get { return kvFilesToCombine; }
+            set { kvFilesToCombine = value; }
+        }
+
+        public class ModdingLibrary
+        {
+            public string name;
+
+            public ModdingLibrary(string name)
+            {
+                // TODO: Complete member initialization
+                this.name = name;
+            }
+
+            public string path { get; set; }
+
+            public string version { get; set; }
+        }
+
+        public List<ModdingLibrary> moddingLibraries = new List<ModdingLibrary>();
 
         private void getMorePaths()
         {
@@ -58,14 +93,7 @@ namespace D2ModKit
             gamePath = _gamePath;
             name = gamePath.Substring(gamePath.LastIndexOf('\\') + 1);
             getMorePaths();
-        }
-
-        public Addon(string _contentPath, string _gamePath)
-        {
-            contentPath = _contentPath;
-            gamePath = _gamePath;
-            name = _contentPath.Substring(_contentPath.LastIndexOf('\\') + 1);
-            getMorePaths();
+            kvFilesToCombine = new List<KVFileToCombine>();
         }
 
 		public string GDS_modID {
@@ -150,56 +178,111 @@ namespace D2ModKit
             set { particlePaths = value; }
         }
 
-		public List<CombineKVFile> combineKVFiles = new List<CombineKVFile>();
+        public KeyValue KVData { get; set; }
 
-		public class CombineKVFile {
-			public string path;
-			public bool activated;
-			public string name;
-			public CombineKVFile(string name) {
-				this.name = name;
-			}
+        public bool create_note0_lore = false;
 
-		}
+        public void getPreferences()
+        {
+            KeyValue pref = null;
+            KeyValue kv_files = null;
+            KeyValue libraries = null;
+            foreach (KeyValue kv in KVData.Children)
+            {
+                if (kv.Key == "preferences")
+                {
+                    pref = kv;
+                }
+            }
 
-		public void getPreferences() {
-			KeyValue pref = null;
-			KeyValue kv_files = null;
-			foreach (KeyValue kv in KVData.Children) {
-				if (kv.Key == "preferences") {
-					pref = kv;
-				}
-			}
+            foreach (KeyValue kv in pref.Children)
+            {
+                if (kv.Key == "create_note0_lore")
+                {
+                    if (kv.Children.ElementAt(0).Key == "1")
+                    {
+                        create_note0_lore = true;
+                    }
+                }
+                else if (kv.Key == "kv_files")
+                {
+                    kv_files = kv;
+                }
+                else if (kv.Key == "libraries")
+                {
+                    libraries = kv;
+                }
+            }
 
-			foreach (KeyValue kv in pref.Children) {
-				if (kv.Key == "create_note0_lore") {
-					if (kv.Children.ElementAt(0).Key == "1") {
-						create_note0_lore = true;
-					} else {
-						create_note0_lore = false;
-					}
-				} else if (kv.Key == "kv_files") {
-					kv_files = kv;
-				}
-			}
-
-			foreach (KeyValue kv in kv_files.Children) {
-				CombineKVFile cf = new CombineKVFile(kv.Key);
-				foreach (KeyValue kv2 in kv.Children) {
-					if (kv2.Key == "path") {
-						cf.path = kv2.Children.ElementAt(0).Key;
-					}
-					if (kv2.Key == "activated") {
-						if (kv2.Children.ElementAt(0).Key == "1") {
-							cf.activated = true;
-						} else {
-							cf.activated = false;
-						}
-					}
-				}
-				combineKVFiles.Add(cf);
-			}
-		}
+            if (kv_files != null)
+            {
+                foreach (KeyValue kv in kv_files.Children)
+                {
+                    KVFileToCombine cf = new KVFileToCombine(kv.Key);
+                    foreach (KeyValue kv2 in kv.Children)
+                    {
+                        if (kv2.Key == "path")
+                        {
+                            cf.path = kv2.Children.ElementAt(0).Key;
+                        }
+                        if (kv2.Key == "activated")
+                        {
+                            if (kv2.Children.ElementAt(0).Key == "1")
+                            {
+                                cf.activated = true;
+                            }
+                            else
+                            {
+                                cf.activated = false;
+                            }
+                        }
+                    }
+                    kvFilesToCombine.Add(cf);
+                }
+            }
+            else
+            {
+                // init kv_files for this addon
+                kv_files = new KeyValue("kv_files");
+                string[] npcFiles = { "Heroes", "Units", "Items", "Abilities" };
+                foreach (string s in npcFiles)
+                {
+                    KeyValue name = new KeyValue(s);
+                    string path = Path.Combine(this.GamePath, "scripts", "npc", "npc_" + s.ToLower() + "_custom.txt");
+                    KeyValue pathKV = new KeyValue("path");
+                    pathKV.AddChild(new KeyValue(path));
+                    KeyValue activated = new KeyValue("activated");
+                    activated.AddChild(new KeyValue("1"));
+                    name.AddChild(pathKV);
+                    name.AddChild(activated);
+                    kv_files.AddChild(name);
+                }
+            }
+            if (libraries != null)
+            {
+                foreach (KeyValue kv in libraries.Children)
+                {
+                    string name = kv.Key;
+                    ModdingLibrary ml = new ModdingLibrary(name);
+                    foreach (KeyValue kv2 in kv.Children)
+                    {
+                        if (kv2.Key == "path")
+                        {
+                            ml.path = kv2.Children.ElementAt(0).Key;
+                        }
+                        else if (kv2.Key == "version")
+                        {
+                            ml.version = kv2.Children.ElementAt(0).Key;
+                        }
+                    }
+                    moddingLibraries.Add(ml);
+                }
+            }
+            else
+            {
+                KVData.AddChild(new KeyValue("libraries"));
+            }
+        }
 
         public void getCurrentAddonEnglish()
         {
@@ -336,11 +419,11 @@ namespace D2ModKit
                                 {
                                     if (items)
                                     {
-                                        itemEntries.Add(new AbilityEntry(ability.Key, kvs));
+                                        itemEntries.Add(new AbilityEntry(this, ability.Key, kvs));
                                     }
                                     else
                                     {
-                                        abilityEntries.Add(new AbilityEntry(ability.Key, kvs));
+                                        abilityEntries.Add(new AbilityEntry(this, ability.Key, kvs));
                                     }
                                     added = true;
                                 }
@@ -352,11 +435,11 @@ namespace D2ModKit
                     {
                         if (items)
                         {
-                            itemEntries.Add(new AbilityEntry(ability.Key, null));
+                            itemEntries.Add(new AbilityEntry(this, ability.Key, null));
                         }
                         else
                         {
-                            abilityEntries.Add(new AbilityEntry(ability.Key, null));
+                            abilityEntries.Add(new AbilityEntry(this, ability.Key, null));
                         }
                     }
                 }
@@ -585,9 +668,5 @@ namespace D2ModKit
             }
             return langFiles;
         }
-
-		public KeyValue KVData { get; set; }
-
-		public bool create_note0_lore { get; set; }
-	}
+    }
 }
