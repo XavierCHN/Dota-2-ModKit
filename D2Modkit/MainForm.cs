@@ -14,9 +14,11 @@ using System.Windows.Forms;
 
 namespace D2ModKit
 {
-    public partial class MainForm : Form
-    {
-        private List<string> addonNames;
+    public partial class MainForm : Form {
+
+		#region definitions
+
+		private List<string> addonNames;
         private List<string> gameAddonPaths;
         private List<string> contentAddonPaths;
 
@@ -115,7 +117,9 @@ namespace D2ModKit
         private string Vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		private Dictionary<string, string> libraries = new Dictionary<string, string>();
 
-        public MainForm()
+		#endregion definitions
+
+		public MainForm()
         {
             // Check if application is already running.
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -129,7 +133,12 @@ namespace D2ModKit
                 // open up changelog
                 Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
-			
+
+			if (Vers == "1.4.7.9" && !Settings.Default.Cleared1479) {
+				AddonData = "";
+				Settings.Default.Cleared1479 = true;
+			}
+
 			// populate libraries dictionary
 			addLibraries();
 
@@ -206,7 +215,7 @@ namespace D2ModKit
 				string source = System.Text.Encoding.ASCII.GetString(responseBytes);
 				foreach (Addon a in addons) {
 					string modID = getVal(a.Name, "gds_modID").Children.ElementAt(0).Key;
-					a.GDS_modID = modID;
+					a.gds_modID = modID;
 					if (modID == null || modID == "") {
 						continue;
 					}
@@ -214,7 +223,7 @@ namespace D2ModKit
 					// accomdate for at most 5 digits
 					string x2 = x.Substring(x.IndexOf("\"popularityRank\":"), 17 + 5);
 					string rank = x2.Substring(17, x2.IndexOf(',') - 17);
-					a.GDS_rank = rank;
+					a.gds_rank = rank;
 				}
 
 			} catch (Exception) { }
@@ -224,17 +233,17 @@ namespace D2ModKit
 			}
 		}
 
-		private void SetGDSButtonText() {
-			if (currAddon.GDS_rank != "") {
-				gdsButton.Text = "#" + currAddon.GDS_rank;
-			}
-		}
-
 		delegate void m_SetGDSButtonText();
 
         void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+			string newAddonData = "\"AddonData\"\n{\n}";
+			AddonDataMasterKV = KVParser.KV1.Parse(newAddonData);
             // TODO: Serialize preferences.
+			foreach (Addon a in addons) {
+				KeyValue addonSerialized = a.serializePreferences();
+				AddonDataMasterKV.AddChild(addonSerialized);
+			}
 
 			AddonData = AddonDataMasterKV.ToString();
 			Settings.Default.Save();
@@ -480,7 +489,9 @@ namespace D2ModKit
             return rgb;
         }
 
-        private void newParticles_Click(object sender, EventArgs e)
+		#region particles
+
+		private void newParticles_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.UGCPath == "")
             {
@@ -586,7 +597,19 @@ namespace D2ModKit
 			//text_notification("Particles successfully forked.", Color.Green, 2000);
         }
 
-        private void getAddons()
+		private void particleDesigner_Click(object sender, EventArgs e) {
+			ParticleDesignForm pdf = new ParticleDesignForm(currAddon);
+			if (pdf.FormCanceled) {
+				//user clicked cancel when picking particle files.
+				pdf.Close();
+				return;
+			}
+			DialogResult r = pdf.ShowDialog();
+		}
+
+		#endregion particles
+
+		private void getAddons()
         {
             string[] dirs = Directory.GetDirectories(UGCPath);
             foreach (string str in dirs)
@@ -610,38 +633,85 @@ namespace D2ModKit
                     }
                 }
             }
-			setAddonData();
+			deserializeAddons();
             setAddonNames();
         }
 
-		private void setAddonData() {
+		private void deserializeAddons() {
 			if (!AddonDataMasterKV.HasChildren) {
 				return;
 			}
 
 			foreach (Addon a in Addons) {
-				bool found = false;
 				foreach (KeyValue kv in AddonDataMasterKV.Children) {
 					if (kv.Key.ToLower() == a.Name.ToLower()) {
 						a.KVData = kv;
-						//string testtest = a.KVData.ToString();
-						found = true;
 					}
 				}
-				if (!found) {
-					// this is a valid addon but not in AddonData
-					KeyValue newKV = new KeyValue(a.Name.ToLower());
-					// Get the preferences
-                    KeyValue pref = new KeyValue("preferences");
-                    newKV.AddChild(pref);
-					//initPreferences(newKV, a);
-					//string test = newKV.ToString();
-					AddonDataMasterKV.AddChild(newKV);
-					a.KVData = newKV;
-				}
-				// deserialize the preferences.
-				a.getPreferences();
 			}
+			// deserialize the preferences.
+			foreach (Addon a in Addons) {
+				a.deserializePreferences();
+			}
+		}
+
+		private void overrideParticlesToBeNull_Click(object sender, EventArgs e) {
+			string extractPath = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
+			if (!Directory.Exists(extractPath)) {
+				DialogResult result = MessageBox.Show(
+					"No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
+					"D2ModKit",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Hand);
+
+				if (result == DialogResult.Yes) {
+					Process.Start("https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M");
+				}
+				return;
+			}
+
+			// get the null particle contents.
+			string nullParticlePath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_particle.vpcf");
+			string nullParticleContents = "";
+			if (File.Exists(nullParticlePath)) {
+				nullParticleContents = File.ReadAllText(nullParticlePath);
+			}
+
+			// We need a particle system to work with.
+			OpenFileDialog fd = new OpenFileDialog();
+			fd.InitialDirectory = extractPath;
+			fd.Multiselect = true;
+			fd.Title = "Select Particles To Override";
+			DialogResult res = fd.ShowDialog();
+			ParticleSystem Ps = null;
+
+			if (res == DialogResult.OK) {
+				Ps = new ParticleSystem(fd.FileNames);
+			} else {
+				return;
+			}
+			Particle[] particles = Ps.Particles;
+			string path = particles[0].Path;
+			int len = path.LastIndexOf('\\') - path.IndexOf("decompiled_particles");
+			string folderStructure = path.Substring(path.IndexOf("decompiled_particles"), len);
+			//folderStructure = folderStructure.Replace("\\", ".");
+			string[] folds = folderStructure.Split('\\');
+			// starting at 1 to forget about the first string, which is "decompiled_particles"
+			string path2 = Path.Combine(CurrentAddon.ContentPath, "particles");
+			for (int i = 1; i < folds.Length; i++) {
+				path2 = Path.Combine(path2, folds[i]);
+			}
+			if (!Directory.Exists(path2)) {
+				Directory.CreateDirectory(path2);
+			}
+			for (int i = 0; i < particles.Count(); i++) {
+				Particle p = particles[i];
+				p.Name = p.Name.Replace(".vpcf_c", ".vpcf");
+				string newPath = Path.Combine(path2, p.Name);
+				File.Copy(p.Path, newPath);
+				File.WriteAllText(newPath, nullParticleContents);
+			}
+			Process.Start(path2);
 		}
 
 		// init addon with basic Modkit preferences if it's never been done before.
@@ -695,8 +765,8 @@ namespace D2ModKit
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
             calculateSize();
-			if (currAddon.GDS_rank != "") {
-				gdsButton.Text = "#" + currAddon.GDS_rank;
+			if (currAddon.gds_rank != "") {
+				gdsButton.Text = "#" + currAddon.gds_rank;
 			} else {
 				gdsButton.Text = "";
 			}
@@ -733,6 +803,14 @@ namespace D2ModKit
             currAddon.writeTooltips();
         }
 
+		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
+			PreferencesForm pf = new PreferencesForm(currAddon);
+			DialogResult r = pf.ShowDialog();
+			if (r == DialogResult.OK) {
+				text_notification("Settings successfully saved.", Color.Green, 1500);
+			}
+
+		}
 
         private void copyToFolder_Click(object sender, EventArgs e)
         {
@@ -757,16 +835,6 @@ namespace D2ModKit
             proc.Start();
             proc.StartInfo.Arguments = "\"" + currAddon.GamePath + "\" \"" + Path.Combine(currAddon.CopyPath, "game") + "\" /D /E /I /Y";
             proc.Start();
-        }
-
-        private void gameDir_Click(object sender, EventArgs e)
-        {
-            Process.Start(currAddon.GamePath);
-        }
-
-        private void contentDir_Click(object sender, EventArgs e)
-        {
-            Process.Start(currAddon.ContentPath);
         }
 
         private void diff_Click(object sender, EventArgs e)
@@ -814,59 +882,66 @@ namespace D2ModKit
          * BAREBONES FORK CODE
          */
 
-        NewAddonForm addonForm;
+		#region barebones
 
-        public NewAddonForm AddonForm
-        {
-            get { return addonForm; }
-            set { addonForm = value; }
-        }
+		NewAddonForm addonForm;
 
-        private void forkAddon(string version)
-        {
-            // ensure a "barebones" folder is in the current directory, and it has game and content in it.
-            string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
-            if (!Directory.Exists(barebonesDir))
-            {
-                DialogResult res = MessageBox.Show("No 'barebones' directory found in the D2ModKit folder. Download barebones now?",
-                    "D2ModKit",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Information);
+		public NewAddonForm AddonForm {
+			get { return addonForm; }
+			set { addonForm = value; }
+		}
 
-                if (res != DialogResult.OK)
-                {
-                    return;
-                }
+		private void myllsBarebones_Click(object sender, EventArgs e) {
+			forkAddon("myll");
+		}
 
-                BarebonesDLForm dl = new BarebonesDLForm(version);
-                dl.ShowDialog();
-            }
+		private void bmdBarebones_Click(object sender, EventArgs e) {
+			forkAddon("bmd");
+		}
 
-            if (Directory.Exists(barebonesDir))
-            {
-                if (!Directory.Exists(Path.Combine(barebonesDir, "game")) || !Directory.Exists(Path.Combine(barebonesDir, "content")))
-                {
-                    MessageBox.Show("Invalid structure in the 'barebones' directory. It must have a 'game' and 'content' folder.",
-                        "D2ModKit",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-            }
+		private void beginnersBarebonesToolStripMenuItem_Click(object sender, EventArgs e) {
+			forkAddon("noya");
+		}
 
-            // at this point we have a valid 'barebones' directory.
-            AddonForm = new NewAddonForm(version);
-            AddonForm.Submit.Click += NewAddonSubmit_Click;
-            AddonForm.CommentCheckBox.Checked = true;
-            AddonForm.RemoveItemsCheckbox.Checked = true;
-            AddonForm.RemoveHeroesCheckBox.Checked = true;
-            AddonForm.ShowDialog();
-        }
+		private void chineseBarebones_Click(object sender, EventArgs e) {
 
-        private void bmdBarebones_Click(object sender, EventArgs e)
-        {
-            forkAddon("bmd");
-        }
+		}
+
+		private void forkAddon(string version) {
+			// ensure a "barebones" folder is in the current directory, and it has game and content in it.
+			string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
+			if (!Directory.Exists(barebonesDir)) {
+				DialogResult res = MessageBox.Show("No 'barebones' directory found in the D2ModKit folder. Download barebones now?",
+					"D2ModKit",
+					MessageBoxButtons.OKCancel,
+					MessageBoxIcon.Information);
+
+				if (res != DialogResult.OK) {
+					return;
+				}
+
+				BarebonesDLForm dl = new BarebonesDLForm(version);
+				dl.ShowDialog();
+			}
+
+			if (Directory.Exists(barebonesDir)) {
+				if (!Directory.Exists(Path.Combine(barebonesDir, "game")) || !Directory.Exists(Path.Combine(barebonesDir, "content"))) {
+					MessageBox.Show("Invalid structure in the 'barebones' directory. It must have a 'game' and 'content' folder.",
+						"D2ModKit",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+					return;
+				}
+			}
+
+			// at this point we have a valid 'barebones' directory.
+			AddonForm = new NewAddonForm(version);
+			AddonForm.Submit.Click += NewAddonSubmit_Click;
+			AddonForm.CommentCheckBox.Checked = true;
+			AddonForm.RemoveItemsCheckbox.Checked = true;
+			AddonForm.RemoveHeroesCheckBox.Checked = true;
+			AddonForm.ShowDialog();
+		}
 
         void NewAddonSubmit_Click(object sender, EventArgs e)
         {
@@ -913,17 +988,7 @@ namespace D2ModKit
             Process.Start(Path.Combine(a.GamePath, "scripts", "vscripts"));
         }
 
-        private void particleDesigner_Click(object sender, EventArgs e)
-        {
-            ParticleDesignForm pdf = new ParticleDesignForm(currAddon);
-            if (pdf.FormCanceled)
-            {
-                //user clicked cancel when picking particle files.
-                pdf.Close();
-                return;
-            }
-            DialogResult r = pdf.ShowDialog();
-        }
+		#endregion barebones
 
         private void removeAddon_Click(object sender, EventArgs e)
         {
@@ -1000,76 +1065,17 @@ namespace D2ModKit
             ab.ShowDialog();
         }
 
-        private void overrideParticlesToBeNull_Click(object sender, EventArgs e)
-        {
-            string extractPath = Path.Combine(Environment.CurrentDirectory, "decompiled_particles");
-            if (!Directory.Exists(extractPath))
-            {
-                DialogResult result = MessageBox.Show(
-                    "No decompiled_particles folder detected in the D2ModKit folder. Would you like to download the decompiled particles now?",
-                    "D2ModKit",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Hand);
+		#region directory click
 
-                if (result == DialogResult.Yes)
-                {
-                    Process.Start("https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M");
-                }
-                return;
-            }
+		private void gameDir_Click(object sender, EventArgs e) {
+			Process.Start(currAddon.GamePath);
+		}
 
-            // get the null particle contents.
-            string nullParticlePath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_particle.vpcf");
-            string nullParticleContents = "";
-            if (File.Exists(nullParticlePath))
-            {
-                nullParticleContents = File.ReadAllText(nullParticlePath);
-            }
+		private void contentDir_Click(object sender, EventArgs e) {
+			Process.Start(currAddon.ContentPath);
+		}
 
-            // We need a particle system to work with.
-            OpenFileDialog fd = new OpenFileDialog();
-            fd.InitialDirectory = extractPath;
-            fd.Multiselect = true;
-            fd.Title = "Select Particles To Override";
-            DialogResult res = fd.ShowDialog();
-            ParticleSystem Ps = null;
-
-            if (res == DialogResult.OK)
-            {
-                Ps = new ParticleSystem(fd.FileNames);
-            }
-            else
-            {
-                return;
-            }
-            Particle[] particles = Ps.Particles;
-            string path = particles[0].Path;
-            int len = path.LastIndexOf('\\') - path.IndexOf("decompiled_particles");
-            string folderStructure = path.Substring(path.IndexOf("decompiled_particles"), len);
-            //folderStructure = folderStructure.Replace("\\", ".");
-            string[] folds = folderStructure.Split('\\');
-            // starting at 1 to forget about the first string, which is "decompiled_particles"
-            string path2 = Path.Combine(CurrentAddon.ContentPath, "particles");
-            for (int i = 1; i < folds.Length; i++)
-            {
-                path2 = Path.Combine(path2, folds[i]);
-            }
-            if (!Directory.Exists(path2))
-            {
-                Directory.CreateDirectory(path2);
-            }
-            for (int i = 0; i < particles.Count(); i++)
-            {
-                Particle p = particles[i];
-                p.Name = p.Name.Replace(".vpcf_c", ".vpcf");
-                string newPath = Path.Combine(path2, p.Name);
-                File.Copy(p.Path, newPath);
-                File.WriteAllText(newPath, nullParticleContents);
-            }
-            Process.Start(path2);
-        }
-
-        private void vscriptsDir_Click(object sender, EventArgs e)
+		private void vscriptsDir_Click(object sender, EventArgs e)
         {
             string path = Path.Combine(currAddon.GamePath, "scripts", "vscripts");
             if (Directory.Exists(path))
@@ -1096,32 +1102,12 @@ namespace D2ModKit
             }
         }
 
-        public static long GetDirectorySize(string p)
-        {
-            // 1.
-            // Get array of all file names.
-            string[] a = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
+		#endregion directory click
 
-            // 2.
-            // Calculate total bytes of all files in a loop.
-            long b = 0;
-            foreach (string name in a)
-            {
-                // 3.
-                // Use FileInfo to get length of each file.
-                FileInfo info = new FileInfo(name);
-                b += info.Length;
-            }
-            // 4.
-            // Return total size
-            return b;
-        }
-
-        private void totalSize_Click(object sender, EventArgs e)
+        /*private void totalSize_Click(object sender, EventArgs e)
         {
-            //Debug.WriteLine("Calc size.");
             calculateSize();
-        }
+        }*/
 
         public Environment.SpecialFolder getRootFolder()
         {
@@ -1258,11 +1244,20 @@ namespace D2ModKit
 
         private void combineBtn_Click(object sender, EventArgs e)
         {
-			string[] items = { "Heroes", "Units", "Items", "Abilities" };
-            for (int i = 0; i < items.Length; i++)
+			string[] standard = { "Heroes", "Units", "Abilities", "Items" };
+            for (int i = 0; i < currAddon.KVFilesToCombine.Count; i++)
             {
-				string itemStr = items[i].ToLower();
-                string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr);
+				Addon.KVFileToCombine kvFileToCombine = currAddon.KVFilesToCombine[i];
+				string itemStr = kvFileToCombine.name.ToLower();
+				string path = kvFileToCombine.path;
+				string fold = path.Substring(0, path.LastIndexOf("."));
+				string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
+
+				bool isStandard = false;
+				if (standard.Contains(kvFileToCombine.name)) {
+					isStandard = true;
+					fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr);
+				}
 
                 if (!Directory.Exists(fold))
                 {
@@ -1277,7 +1272,6 @@ namespace D2ModKit
                     breakUp(itemStr);
                 }
 
-                string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
                 string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
                 string bigKVPath = Path.Combine(parentFolder, "npc_" + foldName + "_custom.txt");
 				string currText = File.ReadAllText(bigKVPath);
@@ -1353,26 +1347,6 @@ namespace D2ModKit
             text_notification("Combine success", Color.Green, 1500);
         }
 
-		private void text_notification(string text, Color color, int duration) {
-            System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
-            notificationLabelTimer.SynchronizingObject = this;
-            notificationLabelTimer.AutoReset = false;
-            notificationLabelTimer.Start();
-            notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
-			notificationLabel.ForeColor = color;
-            notificationLabel.Text = text;
-		}
-
-        void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            notificationLabel.Text = "";
-        }
-
-        private void myllsBarebones_Click(object sender, EventArgs e)
-        {
-            forkAddon("myll");
-        }
-
         #region vtex
 
         private void compileVtex_Click(object sender, EventArgs e)
@@ -1380,7 +1354,7 @@ namespace D2ModKit
             // show dialog to open .tga or .mks file
             OpenFileDialog fd = new OpenFileDialog();
             fd.Multiselect = true;
-            fd.Filter = "TGA|*.tga|MKS|*.mks";
+            fd.Filter = ".tga(.tga)|*.tga|.mks|*.mks";
 
             string materialsPath = Path.Combine(currAddon.ContentPath, "materials");
             if (!Directory.Exists(materialsPath))
@@ -1536,21 +1510,6 @@ namespace D2ModKit
 
         #endregion vtex
 
-        private void modDotaToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://moddota.com/forums/");
-        }
-
-        private void tutorialsToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            Process.Start("https://moddota.com/forums/tutorial-index");
-        }
-
-        private void ircToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            Process.Start("https://moddota.com/forums/chat");
-        }
-
 		private KeyValue getVal(string addonName, string key) {
 			foreach (KeyValue kv in AddonDataMasterKV.Children) {
 				string name = kv.Key;
@@ -1567,22 +1526,6 @@ namespace D2ModKit
 			return null;
 		}
 
-		/*private string getValStr(string addonName, string key) {
-			foreach (KeyValue kv in AddonDataMasterKV.Children) {
-				string name = kv.Key;
-				if (addonName.ToLower() == name.ToLower()) {
-					if (kv.HasChildren) {
-						foreach (KeyValue kv2 in kv.Children) {
-							if (kv2.Key == key) {
-								return kv2.Children.ElementAt(0).Key;
-							}
-						}
-					}
-				}
-			}
-			return null;
-		}*/
-
 		private void addKV(string addonName, string key, string val) {
 			foreach (KeyValue kv in AddonDataMasterKV.Children)
 			{
@@ -1596,15 +1539,13 @@ namespace D2ModKit
 			}
 		}
 
-        private void gdsButton_Click(object sender, EventArgs e)
+		#region gds and stream
+
+		private void gdsButton_Click(object sender, EventArgs e)
         {
-			KeyValue kv = getVal(currAddon.Name, "gds_link");
-			string val = null;
-			if (kv != null && kv.HasChildren) {
-				val = kv.Children.ElementAt(0).Key;
-			}
-			if (val != null) {
-				Process.Start(val);
+			string link = currAddon.gds_link;
+			if (link != null && link != "") {
+				Process.Start(link);
 				return;
 			}
 
@@ -1614,21 +1555,17 @@ namespace D2ModKit
             {
                 return;
             }
-			string link = elf.Textbox.Text;
+			link = elf.Textbox.Text;
             string modID = link.Substring(link.LastIndexOf('=')+1);
-			addKV(currAddon.Name, "gds_link", link);
-			addKV(currAddon.Name, "gds_modID", modID);
+			currAddon.gds_link = link;
+			currAddon.gds_modID = modID;
 			text_notification("Restart ModKit to see GDS rank.", Color.Goldenrod, 2500);
         }
 
 		private void steamButton_Click(object sender, EventArgs e) {
-			KeyValue kv = getVal(currAddon.Name, "workshop_link");
-			string val = null;
-			if (kv != null && kv.HasChildren) {
-				val = kv.Children.ElementAt(0).Key;
-			}
-			if (val != null) {
-				Process.Start(val);
+			string link = currAddon.steam_link;
+			if (link != null && link != "") {
+				Process.Start(link);
 				return;
 			}
 
@@ -1637,40 +1574,20 @@ namespace D2ModKit
 			if (res == DialogResult.Cancel) {
 				return;
 			}
-			string link = elf.Textbox.Text;
+			link = elf.Textbox.Text;
 			string workshop_id = link.Substring(link.LastIndexOf('=') + 1);
-			addKV(currAddon.Name, "workshop_link", link);
-			addKV(currAddon.Name, "workshop_id", workshop_id);
+			currAddon.steam_link = link;
+			currAddon.workshop_id = workshop_id;
 			//text_notification("Restart ModKit for changes to take effect.", Color.Goldenrod, 2500);
 		}
 
-        private void chineseBarebones_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void otherToolsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://moddota.com/forums/tools");
-        }
-
-        private void rdota2moddingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://www.reddit.com/r/dota2modding/");
-        }
-
-		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e) {
-            PreferencesForm pf = new PreferencesForm(currAddon);
-            DialogResult r = pf.ShowDialog();
-			if (r == DialogResult.OK) {
-				text_notification("Settings successfully saved.", Color.Green, 1500);
+		private void SetGDSButtonText() {
+			if (currAddon.gds_rank != "") {
+				gdsButton.Text = "#" + currAddon.gds_rank;
 			}
-
 		}
 
-		private void beginnersBarebonesToolStripMenuItem_Click(object sender, EventArgs e) {
-			forkAddon("noya");
-		}
+		#endregion gds and stream
 
 		#region utf8 copies
 
@@ -1698,10 +1615,35 @@ namespace D2ModKit
 
 		#endregion utf8 copies
 
-		#region gfycat demos
+		#region links and gfycat demos
 
+		private void modDotaToolStripMenuItem1_Click(object sender, EventArgs e) {
+			Process.Start("https://moddota.com/forums/");
+		}
+
+		private void tutorialsToolStripMenuItem_Click_1(object sender, EventArgs e) {
+			Process.Start("https://moddota.com/forums/tutorial-index");
+		}
+
+		private void ircToolStripMenuItem_Click_1(object sender, EventArgs e) {
+			Process.Start("https://moddota.com/forums/chat");
+		}
+
+		private void otherToolsToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("https://moddota.com/forums/tools");
+		}
+
+		private void rdota2moddingToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://www.reddit.com/r/dota2modding/");
+		}
+
+		// gfycat demos
 		private void forkingDecompiledParticlesToolStripMenuItem_Click(object sender, EventArgs e) {
 			Process.Start("http://gfycat.com/PepperyVelvetyCaimanlizard");
+		}
+
+		private void particleDesignerToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
 		}
 
 		private void creatingNewAddonFromBarebonesToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -1716,13 +1658,10 @@ namespace D2ModKit
 			Process.Start("http://gfycat.com/ImpeccablePassionateFirefly");
 		}
 
-		#endregion gfycat demos
-
-		private void particleDesignerToolStripMenuItem_Click(object sender, EventArgs e) {
-			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
-		}
+		#endregion links and gfycat demos
 
 		private void optimizeForWorkshopBtn_Click(object sender, EventArgs e) {
+
 
 		}
 
@@ -1810,6 +1749,57 @@ namespace D2ModKit
                 }
 			}
         }*/
+
+		private void text_notification(string text, Color color, int duration) {
+			System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
+			notificationLabelTimer.SynchronizingObject = this;
+			notificationLabelTimer.AutoReset = false;
+			notificationLabelTimer.Start();
+			notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+			notificationLabel.ForeColor = color;
+			notificationLabel.Text = text;
+		}
+
+		void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+			notificationLabel.Text = "";
+		}
+
+		#region utility
+
+		public static long GetDirectorySize(string p) {
+			// 1.
+			// Get array of all file names.
+			string[] a = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
+
+			// 2.
+			// Calculate total bytes of all files in a loop.
+			long b = 0;
+			foreach (string name in a) {
+				// 3.
+				// Use FileInfo to get length of each file.
+				FileInfo info = new FileInfo(name);
+				b += info.Length;
+			}
+			// 4.
+			// Return total size
+			return b;
+		}
+
+
+
+		#endregion utility
+
+		private void toolStripDropDownButton2_Click(object sender, EventArgs e) {
+
+		}
+
+		private void addonPreferences_Click(object sender, EventArgs e) {
+			AddonPreferencesForm pf = new AddonPreferencesForm(currAddon);
+			DialogResult r = pf.ShowDialog();
+			if (r == DialogResult.OK) {
+				text_notification("Settings successfully saved.", Color.Green, 1500);
+			}
+		}
 
 	}
 }

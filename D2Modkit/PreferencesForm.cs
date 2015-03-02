@@ -17,20 +17,7 @@ namespace D2ModKit
         {
 			addon = a;
             InitializeComponent();
-			preferencesForLabel.Text = "Preferences for " + a.Name + ":";
 
-            foreach (Addon.KVFileToCombine kvFileToCombine in a.KVFilesToCombine)
-            {
-                int index = kvFileCheckbox.Items.Add(kvFileToCombine.name);
-   
-            }
-
-            foreach (Addon.ModdingLibrary moddingLibrary in a.moddingLibraries)
-            {
-                listBox1.Items.Add(moddingLibrary.name);
-            }
-
-			note0LoreCheckBox.Checked = a.create_note0_lore;
 			checkForUpdatesCheckbox.Checked = Settings.Default.CheckForUpdates;
 
             ugcTextBox.Text = Settings.Default.UGCPath;
@@ -51,17 +38,10 @@ namespace D2ModKit
 			needsRestart = true;
         }
 
-        private void note0LoreCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            addon.create_note0_lore = note0LoreCheckBox.Checked;
-        }
-
         private void submitButton_Click(object sender, EventArgs e)
         {
-            //Settings.Default.Save();
-
 			if (needsRestart) {
-				MessageBox.Show("D2ModKit needs to be restarted to procede. Quitting.",
+				MessageBox.Show("Settings saved. D2ModKit needs to be restarted to procede. Quitting.",
 					"D2ModKit",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Information);
@@ -73,32 +53,8 @@ namespace D2ModKit
 			}
         }
 
-		private void addKVButton_Click(object sender, EventArgs e) {
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.InitialDirectory = addon.GamePath;
-			DialogResult dr = ofd.ShowDialog();
-
-			if (dr != DialogResult.OK) {
-				return;
-			}
-
-			string path = ofd.FileName;
-			string fileName = path.Substring(path.LastIndexOf("\\") + 1);
-			string fileNameExt = fileName;
-			fileName = fileName.Remove(fileName.LastIndexOf("."));
-			fileName = fileName.Substring(0, 1).ToUpper() + fileName.Substring(1);
-			kvFileCheckbox.Items.Add(fileName);
-		}
-
 		private void checkForUpdatesCheckbox_CheckedChanged(object sender, EventArgs e) {
 			Settings.Default.CheckForUpdates = checkForUpdatesCheckbox.Checked;
-        }
-
-        private void addLibraryBtn_Click(object sender, EventArgs e)
-        {
-            NewLibraryForm nlf = new NewLibraryForm(addon);
-            DialogResult dr = nlf.ShowDialog();
-
         }
     }
 }

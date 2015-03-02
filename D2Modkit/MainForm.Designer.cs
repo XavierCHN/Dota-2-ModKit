@@ -68,9 +68,9 @@
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.button1 = new System.Windows.Forms.Button();
 			this.particleDesigner = new System.Windows.Forms.Button();
-			this.gameSizeLabel = new System.Windows.Forms.Label();
 			this.compileVtex = new System.Windows.Forms.Button();
 			this.decompileVtex = new System.Windows.Forms.Button();
+			this.gameSizeLabel = new System.Windows.Forms.Label();
 			this.contentSizeLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -89,7 +89,7 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolStrip3 = new System.Windows.Forms.ToolStrip();
 			this.notificationLabel = new System.Windows.Forms.ToolStripLabel();
-			this.optimizeForWorkshopBtn = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.toolStrip3.SuspendLayout();
@@ -164,6 +164,7 @@
 			this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
 			this.toolStripDropDownButton2.Size = new System.Drawing.Size(38, 22);
 			this.toolStripDropDownButton2.Text = "File";
+			this.toolStripDropDownButton2.Click += new System.EventHandler(this.toolStripDropDownButton2_Click);
 			// 
 			// newToolStripMenuItem
 			// 
@@ -209,7 +210,7 @@
 			// 
 			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
 			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
-			this.preferencesToolStripMenuItem.Text = "Preferences";
+			this.preferencesToolStripMenuItem.Text = "ModKit Preferences";
 			this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
@@ -400,7 +401,7 @@
 			// button1
 			// 
 			this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button1.Location = new System.Drawing.Point(73, 75);
+			this.button1.Location = new System.Drawing.Point(73, 108);
 			this.button1.Margin = new System.Windows.Forms.Padding(2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(127, 29);
@@ -422,17 +423,6 @@
 			this.toolTip1.SetToolTip(this.particleDesigner, "Provides options to Re-color, Re-name, \r\nor Re-size a particle system.");
 			this.particleDesigner.UseVisualStyleBackColor = true;
 			this.particleDesigner.Click += new System.EventHandler(this.particleDesigner_Click);
-			// 
-			// gameSizeLabel
-			// 
-			this.gameSizeLabel.AutoSize = true;
-			this.gameSizeLabel.Location = new System.Drawing.Point(232, 25);
-			this.gameSizeLabel.Name = "gameSizeLabel";
-			this.gameSizeLabel.Size = new System.Drawing.Size(61, 13);
-			this.gameSizeLabel.TabIndex = 29;
-			this.gameSizeLabel.Text = "Game Size:";
-			this.toolTip1.SetToolTip(this.gameSizeLabel, "Click to refresh");
-			this.gameSizeLabel.Click += new System.EventHandler(this.totalSize_Click);
 			// 
 			// compileVtex
 			// 
@@ -459,6 +449,15 @@
 			this.toolTip1.SetToolTip(this.decompileVtex, "Decompile VTEX Files");
 			this.decompileVtex.UseVisualStyleBackColor = true;
 			this.decompileVtex.Click += new System.EventHandler(this.decompileVtex_Click);
+			// 
+			// gameSizeLabel
+			// 
+			this.gameSizeLabel.AutoSize = true;
+			this.gameSizeLabel.Location = new System.Drawing.Point(232, 25);
+			this.gameSizeLabel.Name = "gameSizeLabel";
+			this.gameSizeLabel.Size = new System.Drawing.Size(61, 13);
+			this.gameSizeLabel.TabIndex = 29;
+			this.gameSizeLabel.Text = "Game Size:";
 			// 
 			// contentSizeLabel
 			// 
@@ -504,7 +503,7 @@
 			// combineBtn
 			// 
 			this.combineBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.combineBtn.Location = new System.Drawing.Point(73, 160);
+			this.combineBtn.Location = new System.Drawing.Point(73, 141);
 			this.combineBtn.Margin = new System.Windows.Forms.Padding(2);
 			this.combineBtn.Name = "combineBtn";
 			this.combineBtn.Size = new System.Drawing.Size(127, 29);
@@ -676,17 +675,17 @@
 			this.notificationLabel.Size = new System.Drawing.Size(96, 22);
 			this.notificationLabel.Text = "notificationLabel";
 			// 
-			// optimizeForWorkshopBtn
+			// button2
 			// 
-			this.optimizeForWorkshopBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.optimizeForWorkshopBtn.Location = new System.Drawing.Point(73, 108);
-			this.optimizeForWorkshopBtn.Margin = new System.Windows.Forms.Padding(2);
-			this.optimizeForWorkshopBtn.Name = "optimizeForWorkshopBtn";
-			this.optimizeForWorkshopBtn.Size = new System.Drawing.Size(127, 48);
-			this.optimizeForWorkshopBtn.TabIndex = 46;
-			this.optimizeForWorkshopBtn.Text = "Optimize For Workshop";
-			this.optimizeForWorkshopBtn.UseVisualStyleBackColor = true;
-			this.optimizeForWorkshopBtn.Click += new System.EventHandler(this.optimizeForWorkshopBtn_Click);
+			this.button2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button2.Location = new System.Drawing.Point(73, 75);
+			this.button2.Margin = new System.Windows.Forms.Padding(2);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(127, 29);
+			this.button2.TabIndex = 46;
+			this.button2.Text = "Preferences";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.addonPreferences_Click);
 			// 
 			// MainForm
 			// 
@@ -695,7 +694,7 @@
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
 			this.ClientSize = new System.Drawing.Size(342, 259);
-			this.Controls.Add(this.optimizeForWorkshopBtn);
+			this.Controls.Add(this.button2);
 			this.Controls.Add(this.toolStrip3);
 			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.decompileVtex);
@@ -769,8 +768,7 @@
         private System.Windows.Forms.ToolStripMenuItem overrideParticlesToBeNullToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem removeCurrentAddonToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+		private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherToolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rdota2moddingToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton steamButton;
@@ -788,7 +786,8 @@
 		private System.Windows.Forms.ToolStripMenuItem compilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem decompilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem particleDesignerToolStripMenuItem;
-		private System.Windows.Forms.Button optimizeForWorkshopBtn;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+		private System.Windows.Forms.Button button2;
     }
 }
 

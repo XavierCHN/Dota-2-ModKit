@@ -21,8 +21,6 @@ namespace D2ModKit
         private string unitsCustomPath;
         private string heroesCustomPath;
         private string relativeParticlePath;
-		private string gds_modID = "";
-		private string gds_rank = "";
 
         private List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
         private List<AbilityEntry> itemEntries = new List<AbilityEntry>();
@@ -95,16 +93,6 @@ namespace D2ModKit
             getMorePaths();
             kvFilesToCombine = new List<KVFileToCombine>();
         }
-
-		public string GDS_modID {
-			get { return gds_modID; }
-			set { gds_modID = value; }
-		}
-
-		public string GDS_rank {
-			get { return gds_rank; }
-			set { gds_rank = value; }
-		}
 
         public string ItemsCustomPath
         {
@@ -180,39 +168,54 @@ namespace D2ModKit
 
         public KeyValue KVData { get; set; }
 
-        public bool create_note0_lore = false;
+		public string gds_modID = "";
+		public string gds_rank = "";
+		public string gds_link = "";
+		public string steam_link = "";
+		public string workshop_id = "";
+		public bool create_note0_lore = false;
 
-        public void getPreferences()
+        public void deserializePreferences()
         {
             KeyValue pref = null;
             KeyValue kv_files = null;
             KeyValue libraries = null;
-            foreach (KeyValue kv in KVData.Children)
-            {
-                if (kv.Key == "preferences")
-                {
-                    pref = kv;
-                }
-            }
 
-            foreach (KeyValue kv in pref.Children)
-            {
-                if (kv.Key == "create_note0_lore")
-                {
-                    if (kv.Children.ElementAt(0).Key == "1")
-                    {
-                        create_note0_lore = true;
-                    }
-                }
-                else if (kv.Key == "kv_files")
-                {
-                    kv_files = kv;
-                }
-                else if (kv.Key == "libraries")
-                {
-                    libraries = kv;
-                }
-            }
+			/*KeyValue gds_modID = null;
+			KeyValue gds_rank = null;
+			KeyValue gds_link = null;
+			KeyValue steam_link = null;
+			KeyValue workshop_id = null;*/
+
+			if (KVData != null) {
+				foreach (KeyValue kv in KVData.Children) {
+					if (kv.Key == "preferences") {
+						pref = kv;
+					} else if (kv.Key == "libraries") {
+						libraries = kv;
+					} else if (kv.Key == "kv_files") {
+						kv_files = kv;
+					} else if (kv.Key == "gds_modID") {
+						gds_modID = kv.Children.ElementAt(0).Key;
+					} else if (kv.Key == "gds_rank") {
+						gds_rank = kv.Children.ElementAt(0).Key;
+					} else if (kv.Key == "gds_link") {
+						gds_link = kv.Children.ElementAt(0).Key;
+					} else if (kv.Key == "steam_link") {
+						steam_link = kv.Children.ElementAt(0).Key;
+					} else if (kv.Key == "workshop_id") {
+						workshop_id = kv.Children.ElementAt(0).Key;
+					}
+				}
+
+				foreach (KeyValue kv in pref.Children) {
+					if (kv.Key == "create_note0_lore") {
+						if (kv.Children.ElementAt(0).Key == "1") {
+							create_note0_lore = true;
+						}
+					}
+				}
+			}
 
             if (kv_files != null)
             {
@@ -227,7 +230,7 @@ namespace D2ModKit
                         }
                         if (kv2.Key == "activated")
                         {
-                            if (kv2.Children.ElementAt(0).Key == "1")
+                            if (kv2.Children.ElementAt(0).Key == "true")
                             {
                                 cf.activated = true;
                             }
@@ -239,25 +242,16 @@ namespace D2ModKit
                     }
                     kvFilesToCombine.Add(cf);
                 }
-            }
-            else
-            {
-                // init kv_files for this addon
+			} else { // initiate to defaults.
                 kv_files = new KeyValue("kv_files");
                 string[] npcFiles = { "Heroes", "Units", "Items", "Abilities" };
-                foreach (string s in npcFiles)
-                {
-                    KeyValue name = new KeyValue(s);
-                    string path = Path.Combine(this.GamePath, "scripts", "npc", "npc_" + s.ToLower() + "_custom.txt");
-                    KeyValue pathKV = new KeyValue("path");
-                    pathKV.AddChild(new KeyValue(path));
-                    KeyValue activated = new KeyValue("activated");
-                    activated.AddChild(new KeyValue("1"));
-                    name.AddChild(pathKV);
-                    name.AddChild(activated);
-                    kv_files.AddChild(name);
-                }
-            }
+				foreach (string s in npcFiles) {
+					KVFileToCombine cf = new KVFileToCombine(s);
+					cf.path = Path.Combine(gamePath, "scripts", "npc", "npc_" + s.ToLower() + "_custom.txt");
+					cf.activated = true;
+					kvFilesToCombine.Add(cf);
+				}
+			}
             if (libraries != null)
             {
                 foreach (KeyValue kv in libraries.Children)
@@ -277,12 +271,77 @@ namespace D2ModKit
                     }
                     moddingLibraries.Add(ml);
                 }
-            }
-            else
-            {
-                KVData.AddChild(new KeyValue("libraries"));
-            }
+            } // no defaults for libs
         }
+
+		public KeyValue serializePreferences() {
+			KeyValue master = new KeyValue(name.ToLower());
+			KeyValue preferences = new KeyValue("preferences");
+			KeyValue create_note0_lore = new KeyValue("create_note0_lore");
+			KeyValue kv_files = new KeyValue("kv_files");
+			KeyValue libraries = new KeyValue("libraries");
+
+			foreach (KVFileToCombine kvFileToCombine in kvFilesToCombine) {
+				KeyValue kvFile = new KeyValue(kvFileToCombine.name);
+				KeyValue activated = new KeyValue("activated");
+				activated.AddChild(new KeyValue(kvFileToCombine.activated.ToString().ToLower()));
+				KeyValue path = new KeyValue("path");
+				path.AddChild(new KeyValue(kvFileToCombine.path));
+				kvFile.AddChild(activated);
+				kvFile.AddChild(path);
+				kv_files.AddChild(kvFile);
+			}
+
+			foreach (ModdingLibrary ml in moddingLibraries) {
+				KeyValue lib = new KeyValue(ml.name);
+				KeyValue path = new KeyValue("path");
+				KeyValue version = new KeyValue("version");
+				path.AddChild(new KeyValue(ml.path));
+				version.AddChild(new KeyValue(ml.version));
+				lib.AddChild(path);
+				lib.AddChild(version);
+				libraries.AddChild(lib);
+
+			}
+
+			if (this.gds_modID != "") {
+				KeyValue gds_modID = new KeyValue("gds_modID");
+				gds_modID.AddChild(new KeyValue(this.gds_modID));
+				master.AddChild(gds_modID);
+			}
+			if (this.gds_rank != "") {
+				KeyValue gds_rank = new KeyValue("gds_rank");
+				gds_rank.AddChild(new KeyValue(this.gds_rank));
+				master.AddChild(gds_rank);
+			}
+			if (this.gds_link != "") {
+				KeyValue gds_link = new KeyValue("gds_link");
+				gds_link.AddChild(new KeyValue(this.gds_link));
+				master.AddChild(gds_link);
+			}
+			if (this.steam_link != "") {
+				KeyValue steam_link = new KeyValue("steam_link");
+				steam_link.AddChild(new KeyValue(this.steam_link));
+				master.AddChild(steam_link);
+			}
+			if (this.workshop_id != "") {
+				KeyValue workshop_id = new KeyValue("workshop_id");
+				workshop_id.AddChild(new KeyValue(this.workshop_id));
+				master.AddChild(workshop_id);
+			}
+
+			if (this.create_note0_lore) {
+				create_note0_lore.AddChild(new KeyValue("true"));
+			} else {
+				create_note0_lore.AddChild(new KeyValue("false"));
+			}
+
+			preferences.AddChild(create_note0_lore);
+			master.AddChild(kv_files);
+			master.AddChild(preferences);
+			master.AddChild(libraries);
+			return master;
+		}
 
         public void getCurrentAddonEnglish()
         {
