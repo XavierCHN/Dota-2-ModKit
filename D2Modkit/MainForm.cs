@@ -134,13 +134,10 @@ namespace D2ModKit
                 Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
             }
 
-			if (Vers == "1.4.7.9" && !Settings.Default.Cleared1479) {
+			if (Vers == "1.4.8.0" && !Settings.Default.Cleared1480) {
 				AddonData = "";
-				Settings.Default.Cleared1479 = true;
+				Settings.Default.Cleared1480 = true;
 			}
-
-			// populate libraries dictionary
-			addLibraries();
 
 			if (AddonData == null || AddonData == "") {
 				AddonData = "\"AddonData\"\n{\n}";
@@ -196,17 +193,12 @@ namespace D2ModKit
             selectCurrentAddon(Settings.Default.CurrAddon);
         }
 
-		private void addPreference(KeyValue preferences, string key, string val) {
-			KeyValue newKV = new KeyValue(key);
-			newKV.AddChild(new KeyValue(val));
-			preferences.AddChild(newKV);
-		}
-
+        /*
 		private void addLibraries() {
 			libraries.Add("buildinghelper.lua", "https://raw.githubusercontent.com/Myll/Dota-2-Building-Helper/master/game/dota_addons/samplerts/scripts/vscripts/buildinghelper.lua");
 			libraries.Add("physics.lua", "https://raw.githubusercontent.com/bmddota/barebones/source2/game/dota_addons/barebones/scripts/vscripts/physics.lua");
 			//libraries.Add("physics.lua", "https://raw.githubusercontent.com/bmddota/barebones/source2/game/dota_addons/barebones/scripts/vscripts/physics.lua");
-		}
+		}*/
 
 		private void GetGDSRanks() {
 			WebClient wc = new WebClient();
@@ -214,8 +206,7 @@ namespace D2ModKit
 				Byte[] responseBytes = wc.DownloadData("http://getdotastats.com/d2mods/api/popular_mods.php");
 				string source = System.Text.Encoding.ASCII.GetString(responseBytes);
 				foreach (Addon a in addons) {
-					string modID = getVal(a.Name, "gds_modID").Children.ElementAt(0).Key;
-					a.gds_modID = modID;
+                    string modID = a.gds_modID;
 					if (modID == null || modID == "") {
 						continue;
 					}
@@ -375,7 +366,7 @@ namespace D2ModKit
             }
         }
 
-        string convertVers(string vers, int add)
+        public static string convertVers(string vers, int add)
         {
             //Debug.WriteLine("input: " + vers);
             // check for new Vers
@@ -878,10 +869,6 @@ namespace D2ModKit
             return null;
         }
 
-        /*
-         * BAREBONES FORK CODE
-         */
-
 		#region barebones
 
 		NewAddonForm addonForm;
@@ -1121,7 +1108,7 @@ namespace D2ModKit
 				return Environment.SpecialFolder.MyComputer;
 			}
 			string ugcDrive = UGCPath.Substring(0, UGCPath.IndexOf(':'));
-			if (foldPath.StartsWith(ugcDrive)) {
+			if (foldPath.StartsWith(ugcDrive) && UGCPath.Contains("Program Files")) {
 				return specialFold;
 			}
 				return Environment.SpecialFolder.MyComputer;
@@ -1799,7 +1786,12 @@ namespace D2ModKit
 			if (r == DialogResult.OK) {
 				text_notification("Settings successfully saved.", Color.Green, 1500);
 			}
-		}
+        }
+
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+
+        }
 
 	}
 }

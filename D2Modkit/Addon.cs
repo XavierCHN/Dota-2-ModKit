@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using KVLib;
+using System.Net;
+using System.Threading;
 
 namespace D2ModKit
 {
@@ -63,6 +65,9 @@ namespace D2ModKit
         public class ModdingLibrary
         {
             public string name;
+            public string localLink;
+            public object webVers;
+            public object localVers;
 
             public ModdingLibrary(string name)
             {
@@ -70,9 +75,66 @@ namespace D2ModKit
                 this.name = name;
             }
 
-            public string path { get; set; }
+            public string webLink { get; set; }
 
             public string version { get; set; }
+
+            /*internal bool isOutOfDate()
+            {
+                ThreadStart childref = new ThreadStart(IsOutOfDate);
+                Thread thread = new Thread(childref);
+                thread.Start();
+            }
+
+            private void IsOutOfDate()
+            {
+                string webVers = getWebVers();
+                string localVers = getLocalVers();
+                if (webVers != localVers)
+                {
+                    return true;
+                }
+                return false;
+            }*/
+
+            internal string getVers(string[] lines)
+            {
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string line = lines[i];
+                    if (i > 9)
+                    {
+                        break;
+                    }
+                    string trimmed = line.Trim();
+                    if (trimmed.StartsWith("Version: "))
+                    {
+                        return trimmed.Substring(9);
+                    }
+                }
+                return "";
+            }
+
+            internal string getWebVers()
+            {
+                using (WebClient client = new WebClient())
+                {
+                    try
+                    {
+                        Byte[] responseBytes = client.DownloadData(webLink);
+                        string source = System.Text.Encoding.ASCII.GetString(responseBytes);
+                        return getVers(source.Split('\n'));
+                    }
+                    catch (Exception) { }
+                }
+                return "";
+            }
+
+            internal string getLocalVers()
+            {
+                string[] lines = File.ReadAllLines(localLink);
+                return getVers(lines);
+            }
         }
 
         public List<ModdingLibrary> moddingLibraries = new List<ModdingLibrary>();
@@ -210,7 +272,7 @@ namespace D2ModKit
 
 				foreach (KeyValue kv in pref.Children) {
 					if (kv.Key == "create_note0_lore") {
-						if (kv.Children.ElementAt(0).Key == "1") {
+						if (kv.Children.ElementAt(0).Key == "true") {
 							create_note0_lore = true;
 						}
 					}
@@ -262,7 +324,7 @@ namespace D2ModKit
                     {
                         if (kv2.Key == "path")
                         {
-                            ml.path = kv2.Children.ElementAt(0).Key;
+                            ml.webLink = kv2.Children.ElementAt(0).Key;
                         }
                         else if (kv2.Key == "version")
                         {
@@ -296,7 +358,7 @@ namespace D2ModKit
 				KeyValue lib = new KeyValue(ml.name);
 				KeyValue path = new KeyValue("path");
 				KeyValue version = new KeyValue("version");
-				path.AddChild(new KeyValue(ml.path));
+				path.AddChild(new KeyValue(ml.webLink));
 				version.AddChild(new KeyValue(ml.version));
 				lib.AddChild(path);
 				lib.AddChild(version);
@@ -726,6 +788,18 @@ namespace D2ModKit
                 }
             }
             return langFiles;
+        }
+
+        internal bool hasLibrary(string p)
+        {
+            foreach (ModdingLibrary ml in moddingLibraries)
+            {
+                if (ml.name == p)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

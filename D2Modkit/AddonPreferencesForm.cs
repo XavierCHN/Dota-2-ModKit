@@ -55,6 +55,22 @@ namespace D2ModKit {
 		private void addLibraryBtn_Click(object sender, EventArgs e) {
 			NewLibraryForm nlf = new NewLibraryForm(addon);
 			DialogResult dr = nlf.ShowDialog();
+            if (dr != DialogResult.OK)
+            {
+                return;
+            }
+            if ((nlf.linkToLib == "" || nlf.libName == ""))
+            {
+                foreach (string item in nlf.chosenLibs)
+                {
+                    Addon.ModdingLibrary ml = new Addon.ModdingLibrary(item);
+                    ml.webLink = nlf.linkToLib;
+                    ml.localLink = nlf.localLink;
+                    ml.webVers = ml.getWebVers();
+                    ml.localVers = ml.getLocalVers();
+                    ml.version = ""; // TODO
+                }
+            }
 
 		}
 
@@ -86,6 +102,6 @@ namespace D2ModKit {
 				this.DialogResult = DialogResult.OK;
 				this.Close();
 			}
-		}
+        }
 	}
 }
