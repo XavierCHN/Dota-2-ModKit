@@ -1143,7 +1143,7 @@ namespace D2ModKit
 				return Environment.SpecialFolder.MyComputer;
 			}
 			string ugcDrive = UGCPath.Substring(0, UGCPath.IndexOf(':'));
-			if (foldPath.StartsWith(ugcDrive)) {
+			if (foldPath.StartsWith(ugcDrive) && UGCPath.Contains("Program Files")) {
 				return specialFold;
 			}
 				return Environment.SpecialFolder.MyComputer;
