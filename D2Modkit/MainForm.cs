@@ -1167,6 +1167,7 @@ namespace D2ModKit
                 Directory.CreateDirectory(folderPath);
             }
             string allText = File.ReadAllText(file);
+			allText = allText.Replace("\r", "");
             KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
             foreach (KeyValue kv in kvs)
             {
@@ -1241,7 +1242,7 @@ namespace D2ModKit
                                 {
                                     line = line.Substring(1);
                                 }
-                                sb.Append(line);
+                                sb.AppendLine(line);
                             }
 
                             string output = sb.ToString();
@@ -1492,11 +1493,11 @@ namespace D2ModKit
             string extract = Path.Combine(UGCPath, "game", "dota_imported", "materials");
             if (!Directory.Exists(extract))
             {
-                MessageBox.Show("You must extract the 'materials' folder from " + Path.Combine("dota_ugc", "game", "dota_imported", "pak01_dir.vpk") +
-                    " into " + Path.Combine("dota_ugc", "game", "dota_imported") + " using GCFScape before using this feature.",
-                    "D2ModKit",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+				MessageBox.Show("Use GCFScape to extract .vtex_c files from the materials folder in " + Path.Combine("dota_ugc", "game", "dota_imported", "pak01_dir.vpk") +
+					" to the folder that just opened. A demo is available under 'Help' if you don't understand.",
+					"D2ModKit",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Information);
                 return;
             }
 
@@ -1533,6 +1534,10 @@ namespace D2ModKit
                 foreach (string file in tgaFiles)
                 {
                     string fileName = file.Remove(0,file.LastIndexOf('\\')+1);
+					// prepare for moving file
+					if (File.Exists(fileName)) {
+						File.Delete(fileName);
+					}
                     File.Move(file, Path.Combine(materialsPath, fileName));
                 }
                 Process.Start(materialsPath);
@@ -1571,22 +1576,6 @@ namespace D2ModKit
 			}
 			return null;
 		}
-
-		/*private string getValStr(string addonName, string key) {
-			foreach (KeyValue kv in AddonDataMasterKV.Children) {
-				string name = kv.Key;
-				if (addonName.ToLower() == name.ToLower()) {
-					if (kv.HasChildren) {
-						foreach (KeyValue kv2 in kv.Children) {
-							if (kv2.Key == key) {
-								return kv2.Children.ElementAt(0).Key;
-							}
-						}
-					}
-				}
-			}
-			return null;
-		}*/
 
 		private void addKV(string addonName, string key, string val) {
 			foreach (KeyValue kv in AddonDataMasterKV.Children)
