@@ -1270,7 +1270,7 @@ namespace D2ModKit
 			string[] items = { "Heroes", "Units", "Items", "Abilities" };
             for (int i = 0; i < items.Length; i++)
             {
-				string itemStr = items[i].ToLower();
+				string itemStr = items[i].ToLowerInvariant();
                 string fold = Path.Combine(currAddon.GamePath, "scripts", "npc", itemStr);
 
                 if (!Directory.Exists(fold))
@@ -1712,6 +1712,18 @@ namespace D2ModKit
 			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
 		}
 
+		/*private void button2_Click(object sender, EventArgs e) {
+			string path = Path.Combine(Environment.CurrentDirectory, "console_commands.txt");
+			string newPath = Path.Combine(Environment.CurrentDirectory, "console_commands2.txt");
+			File.Create(newPath).Close();
+			string allText = "";
+			foreach (string line in File.ReadAllLines(path)) {
+				string newLine = line.Substring(8);
+				newLine = "\"" + newLine + "\",";
+				allText += newLine + "\n";
+			}
+			File.WriteAllText(newPath, allText);
+		}*/
 
 		/*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)

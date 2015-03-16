@@ -578,9 +578,10 @@ namespace D2ModKit
             // only take the addon_language files
             for (int i = 0; i < resourceFiles.Count(); i++)
             {
-                if (resourceFiles[i].Contains("addon_") && resourceFiles[i].EndsWith(".txt"))
+				string resourceFile = resourceFiles[i];
+				if (resourceFile.Contains("addon_") && resourceFile.EndsWith(".txt") && !resourceFile.EndsWith("utf8.txt"))
                 {
-                    langFiles.Add(resourceFiles[i]);
+                    langFiles.Add(resourceFile);
                 }
             }
             return langFiles;
