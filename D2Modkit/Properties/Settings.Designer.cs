@@ -140,5 +140,16 @@ namespace D2ModKit.Properties {
                 this["CheckForUpdates"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection SwfFilesToIgnore {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SwfFilesToIgnore"]));
+            }
+            set {
+                this["SwfFilesToIgnore"] = value;
+            }
+        }
     }
 }

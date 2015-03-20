@@ -703,6 +703,7 @@ namespace D2ModKit
             Settings.Default.CurrAddon = currAddon.Name;
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
+			loadUpSwfs();
             calculateSize();
 			if (currAddon.GDS_rank != "") {
 				gdsButton.Text = "#" + currAddon.GDS_rank;
@@ -711,6 +712,39 @@ namespace D2ModKit
 			}
 			//checkForNewLibraryVersions();
         }
+
+		private void loadUpSwfs() {
+			for (int i = 0; i < swfListBox.Items.Count; i++) {
+				swfListBox.Items.RemoveAt(i);
+			}
+			if (Settings.Default.SwfFilesToIgnore == null) {
+				Settings.Default.SwfFilesToIgnore = new System.Collections.Specialized.StringCollection();
+			}
+
+			string flash3 = Path.Combine(currAddon.GamePath, "resource", "flash3");
+			string custom_ui = Path.Combine(flash3, "custom_ui.txt");
+			if (!Directory.Exists(flash3) || !File.Exists(custom_ui)) {
+				return;
+			}
+			string[] swfFilesArr = Directory.GetFiles(flash3, "*.swf");
+			HashSet<string> swfFiles = new HashSet<string>();
+			//HashSet<string> swfFiles = new HashSet<string>();
+			foreach (string swf in swfFilesArr) {
+				swfFiles.Add(swf);
+			}
+
+			foreach (string swfToIgnore in Settings.Default.SwfFilesToIgnore) {
+				if (swfFiles.Contains(swfToIgnore)) {
+					swfFiles.Remove(swfToIgnore);
+				}
+			}
+
+			foreach (string swf in swfFiles) {
+				string swfName = swf.Substring(swf.LastIndexOf('\\') + 1);
+				swfName = swfName.Replace(".swf", "");
+				swfListBox.Items.Add(swfName);
+			}
+		}
 
 		//TODO:
 		private void checkForNewLibraryVersions() {
@@ -1706,24 +1740,57 @@ namespace D2ModKit
 			Process.Start("http://gfycat.com/ImpeccablePassionateFirefly");
 		}
 
-		#endregion gfycat demos
-
 		private void particleDesignerToolStripMenuItem_Click(object sender, EventArgs e) {
 			Process.Start("http://gfycat.com/YearlyWeepyGlobefish");
 		}
 
+		#endregion gfycat demos
+
 		/*private void button2_Click(object sender, EventArgs e) {
-			string path = Path.Combine(Environment.CurrentDirectory, "console_commands.txt");
-			string newPath = Path.Combine(Environment.CurrentDirectory, "console_commands2.txt");
-			File.Create(newPath).Close();
-			string allText = "";
-			foreach (string line in File.ReadAllLines(path)) {
-				string newLine = line.Substring(8);
-				newLine = "\"" + newLine + "\",";
-				allText += newLine + "\n";
+			string[] files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "minimap_icon_files"));
+			StringBuilder sb = new StringBuilder();
+			HashSet<string> blah = new HashSet<string>();
+			foreach (string file in files) {
+				string text = File.ReadAllText(file);
+				KeyValue root = KVLib.KVParser.KV1.Parse(text);
+				foreach (KeyValue kv in root.Children) {
+					if (kv.HasChildren) {
+						bool didShit = false;
+						foreach (KeyValue kv2 in kv.Children) {
+							if (kv2.Key == "MinimapIcon") {
+								string val = kv2.GetString();
+								if (!blah.Contains(val)) {
+									sb.AppendLine("MinimapIcon: " + kv2.GetString());
+									blah.Add(val);
+									didShit = true;
+								}
+							}
+							if (kv2.Key == "MinimapIconSize" && didShit) {
+								sb.AppendLine("MinimapIconSize: " + kv2.GetString());
+								didShit = true;
+							}
+						}
+						if (didShit) {
+							sb.AppendLine("UnitName: " + kv.Key);
+							sb.AppendLine();
+						}
+					}
+				}
+				File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "minimap_icon_files", "output.txt"), sb.ToString());
 			}
-			File.WriteAllText(newPath, allText);
 		}*/
+
+		private void reloadSwfFiles_Click(object sender, EventArgs e) {
+
+			ReloadSwfForm rsf = new ReloadSwfForm(currAddon);
+			DialogResult r = rsf.ShowDialog();
+			//string[] asFiles = Directory.GetFiles(flash3, "*.as");
+
+		}
+
+		private void reloadSwfLabel_Click(object sender, EventArgs e) {
+
+		}
 
 		/*
         private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
