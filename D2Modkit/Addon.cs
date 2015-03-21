@@ -149,6 +149,47 @@ namespace D2ModKit
             get { return particlePaths; }
             set { particlePaths = value; }
         }
+		public HashSet<swf> swfs = new HashSet<swf>();
+
+		public class swf {
+			public string as3Path;
+			public string swfPath;
+			public string as3Contents;
+			public int currNum;
+			public int newNum;
+			public string name;
+			public string nameWithoutNumber;
+			public bool hasNum = false;
+			public bool wasChecked = false;
+			public string prevName;
+			public string newSwfPath;
+			public string fla;
+
+			public swf(string swfPath) {
+				this.swfPath = swfPath;
+				name = swfPath.Substring(swfPath.LastIndexOf('\\') + 1);
+				name = name.Replace(".swf", "");
+				nameWithoutNumber = name;
+
+				// get the number
+				if (name.Contains("_")) {
+					if (int.TryParse(name.Substring(name.LastIndexOf("_") + 1), out currNum)) {
+						hasNum = true;
+						newNum = currNum + 1;
+						nameWithoutNumber = name.Substring(0, name.LastIndexOf("_"));
+					}
+				}
+			}
+
+			internal void changeCurrNum(int p) {
+				currNum = p;
+				newNum = p + 1;
+			}
+		}
+
+		public void addSwf(swf swf) {
+			this.swfs.Add(swf);
+		}
 
 		public List<CombineKVFile> combineKVFiles = new List<CombineKVFile>();
 

@@ -714,9 +714,9 @@ namespace D2ModKit
         }
 
 		private void loadUpSwfs() {
-			for (int i = 0; i < swfListBox.Items.Count; i++) {
-				swfListBox.Items.RemoveAt(i);
-			}
+			swfListBox.Items.Clear();
+			currAddon.swfs.Clear();
+
 			if (Settings.Default.SwfFilesToIgnore == null) {
 				Settings.Default.SwfFilesToIgnore = new System.Collections.Specialized.StringCollection();
 			}
@@ -727,8 +727,8 @@ namespace D2ModKit
 				return;
 			}
 			string[] swfFilesArr = Directory.GetFiles(flash3, "*.swf");
+			//string[] flaFilesArr = Directory.GetFiles(flash3, "*.fla");
 			HashSet<string> swfFiles = new HashSet<string>();
-			//HashSet<string> swfFiles = new HashSet<string>();
 			foreach (string swf in swfFilesArr) {
 				swfFiles.Add(swf);
 			}
@@ -739,10 +739,20 @@ namespace D2ModKit
 				}
 			}
 
-			foreach (string swf in swfFiles) {
-				string swfName = swf.Substring(swf.LastIndexOf('\\') + 1);
-				swfName = swfName.Replace(".swf", "");
-				swfListBox.Items.Add(swfName);
+			foreach (string swfPath in swfFiles) {
+				Addon.swf swf = new Addon.swf(swfPath);
+				string flaPath = Path.Combine(flash3, swf.nameWithoutNumber + ".fla");
+				if (File.Exists(flaPath)) {
+					swf.fla = flaPath;
+				}
+
+				if (!swfListBox.Items.Contains(swf.name)) {
+					swf.as3Path = Path.Combine(currAddon.GamePath, "resource", "flash3", swf.name + ".as");
+					if (swf.fla != null) {
+						swfListBox.Items.Add(swf.name);
+						currAddon.swfs.Add(swf);
+					}
+				}
 			}
 		}
 
@@ -1780,11 +1790,135 @@ namespace D2ModKit
 			}
 		}*/
 
+
 		private void reloadSwfFiles_Click(object sender, EventArgs e) {
 
-			ReloadSwfForm rsf = new ReloadSwfForm(currAddon);
-			DialogResult r = rsf.ShowDialog();
-			//string[] asFiles = Directory.GetFiles(flash3, "*.as");
+			string flash3 = Path.Combine(currAddon.GamePath, "resource", "flash3");
+			string custom_ui_path = Path.Combine(flash3, "custom_ui.txt");
+
+			if (currAddon.swfs.Count == 0 || !Directory.Exists(flash3) || !File.Exists(custom_ui_path)) {
+				return;
+			}
+
+			string[] custom_ui_lines = File.ReadAllLines(custom_ui_path);
+
+			List<Addon.swf> checkedSwfs = new List<Addon.swf>();
+			HashSet<string> swfsToBeRechecked = new HashSet<string>();
+
+			foreach (Addon.swf swf in currAddon.swfs) {
+				// ensure swf is checked in the check box.
+				bool found = false;
+				foreach (string item in swfListBox.CheckedItems)
+				{
+					if (item == swf.name) {
+						found = true;
+						swf.wasChecked = true;
+						checkedSwfs.Add(swf);
+						break;
+					} else {
+						swf.wasChecked = false;
+					}
+				}
+				if (!found) {
+					continue;
+				}
+
+				string as3 = File.ReadAllText(swf.as3Path);
+				string newName = swf.name + "_1";
+				if (swf.hasNum) {
+					newName = swf.nameWithoutNumber + "_" + swf.newNum;
+				}
+
+				swf.newSwfPath = swf.swfPath.Replace(swf.name, newName);
+				string newAS3Path = swf.as3Path.Replace(swf.name, newName);
+
+				// replace as3 contents, and rename.
+				string as3Contents = File.ReadAllText(swf.as3Path);
+				as3Contents = as3Contents.Replace(swf.name, newName);
+				File.WriteAllText(swf.as3Path, as3Contents);
+				File.Move(swf.as3Path, newAS3Path);
+				swf.as3Path = newAS3Path;
+
+				// replace contents of custom_ui file
+				for (int i = 0; i < custom_ui_lines.Length; i++) {
+					// don't worry about first line with "CustomUI" key.
+					// and skip commented lines.
+					if (i==0 || custom_ui_lines[i].Trim().StartsWith("//")) {
+						continue;
+					}
+					custom_ui_lines[i] = custom_ui_lines[i].Replace(swf.name, newName);
+				}
+
+				// this swf definitely has a num now.
+				swf.hasNum = true;
+				swf.changeCurrNum(swf.newNum);
+				swf.prevName = swf.name;
+				swf.name = newName;
+			}
+
+
+			// reload checkbox
+			string prompt = "Please manually rename the following document classes and then save and compile the .fla files:\n\n" +
+				"NOTE: Do not click OK before you've completed this task.\n\n";
+			foreach (Addon.swf swf in currAddon.swfs) {
+				if (swf.wasChecked) {
+					prompt += swf.prevName + " -> " + swf.name + "\n";
+				}
+			}
+			prompt += "\nPlease view a screenshot here to further understand this process: http://goo.gl/dh32tS\n";
+			if (checkedSwfs.Count == 0) {
+				MessageBox.Show("No swf files selected.", "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			} else {
+				MessageBox.Show(prompt, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				// rename the swfs
+				prompt = "Could not detect these expected .swf files:\n\n";
+				bool error = false;
+				foreach (Addon.swf swf in checkedSwfs) {
+
+					// check for newly compiled swf
+					string compiledSwf = swf.fla.Replace(".fla", ".swf");
+					if (File.Exists(compiledSwf)) {
+						// remove the previous swf
+						if (File.Exists(swf.swfPath)) {
+							File.Delete(swf.swfPath);
+						}
+						File.Move(compiledSwf, swf.newSwfPath);
+						swf.swfPath = swf.newSwfPath;
+					} else {
+						error = true;
+						// undo the as3 change
+						string newAS3Path = swf.as3Path.Replace(swf.name, swf.prevName);
+						string as3Contents = File.ReadAllText(swf.as3Path);
+						as3Contents = as3Contents.Replace(swf.name, swf.prevName);
+						File.WriteAllText(swf.as3Path, as3Contents);
+						File.Move(swf.as3Path, newAS3Path);
+						swf.as3Path = newAS3Path;
+
+						prompt += compiledSwf.Substring(compiledSwf.LastIndexOf("\\") + 1) + "\n";
+					}
+					swfsToBeRechecked.Add(swf.name);
+				}
+				if (error) {
+					prompt += "\nYou likely forgot to compile the corresponding .fla files before hitting OK.";
+					MessageBox.Show(prompt, "D2ModKit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				} else {
+					// write custom_ui.txt
+					string text = "";
+					foreach (string line in custom_ui_lines) {
+						text += line + "\n";
+					}
+					File.WriteAllText(custom_ui_path, text);
+				}
+				loadUpSwfs();
+				// re-check boxes
+				for (int i = 0; i < swfListBox.Items.Count; i++) {
+					string item = swfListBox.Items[i].ToString();
+					if (swfsToBeRechecked.Contains(item)) {
+						swfListBox.SetItemChecked(i, true);
+					}
+				}
+			}
 
 		}
 

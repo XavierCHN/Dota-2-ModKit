@@ -395,7 +395,7 @@
 			// 
 			// toolTip1
 			// 
-			this.toolTip1.AutoPopDelay = 10000;
+			this.toolTip1.AutoPopDelay = 30000;
 			this.toolTip1.InitialDelay = 500;
 			this.toolTip1.ReshowDelay = 100;
 			// 
@@ -541,7 +541,7 @@
             this.gdsButton});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 25);
 			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(68, 314);
+			this.toolStrip2.Size = new System.Drawing.Size(68, 287);
 			this.toolStrip2.TabIndex = 44;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -664,7 +664,7 @@
 			this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.notificationLabel});
-			this.toolStrip3.Location = new System.Drawing.Point(68, 314);
+			this.toolStrip3.Location = new System.Drawing.Point(68, 287);
 			this.toolStrip3.Name = "toolStrip3";
 			this.toolStrip3.Size = new System.Drawing.Size(275, 25);
 			this.toolStrip3.TabIndex = 45;
@@ -684,9 +684,10 @@
 			this.reloadSwfFiles.Location = new System.Drawing.Point(73, 244);
 			this.reloadSwfFiles.Margin = new System.Windows.Forms.Padding(2);
 			this.reloadSwfFiles.Name = "reloadSwfFiles";
-			this.reloadSwfFiles.Size = new System.Drawing.Size(113, 38);
+			this.reloadSwfFiles.Size = new System.Drawing.Size(127, 31);
 			this.reloadSwfFiles.TabIndex = 46;
-			this.reloadSwfFiles.Text = "Change classnames";
+			this.reloadSwfFiles.Text = "Rename Flash files";
+			this.toolTip1.SetToolTip(this.reloadSwfFiles, resources.GetString("reloadSwfFiles.ToolTip"));
 			this.reloadSwfFiles.UseVisualStyleBackColor = true;
 			this.reloadSwfFiles.Click += new System.EventHandler(this.reloadSwfFiles_Click);
 			// 
@@ -703,11 +704,11 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(71, 139);
+			this.label3.Location = new System.Drawing.Point(99, 139);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(115, 20);
+			this.label3.Size = new System.Drawing.Size(70, 20);
 			this.label3.TabIndex = 48;
-			this.label3.Text = ".swf files found:";
+			this.label3.Text = ".swf files:";
 			this.label3.Click += new System.EventHandler(this.reloadSwfLabel_Click);
 			// 
 			// MainForm
@@ -716,7 +717,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-			this.ClientSize = new System.Drawing.Size(343, 339);
+			this.ClientSize = new System.Drawing.Size(343, 312);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.swfListBox);
 			this.Controls.Add(this.reloadSwfFiles);
