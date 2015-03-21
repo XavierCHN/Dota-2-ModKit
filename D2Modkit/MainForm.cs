@@ -1909,6 +1909,7 @@ namespace D2ModKit
 						text += line + "\n";
 					}
 					File.WriteAllText(custom_ui_path, text);
+					text_notification("Flash reloading successful.", Color.Green, 2000);
 				}
 				loadUpSwfs();
 				// re-check boxes
