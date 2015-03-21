@@ -471,7 +471,8 @@
 			this.reloadSwfFiles.Size = new System.Drawing.Size(127, 31);
 			this.reloadSwfFiles.TabIndex = 46;
 			this.reloadSwfFiles.Text = "Reload Flash files";
-			this.toolTip1.SetToolTip(this.reloadSwfFiles, resources.GetString("reloadSwfFiles.ToolTip"));
+			this.toolTip1.SetToolTip(this.reloadSwfFiles, "Just select the swf files you\'ve changed, and click this\r\nand follow the short wi" +
+        "zard so you don\'t have to\r\nrestart the workshop tools. :)");
 			this.reloadSwfFiles.UseVisualStyleBackColor = true;
 			this.reloadSwfFiles.Click += new System.EventHandler(this.reloadSwfFiles_Click);
 			// 

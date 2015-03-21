@@ -1879,11 +1879,11 @@ namespace D2ModKit
 					// check for newly compiled swf
 					string compiledSwf = swf.fla.Replace(".fla", ".swf");
 					if (File.Exists(compiledSwf)) {
+						File.Move(compiledSwf, swf.newSwfPath);
 						// remove the previous swf
 						if (File.Exists(swf.swfPath)) {
 							File.Delete(swf.swfPath);
 						}
-						File.Move(compiledSwf, swf.newSwfPath);
 						swf.swfPath = swf.newSwfPath;
 					} else {
 						error = true;

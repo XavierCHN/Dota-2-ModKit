@@ -187,14 +187,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>
-  <data name="reloadSwfFiles.ToolTip" xml:space="preserve">
-    <value>This takes all the checked swf files and renames the
-.swf and the corresponding .as files, and changes the
-custom_ui.txt accordingly.
-
-Just select the swf files you've changed, and click this
-so you don't have to restart the workshop tools. :)</value>
-  </data>
   <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>219, 17</value>
   </metadata>
