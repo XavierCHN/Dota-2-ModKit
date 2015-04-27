@@ -71,7 +71,6 @@
 			this.gameSizeLabel = new System.Windows.Forms.Label();
 			this.compileVtex = new System.Windows.Forms.Button();
 			this.decompileVtex = new System.Windows.Forms.Button();
-			this.reloadSwfFiles = new System.Windows.Forms.Button();
 			this.contentSizeLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -90,8 +89,6 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolStrip3 = new System.Windows.Forms.ToolStrip();
 			this.notificationLabel = new System.Windows.Forms.ToolStripLabel();
-			this.swfListBox = new System.Windows.Forms.CheckedListBox();
-			this.label3 = new System.Windows.Forms.Label();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.toolStrip3.SuspendLayout();
@@ -145,7 +142,7 @@
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-			this.toolStrip1.Size = new System.Drawing.Size(343, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(342, 25);
 			this.toolStrip1.TabIndex = 6;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -462,20 +459,6 @@
 			this.decompileVtex.UseVisualStyleBackColor = true;
 			this.decompileVtex.Click += new System.EventHandler(this.decompileVtex_Click);
 			// 
-			// reloadSwfFiles
-			// 
-			this.reloadSwfFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.reloadSwfFiles.Location = new System.Drawing.Point(73, 229);
-			this.reloadSwfFiles.Margin = new System.Windows.Forms.Padding(2);
-			this.reloadSwfFiles.Name = "reloadSwfFiles";
-			this.reloadSwfFiles.Size = new System.Drawing.Size(127, 31);
-			this.reloadSwfFiles.TabIndex = 46;
-			this.reloadSwfFiles.Text = "Reload Flash files";
-			this.toolTip1.SetToolTip(this.reloadSwfFiles, "Just select the swf files you\'ve changed, and click this\r\nand follow the short wi" +
-        "zard so you don\'t have to\r\nrestart the workshop tools. :)");
-			this.reloadSwfFiles.UseVisualStyleBackColor = true;
-			this.reloadSwfFiles.Click += new System.EventHandler(this.reloadSwfFiles_Click);
-			// 
 			// contentSizeLabel
 			// 
 			this.contentSizeLabel.AutoSize = true;
@@ -555,7 +538,7 @@
             this.gdsButton});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 25);
 			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(68, 287);
+			this.toolStrip2.Size = new System.Drawing.Size(68, 232);
 			this.toolStrip2.TabIndex = 44;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -678,9 +661,9 @@
 			this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.notificationLabel});
-			this.toolStrip3.Location = new System.Drawing.Point(68, 287);
+			this.toolStrip3.Location = new System.Drawing.Point(68, 232);
 			this.toolStrip3.Name = "toolStrip3";
-			this.toolStrip3.Size = new System.Drawing.Size(275, 25);
+			this.toolStrip3.Size = new System.Drawing.Size(274, 25);
 			this.toolStrip3.TabIndex = 45;
 			this.toolStrip3.Text = "toolStrip3";
 			// 
@@ -692,36 +675,13 @@
 			this.notificationLabel.Size = new System.Drawing.Size(96, 22);
 			this.notificationLabel.Text = "notificationLabel";
 			// 
-			// swfListBox
-			// 
-			this.swfListBox.CheckOnClick = true;
-			this.swfListBox.FormattingEnabled = true;
-			this.swfListBox.Location = new System.Drawing.Point(73, 160);
-			this.swfListBox.Name = "swfListBox";
-			this.swfListBox.Size = new System.Drawing.Size(113, 64);
-			this.swfListBox.TabIndex = 47;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(99, 139);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(70, 20);
-			this.label3.TabIndex = 48;
-			this.label3.Text = ".swf files:";
-			this.label3.Click += new System.EventHandler(this.reloadSwfLabel_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-			this.ClientSize = new System.Drawing.Size(343, 312);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.swfListBox);
-			this.Controls.Add(this.reloadSwfFiles);
+			this.ClientSize = new System.Drawing.Size(342, 257);
 			this.Controls.Add(this.toolStrip3);
 			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.decompileVtex);
@@ -814,9 +774,6 @@
 		private System.Windows.Forms.ToolStripMenuItem compilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem decompilingVTEXToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem particleDesignerToolStripMenuItem;
-		private System.Windows.Forms.Button reloadSwfFiles;
-		private System.Windows.Forms.CheckedListBox swfListBox;
-		private System.Windows.Forms.Label label3;
     }
 }
 

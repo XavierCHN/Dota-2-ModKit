@@ -414,7 +414,6 @@ namespace D2ModKit
                     }
                 }
                 catch (Exception) { }
-
                 if (!HasSettings)
                 {
                     MessageBox.Show("Please select the path to your dota_ugc folder.", "D2ModKit", MessageBoxButtons.OK);
@@ -703,17 +702,15 @@ namespace D2ModKit
             Settings.Default.CurrAddon = currAddon.Name;
             Debug.WriteLine("Current addon: " + currAddon.Name);
             addonDropDown.Text = currAddon.Name;
-			loadUpSwfs();
             calculateSize();
 			if (currAddon.GDS_rank != "") {
 				gdsButton.Text = "#" + currAddon.GDS_rank;
 			} else {
 				gdsButton.Text = "";
 			}
-			//checkForNewLibraryVersions();
         }
 
-		private void loadUpSwfs() {
+		/*private void loadUpSwfs() {
 			swfListBox.Items.Clear();
 			currAddon.swfs.Clear();
 
@@ -754,20 +751,7 @@ namespace D2ModKit
 					}
 				}
 			}
-		}
-
-		//TODO:
-		private void checkForNewLibraryVersions() {
-			string vscripts = Path.Combine(currAddon.GamePath, "scripts", "vscripts");
-			string[] luaFiles = Directory.GetFiles(vscripts, "*.lua", SearchOption.AllDirectories);
-			foreach (string luaFile in luaFiles) {
-				if (libraries.ContainsKey(luaFile)) {
-					// this addon uses a known library
-					string url = libraries[luaFile];
-
-				}
-			}
-		}
+		}*/
 
         private void calculateSize()
         {
@@ -1450,6 +1434,7 @@ namespace D2ModKit
 
             string[] filePaths = fd.FileNames;
 
+			/*
 			// Let user choose where to put the the .vtex files.
 			FolderBrowserDialog browser = new FolderBrowserDialog();
 			// RootFolder needs to be defined for auto-scrolling to work apparently.
@@ -1465,7 +1450,9 @@ namespace D2ModKit
 			if (r != DialogResult.OK) {
 				return;
 			}
-			string saveFolder = browser.SelectedPath;
+			*/
+
+			string saveFolder = materialsPath;
 
 			// Start the conversion process
             foreach (string file in filePaths)
@@ -1528,6 +1515,20 @@ namespace D2ModKit
 				string path = Path.Combine(saveFolder, name + ".vtex");
 				File.Create(path).Close();
 				File.WriteAllLines(path, vtexFileStrings);
+				// resource compiler path
+				string resourceCompilerPath = Path.Combine(UGCPath, "game", "bin", "win64", "resourcecompiler.exe");
+
+				Process proc = new Process {
+					StartInfo = new ProcessStartInfo {
+						FileName = resourceCompilerPath,
+						Arguments = "-i \"" + path + "\"",
+						UseShellExecute = false,
+						RedirectStandardOutput = true,
+						CreateNoWindow = true
+					}
+				};
+				proc.Start();
+
 			}
 			text_notification("VTEX files successfully created.", Color.Green, 2000);
         }
@@ -1756,42 +1757,7 @@ namespace D2ModKit
 
 		#endregion gfycat demos
 
-		/*private void button2_Click(object sender, EventArgs e) {
-			string[] files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "minimap_icon_files"));
-			StringBuilder sb = new StringBuilder();
-			HashSet<string> blah = new HashSet<string>();
-			foreach (string file in files) {
-				string text = File.ReadAllText(file);
-				KeyValue root = KVLib.KVParser.KV1.Parse(text);
-				foreach (KeyValue kv in root.Children) {
-					if (kv.HasChildren) {
-						bool didShit = false;
-						foreach (KeyValue kv2 in kv.Children) {
-							if (kv2.Key == "MinimapIcon") {
-								string val = kv2.GetString();
-								if (!blah.Contains(val)) {
-									sb.AppendLine("MinimapIcon: " + kv2.GetString());
-									blah.Add(val);
-									didShit = true;
-								}
-							}
-							if (kv2.Key == "MinimapIconSize" && didShit) {
-								sb.AppendLine("MinimapIconSize: " + kv2.GetString());
-								didShit = true;
-							}
-						}
-						if (didShit) {
-							sb.AppendLine("UnitName: " + kv.Key);
-							sb.AppendLine();
-						}
-					}
-				}
-				File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "minimap_icon_files", "output.txt"), sb.ToString());
-			}
-		}*/
-
-
-		private void reloadSwfFiles_Click(object sender, EventArgs e) {
+		/*private void reloadSwfFiles_Click(object sender, EventArgs e) {
 
 			string flash3 = Path.Combine(currAddon.GamePath, "resource", "flash3");
 			string custom_ui_path = Path.Combine(flash3, "custom_ui.txt");
@@ -1920,97 +1886,6 @@ namespace D2ModKit
 					}
 				}
 			}
-
-		}
-
-		private void reloadSwfLabel_Click(object sender, EventArgs e) {
-
-		}
-
-		/*
-        private void overrideSoundsToBeNullToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Properties.Settings.Default.S2DotaExtractPath == "")
-            {
-                DialogResult r = MessageBox.Show("No Source 2 Dota Extract path defined. Set the path now?",
-                        "D2ModKit", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
-                if (r == DialogResult.Cancel)
-                {
-                    return;
-                }
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-                // let the user see the particles directory first.
-                fbd.Description =
-                    "Browse to your Extracted Source 2 Dota path.";
-                DialogResult fbd_res = fbd.ShowDialog();
-                if (fbd_res == DialogResult.OK)
-                {
-                    Properties.Settings.Default.S2DotaExtractPath = fbd.SelectedPath;
-                    Settings.Default.Save();
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            // get the null sound contents.
-            string nullSoundPath = Path.Combine(Environment.CurrentDirectory, "stubs", "null_sound.vsndevts");
-            string[] nullSoundContents = null;
-            if (File.Exists(nullSoundPath))
-            {
-                nullSoundContents = File.ReadAllLines(nullSoundPath);
-            }
-
-            string extractPath = Properties.Settings.Default.S2DotaExtractPath;
-
-            OpenFileDialog fd = new OpenFileDialog();
-            fd.InitialDirectory = Path.Combine(extractPath, "scripts");
-            fd.Multiselect = true;
-            fd.Title = "Select Sound Scripts To Override";
-            DialogResult res = fd.ShowDialog();
-            string[] fileNames = null;
-
-            if (res == DialogResult.OK)
-            {
-                fileNames = fd.FileNames;
-            }
-            else
-            {
-                return;
-            }
-
-            for (int i = 0; i < fileNames.Length; i++)
-			{
-                string path = fileNames[i];
-                // for this file we need the folder structure.
-                int len = path.LastIndexOf('\\') - path.IndexOf("scripts");
-                string folderStructure = path.Substring(path.IndexOf("scripts"), len);
-                //folderStructure = folderStructure.Replace("\\", ".");
-                string[] folds = folderStructure.Split('\\');
-                // starting at 1 to forget about the first string, which is "scripts"
-                string path2 = Path.Combine(CurrentAddon.ContentPath, "soundevents");
-                for (int j = 1; j < folds.Length; j++)
-                {
-                    path2 = Path.Combine(path2, folds[j]);
-                }
-                if (!Directory.Exists(path2))
-                {
-                    Directory.CreateDirectory(path2);
-                }
-                string soundFileName = path.Substring(path.LastIndexOf('\\') + 1);
-                soundFileName = soundFileName.Replace(".txt", ".vsndevts");
-                string newPath = Path.Combine(path2, soundFileName);
-                File.Create(newPath).Close();
-                KeyValue[] rootKVs = KVParser.KV1.ParseAll(File.ReadAllText(path));
-                for (int j = 0; j < rootKVs.Length; j++)
-                {
-                    string soundName = rootKVs[j].Key;
-                    nullSoundContents[0] = "\"" + soundName + "\"";
-                    File.AppendAllLines(newPath, nullSoundContents);
-                }
-			}
-        }*/
-
+		}*/
 	}
 }
