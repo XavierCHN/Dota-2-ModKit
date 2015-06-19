@@ -408,7 +408,7 @@ namespace D2ModKit
                     if (regKey != null)
                     {
                         string dir = regKey.GetValue("InstallLocation").ToString();
-                        UGCPath = Path.Combine(dir, "dota_ugc");
+                        UGCPath = dir;
                         Debug.WriteLine("Directory: " + dir);
                         HasSettings = true;
                     }
