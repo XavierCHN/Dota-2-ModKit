@@ -2,6 +2,8 @@
 
 A GUI comprised of useful tools to help with Dota 2 modding.
 
+## Note: If D2ModKit crashes instantly use this solution: https://github.com/Myll/Dota-2-ModKit/issues/41
+
 ### Features:
 * [**Particle Forker & Designer**](http://gfycat.com/IdioticMarvelousBee). Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
   * Re-color, rename, and/or resize whole particle systems at just the click of a button!
