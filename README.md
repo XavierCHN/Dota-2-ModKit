@@ -16,8 +16,6 @@ D2ModKit has been updated to work with Reborn's new file structure.
 
 ### Let's look at D2ModKit v2 in action:
 
-Note: Particle Designer is not ready at this time. Need to update it to be compatible with the new KV3 format for particles.
-
 -------
 
 #### Breaking up and combining KV files:
@@ -31,6 +29,8 @@ Note: Particle Designer is not ready at this time. Need to update it to be compa
 #### Generating tooltips:
 
 ![DEMO](http://giant.gfycat.com/LividSevereElk.gif)
+
+Note: Particle Designer is not ready at this time. Need to update it to be compatible with the new KV3 format for particles.
 
 ## Donations
 
