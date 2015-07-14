@@ -1,5 +1,7 @@
 # Dota-2-ModKit-Reborn
 
+### [Download the latest version here!](https://github.com/Myll/Dota-2-ModKit/releases)
+
 ## Dota 2 ModKit is now...
 
 ### Re-coded.
