@@ -81,7 +81,7 @@
 			// generateAddonLangsBtn
 			// 
 			this.generateAddonLangsBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.generateAddonLangsBtn.Location = new System.Drawing.Point(133, 6);
+			this.generateAddonLangsBtn.Location = new System.Drawing.Point(130, 6);
 			this.generateAddonLangsBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.generateAddonLangsBtn.Name = "generateAddonLangsBtn";
 			this.generateAddonLangsBtn.Size = new System.Drawing.Size(125, 33);
@@ -98,9 +98,9 @@
 			// 
 			this.addonTile.ActiveControl = null;
 			this.addonTile.ContextMenuStrip = this.metroContextMenu1;
-			this.addonTile.Location = new System.Drawing.Point(11, 59);
+			this.addonTile.Location = new System.Drawing.Point(9, 57);
 			this.addonTile.Name = "addonTile";
-			this.addonTile.Size = new System.Drawing.Size(140, 140);
+			this.addonTile.Size = new System.Drawing.Size(136, 136);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.addonTile.TabIndex = 0;
 			this.addonTile.Text = "AddonName";
@@ -141,10 +141,10 @@
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
-			this.tabControl.Location = new System.Drawing.Point(193, 44);
+			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(270, 220);
+			this.tabControl.SelectedIndex = 2;
+			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -161,7 +161,7 @@
 			this.toolsTab.HorizontalScrollbarSize = 1;
 			this.toolsTab.Location = new System.Drawing.Point(4, 38);
 			this.toolsTab.Name = "toolsTab";
-			this.toolsTab.Size = new System.Drawing.Size(262, 178);
+			this.toolsTab.Size = new System.Drawing.Size(258, 183);
 			this.toolsTab.TabIndex = 0;
 			this.toolsTab.Text = "Tools";
 			this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -172,7 +172,7 @@
 			// decompileVtexButton
 			// 
 			this.decompileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.decompileVtexButton.Location = new System.Drawing.Point(133, 88);
+			this.decompileVtexButton.Location = new System.Drawing.Point(130, 82);
 			this.decompileVtexButton.Margin = new System.Windows.Forms.Padding(4);
 			this.decompileVtexButton.Name = "decompileVtexButton";
 			this.decompileVtexButton.Size = new System.Drawing.Size(125, 33);
@@ -187,7 +187,7 @@
 			// compileVtexButton
 			// 
 			this.compileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.compileVtexButton.Location = new System.Drawing.Point(133, 47);
+			this.compileVtexButton.Location = new System.Drawing.Point(130, 44);
 			this.compileVtexButton.Margin = new System.Windows.Forms.Padding(4);
 			this.compileVtexButton.Name = "compileVtexButton";
 			this.compileVtexButton.Size = new System.Drawing.Size(125, 33);
@@ -218,7 +218,7 @@
 			// particleDesignBtn
 			// 
 			this.particleDesignBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.particleDesignBtn.Location = new System.Drawing.Point(0, 47);
+			this.particleDesignBtn.Location = new System.Drawing.Point(0, 44);
 			this.particleDesignBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.particleDesignBtn.Name = "particleDesignBtn";
 			this.particleDesignBtn.Size = new System.Drawing.Size(125, 33);
@@ -238,7 +238,7 @@
 			this.optionsTab.HorizontalScrollbarSize = 1;
 			this.optionsTab.Location = new System.Drawing.Point(4, 38);
 			this.optionsTab.Name = "optionsTab";
-			this.optionsTab.Size = new System.Drawing.Size(262, 178);
+			this.optionsTab.Size = new System.Drawing.Size(258, 183);
 			this.optionsTab.TabIndex = 2;
 			this.optionsTab.Text = "Options";
 			this.optionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -250,7 +250,7 @@
 			// 
 			this.metroLabel1.AutoSize = true;
 			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.metroLabel1.Location = new System.Drawing.Point(0, 10);
+			this.metroLabel1.Location = new System.Drawing.Point(0, 6);
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Size = new System.Drawing.Size(125, 19);
 			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
@@ -283,7 +283,7 @@
 			this.helpTab.HorizontalScrollbarSize = 1;
 			this.helpTab.Location = new System.Drawing.Point(4, 38);
 			this.helpTab.Name = "helpTab";
-			this.helpTab.Size = new System.Drawing.Size(262, 178);
+			this.helpTab.Size = new System.Drawing.Size(258, 183);
 			this.helpTab.TabIndex = 3;
 			this.helpTab.Text = "Help";
 			this.helpTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -370,9 +370,9 @@
 			// 
 			// goBtn
 			// 
-			this.goBtn.Location = new System.Drawing.Point(229, 6);
+			this.goBtn.Location = new System.Drawing.Point(230, 6);
 			this.goBtn.Name = "goBtn";
-			this.goBtn.Size = new System.Drawing.Size(33, 23);
+			this.goBtn.Size = new System.Drawing.Size(28, 23);
 			this.goBtn.TabIndex = 7;
 			this.goBtn.Text = "GO";
 			this.goBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -382,7 +382,7 @@
 			// jsRadioButton
 			// 
 			this.jsRadioButton.AutoSize = true;
-			this.jsRadioButton.Location = new System.Drawing.Point(189, 35);
+			this.jsRadioButton.Location = new System.Drawing.Point(145, 35);
 			this.jsRadioButton.Name = "jsRadioButton";
 			this.jsRadioButton.Size = new System.Drawing.Size(33, 15);
 			this.jsRadioButton.TabIndex = 12;
@@ -394,7 +394,7 @@
 			// textRadioButton
 			// 
 			this.textRadioButton.AutoSize = true;
-			this.textRadioButton.Location = new System.Drawing.Point(146, 35);
+			this.textRadioButton.Location = new System.Drawing.Point(102, 35);
 			this.textRadioButton.Name = "textRadioButton";
 			this.textRadioButton.Size = new System.Drawing.Size(37, 15);
 			this.textRadioButton.TabIndex = 11;
@@ -406,7 +406,7 @@
 			// luaRadioBtn
 			// 
 			this.luaRadioBtn.AutoSize = true;
-			this.luaRadioBtn.Location = new System.Drawing.Point(98, 35);
+			this.luaRadioBtn.Location = new System.Drawing.Point(54, 35);
 			this.luaRadioBtn.Name = "luaRadioBtn";
 			this.luaRadioBtn.Size = new System.Drawing.Size(42, 15);
 			this.luaRadioBtn.TabIndex = 10;
@@ -419,7 +419,7 @@
 			// 
 			this.addonNameLabel.AutoSize = true;
 			this.addonNameLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.addonNameLabel.Location = new System.Drawing.Point(-2, 6);
+			this.addonNameLabel.Location = new System.Drawing.Point(0, 6);
 			this.addonNameLabel.Name = "addonNameLabel";
 			this.addonNameLabel.Size = new System.Drawing.Size(56, 19);
 			this.addonNameLabel.Style = MetroFramework.MetroColorStyle.Blue;
@@ -430,13 +430,13 @@
 			// githubTextBox
 			// 
 			this.githubTextBox.Lines = new string[0];
-			this.githubTextBox.Location = new System.Drawing.Point(54, 6);
+			this.githubTextBox.Location = new System.Drawing.Point(56, 6);
 			this.githubTextBox.MaxLength = 32767;
 			this.githubTextBox.Name = "githubTextBox";
 			this.githubTextBox.PasswordChar = '\0';
 			this.githubTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.githubTextBox.SelectedText = "";
-			this.githubTextBox.Size = new System.Drawing.Size(169, 23);
+			this.githubTextBox.Size = new System.Drawing.Size(171, 23);
 			this.githubTextBox.TabIndex = 7;
 			this.githubTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.githubTextBox.UseSelectable = true;
@@ -499,7 +499,7 @@
 			// versionLabel
 			// 
 			this.versionLabel.AutoSize = true;
-			this.versionLabel.Location = new System.Drawing.Point(416, 277);
+			this.versionLabel.Location = new System.Drawing.Point(403, 277);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(49, 19);
 			this.versionLabel.TabIndex = 4;
@@ -513,7 +513,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(5, 268);
+			this.notificationLabel.Location = new System.Drawing.Point(9, 271);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -536,9 +536,9 @@
 			// vscriptsTile
 			// 
 			this.vscriptsTile.ActiveControl = null;
-			this.vscriptsTile.Location = new System.Drawing.Point(157, 59);
+			this.vscriptsTile.Location = new System.Drawing.Point(149, 57);
 			this.vscriptsTile.Name = "vscriptsTile";
-			this.vscriptsTile.Size = new System.Drawing.Size(31, 31);
+			this.vscriptsTile.Size = new System.Drawing.Size(29, 29);
 			this.vscriptsTile.Style = MetroFramework.MetroColorStyle.Blue;
 			this.vscriptsTile.TabIndex = 7;
 			this.vscriptsTile.Text = "G";
@@ -551,9 +551,9 @@
 			// contentTile
 			// 
 			this.contentTile.ActiveControl = null;
-			this.contentTile.Location = new System.Drawing.Point(157, 96);
+			this.contentTile.Location = new System.Drawing.Point(149, 90);
 			this.contentTile.Name = "contentTile";
-			this.contentTile.Size = new System.Drawing.Size(31, 31);
+			this.contentTile.Size = new System.Drawing.Size(29, 29);
 			this.contentTile.Style = MetroFramework.MetroColorStyle.Orange;
 			this.contentTile.TabIndex = 10;
 			this.contentTile.Text = "C";
@@ -566,9 +566,9 @@
 			// metroTile3
 			// 
 			this.metroTile3.ActiveControl = null;
-			this.metroTile3.Location = new System.Drawing.Point(11, 205);
+			this.metroTile3.Location = new System.Drawing.Point(9, 197);
 			this.metroTile3.Name = "metroTile3";
-			this.metroTile3.Size = new System.Drawing.Size(37, 31);
+			this.metroTile3.Size = new System.Drawing.Size(37, 27);
 			this.metroTile3.Style = MetroFramework.MetroColorStyle.Teal;
 			this.metroTile3.TabIndex = 13;
 			this.metroTile3.Text = "S1V";
@@ -581,9 +581,9 @@
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
-			this.steamTile.Location = new System.Drawing.Point(157, 133);
+			this.steamTile.Location = new System.Drawing.Point(149, 123);
 			this.steamTile.Name = "steamTile";
-			this.steamTile.Size = new System.Drawing.Size(31, 31);
+			this.steamTile.Size = new System.Drawing.Size(29, 29);
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.steamTile.TabIndex = 14;
 			this.steamTile.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -601,9 +601,9 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(54, 205);
+			this.metroTile1.Location = new System.Drawing.Point(51, 197);
 			this.metroTile1.Name = "metroTile1";
-			this.metroTile1.Size = new System.Drawing.Size(37, 31);
+			this.metroTile1.Size = new System.Drawing.Size(37, 27);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
 			this.metroTile1.TabIndex = 16;
 			this.metroTile1.Text = "S2V";
@@ -617,7 +617,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 295);
+			this.ClientSize = new System.Drawing.Size(450, 295);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
 			this.Controls.Add(this.metroTile3);

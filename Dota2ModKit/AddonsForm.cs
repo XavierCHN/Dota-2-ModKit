@@ -2,6 +2,7 @@
 using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -292,7 +293,18 @@ namespace Dota2ModKit {
 				this.DialogResult = DialogResult.OK;
 				this.Close();
 			} catch (Exception ex) {
-				MetroMessageBox.Show(this, ex.Message,
+				/*string text = ex.ToString() + "\n\n";
+				text += ex.Message + "\n\n";
+				text += "StackTrace: " + ex.StackTrace + "\n\n";
+				text += "ex.Data:\n";
+				foreach (DictionaryEntry item in ex.Data) {
+					text += "\n";
+					text += item.Key.ToString() + " | " + item.Value.ToString();
+				}
+
+				File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "error.txt"), text);*/
+
+				MetroMessageBox.Show(this, ex.StackTrace,
 				ex.ToString(),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Error);
