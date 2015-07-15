@@ -41,8 +41,6 @@
 			this.compileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
 			this.particleDesignBtn = new MetroFramework.Controls.MetroButton();
-			this.optionsTab = new MetroFramework.Controls.MetroTabPage();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.helpTab = new MetroFramework.Controls.MetroTabPage();
 			this.metroLink12 = new MetroFramework.Controls.MetroLink();
 			this.metroLink11 = new MetroFramework.Controls.MetroLink();
@@ -71,10 +69,10 @@
 			this.steamTile = new MetroFramework.Controls.MetroTile();
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
+			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
-			this.optionsTab.SuspendLayout();
 			this.helpTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -136,7 +134,6 @@
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.toolsTab);
-			this.tabControl.Controls.Add(this.optionsTab);
 			this.tabControl.Controls.Add(this.helpTab);
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
@@ -229,34 +226,6 @@
 			this.metroToolTip1.SetToolTip(this.particleDesignBtn, "Provides options to bulk modify the color, size, etc of\r\nselected particles.");
 			this.particleDesignBtn.UseSelectable = true;
 			this.particleDesignBtn.Click += new System.EventHandler(this.particleDesignBtn_Click);
-			// 
-			// optionsTab
-			// 
-			this.optionsTab.Controls.Add(this.metroLabel1);
-			this.optionsTab.HorizontalScrollbarBarColor = true;
-			this.optionsTab.HorizontalScrollbarHighlightOnWheel = false;
-			this.optionsTab.HorizontalScrollbarSize = 1;
-			this.optionsTab.Location = new System.Drawing.Point(4, 38);
-			this.optionsTab.Name = "optionsTab";
-			this.optionsTab.Size = new System.Drawing.Size(258, 183);
-			this.optionsTab.TabIndex = 2;
-			this.optionsTab.Text = "Options";
-			this.optionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.optionsTab.VerticalScrollbarBarColor = true;
-			this.optionsTab.VerticalScrollbarHighlightOnWheel = false;
-			this.optionsTab.VerticalScrollbarSize = 2;
-			// 
-			// metroLabel1
-			// 
-			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.metroLabel1.Location = new System.Drawing.Point(0, 6);
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(125, 19);
-			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroLabel1.TabIndex = 10;
-			this.metroLabel1.Text = "Coming soon(tm)...";
-			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// helpTab
 			// 
@@ -613,11 +582,27 @@
 			this.metroTile1.UseTileImage = true;
 			this.metroTile1.Click += new System.EventHandler(this.shortcutTile_Click);
 			// 
+			// optionsBtn
+			// 
+			this.optionsBtn.ActiveControl = null;
+			this.optionsBtn.Location = new System.Drawing.Point(149, 158);
+			this.optionsBtn.Name = "optionsBtn";
+			this.optionsBtn.Size = new System.Drawing.Size(29, 29);
+			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Yellow;
+			this.optionsBtn.TabIndex = 18;
+			this.optionsBtn.Text = "O";
+			this.optionsBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.optionsBtn, "Open Options page");
+			this.optionsBtn.UseSelectable = true;
+			this.optionsBtn.UseTileImage = true;
+			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
+			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
 			this.Controls.Add(this.metroTile3);
@@ -643,8 +628,6 @@
 			this.metroContextMenu1.ResumeLayout(false);
 			this.tabControl.ResumeLayout(false);
 			this.toolsTab.ResumeLayout(false);
-			this.optionsTab.ResumeLayout(false);
-			this.optionsTab.PerformLayout();
 			this.helpTab.ResumeLayout(false);
 			this.helpTab.PerformLayout();
 			this.ResumeLayout(false);
@@ -663,7 +646,6 @@
 		private MetroFramework.Controls.MetroLabel versionLabel;
 		private MetroFramework.Controls.MetroLabel notificationLabel;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
-		private MetroFramework.Controls.MetroTabPage optionsTab;
 		private MetroFramework.Controls.MetroTabPage helpTab;
 		private MetroFramework.Controls.MetroLink metroLink5;
 		private MetroFramework.Controls.MetroLink metroLink4;
@@ -694,7 +676,7 @@
 		private MetroFramework.Controls.MetroTile metroTile1;
 		private MetroFramework.Controls.MetroButton decompileVtexButton;
 		private MetroFramework.Controls.MetroButton compileVtexButton;
-		private MetroFramework.Controls.MetroLabel metroLabel1;
+		private MetroFramework.Controls.MetroTile optionsBtn;
 	}
 }
 

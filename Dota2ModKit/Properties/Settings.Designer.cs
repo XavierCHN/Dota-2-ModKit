@@ -94,5 +94,17 @@ namespace Dota2ModKit.Properties {
                 this["AddonsKV"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OpenChangelog {
+            get {
+                return ((bool)(this["OpenChangelog"]));
+            }
+            set {
+                this["OpenChangelog"] = value;
+            }
+        }
     }
 }

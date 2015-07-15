@@ -50,7 +50,9 @@ namespace Dota2ModKit {
 				Settings.Default.UpdateRequired = false;
 				Settings.Default.Save();
 				// open up changelog
-				Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
+				if (Settings.Default.OpenChangelog) {
+					Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
+				}
 			}
 
 			// setup hooks
@@ -279,16 +281,7 @@ namespace Dota2ModKit {
 					continue;
 				}
 
-				foreach (KeyValue kv2 in kv.Children) {
-					if (kv2.Key == "workshopID") {
-						Debug.WriteLine("#Children: " + kv2.Children.Count());
-						if (kv2.HasChildren) {
-							if (!Int32.TryParse(kv2.Children.ElementAt(0).Key, out addon.workshopID)) {
-								Debug.WriteLine("Couldn't parse workshopID for " + addon.name);
-							}
-                        }
-					}
-				}
+				addon.deserializeSettings(kv);
 			}
 		}
 
@@ -298,11 +291,8 @@ namespace Dota2ModKit {
 				string addonName = a.Key;
 				Addon addon = a.Value;
 				KeyValue addonKV = new KeyValue(addonName);
+				addon.serializeSettings(addonKV);
 				rootKV.AddChild(addonKV);
-
-				KeyValue workshopIDKV = new KeyValue("workshopID");
-				workshopIDKV.AddChild(new KeyValue(addon.workshopID.ToString()));
-				addonKV.AddChild(workshopIDKV);
 			}
 			Settings.Default.AddonsKV = rootKV.ToString();
         }
@@ -657,6 +647,16 @@ namespace Dota2ModKit {
 
 		private void reportBugBtn_Click(object sender, EventArgs e) {
 			Process.Start("https://github.com/Myll/Dota-2-ModKit/issues");
+		}
+
+		private void optionsBtn_Click(object sender, EventArgs e) {
+			OptionsForm of = new OptionsForm(this);
+			DialogResult dr = of.ShowDialog();
+
+			if (dr != DialogResult.OK) {
+				return;
+			}
+
 		}
 	}
 }

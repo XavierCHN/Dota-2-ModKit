@@ -8,6 +8,7 @@ using KVLib;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Dota2ModKit
 {
@@ -31,6 +32,8 @@ namespace Dota2ModKit
 		List<UnitEntry> unitEntries = new List<UnitEntry>();
 		List<HeroEntry> heroEntries = new List<HeroEntry>();
 		HashSet<string> alreadyHasKeys = new HashSet<string>();
+		internal bool generateNote0;
+		internal bool generateLore;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -132,7 +135,7 @@ namespace Dota2ModKit
 				string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
 				content.Append(head3);
 				foreach (string amn in abilityModifierNames) {
-					ModifierEntry me = new ModifierEntry(amn);
+					ModifierEntry me = new ModifierEntry(this, amn);
 					if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
 						content.Append(me + "\n");
 					}
@@ -141,7 +144,7 @@ namespace Dota2ModKit
 				string head4 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
 				content.Append(head4);
 				foreach (string imn in itemModifierNames) {
-					ModifierEntry me = new ModifierEntry(imn);
+					ModifierEntry me = new ModifierEntry(this, imn);
 					if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
 						content.Append(me + "\n");
 					}
@@ -233,13 +236,13 @@ namespace Dota2ModKit
 
 					foreach (KeyValue kv2 in kv.Children) {
 						if (kv2.Key == "override_hero") {
-							heroEntries.Add(new HeroEntry(kv2.GetString(), name));
+							heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
 							break;
 						}
 
 					}
 
-					unitEntries.Add(new UnitEntry(kv.Key));
+					unitEntries.Add(new UnitEntry(this, kv.Key));
 				}
 
 			} catch (Exception e) {
@@ -267,7 +270,7 @@ namespace Dota2ModKit
 					if (kv.Key == "Version") {
 						continue;
 					}
-					unitEntries.Add(new UnitEntry(kv.Key));
+					unitEntries.Add(new UnitEntry(this, kv.Key));
 				}
 
 			} catch (Exception e) {
@@ -280,6 +283,51 @@ namespace Dota2ModKit
 			}
 
 
+		}
+
+		internal void deserializeSettings(KeyValue kv) {
+			foreach (KeyValue kv2 in kv.Children) {
+				if (kv2.Key == "workshopID") {
+					Debug.WriteLine("#Children: " + kv2.Children.Count());
+					if (kv2.HasChildren) {
+						if (!Int32.TryParse(kv2.Children.ElementAt(0).Key, out this.workshopID)) {
+							Debug.WriteLine("Couldn't parse workshopID for " + this.name);
+						}
+					}
+				} else if (kv2.Key == "generateNote0") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.generateNote0 = true;
+						} else {
+							this.generateNote0 = false;
+						}
+					}
+				} else if (kv2.Key == "generateLore") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.generateLore = true;
+						} else {
+							this.generateLore = false;
+						}
+					}
+				}
+			}
+		}
+
+		internal void serializeSettings(KeyValue addonKV) {
+			KeyValue workshopIDKV = new KeyValue("workshopID");
+			workshopIDKV.AddChild(new KeyValue(this.workshopID.ToString()));
+			addonKV.AddChild(workshopIDKV);
+
+			KeyValue generateNote0KV = new KeyValue("generateNote0");
+			generateNote0KV.AddChild(new KeyValue(this.generateNote0.ToString()));
+			addonKV.AddChild(generateNote0KV);
+
+			KeyValue generateLoreKV = new KeyValue("generateLore");
+			generateLoreKV.AddChild(new KeyValue(this.generateLore.ToString()));
+			addonKV.AddChild(generateLoreKV);
 		}
 
 		private void generateAbilityTooltips(bool item) {
@@ -336,9 +384,9 @@ namespace Dota2ModKit
 						}
 					}
 					if (!item) {
-						abilityEntries.Add(new AbilityEntry(abilName, abilitySpecialNames));
+						abilityEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
 					} else {
-						itemEntries.Add(new AbilityEntry(abilName, abilitySpecialNames));
+						itemEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
 					}
 				}
 			} catch (Exception e) {

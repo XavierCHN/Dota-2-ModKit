@@ -35,8 +35,11 @@ namespace Dota2ModKit {
 
 	public class ModifierEntry {
 		public Pair name, description;
+		private Addon addon;
 
-		public ModifierEntry(string _name) {
+		public ModifierEntry(Addon a, string _name) {
+			this.addon = a;
+
 			// prevent modifier_modifier names
 			name = new Pair("DOTA_Tooltip_" + _name, getVal(_name));
 
@@ -95,8 +98,10 @@ namespace Dota2ModKit {
 
 	public class UnitEntry {
 		public Pair name;
+		private Addon addon;
 
-		public UnitEntry(string _name) {
+		public UnitEntry(Addon a, string _name) {
+			this.addon = a;
 			name = new Pair(_name, getVal(_name));
 		}
 
@@ -139,8 +144,10 @@ namespace Dota2ModKit {
 
 	public class HeroEntry {
 		public Pair name;
+		private Addon addon;
 
-		public HeroEntry(string overrideHeroName, string name) {
+		public HeroEntry(Addon a, string overrideHeroName, string name) {
+			this.addon = a;
 			try {
 				// remove the npc_dota_hero part for the value.
 				//this.name = new Pair(overrideHeroName, getVal(overrideHeroName.Substring(14)));
@@ -188,8 +195,10 @@ namespace Dota2ModKit {
 		// description and lore are default for abilities.
 		public Pair name, description, lore, note0;
 		public List<Pair> abilitySpecials = new List<Pair>();
+		private Addon addon;
 
-		public AbilityEntry(string _name, List<string> keys) {
+		public AbilityEntry(Addon a, string _name, List<string> keys) {
+			this.addon = a;
 			name = new Pair("DOTA_Tooltip_ability_" + _name, getVal(_name));
 			description = new Pair(name.key + "_Description", "");
 			note0 = new Pair(name.key + "_Note0", "");
@@ -266,6 +275,12 @@ namespace Dota2ModKit {
 			string str = "";
 			str += name.ToString();
 			str += description.ToString();
+			if (addon.generateNote0) {
+				str += note0.ToString();
+			}
+			if (addon.generateLore) {
+				str += lore.ToString();
+			}
 			/*
 			if (Properties.Settings.Default.GenNote0Lore) {
 				str += Note0.ToString();
