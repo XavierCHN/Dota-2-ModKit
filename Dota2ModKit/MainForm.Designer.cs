@@ -143,7 +143,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 2;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -226,7 +226,7 @@
 			this.particleDesignBtn.TabStop = false;
 			this.particleDesignBtn.Text = "Particle Designer";
 			this.particleDesignBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.particleDesignBtn, "Coming soon(tm)");
+			this.metroToolTip1.SetToolTip(this.particleDesignBtn, "Provides options to bulk modify the color, size, etc of\r\nselected particles.");
 			this.particleDesignBtn.UseSelectable = true;
 			this.particleDesignBtn.Click += new System.EventHandler(this.particleDesignBtn_Click);
 			// 

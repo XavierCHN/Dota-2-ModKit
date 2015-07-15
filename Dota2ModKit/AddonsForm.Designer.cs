@@ -25,7 +25,7 @@
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddonsForm));
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
-			this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+			this.myAddonsTab = new MetroFramework.Controls.MetroTabPage();
 			this.backBtn = new MetroFramework.Controls.MetroButton();
 			this.nextBtn = new MetroFramework.Controls.MetroButton();
 			this.metroTile12 = new MetroFramework.Controls.MetroTile();
@@ -40,7 +40,7 @@
 			this.metroTile3 = new MetroFramework.Controls.MetroTile();
 			this.metroTile2 = new MetroFramework.Controls.MetroTile();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
-			this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+			this.newAddonTab = new MetroFramework.Controls.MetroTabPage();
 			this.progressLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
 			this.addonNameTextBox = new MetroFramework.Controls.MetroTextBox();
@@ -49,52 +49,52 @@
 			this.bmdRadioButton = new MetroFramework.Controls.MetroRadioButton();
 			this.dummyRadioBtn = new MetroFramework.Controls.MetroRadioButton();
 			this.tabControl.SuspendLayout();
-			this.metroTabPage1.SuspendLayout();
-			this.metroTabPage2.SuspendLayout();
+			this.myAddonsTab.SuspendLayout();
+			this.newAddonTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl
 			// 
-			this.tabControl.Controls.Add(this.metroTabPage1);
-			this.tabControl.Controls.Add(this.metroTabPage2);
+			this.tabControl.Controls.Add(this.myAddonsTab);
+			this.tabControl.Controls.Add(this.newAddonTab);
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.Location = new System.Drawing.Point(23, 63);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 1;
 			this.tabControl.Size = new System.Drawing.Size(495, 430);
 			this.tabControl.TabIndex = 1;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
 			// 
-			// metroTabPage1
+			// myAddonsTab
 			// 
-			this.metroTabPage1.Controls.Add(this.backBtn);
-			this.metroTabPage1.Controls.Add(this.nextBtn);
-			this.metroTabPage1.Controls.Add(this.metroTile12);
-			this.metroTabPage1.Controls.Add(this.metroTile8);
-			this.metroTabPage1.Controls.Add(this.metroTile4);
-			this.metroTabPage1.Controls.Add(this.metroTile11);
-			this.metroTabPage1.Controls.Add(this.metroTile10);
-			this.metroTabPage1.Controls.Add(this.metroTile9);
-			this.metroTabPage1.Controls.Add(this.metroTile7);
-			this.metroTabPage1.Controls.Add(this.metroTile6);
-			this.metroTabPage1.Controls.Add(this.metroTile5);
-			this.metroTabPage1.Controls.Add(this.metroTile3);
-			this.metroTabPage1.Controls.Add(this.metroTile2);
-			this.metroTabPage1.Controls.Add(this.metroTile1);
-			this.metroTabPage1.HorizontalScrollbarBarColor = true;
-			this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
-			this.metroTabPage1.HorizontalScrollbarSize = 10;
-			this.metroTabPage1.Location = new System.Drawing.Point(4, 44);
-			this.metroTabPage1.Name = "metroTabPage1";
-			this.metroTabPage1.Size = new System.Drawing.Size(487, 382);
-			this.metroTabPage1.TabIndex = 0;
-			this.metroTabPage1.Text = "Library";
-			this.metroTabPage1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroTabPage1.VerticalScrollbarBarColor = true;
-			this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
-			this.metroTabPage1.VerticalScrollbarSize = 10;
+			this.myAddonsTab.Controls.Add(this.backBtn);
+			this.myAddonsTab.Controls.Add(this.nextBtn);
+			this.myAddonsTab.Controls.Add(this.metroTile12);
+			this.myAddonsTab.Controls.Add(this.metroTile8);
+			this.myAddonsTab.Controls.Add(this.metroTile4);
+			this.myAddonsTab.Controls.Add(this.metroTile11);
+			this.myAddonsTab.Controls.Add(this.metroTile10);
+			this.myAddonsTab.Controls.Add(this.metroTile9);
+			this.myAddonsTab.Controls.Add(this.metroTile7);
+			this.myAddonsTab.Controls.Add(this.metroTile6);
+			this.myAddonsTab.Controls.Add(this.metroTile5);
+			this.myAddonsTab.Controls.Add(this.metroTile3);
+			this.myAddonsTab.Controls.Add(this.metroTile2);
+			this.myAddonsTab.Controls.Add(this.metroTile1);
+			this.myAddonsTab.HorizontalScrollbarBarColor = true;
+			this.myAddonsTab.HorizontalScrollbarHighlightOnWheel = false;
+			this.myAddonsTab.HorizontalScrollbarSize = 10;
+			this.myAddonsTab.Location = new System.Drawing.Point(4, 44);
+			this.myAddonsTab.Name = "myAddonsTab";
+			this.myAddonsTab.Size = new System.Drawing.Size(487, 382);
+			this.myAddonsTab.TabIndex = 0;
+			this.myAddonsTab.Text = "My Addons";
+			this.myAddonsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.myAddonsTab.VerticalScrollbarBarColor = true;
+			this.myAddonsTab.VerticalScrollbarHighlightOnWheel = false;
+			this.myAddonsTab.VerticalScrollbarSize = 10;
 			// 
 			// backBtn
 			// 
@@ -276,26 +276,26 @@
 			this.metroTile1.UseSelectable = true;
 			this.metroTile1.Click += new System.EventHandler(this.metroTile_Click);
 			// 
-			// metroTabPage2
+			// newAddonTab
 			// 
-			this.metroTabPage2.Controls.Add(this.progressLabel);
-			this.metroTabPage2.Controls.Add(this.metroProgressBar1);
-			this.metroTabPage2.Controls.Add(this.addonNameTextBox);
-			this.metroTabPage2.Controls.Add(this.addonNameLabel);
-			this.metroTabPage2.Controls.Add(this.createAddonBtn);
-			this.metroTabPage2.Controls.Add(this.bmdRadioButton);
-			this.metroTabPage2.HorizontalScrollbarBarColor = true;
-			this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
-			this.metroTabPage2.HorizontalScrollbarSize = 10;
-			this.metroTabPage2.Location = new System.Drawing.Point(4, 44);
-			this.metroTabPage2.Name = "metroTabPage2";
-			this.metroTabPage2.Size = new System.Drawing.Size(487, 382);
-			this.metroTabPage2.TabIndex = 1;
-			this.metroTabPage2.Text = "New Addon";
-			this.metroTabPage2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroTabPage2.VerticalScrollbarBarColor = true;
-			this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
-			this.metroTabPage2.VerticalScrollbarSize = 10;
+			this.newAddonTab.Controls.Add(this.progressLabel);
+			this.newAddonTab.Controls.Add(this.metroProgressBar1);
+			this.newAddonTab.Controls.Add(this.addonNameTextBox);
+			this.newAddonTab.Controls.Add(this.addonNameLabel);
+			this.newAddonTab.Controls.Add(this.createAddonBtn);
+			this.newAddonTab.Controls.Add(this.bmdRadioButton);
+			this.newAddonTab.HorizontalScrollbarBarColor = true;
+			this.newAddonTab.HorizontalScrollbarHighlightOnWheel = false;
+			this.newAddonTab.HorizontalScrollbarSize = 10;
+			this.newAddonTab.Location = new System.Drawing.Point(4, 44);
+			this.newAddonTab.Name = "newAddonTab";
+			this.newAddonTab.Size = new System.Drawing.Size(487, 382);
+			this.newAddonTab.TabIndex = 1;
+			this.newAddonTab.Text = "New Addon";
+			this.newAddonTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.newAddonTab.VerticalScrollbarBarColor = true;
+			this.newAddonTab.VerticalScrollbarHighlightOnWheel = false;
+			this.newAddonTab.VerticalScrollbarSize = 10;
 			// 
 			// progressLabel
 			// 
@@ -401,9 +401,9 @@
 			this.Text = "Addon Library";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.ResumeLayout(false);
-			this.metroTabPage1.ResumeLayout(false);
-			this.metroTabPage2.ResumeLayout(false);
-			this.metroTabPage2.PerformLayout();
+			this.myAddonsTab.ResumeLayout(false);
+			this.newAddonTab.ResumeLayout(false);
+			this.newAddonTab.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -412,8 +412,8 @@
 		#endregion
 
 		private MetroFramework.Controls.MetroTabControl tabControl;
-		private MetroFramework.Controls.MetroTabPage metroTabPage1;
-		private MetroFramework.Controls.MetroTabPage metroTabPage2;
+		private MetroFramework.Controls.MetroTabPage myAddonsTab;
+		private MetroFramework.Controls.MetroTabPage newAddonTab;
 		private MetroFramework.Controls.MetroRadioButton bmdRadioButton;
 		private MetroFramework.Controls.MetroTile metroTile1;
 		private MetroFramework.Controls.MetroTile metroTile12;

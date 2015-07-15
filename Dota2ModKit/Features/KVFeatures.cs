@@ -44,8 +44,7 @@ namespace Dota2ModKit.Features {
 				string currText = File.ReadAllText(bigKVPath);
 
 				// so now we have the big KV file created and ready to be populated.
-
-				string[] files = Directory.GetFiles(fold);
+				string[] files = Directory.GetFiles(fold, "*.txt", SearchOption.AllDirectories);
 				StringBuilder text = new StringBuilder("\"DOTAAbilities\"" + "\n{\n");
 				if (foldName == "heroes") {
 					text = new StringBuilder("\"DOTAHeroes\"" + "\n{\n");

@@ -304,7 +304,7 @@ namespace Dota2ModKit {
 
 				File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "error.txt"), text);*/
 
-				MetroMessageBox.Show(this, ex.StackTrace,
+				MetroMessageBox.Show(this, ex.Message,
 				ex.ToString(),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Error);

@@ -274,11 +274,18 @@ namespace Dota2ModKit {
 				string addonName = kv.Key;
 				Addon addon = getAddonFromName(addonName);
 
+				// this can occur if addon is deleted and program doesn't exit correctly.
+				if (addon == null) {
+					continue;
+				}
+
 				foreach (KeyValue kv2 in kv.Children) {
 					if (kv2.Key == "workshopID") {
 						Debug.WriteLine("#Children: " + kv2.Children.Count());
 						if (kv2.HasChildren) {
-							addon.workshopID = Int32.Parse(kv2.Children.ElementAt(0).Key);
+							if (!Int32.TryParse(kv2.Children.ElementAt(0).Key, out addon.workshopID)) {
+								Debug.WriteLine("Couldn't parse workshopID for " + addon.name);
+							}
                         }
 					}
 				}
