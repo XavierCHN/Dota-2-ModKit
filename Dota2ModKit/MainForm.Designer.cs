@@ -70,6 +70,7 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -112,9 +113,10 @@
 			// 
 			this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changePictureToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(156, 48);
+			this.metroContextMenu1.Size = new System.Drawing.Size(156, 70);
 			// 
 			// changePictureToolStripMenuItem
 			// 
@@ -468,7 +470,7 @@
 			// versionLabel
 			// 
 			this.versionLabel.AutoSize = true;
-			this.versionLabel.Location = new System.Drawing.Point(403, 277);
+			this.versionLabel.Location = new System.Drawing.Point(404, 277);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(49, 19);
 			this.versionLabel.TabIndex = 4;
@@ -482,7 +484,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(9, 271);
+			this.notificationLabel.Location = new System.Drawing.Point(2, 268);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -585,9 +587,9 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(149, 158);
+			this.optionsBtn.Location = new System.Drawing.Point(92, 197);
 			this.optionsBtn.Name = "optionsBtn";
-			this.optionsBtn.Size = new System.Drawing.Size(29, 29);
+			this.optionsBtn.Size = new System.Drawing.Size(29, 27);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Yellow;
 			this.optionsBtn.TabIndex = 18;
 			this.optionsBtn.Text = "O";
@@ -596,6 +598,13 @@
 			this.optionsBtn.UseSelectable = true;
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
+			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.optionsToolStripMenuItem.Text = "Options";
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -677,6 +686,7 @@
 		private MetroFramework.Controls.MetroButton decompileVtexButton;
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroTile optionsBtn;
+		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 	}
 }
 

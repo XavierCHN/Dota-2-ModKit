@@ -650,6 +650,14 @@ namespace Dota2ModKit {
 		}
 
 		private void optionsBtn_Click(object sender, EventArgs e) {
+			onOptionsClick();
+		}
+
+		private void optionsToolStripMenuItem_Click(object sender, EventArgs e) {
+			onOptionsClick();
+		}
+
+		void onOptionsClick() {
 			OptionsForm of = new OptionsForm(this);
 			DialogResult dr = of.ShowDialog();
 
@@ -657,6 +665,7 @@ namespace Dota2ModKit {
 				return;
 			}
 
+			text_notification("Options saved", MetroColorStyle.Green, 2500);
 		}
 	}
 }
