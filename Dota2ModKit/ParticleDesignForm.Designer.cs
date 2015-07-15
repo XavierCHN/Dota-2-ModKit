@@ -32,6 +32,9 @@
 			this.particlesSelectedLabel = new MetroFramework.Controls.MetroLabel();
 			this.sizeLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
+			this.rLabel = new MetroFramework.Controls.MetroLabel();
+			this.gLabel = new MetroFramework.Controls.MetroLabel();
+			this.bLabel = new MetroFramework.Controls.MetroLabel();
 			this.SuspendLayout();
 			// 
 			// metroTrackBar1
@@ -66,7 +69,7 @@
 			this.metroLabel2.Name = "metroLabel2";
 			this.metroLabel2.Size = new System.Drawing.Size(50, 19);
 			this.metroLabel2.TabIndex = 2;
-			this.metroLabel2.Text = "-200%";
+			this.metroLabel2.Text = "-100%";
 			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// metroLabel3
@@ -83,26 +86,24 @@
 			// recolorBtn
 			// 
 			this.recolorBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.recolorBtn.Location = new System.Drawing.Point(24, 207);
+			this.recolorBtn.Location = new System.Drawing.Point(24, 196);
 			this.recolorBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.recolorBtn.Name = "recolorBtn";
-			this.recolorBtn.Size = new System.Drawing.Size(193, 45);
-			this.recolorBtn.Style = MetroFramework.MetroColorStyle.Blue;
+			this.recolorBtn.Size = new System.Drawing.Size(197, 41);
 			this.recolorBtn.TabIndex = 5;
 			this.recolorBtn.TabStop = false;
 			this.recolorBtn.Text = "Bulk Recolor";
 			this.recolorBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.recolorBtn.UseSelectable = true;
-			this.recolorBtn.UseStyleColors = true;
 			this.recolorBtn.Click += new System.EventHandler(this.recolorBtn_Click);
 			// 
 			// submitBtn
 			// 
 			this.submitBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.submitBtn.Location = new System.Drawing.Point(114, 322);
+			this.submitBtn.Location = new System.Drawing.Point(117, 295);
 			this.submitBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.submitBtn.Name = "submitBtn";
-			this.submitBtn.Size = new System.Drawing.Size(179, 45);
+			this.submitBtn.Size = new System.Drawing.Size(169, 41);
 			this.submitBtn.TabIndex = 6;
 			this.submitBtn.TabStop = false;
 			this.submitBtn.Text = "Submit";
@@ -145,11 +146,53 @@
 			this.metroRadioButton1.UseSelectable = true;
 			this.metroRadioButton1.Visible = false;
 			// 
+			// rLabel
+			// 
+			this.rLabel.AutoSize = true;
+			this.rLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+			this.rLabel.Location = new System.Drawing.Point(228, 190);
+			this.rLabel.Name = "rLabel";
+			this.rLabel.Size = new System.Drawing.Size(20, 19);
+			this.rLabel.Style = MetroFramework.MetroColorStyle.Red;
+			this.rLabel.TabIndex = 10;
+			this.rLabel.Text = "R:";
+			this.rLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.rLabel.UseStyleColors = true;
+			// 
+			// gLabel
+			// 
+			this.gLabel.AutoSize = true;
+			this.gLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+			this.gLabel.Location = new System.Drawing.Point(228, 209);
+			this.gLabel.Name = "gLabel";
+			this.gLabel.Size = new System.Drawing.Size(22, 19);
+			this.gLabel.Style = MetroFramework.MetroColorStyle.Green;
+			this.gLabel.TabIndex = 11;
+			this.gLabel.Text = "G:";
+			this.gLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.gLabel.UseStyleColors = true;
+			// 
+			// bLabel
+			// 
+			this.bLabel.AutoSize = true;
+			this.bLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+			this.bLabel.Location = new System.Drawing.Point(228, 228);
+			this.bLabel.Name = "bLabel";
+			this.bLabel.Size = new System.Drawing.Size(20, 19);
+			this.bLabel.Style = MetroFramework.MetroColorStyle.Blue;
+			this.bLabel.TabIndex = 12;
+			this.bLabel.Text = "B:";
+			this.bLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.bLabel.UseStyleColors = true;
+			// 
 			// ParticleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(411, 391);
+			this.ClientSize = new System.Drawing.Size(396, 360);
+			this.Controls.Add(this.bLabel);
+			this.Controls.Add(this.gLabel);
+			this.Controls.Add(this.rLabel);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.sizeLabel);
 			this.Controls.Add(this.particlesSelectedLabel);
@@ -166,7 +209,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Style = MetroFramework.MetroColorStyle.Yellow;
-			this.Text = "Quick Particle Designer";
+			this.Text = "Particle Designer";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -184,5 +227,8 @@
 		private MetroFramework.Controls.MetroLabel particlesSelectedLabel;
 		private MetroFramework.Controls.MetroLabel sizeLabel;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
+		private MetroFramework.Controls.MetroLabel rLabel;
+		private MetroFramework.Controls.MetroLabel gLabel;
+		private MetroFramework.Controls.MetroLabel bLabel;
 	}
 }

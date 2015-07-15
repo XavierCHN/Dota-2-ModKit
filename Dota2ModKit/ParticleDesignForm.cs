@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ using System.Windows.Forms;
 namespace Dota2ModKit {
 	public partial class ParticleDesignForm : MetroForm {
 		MainForm mainForm;
+		string[] rgb = null;
+		List<Particle> particles = new List<Particle>();
 
 		public ParticleDesignForm(MainForm mainForm, string[] particlePaths) {
 			this.mainForm = mainForm;
@@ -21,11 +24,9 @@ namespace Dota2ModKit {
 
 			// setup hooks
 			metroTrackBar1.Maximum = 200;
-			metroTrackBar1.Minimum = -200;
+			metroTrackBar1.Minimum = -100;
 			metroTrackBar1.Value = 0;
 			metroTrackBar1.ValueChanged += MetroTrackBar1_ValueChanged;
-
-			List<Particle> particles = new List<Particle>();
 
 			string suffix = " particles selected";
 			if (particlePaths.Length == 1) {
@@ -55,12 +56,24 @@ namespace Dota2ModKit {
 
 		private void submitBtn_Click(object sender, EventArgs e) {
 
+			foreach (Particle p in particles) {
+				p.alterParticle(rgb, metroTrackBar1.Value);
+				string[] lines = p.lines;
+				File.WriteAllLines(p.path, p.lines);
+
+			}
+
+
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}
 
 		private void recolorBtn_Click(object sender, EventArgs e) {
-			string[] rgb = Util.getRGB();
+			rgb = Util.getRGB();
+
+			rLabel.Text = "R: " + rgb[0];
+			gLabel.Text = "G: " + rgb[1];
+			bLabel.Text = "B: " + rgb[2];
 
 			metroRadioButton1.Select();
 		}

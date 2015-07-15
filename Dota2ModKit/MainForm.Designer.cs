@@ -42,6 +42,7 @@
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
 			this.particleDesignBtn = new MetroFramework.Controls.MetroButton();
 			this.optionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.helpTab = new MetroFramework.Controls.MetroTabPage();
 			this.metroLink12 = new MetroFramework.Controls.MetroLink();
 			this.metroLink11 = new MetroFramework.Controls.MetroLink();
@@ -70,7 +71,6 @@
 			this.steamTile = new MetroFramework.Controls.MetroTile();
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -100,7 +100,7 @@
 			this.addonTile.ContextMenuStrip = this.metroContextMenu1;
 			this.addonTile.Location = new System.Drawing.Point(11, 59);
 			this.addonTile.Name = "addonTile";
-			this.addonTile.Size = new System.Drawing.Size(140, 142);
+			this.addonTile.Size = new System.Drawing.Size(140, 140);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.addonTile.TabIndex = 0;
 			this.addonTile.Text = "AddonName";
@@ -217,7 +217,6 @@
 			// 
 			// particleDesignBtn
 			// 
-			this.particleDesignBtn.Enabled = false;
 			this.particleDesignBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
 			this.particleDesignBtn.Location = new System.Drawing.Point(0, 47);
 			this.particleDesignBtn.Margin = new System.Windows.Forms.Padding(4);
@@ -246,6 +245,18 @@
 			this.optionsTab.VerticalScrollbarBarColor = true;
 			this.optionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.optionsTab.VerticalScrollbarSize = 2;
+			// 
+			// metroLabel1
+			// 
+			this.metroLabel1.AutoSize = true;
+			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+			this.metroLabel1.Location = new System.Drawing.Point(0, 10);
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Size = new System.Drawing.Size(125, 19);
+			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
+			this.metroLabel1.TabIndex = 10;
+			this.metroLabel1.Text = "Coming soon(tm)...";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// helpTab
 			// 
@@ -490,9 +501,9 @@
 			this.versionLabel.AutoSize = true;
 			this.versionLabel.Location = new System.Drawing.Point(416, 277);
 			this.versionLabel.Name = "versionLabel";
-			this.versionLabel.Size = new System.Drawing.Size(52, 19);
+			this.versionLabel.Size = new System.Drawing.Size(49, 19);
 			this.versionLabel.TabIndex = 4;
-			this.versionLabel.Text = "v2.0.0.0";
+			this.versionLabel.Text = "v2.x.x.x";
 			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
@@ -502,7 +513,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(11, 267);
+			this.notificationLabel.Location = new System.Drawing.Point(5, 268);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -555,7 +566,7 @@
 			// metroTile3
 			// 
 			this.metroTile3.ActiveControl = null;
-			this.metroTile3.Location = new System.Drawing.Point(11, 207);
+			this.metroTile3.Location = new System.Drawing.Point(11, 205);
 			this.metroTile3.Name = "metroTile3";
 			this.metroTile3.Size = new System.Drawing.Size(37, 31);
 			this.metroTile3.Style = MetroFramework.MetroColorStyle.Teal;
@@ -590,7 +601,7 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(54, 207);
+			this.metroTile1.Location = new System.Drawing.Point(54, 205);
 			this.metroTile1.Name = "metroTile1";
 			this.metroTile1.Size = new System.Drawing.Size(37, 31);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
@@ -601,18 +612,6 @@
 			this.metroTile1.UseSelectable = true;
 			this.metroTile1.UseTileImage = true;
 			this.metroTile1.Click += new System.EventHandler(this.shortcutTile_Click);
-			// 
-			// metroLabel1
-			// 
-			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.metroLabel1.Location = new System.Drawing.Point(0, 10);
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(125, 19);
-			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroLabel1.TabIndex = 10;
-			this.metroLabel1.Text = "Coming soon(tm)...";
-			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// MainForm
 			// 
