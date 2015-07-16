@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Addon.cs" />
     <Compile Include="AddonLangEntry.cs" />
+    <Compile Include="Features\SoundFeatures.cs" />
     <Compile Include="Forms\AddonsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +83,12 @@
     <Compile Include="Features\KVFeatures.cs" />
     <Compile Include="Features\ParticleFeatures.cs" />
     <Compile Include="Features\VTEXFeatures.cs" />
+    <Compile Include="Forms\FindSoundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FindSoundForm.Designer.cs">
+      <DependentUpon>FindSoundForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Initializer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -130,6 +137,9 @@
     <Compile Include="VPKExtract\VPKUtil.cs" />
     <EmbeddedResource Include="Forms\AddonsForm.resx">
       <DependentUpon>AddonsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FindSoundForm.resx">
+      <DependentUpon>FindSoundForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

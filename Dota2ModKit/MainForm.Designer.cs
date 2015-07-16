@@ -38,6 +38,7 @@
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.toolsTab = new MetroFramework.Controls.MetroTabPage();
+			this.findSoundNameBtn = new MetroFramework.Controls.MetroButton();
 			this.decompileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.compileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
@@ -71,7 +72,6 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
-			this.vsndToSoundNameBtn = new MetroFramework.Controls.MetroButton();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -158,7 +158,7 @@
 			// 
 			// toolsTab
 			// 
-			this.toolsTab.Controls.Add(this.vsndToSoundNameBtn);
+			this.toolsTab.Controls.Add(this.findSoundNameBtn);
 			this.toolsTab.Controls.Add(this.decompileVtexButton);
 			this.toolsTab.Controls.Add(this.compileVtexButton);
 			this.toolsTab.Controls.Add(this.combineKVBtn);
@@ -176,6 +176,21 @@
 			this.toolsTab.VerticalScrollbarBarColor = true;
 			this.toolsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.toolsTab.VerticalScrollbarSize = 2;
+			// 
+			// findSoundNameBtn
+			// 
+			this.findSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.findSoundNameBtn.Location = new System.Drawing.Point(0, 82);
+			this.findSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
+			this.findSoundNameBtn.Name = "findSoundNameBtn";
+			this.findSoundNameBtn.Size = new System.Drawing.Size(125, 33);
+			this.findSoundNameBtn.TabIndex = 6;
+			this.findSoundNameBtn.TabStop = false;
+			this.findSoundNameBtn.Text = "Find SoundName";
+			this.findSoundNameBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.findSoundNameBtn, "Decompiles .vtex_c files to .tga files");
+			this.findSoundNameBtn.UseSelectable = true;
+			this.findSoundNameBtn.Click += new System.EventHandler(this.findSoundNameBtn_Click);
 			// 
 			// decompileVtexButton
 			// 
@@ -608,21 +623,6 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
-			// vsndToSoundNameBtn
-			// 
-			this.vsndToSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.vsndToSoundNameBtn.Location = new System.Drawing.Point(0, 82);
-			this.vsndToSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
-			this.vsndToSoundNameBtn.Name = "vsndToSoundNameBtn";
-			this.vsndToSoundNameBtn.Size = new System.Drawing.Size(125, 33);
-			this.vsndToSoundNameBtn.TabIndex = 6;
-			this.vsndToSoundNameBtn.TabStop = false;
-			this.vsndToSoundNameBtn.Text = ".vsnd -> Name";
-			this.vsndToSoundNameBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.vsndToSoundNameBtn, "Decompiles .vtex_c files to .tga files");
-			this.vsndToSoundNameBtn.UseSelectable = true;
-			this.vsndToSoundNameBtn.Click += new System.EventHandler(this.vsndToSoundNameBtn_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -704,7 +704,7 @@
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroTile optionsBtn;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-		private MetroFramework.Controls.MetroButton vsndToSoundNameBtn;
+		private MetroFramework.Controls.MetroButton findSoundNameBtn;
 	}
 }
 

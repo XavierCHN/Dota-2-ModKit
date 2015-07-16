@@ -26,9 +26,11 @@ namespace Dota2ModKit {
 		string firstAddonName = "";
 		public System.Media.SoundPlayer player = new System.Media.SoundPlayer();
 		public string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+		public Dictionary<string, List<string>> vsndToName = new Dictionary<string, List<string>>();
 		KVFeatures kvFeatures;
 		VTEXFeatures vtexFeatures;
 		ParticleFeatures particleFeatures;
+		SoundFeatures soundFeatures;
 
 		// for updating modkit
 		Updater updater;
@@ -145,6 +147,7 @@ namespace Dota2ModKit {
 			kvFeatures = new KVFeatures(this);
 			vtexFeatures = new VTEXFeatures(this);
 			particleFeatures = new ParticleFeatures(this);
+			soundFeatures = new SoundFeatures(this);
 
 		}
 
@@ -475,17 +478,8 @@ namespace Dota2ModKit {
 		/// <summary>
 		/// there is a bug with Metro where pressing a button in dark theme will keep it grey.
 		/// </summary>
-		private void fixButton() {
+		public void fixButton() {
 			metroRadioButton1.Select();
-
-			/*
-			int index = tabControl.SelectedIndex;
-			if (index == 0) {
-				tabControl.SelectedIndex = 1;
-			} else {
-				tabControl.SelectedIndex = 0;
-			}
-			tabControl.SelectedIndex = index;*/
 		}
 
 		private void particleDesignBtn_Click(object sender, EventArgs e) {
@@ -677,117 +671,17 @@ namespace Dota2ModKit {
 			text_notification("Options saved", MetroColorStyle.Green, 2500);
 		}
 
-		private void vsndToSoundNameBtn_Click(object sender, EventArgs e) {
+		private void findSoundNameBtn_Click(object sender, EventArgs e) {
 			fixButton();
 
-			string[] files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "*.txt", SearchOption.AllDirectories);
-
-			Dictionary<string, List<string>> wavToName = new Dictionary<string, List<string>>();
-
-			foreach (string file in files) {
-				try {
-					if (file.Contains("sounds")) {
-						KeyValue[] root = KVParser.KV1.ParseAll(File.ReadAllText(file));
-						if (root == null || root.Count() == 0) {
-							continue;
-						}
-
-						foreach (KeyValue kv2 in root) {
-							string soundName = kv2.Key;
-							
-
-							if (kv2.HasChildren) {
-								foreach (KeyValue kv3 in kv2.Children) {
-									if (kv3.Key.Contains("wave")) {
-										if (kv3.HasChildren) {
-											foreach (KeyValue kv4 in kv3.Children) {
-												string val4 = kv4.GetString();
-												if (val4.EndsWith(".wav") || val4.EndsWith(".mp3")) {
-													string wav = fixWave(val4);
-													//Debug.WriteLine(val4 + " | " + soundName);
-													if (!wavToName.ContainsKey(wav)) {
-														List<string> soundNames = new List<string>();
-														soundNames.Add(soundName);
-														soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
-														wavToName[wav] = soundNames;
-													} else {
-														if (!wavToName[wav].Contains(soundName)) {
-															wavToName[wav].Add(soundName);
-														}
-													}
-												}
-
-											}
-										} else {
-											string val3 = kv3.GetString();
-											if (val3.EndsWith(".wav") || val3.EndsWith(".mp3")) {
-												string wav = fixWave(val3);
-												//Debug.WriteLine(val3 + " | " + soundName);
-												if (!wavToName.ContainsKey(wav)) {
-													List<string> soundNames = new List<string>();
-													soundNames.Add(soundName);
-													soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
-													wavToName[wav] = soundNames;
-												} else {
-													if (!wavToName[wav].Contains(soundName)) {
-														wavToName[wav].Add(soundName);
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				} catch (Exception ex) {
-					Debug.WriteLine("Skipping " + file + ":");
-					Debug.WriteLine(ex.ToString());
-					continue;
-				}
+			try {
+				soundFeatures.findSoundName();
+			} catch (Exception ex) {
+				MetroMessageBox.Show(this, ex.Message,
+					ex.ToString(),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
 			}
-
-			KeyValue root2 = new KeyValue("Sounds");
-			foreach (KeyValuePair<string, List<string>> m in wavToName) {
-				string soundName = m.Key;
-				List<string> waves = m.Value;
-				KeyValue soundNameKV = new KeyValue(soundName);
-				root2.AddChild(soundNameKV);
-
-				string path = "";
-				foreach (string wave in waves) {
-					if (wave.StartsWith("path:")) {
-						path = wave;
-						continue;
-					}
-					KeyValue waveKV = new KeyValue(wave);
-					soundNameKV.AddChild(waveKV);
-				}
-
-				path = path.Replace("\\", "/");
-				path = path.Replace(".txt", ".vsndevts");
-				KeyValue pathKV = new KeyValue(path);
-				soundNameKV.AddChild(pathKV);
-
-
-			}
-			File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname.txt"), root2.ToString());
-
 		}
-
-		string fixWave(string wave) {
-			string wav = wave;
-			wav = wav.Replace("\\", "/");
-			wav = wav.Replace("*", "");
-			wav = wav.Replace("#", "");
-			wav = wav.Replace("(", "");
-			wav = wav.Replace(")", "");
-			wav = wav.Replace(".wav", ".vsnd");
-			wav = wav.Replace(".mp3", ".vsnd");
-			wav = "sounds/" + wav;
-
-			return wav;
-		}
-
 	}
 }
