@@ -428,7 +428,7 @@
 			this.githubTextBox.Location = new System.Drawing.Point(56, 6);
 			this.githubTextBox.MaxLength = 32767;
 			this.githubTextBox.Name = "githubTextBox";
-			this.githubTextBox.PasswordChar = '\0';
+			//this.githubTextBox.PasswordChar = '\0';
 			this.githubTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.githubTextBox.SelectedText = "";
 			this.githubTextBox.Size = new System.Drawing.Size(171, 23);

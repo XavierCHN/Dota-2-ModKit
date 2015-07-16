@@ -30,6 +30,7 @@
 			this.addonNameLabel = new MetroFramework.Controls.MetroLabel();
 			this.okBtn = new MetroFramework.Controls.MetroButton();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+			this.metroScrollBar1 = new MetroFramework.Controls.MetroScrollBar();
 			this.SuspendLayout();
 			// 
 			// soundNamesTextBox
@@ -115,11 +116,28 @@
 			this.metroLabel1.Text = "(ex: sounds/ambient/horn_radiant.vsnd)";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
+			// metroScrollBar1
+			// 
+			this.metroScrollBar1.LargeChange = 10;
+			this.metroScrollBar1.Location = new System.Drawing.Point(352, 152);
+			this.metroScrollBar1.Maximum = 100;
+			this.metroScrollBar1.Minimum = 0;
+			this.metroScrollBar1.MouseWheelBarPartitions = 10;
+			this.metroScrollBar1.Name = "metroScrollBar1";
+			this.metroScrollBar1.Orientation = MetroFramework.Controls.MetroScrollOrientation.Vertical;
+			this.metroScrollBar1.ScrollbarSize = 10;
+			this.metroScrollBar1.Size = new System.Drawing.Size(10, 156);
+			this.metroScrollBar1.TabIndex = 15;
+			this.metroScrollBar1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroScrollBar1.UseSelectable = true;
+			this.metroScrollBar1.Visible = false;
+			// 
 			// FindSoundForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(385, 394);
+			this.Controls.Add(this.metroScrollBar1);
 			this.Controls.Add(this.metroLabel1);
 			this.Controls.Add(this.okBtn);
 			this.Controls.Add(this.addonNameLabel);
@@ -148,5 +166,6 @@
 		private MetroFramework.Controls.MetroLabel addonNameLabel;
 		private MetroFramework.Controls.MetroButton okBtn;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
+		private MetroFramework.Controls.MetroScrollBar metroScrollBar1;
 	}
 }

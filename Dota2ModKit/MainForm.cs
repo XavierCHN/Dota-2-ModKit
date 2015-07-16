@@ -127,20 +127,7 @@ namespace Dota2ModKit {
 
 			// basically, if this is first run of modkit, set the currAddon to w/e the default addon is in the workshop tools.
 			if (currAddon == null) {
-				string dota2cfgPath = Path.Combine(gamePath, "dota2cfg.cfg");
-				string defaultAddonName = firstAddonName;
-
-                if (File.Exists(dota2cfgPath)) {
-					KeyValue kv = KVLib.KVParser.KV1.ParseAll(File.ReadAllText(dota2cfgPath))[0];
-					if (kv != null && kv.HasChildren) {
-						foreach (KeyValue kv2 in kv.Children) {
-							if (kv2.Key == "default") {
-								defaultAddonName = kv2.GetString();
-							}
-						}
-					}
-				}
-				changeCurrAddon(addons[defaultAddonName]);
+				changeCurrAddon(addons[getDefaultAddonName()]);
 			}
 
 			// init our features of Modkit
@@ -148,7 +135,6 @@ namespace Dota2ModKit {
 			vtexFeatures = new VTEXFeatures(this);
 			particleFeatures = new ParticleFeatures(this);
 			soundFeatures = new SoundFeatures(this);
-
 		}
 
 		private void retrieveDotaDir() {
@@ -224,6 +210,28 @@ namespace Dota2ModKit {
 					}
 				}
 			}*/
+		}
+
+		private string getDefaultAddonName() {
+			string dota2cfgPath = Path.Combine(gamePath, "dota2cfg.cfg");
+			string defaultAddonName = firstAddonName;
+
+			try {
+				if (File.Exists(dota2cfgPath)) {
+					KeyValue kv = KVLib.KVParser.KV1.ParseAll(File.ReadAllText(dota2cfgPath))[0];
+					if (kv.HasChildren) {
+						foreach (KeyValue kv2 in kv.Children) {
+							if (kv2.Key == "default") {
+								if (addons.ContainsKey(kv2.GetString())) {
+									defaultAddonName = kv2.GetString();
+								}
+							}
+						}
+					}
+				}
+			} catch (Exception ex) { }
+
+			return defaultAddonName;
 		}
 
 		private void TabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -369,10 +377,11 @@ namespace Dota2ModKit {
 		private Dictionary<string, Addon> getAddons() {
 			Dictionary<string, Addon> addons = new Dictionary<string, Addon>();
 			string[] dirs = Directory.GetDirectories(gamePath);
+			string addons_constructed = "Addons constructed:\n";
 			foreach (string s in dirs) {
 				// construct a new addon from this dir path.
 				Addon a = new Addon(s);
-
+				addons_constructed += s + "\n";
 				// skip the dirs that we know aren't addons.
 				if (a.name == "vpks") {
 					continue;
@@ -380,13 +389,14 @@ namespace Dota2ModKit {
 
 				// if constructor didn't return null, we have a valid addon.
 				if (a != null) {
-					addons[a.name] = a;
+					addons.Add(a.name, a);
 					if (firstAddonName == "") {
 						firstAddonName = a.name;
 					}
 				}
 			}
 
+			log(addons_constructed);
 			return addons;
 		}
 
@@ -683,5 +693,20 @@ namespace Dota2ModKit {
 					MessageBoxIcon.Error);
 			}
 		}
+
+		void log(string text) {
+			string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
+
+			if (!File.Exists(logPath)) {
+				File.Create(logPath).Close();
+			}
+
+			string logText = File.ReadAllText(logPath);
+
+			logText += text + "\n\n";
+			File.WriteAllText(logPath, logText);
+
+		}
+
 	}
 }

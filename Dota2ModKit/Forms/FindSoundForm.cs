@@ -20,6 +20,7 @@ namespace Dota2ModKit.Forms {
 			vsndToName = mainForm.vsndToName;
 
 			InitializeComponent();
+			//soundNamesTextBox.ScrollBars = metroScrollBar1;
 
 			soundNamesTextBox.Clear();
 			vsndTextBox.Clear();
