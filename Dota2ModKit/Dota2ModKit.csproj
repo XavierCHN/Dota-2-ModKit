@@ -73,10 +73,10 @@
   <ItemGroup>
     <Compile Include="Addon.cs" />
     <Compile Include="AddonLangEntry.cs" />
-    <Compile Include="AddonsForm.cs">
+    <Compile Include="Forms\AddonsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddonsForm.Designer.cs">
+    <Compile Include="Forms\AddonsForm.Designer.cs">
       <DependentUpon>AddonsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Features\KVFeatures.cs" />
@@ -89,17 +89,17 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OptionsForm.cs">
+    <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionsForm.Designer.cs">
+    <Compile Include="Forms\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Particle.cs" />
-    <Compile Include="ParticleDesignForm.cs">
+    <Compile Include="Forms\ParticleDesignForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ParticleDesignForm.Designer.cs">
+    <Compile Include="Forms\ParticleDesignForm.Designer.cs">
       <DependentUpon>ParticleDesignForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -110,30 +110,34 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="SingleTextboxForm.cs">
+    <Compile Include="Forms\SingleTextboxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SingleTextboxForm.Designer.cs">
+    <Compile Include="Forms\SingleTextboxForm.Designer.cs">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpdateForm.cs">
+    <Compile Include="Forms\UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateForm.Designer.cs">
+    <Compile Include="Forms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="Util.cs" />
-    <EmbeddedResource Include="AddonsForm.resx">
+    <Compile Include="VPKExtract\VpkFile.cs" />
+    <Compile Include="VPKExtract\VpkNode.cs" />
+    <Compile Include="VPKExtract\VPKProgram.cs" />
+    <Compile Include="VPKExtract\VPKUtil.cs" />
+    <EmbeddedResource Include="Forms\AddonsForm.resx">
       <DependentUpon>AddonsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionsForm.resx">
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ParticleDesignForm.resx">
+    <EmbeddedResource Include="Forms\ParticleDesignForm.resx">
       <DependentUpon>ParticleDesignForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,10 +145,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SingleTextboxForm.resx">
+    <EmbeddedResource Include="Forms\SingleTextboxForm.resx">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateForm.resx">
+    <EmbeddedResource Include="Forms\UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

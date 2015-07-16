@@ -14,6 +14,7 @@ using System.Media;
 using System.Reflection;
 using System.Text;
 using Dota2ModKit.Features;
+using VPKExtract;
 
 namespace Dota2ModKit {
 	public partial class MainForm : MetroForm {
@@ -101,26 +102,11 @@ namespace Dota2ModKit {
 
 			// does this computer have any dota addons?
 			if (addons.Count == 0) {
-				MetroMessageBox.Show(this, "No Dota 2 addons detected. There must be one addon for Dota 2 ModKit to function properly. Exiting.",
+				MetroMessageBox.Show(this, "No Dota 2 addons detected. There must be one addon for D2ModKit to function properly. Exiting.",
 					"No Dota 2 addons detected.",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 				Environment.Exit(0);
-
-				// TODO:
-				/*DialogResult dr = MetroMessageBox.Show(this, "No Dota 2 addons detected. Dota 2 ModKit must have one addon to function properly. " +
-					"Would you like to create an addon from Barebones?",
-					"No Dota 2 addons detected.",
-					MessageBoxButtons.YesNo,
-					MessageBoxIcon.Information);
-
-				if (dr == DialogResult.Yes) {
-					// try and create a new addon from barebones.
-					tryCreateAddon();
-
-				} else {
-
-				}*/
 			}
 
 			// deserialize settings
@@ -208,10 +194,33 @@ namespace Dota2ModKit {
 
 				Environment.Exit(0);
 			}
-		}
 
-		private void tryCreateAddon() {
+			// trying to read vpk practice. this works currently
+			/*
+			string s2vpkPath = Path.Combine(dotaDir, "game", "dota_imported", "pak01_dir.vpk");
+			using (var vpk = new VpkFile(s2vpkPath)) {
+				vpk.Open();
+				Debug.WriteLine("Got VPK version {0}", vpk.Version);
+				VpkNode node = vpk.GetFile("scripts/npc/npc_units.txt");
+				using (var inputStream = VPKUtil.GetInputStream(s2vpkPath, node)) {
+					var pathPieces = node.FilePath.Split('/');
+					var directory = pathPieces.Take(pathPieces.Count() - 1);
+					var fileName = pathPieces.Last();
 
+					//EnsureDirectoryExists(Path.Combine(directory.ToArray()));
+
+					using (var fsout = File.OpenWrite(Path.Combine(Environment.CurrentDirectory, "something.txt"))) {
+						var buffer = new byte[1024];
+						int amtToRead = (int)node.EntryLength;
+						int read;
+
+						while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0 && amtToRead > 0) {
+							fsout.Write(buffer, 0, Math.Min(amtToRead, read));
+							amtToRead -= read;
+						}
+					}
+				}
+			}*/
 		}
 
 		private void TabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -667,5 +676,118 @@ namespace Dota2ModKit {
 
 			text_notification("Options saved", MetroColorStyle.Green, 2500);
 		}
+
+		private void vsndToSoundNameBtn_Click(object sender, EventArgs e) {
+			fixButton();
+
+			string[] files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "*.txt", SearchOption.AllDirectories);
+
+			Dictionary<string, List<string>> wavToName = new Dictionary<string, List<string>>();
+
+			foreach (string file in files) {
+				try {
+					if (file.Contains("sounds")) {
+						KeyValue[] root = KVParser.KV1.ParseAll(File.ReadAllText(file));
+						if (root == null || root.Count() == 0) {
+							continue;
+						}
+
+						foreach (KeyValue kv2 in root) {
+							string soundName = kv2.Key;
+							
+
+							if (kv2.HasChildren) {
+								foreach (KeyValue kv3 in kv2.Children) {
+									if (kv3.Key.Contains("wave")) {
+										if (kv3.HasChildren) {
+											foreach (KeyValue kv4 in kv3.Children) {
+												string val4 = kv4.GetString();
+												if (val4.EndsWith(".wav") || val4.EndsWith(".mp3")) {
+													string wav = fixWave(val4);
+													//Debug.WriteLine(val4 + " | " + soundName);
+													if (!wavToName.ContainsKey(wav)) {
+														List<string> soundNames = new List<string>();
+														soundNames.Add(soundName);
+														soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
+														wavToName[wav] = soundNames;
+													} else {
+														if (!wavToName[wav].Contains(soundName)) {
+															wavToName[wav].Add(soundName);
+														}
+													}
+												}
+
+											}
+										} else {
+											string val3 = kv3.GetString();
+											if (val3.EndsWith(".wav") || val3.EndsWith(".mp3")) {
+												string wav = fixWave(val3);
+												//Debug.WriteLine(val3 + " | " + soundName);
+												if (!wavToName.ContainsKey(wav)) {
+													List<string> soundNames = new List<string>();
+													soundNames.Add(soundName);
+													soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
+													wavToName[wav] = soundNames;
+												} else {
+													if (!wavToName[wav].Contains(soundName)) {
+														wavToName[wav].Add(soundName);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} catch (Exception ex) {
+					Debug.WriteLine("Skipping " + file + ":");
+					Debug.WriteLine(ex.ToString());
+					continue;
+				}
+			}
+
+			KeyValue root2 = new KeyValue("Sounds");
+			foreach (KeyValuePair<string, List<string>> m in wavToName) {
+				string soundName = m.Key;
+				List<string> waves = m.Value;
+				KeyValue soundNameKV = new KeyValue(soundName);
+				root2.AddChild(soundNameKV);
+
+				string path = "";
+				foreach (string wave in waves) {
+					if (wave.StartsWith("path:")) {
+						path = wave;
+						continue;
+					}
+					KeyValue waveKV = new KeyValue(wave);
+					soundNameKV.AddChild(waveKV);
+				}
+
+				path = path.Replace("\\", "/");
+				path = path.Replace(".txt", ".vsndevts");
+				KeyValue pathKV = new KeyValue(path);
+				soundNameKV.AddChild(pathKV);
+
+
+			}
+			File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname.txt"), root2.ToString());
+
+		}
+
+		string fixWave(string wave) {
+			string wav = wave;
+			wav = wav.Replace("\\", "/");
+			wav = wav.Replace("*", "");
+			wav = wav.Replace("#", "");
+			wav = wav.Replace("(", "");
+			wav = wav.Replace(")", "");
+			wav = wav.Replace(".wav", ".vsnd");
+			wav = wav.Replace(".mp3", ".vsnd");
+			wav = "sounds/" + wav;
+
+			return wav;
+		}
+
 	}
 }

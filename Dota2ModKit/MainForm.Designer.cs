@@ -34,6 +34,7 @@
 			this.addonTile = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.toolsTab = new MetroFramework.Controls.MetroTabPage();
@@ -70,7 +71,7 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
-			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.vsndToSoundNameBtn = new MetroFramework.Controls.MetroButton();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -126,6 +127,13 @@
 			this.changePictureToolStripMenuItem.Text = "Change Picture";
 			this.changePictureToolStripMenuItem.Click += new System.EventHandler(this.changePictureToolStripMenuItem_Click);
 			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.optionsToolStripMenuItem.Text = "Options";
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+			// 
 			// deleteAddonToolStripMenuItem
 			// 
 			this.deleteAddonToolStripMenuItem.Name = "deleteAddonToolStripMenuItem";
@@ -150,6 +158,7 @@
 			// 
 			// toolsTab
 			// 
+			this.toolsTab.Controls.Add(this.vsndToSoundNameBtn);
 			this.toolsTab.Controls.Add(this.decompileVtexButton);
 			this.toolsTab.Controls.Add(this.compileVtexButton);
 			this.toolsTab.Controls.Add(this.combineKVBtn);
@@ -599,12 +608,20 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
-			// optionsToolStripMenuItem
+			// vsndToSoundNameBtn
 			// 
-			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-			this.optionsToolStripMenuItem.Text = "Options";
-			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+			this.vsndToSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.vsndToSoundNameBtn.Location = new System.Drawing.Point(0, 82);
+			this.vsndToSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
+			this.vsndToSoundNameBtn.Name = "vsndToSoundNameBtn";
+			this.vsndToSoundNameBtn.Size = new System.Drawing.Size(125, 33);
+			this.vsndToSoundNameBtn.TabIndex = 6;
+			this.vsndToSoundNameBtn.TabStop = false;
+			this.vsndToSoundNameBtn.Text = ".vsnd -> Name";
+			this.vsndToSoundNameBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.vsndToSoundNameBtn, "Decompiles .vtex_c files to .tga files");
+			this.vsndToSoundNameBtn.UseSelectable = true;
+			this.vsndToSoundNameBtn.Click += new System.EventHandler(this.vsndToSoundNameBtn_Click);
 			// 
 			// MainForm
 			// 
@@ -687,6 +704,7 @@
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroTile optionsBtn;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private MetroFramework.Controls.MetroButton vsndToSoundNameBtn;
 	}
 }
 
