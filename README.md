@@ -1,4 +1,4 @@
-# Dota-2-ModKit-Reborn
+# Dota 2 ModKit Reborn
 
 ### [Download the latest version here!](https://github.com/Myll/Dota-2-ModKit/releases)
 
@@ -32,7 +32,16 @@ D2ModKit has been updated to work with Reborn's new file structure.
 
 ![DEMO](http://giant.gfycat.com/LividSevereElk.gif)
 
-Note: Particle Designer is not ready at this time. Need to update it to be compatible with the new KV3 format for particles.
+## Credits
+
+Thank you to these people who have contributed to D2ModKit in some way during its lifetime:
+
+* [Noya](https://github.com/MNoya): Feature ideas
+* [RoyAwesome](https://github.com/RoyAwesome): KVLib
+* [penguinwizzard](https://github.com/Penguinwizzard): Icon
+* [ToraxXx](https://github.com/toraxxx): Decompiled particles
+* [XavierCHN](https://github.com/XavierCHN): Helping with VTEX features
+* [SebRut](https://github.com/sebrut): Ideas and C# tips.
 
 ## Donations
 
