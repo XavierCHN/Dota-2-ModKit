@@ -1,21 +1,25 @@
-﻿using System;
+﻿using MetroFramework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dota2ModKit {
 	class Particle {
 		public string path;
 		public string[] lines;
+		private ParticleDesignForm pdf;
 
 		public Particle(string path) {
 			this.path = path;
 			lines = File.ReadAllLines(path);
 		}
 
-		internal void alterParticle(string[] rgb, int sizeValue) {
+		internal void alterParticle(ParticleDesignForm pdf, string[] rgb, int sizeValue) {
+			this.pdf = pdf;
 
 			List<string> newLines = new List<string>();
 			bool changeColor = false, changeSize = false;
@@ -36,11 +40,23 @@ namespace Dota2ModKit {
 			int count = 0;
 			int r, g, b, a;
 			//int rIndex, gIndex, bIndex, aIndex;
-
+			bool error = false;
 
 			// Are we currently inside a colorKey or sizeKey?
 			for (int i = 0; i < lines.Length; i++) {
 				string l = lines[i];
+
+				if (i == 0) {
+					// Check if particle is in KV3 format.
+					if (!l.Contains("<!-- kv3")) {
+						MetroMessageBox.Show(pdf, path + " is not in KV3 format!",
+						"Error parsing .vpcf",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+					}
+					error = true;
+					break;
+				}
 
 				if (colorKeyFound && changeColor) {
 					count++;
@@ -114,8 +130,9 @@ namespace Dota2ModKit {
 				newLines.Add(l);
 			}
 
-			lines = newLines.ToArray();
-
+			if (!error) {
+				lines = newLines.ToArray();
+			}
 		}
 	}
 }

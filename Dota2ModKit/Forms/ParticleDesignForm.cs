@@ -57,7 +57,7 @@ namespace Dota2ModKit {
 		private void submitBtn_Click(object sender, EventArgs e) {
 
 			foreach (Particle p in particles) {
-				p.alterParticle(rgb, metroTrackBar1.Value);
+				p.alterParticle(this, rgb, metroTrackBar1.Value);
 				string[] lines = p.lines;
 				File.WriteAllLines(p.path, p.lines);
 
