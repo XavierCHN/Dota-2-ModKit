@@ -72,10 +72,12 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
 			this.helpTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// generateAddonLangsBtn
@@ -150,7 +152,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 1;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -435,7 +437,7 @@
 			this.githubTextBox.Location = new System.Drawing.Point(56, 6);
 			this.githubTextBox.MaxLength = 32767;
 			this.githubTextBox.Name = "githubTextBox";
-			//this.githubTextBox.PasswordChar = '\0';
+			this.githubTextBox.PasswordChar = '\0';
 			this.githubTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.githubTextBox.SelectedText = "";
 			this.githubTextBox.Size = new System.Drawing.Size(171, 23);
@@ -506,7 +508,7 @@
 			// versionLabel
 			// 
 			this.versionLabel.AutoSize = true;
-			this.versionLabel.Location = new System.Drawing.Point(404, 277);
+			this.versionLabel.Location = new System.Drawing.Point(402, 277);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(49, 19);
 			this.versionLabel.TabIndex = 4;
@@ -520,7 +522,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(2, 268);
+			this.notificationLabel.Location = new System.Drawing.Point(-4, 273);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -635,11 +637,22 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = global::Dota2ModKit.Properties.Resources.d2modkit;
+			this.pictureBox1.Location = new System.Drawing.Point(178, 15);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox1.TabIndex = 7;
+			this.pictureBox1.TabStop = false;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
@@ -658,7 +671,7 @@
 			this.Name = "MainForm";
 			this.Padding = new System.Windows.Forms.Padding(27, 92, 27, 31);
 			this.Resizable = false;
-			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
+			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "Dota 2 ModKit";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -668,6 +681,7 @@
 			this.toolsTab.ResumeLayout(false);
 			this.helpTab.ResumeLayout(false);
 			this.helpTab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -717,6 +731,7 @@
 		private MetroFramework.Controls.MetroTile optionsBtn;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private MetroFramework.Controls.MetroButton findSoundNameBtn;
+		private System.Windows.Forms.PictureBox pictureBox1;
 	}
 }
 

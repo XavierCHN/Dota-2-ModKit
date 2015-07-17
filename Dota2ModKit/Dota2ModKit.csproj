@@ -179,6 +179,7 @@
   <ItemGroup>
     <Content Include="d2modkit.ico" />
     <Content Include="FodyWeavers.xml" />
+    <None Include="Resources\d2modkit.png" />
     <None Include="Resources\steam-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

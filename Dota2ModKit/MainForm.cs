@@ -81,7 +81,7 @@ namespace Dota2ModKit {
 			luaRadioBtn.Checked = true;
 			tabControl.SelectedIndex = 0;
 			notificationLabel.Text = "";
-			versionLabel.Text = version;
+			versionLabel.Text = "v" + version;
 
 			retrieveDotaDir();
 
