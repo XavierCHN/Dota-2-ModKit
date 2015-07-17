@@ -31,6 +31,7 @@ namespace Dota2ModKit {
 		VTEXFeatures vtexFeatures;
 		ParticleFeatures particleFeatures;
 		SoundFeatures soundFeatures;
+		string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
 
 		// for updating modkit
 		Updater updater;
@@ -41,8 +42,11 @@ namespace Dota2ModKit {
 		public MetroTile _addonTile;
 
         public MainForm() {
-            // Check if application is already running.
-            if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
+			// refresh the debug_log
+			refreshDebugLog();
+
+			// Check if application is already running.
+			if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
 			// bring up the UI
 			InitializeComponent();
@@ -695,18 +699,24 @@ namespace Dota2ModKit {
 		}
 
 		void log(string text) {
-			string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
+			try {
+				if (!File.Exists(logPath)) {
+					File.Create(logPath).Close();
+				}
 
-			if (!File.Exists(logPath)) {
-				File.Create(logPath).Close();
-			}
+				string logText = File.ReadAllText(logPath);
 
-			string logText = File.ReadAllText(logPath);
-
-			logText += text + "\n\n";
-			File.WriteAllText(logPath, logText);
-
+				logText += text + "\n\n";
+				File.WriteAllText(logPath, logText);
+			} catch (Exception) { }
 		}
 
+		private void refreshDebugLog() {
+			try {
+				if (File.Exists(logPath)) {
+					File.Delete(logPath);
+				}
+			} catch (Exception) { }
+		}
 	}
 }
