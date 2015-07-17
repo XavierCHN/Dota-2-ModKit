@@ -150,7 +150,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 1;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -288,77 +288,84 @@
 			// 
 			// metroLink12
 			// 
-			this.metroLink12.Location = new System.Drawing.Point(81, 114);
+			this.metroLink12.Location = new System.Drawing.Point(92, 115);
 			this.metroLink12.Name = "metroLink12";
 			this.metroLink12.Size = new System.Drawing.Size(56, 23);
 			this.metroLink12.TabIndex = 19;
 			this.metroLink12.Text = "dev.dota";
+			this.metroLink12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink12.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink12.UseSelectable = true;
 			this.metroLink12.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink11
 			// 
-			this.metroLink11.Location = new System.Drawing.Point(0, 114);
+			this.metroLink11.Location = new System.Drawing.Point(11, 115);
 			this.metroLink11.Name = "metroLink11";
 			this.metroLink11.Size = new System.Drawing.Size(75, 23);
 			this.metroLink11.TabIndex = 18;
 			this.metroLink11.Text = "SpellLibrary";
+			this.metroLink11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink11.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink11.UseSelectable = true;
 			this.metroLink11.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink10
 			// 
-			this.metroLink10.Location = new System.Drawing.Point(181, 56);
+			this.metroLink10.Location = new System.Drawing.Point(192, 57);
 			this.metroLink10.Name = "metroLink10";
 			this.metroLink10.Size = new System.Drawing.Size(34, 23);
 			this.metroLink10.TabIndex = 17;
 			this.metroLink10.Text = "VPK";
+			this.metroLink10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink10.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink10.UseSelectable = true;
 			this.metroLink10.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink9
 			// 
-			this.metroLink9.Location = new System.Drawing.Point(67, 85);
+			this.metroLink9.Location = new System.Drawing.Point(78, 86);
 			this.metroLink9.Name = "metroLink9";
 			this.metroLink9.Size = new System.Drawing.Size(83, 23);
 			this.metroLink9.TabIndex = 16;
 			this.metroLink9.Text = "Ability Names";
+			this.metroLink9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink9.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink9.UseSelectable = true;
 			this.metroLink9.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink8
 			// 
-			this.metroLink8.Location = new System.Drawing.Point(54, 56);
+			this.metroLink8.Location = new System.Drawing.Point(65, 57);
 			this.metroLink8.Name = "metroLink8";
 			this.metroLink8.Size = new System.Drawing.Size(86, 23);
 			this.metroLink8.TabIndex = 15;
 			this.metroLink8.Text = "Panorama API";
+			this.metroLink8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink8.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink8.UseSelectable = true;
 			this.metroLink8.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink7
 			// 
-			this.metroLink7.Location = new System.Drawing.Point(0, 56);
+			this.metroLink7.Location = new System.Drawing.Point(11, 57);
 			this.metroLink7.Name = "metroLink7";
 			this.metroLink7.Size = new System.Drawing.Size(48, 23);
 			this.metroLink7.TabIndex = 14;
 			this.metroLink7.Text = "Lua API";
+			this.metroLink7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink7.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink7.UseSelectable = true;
 			this.metroLink7.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink6
 			// 
-			this.metroLink6.Location = new System.Drawing.Point(156, 85);
+			this.metroLink6.Location = new System.Drawing.Point(167, 86);
 			this.metroLink6.Name = "metroLink6";
 			this.metroLink6.Size = new System.Drawing.Size(83, 23);
 			this.metroLink6.TabIndex = 13;
 			this.metroLink6.Text = "Lua Modifiers";
+			this.metroLink6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink6.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink6.UseSelectable = true;
 			this.metroLink6.Click += new System.EventHandler(this.onLink_Click);
@@ -438,55 +445,60 @@
 			// 
 			// metroLink5
 			// 
-			this.metroLink5.Location = new System.Drawing.Point(0, 143);
+			this.metroLink5.Location = new System.Drawing.Point(11, 144);
 			this.metroLink5.Name = "metroLink5";
 			this.metroLink5.Size = new System.Drawing.Size(85, 23);
 			this.metroLink5.TabIndex = 6;
 			this.metroLink5.Text = "GetDotaStats";
+			this.metroLink5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink5.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink5.UseSelectable = true;
 			this.metroLink5.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink4
 			// 
-			this.metroLink4.Location = new System.Drawing.Point(146, 56);
+			this.metroLink4.Location = new System.Drawing.Point(157, 57);
 			this.metroLink4.Name = "metroLink4";
 			this.metroLink4.Size = new System.Drawing.Size(29, 23);
 			this.metroLink4.TabIndex = 5;
 			this.metroLink4.Text = "IRC";
+			this.metroLink4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink4.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink4.UseSelectable = true;
 			this.metroLink4.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink3
 			// 
-			this.metroLink3.Location = new System.Drawing.Point(143, 114);
+			this.metroLink3.Location = new System.Drawing.Point(154, 115);
 			this.metroLink3.Name = "metroLink3";
 			this.metroLink3.Size = new System.Drawing.Size(104, 23);
 			this.metroLink3.TabIndex = 4;
 			this.metroLink3.Text = "r/Dota2Modding";
+			this.metroLink3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink3.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink3.UseSelectable = true;
 			this.metroLink3.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink2
 			// 
-			this.metroLink2.Location = new System.Drawing.Point(91, 143);
+			this.metroLink2.Location = new System.Drawing.Point(102, 144);
 			this.metroLink2.Name = "metroLink2";
 			this.metroLink2.Size = new System.Drawing.Size(64, 23);
 			this.metroLink2.TabIndex = 3;
 			this.metroLink2.Text = "Workshop";
+			this.metroLink2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink2.UseSelectable = true;
 			this.metroLink2.Click += new System.EventHandler(this.onLink_Click);
 			// 
 			// metroLink1
 			// 
-			this.metroLink1.Location = new System.Drawing.Point(0, 85);
+			this.metroLink1.Location = new System.Drawing.Point(11, 86);
 			this.metroLink1.Name = "metroLink1";
 			this.metroLink1.Size = new System.Drawing.Size(61, 23);
 			this.metroLink1.TabIndex = 2;
 			this.metroLink1.Text = "ModDota";
+			this.metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.metroLink1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroLink1.UseSelectable = true;
 			this.metroLink1.Click += new System.EventHandler(this.onLink_Click);

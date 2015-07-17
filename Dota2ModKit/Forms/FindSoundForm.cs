@@ -33,10 +33,26 @@ namespace Dota2ModKit.Forms {
 		private void VsndTextBox_TextChanged(object sender, EventArgs e) {
 			soundNamesTextBox.Clear();
 
-			if (vsndToName.ContainsKey(vsndTextBox.Text)) {
+			string vsndPath = vsndTextBox.Text;
+            if (vsndToName.ContainsKey(vsndPath)) {
 				string text = "";
-				foreach (string soundName in vsndToName[vsndTextBox.Text]) {
-					text += soundName + "\r\n";
+
+				List<string> vsndevtsPaths = new List<string>();
+
+				foreach (string soundInfo in vsndToName[vsndPath]) {
+					string[] soundInfoArr = soundInfo.Split('|');
+					string soundName = soundInfoArr[0];
+					string vsndevtsPath = soundInfoArr[1];
+
+					vsndevtsPaths.Add(vsndevtsPath);
+
+					text += vsndevtsPaths.Count + ". " + soundName + "\r\n";
+				}
+				text += "\r\nMatch the numbers above with the numbers below:\r\n\r\n";
+
+				for (int i = 0; i < vsndevtsPaths.Count; i++) {
+					int ptr = i + 1;
+					text += ptr + ". " + vsndevtsPaths[i] + "\r\n";
 				}
 				soundNamesTextBox.Text = text;
 			} else {
@@ -48,6 +64,9 @@ namespace Dota2ModKit.Forms {
 
 		private void okBtn_Click(object sender, EventArgs e) {
 			DialogResult = DialogResult.OK;
+			// clear memory. this still won't decrease the memory usage # in task manager :/
+			vsndToName.Clear();
+
 			this.Close();
 		}
 	}

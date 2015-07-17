@@ -42,10 +42,9 @@ namespace Dota2ModKit
 			
 			string header = "Please report this crash to https://github.com/Myll/Dota-2-ModKit/issues \n";
 
-			File.WriteAllText("Crashes/Crash_" + DateTime.Now.ToString("dd-mm-yy_h-mm-ss") + ".txt", header + ex.ToString() + "\n\n" + ex.Message);
+			File.WriteAllText("Crashes/Crash_" + DateTime.Now.ToString("dd-mm-yy_h-mm-ss") + ".txt", header + ex.ToString());
 
-			MetroMessageBox.Show(null,
-				"D2ModKit has crashed. A crash report has been created in " + crashesDir + "\nExiting.",
+			MessageBox.Show("D2ModKit has crashed. A crash report has been created in " + crashesDir + "\nExiting.",
 				"Error",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Error);

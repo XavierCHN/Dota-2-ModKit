@@ -14,6 +14,7 @@ namespace Dota2ModKit.Features {
 	class SoundFeatures {
 		private MainForm mainForm;
 		private Dictionary<string, List<string>> vsndToName;
+		string vsnd_to_soundname_Path = Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname_v2.txt");
 
 		public SoundFeatures(MainForm mainForm) {
 			this.mainForm = mainForm;
@@ -21,8 +22,6 @@ namespace Dota2ModKit.Features {
 		}
 
 		public void findSoundName() {
-			string vsnd_to_soundname_Path = Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname.txt");
-
 			if (!File.Exists(vsnd_to_soundname_Path)) {
 				DialogResult dr = MetroMessageBox.Show(mainForm,
 					"Couldn't find " + vsnd_to_soundname_Path + ". A link will now open to DL the file. In the future, this will be auto-generated.",
@@ -33,11 +32,11 @@ namespace Dota2ModKit.Features {
 				if (dr != DialogResult.OK) {
 					return;
 				}
-				Process.Start("https://mega.co.nz/#!E0wwlIhb!_BzVyHi5PXOPCkTCUKNvoi_E-cCrZ1sLMHXybLCjMVY");
 
+				Process.Start("https://mega.co.nz/#!VxYnQQBK!HewGiE2idCqaELGffHVbv1ihhg0U7se-BAdkynRAulU");
 				return; //remove this for auto-generate
-				extractScripts();
-				generateSoundMapFile();
+				//extractScripts();
+				//generateSoundMapFile();
 			}
 
 			// we have a vsnd_to_soundname.txt at this point.
@@ -51,7 +50,7 @@ namespace Dota2ModKit.Features {
 		}
 
 		private void populateVsndToName() {
-			KeyValue root = KVParser.KV1.ParseAll(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname.txt")))[0];
+			KeyValue root = KVParser.KV1.ParseAll(File.ReadAllText(vsnd_to_soundname_Path))[0];
 			foreach (KeyValue kv in root.Children) {
 				string vsndPath = kv.Key;
 				List<string> soundNames = new List<string>();
@@ -76,7 +75,7 @@ namespace Dota2ModKit.Features {
 
 			foreach (string file in files) {
 				try {
-					if (file.Contains("sounds")) {
+					if (file.Contains("sounds") && !file.Contains("phonemes")) {
 						KeyValue[] roots = KVParser.KV1.ParseAll(File.ReadAllText(file));
 						if (roots == null || roots.Count() == 0) {
 							continue;
@@ -93,16 +92,16 @@ namespace Dota2ModKit.Features {
 											foreach (KeyValue kv4 in kv3.Children) {
 												string val4 = kv4.GetString();
 												if (val4.EndsWith(".wav") || val4.EndsWith(".mp3")) {
-													string wav = fixWave(val4);
+													string vsnd = fixWave(val4);
 													//Debug.WriteLine(val4 + " | " + soundName);
-													if (!vsndToName.ContainsKey(wav)) {
+													string val = soundName + "|" + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents");
+                                                    if (!vsndToName.ContainsKey(vsnd)) {
 														List<string> soundNames = new List<string>();
-														soundNames.Add(soundName);
-														soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
-														vsndToName[wav] = soundNames;
+														soundNames.Add(val);
+														vsndToName[vsnd] = soundNames;
 													} else {
-														if (!vsndToName[wav].Contains(soundName)) {
-															vsndToName[wav].Add(soundName);
+														if (!vsndToName[vsnd].Contains(val)) {
+															vsndToName[vsnd].Add(val);
 														}
 													}
 												}
@@ -111,16 +110,16 @@ namespace Dota2ModKit.Features {
 										} else {
 											string val3 = kv3.GetString();
 											if (val3.EndsWith(".wav") || val3.EndsWith(".mp3")) {
-												string wav = fixWave(val3);
+												string vsnd = fixWave(val3);
 												//Debug.WriteLine(val3 + " | " + soundName);
-												if (!vsndToName.ContainsKey(wav)) {
+												string val = soundName + "|" + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents");
+												if (!vsndToName.ContainsKey(vsnd)) {
 													List<string> soundNames = new List<string>();
-													soundNames.Add(soundName);
-													soundNames.Add("path: " + file.Replace(Path.Combine(Environment.CurrentDirectory, "possible_sscripts"), "soundevents"));
-													vsndToName[wav] = soundNames;
+													soundNames.Add(val);
+													vsndToName[vsnd] = soundNames;
 												} else {
-													if (!vsndToName[wav].Contains(soundName)) {
-														vsndToName[wav].Add(soundName);
+													if (!vsndToName[vsnd].Contains(val)) {
+														vsndToName[vsnd].Add(val);
 													}
 												}
 											}
@@ -139,27 +138,25 @@ namespace Dota2ModKit.Features {
 
 			KeyValue root = new KeyValue("Sounds");
 			foreach (KeyValuePair<string, List<string>> m in vsndToName) {
-				string soundName = m.Key;
-				List<string> waves = m.Value;
-				KeyValue soundNameKV = new KeyValue(soundName);
-				root.AddChild(soundNameKV);
+				string soundVsnd = m.Key;
+				List<string> soundInfos = m.Value;
+				KeyValue soundKV = new KeyValue(soundVsnd);
+				root.AddChild(soundKV);
 
-				string path = "";
-				foreach (string wave in waves) {
-					if (wave.StartsWith("path:")) {
-						path = wave;
-						continue;
-					}
-					KeyValue waveKV = new KeyValue(wave);
-					soundNameKV.AddChild(waveKV);
+				foreach (string soundInfo in soundInfos) {
+					string[] parts = soundInfo.Split('|');
+					string soundName = parts[0];
+					string vsndevts = parts[1];
+
+					vsndevts = vsndevts.Replace("\\", "/");
+					vsndevts = vsndevts.Replace(".txt", ".vsndevts");
+
+					KeyValue waveKV = new KeyValue(soundName + "|" + vsndevts);
+					soundKV.AddChild(waveKV);
 				}
-
-				path = path.Replace("\\", "/");
-				path = path.Replace(".txt", ".vsndevts");
-				KeyValue pathKV = new KeyValue(path);
-				soundNameKV.AddChild(pathKV);
 			}
-			File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname.txt"), root.ToString());
+
+			File.WriteAllText(vsnd_to_soundname_Path, root.ToString());
 		}
 
 		private string fixWave(string wave) {

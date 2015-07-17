@@ -45,7 +45,7 @@
 			this.soundNamesTextBox.ReadOnly = true;
 			this.soundNamesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.soundNamesTextBox.SelectedText = "";
-			this.soundNamesTextBox.Size = new System.Drawing.Size(339, 156);
+			this.soundNamesTextBox.Size = new System.Drawing.Size(459, 232);
 			this.soundNamesTextBox.TabIndex = 0;
 			this.soundNamesTextBox.TabStop = false;
 			this.soundNamesTextBox.Text = "metroTextBox1";
@@ -73,7 +73,7 @@
 			this.vsndTextBox.PasswordChar = '\0';
 			this.vsndTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.vsndTextBox.SelectedText = "";
-			this.vsndTextBox.Size = new System.Drawing.Size(339, 23);
+			this.vsndTextBox.Size = new System.Drawing.Size(459, 23);
 			this.vsndTextBox.TabIndex = 11;
 			this.vsndTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.vsndTextBox.UseSelectable = true;
@@ -93,7 +93,7 @@
 			// okBtn
 			// 
 			this.okBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.okBtn.Location = new System.Drawing.Point(132, 336);
+			this.okBtn.Location = new System.Drawing.Point(196, 398);
 			this.okBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.okBtn.Name = "okBtn";
 			this.okBtn.Size = new System.Drawing.Size(125, 33);
@@ -119,14 +119,14 @@
 			// metroScrollBar1
 			// 
 			this.metroScrollBar1.LargeChange = 10;
-			this.metroScrollBar1.Location = new System.Drawing.Point(352, 152);
+			this.metroScrollBar1.Location = new System.Drawing.Point(472, 152);
 			this.metroScrollBar1.Maximum = 100;
 			this.metroScrollBar1.Minimum = 0;
 			this.metroScrollBar1.MouseWheelBarPartitions = 10;
 			this.metroScrollBar1.Name = "metroScrollBar1";
 			this.metroScrollBar1.Orientation = MetroFramework.Controls.MetroScrollOrientation.Vertical;
 			this.metroScrollBar1.ScrollbarSize = 10;
-			this.metroScrollBar1.Size = new System.Drawing.Size(10, 156);
+			this.metroScrollBar1.Size = new System.Drawing.Size(10, 232);
 			this.metroScrollBar1.TabIndex = 15;
 			this.metroScrollBar1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroScrollBar1.UseSelectable = true;
@@ -136,7 +136,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(385, 394);
+			this.ClientSize = new System.Drawing.Size(505, 455);
 			this.Controls.Add(this.metroScrollBar1);
 			this.Controls.Add(this.metroLabel1);
 			this.Controls.Add(this.okBtn);
