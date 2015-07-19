@@ -12,6 +12,28 @@ using VPKExtract;
 namespace Dota2ModKit {
 	public static class Util {
 
+		public static string findCommonBeginning(string[] strs) {
+			string commonBeginning = "";
+			int maxLength = Int32.MaxValue;
+
+			foreach (string s in strs) {
+				if (s.Length < maxLength) {
+					maxLength = s.Length;
+				}
+			}
+			for (int i = 0; i < maxLength; i++) {
+
+				string possibleCommonBeg = commonBeginning + strs[0][i];
+				foreach (string s in strs) {
+					if (!s.StartsWith(possibleCommonBeg)) {
+						return commonBeginning;
+					}
+				}
+				commonBeginning = possibleCommonBeg;
+			}
+			return commonBeginning;
+		}
+
 		public static string getDotaDir() {
 			string dotaDir = "";
 			// Auto-find the dota path.

@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using Dota2ModKit.Features;
 using VPKExtract;
+using Dota2ModKit.Forms;
 
 namespace Dota2ModKit {
 	public partial class MainForm : MetroForm {
@@ -740,6 +741,20 @@ namespace Dota2ModKit {
 					File.Delete(logPath);
 				}
 			} catch (Exception) { }
+		}
+
+		private void spellLibraryBtn_Click(object sender, EventArgs e) {
+			fixButton();
+
+			//try {
+				SpellLibraryForm slf = new SpellLibraryForm(this);
+				DialogResult dr = slf.ShowDialog();
+			/*} catch (Exception ex) {
+				MetroMessageBox.Show(this, ex.Message,
+					ex.ToString(),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+			}*/
 		}
 	}
 }

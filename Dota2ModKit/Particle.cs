@@ -18,7 +18,7 @@ namespace Dota2ModKit {
 			lines = File.ReadAllLines(path);
 		}
 
-		internal void alterParticle(ParticleDesignForm pdf, string[] rgb, int sizeValue) {
+		internal bool alterParticle(ParticleDesignForm pdf, string[] rgb, int sizeValue) {
 			this.pdf = pdf;
 
 			List<string> newLines = new List<string>();
@@ -132,7 +132,10 @@ namespace Dota2ModKit {
 
 			if (!error) {
 				lines = newLines.ToArray();
+			} else {
+				return false;
 			}
+			return true;
 		}
 	}
 }

@@ -31,7 +31,7 @@ namespace Dota2ModKit {
 		private void CheckForUpdatesThread() {
 			// use these to test version updater.
 			//newVers = "1.3.2";
-			//url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v1.3.2/D2ModKit.zip";
+			//url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v1.3.2/D2ModKit.zip";
 
 			// remember to keep the version naming consistent!
 			//  you can go from 1.3.4.4 to 1.3.5.0, OR 1.3.4.0 to 1.3.5.0
@@ -43,12 +43,12 @@ namespace Dota2ModKit {
 			int j = 0;
 			while (true) {
 				newVers = Util.incrementVers(version, count + j);
-				url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+				url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 				url += newVers + "/D2ModKit.zip";
 				WebClient wc = new WebClient();
 
 				try {
-					byte[] responseBytes = wc.DownloadData("https://github.com/Myll/Dota-2-ModKit/releases/tag/v" + newVers);
+					byte[] responseBytes = wc.DownloadData("https://github.com/stephenfournier/Dota-2-ModKit/releases/tag/v" + newVers);
 					string source = System.Text.Encoding.ASCII.GetString(responseBytes);
 				} catch (Exception) {
 					if (j < 10) {
@@ -69,7 +69,7 @@ namespace Dota2ModKit {
 			}
 
 			newVers = Util.incrementVers(version, count - 1);
-			url = "https://github.com/Myll/Dota-2-ModKit/releases/download/v";
+			url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 			url += newVers + "/D2ModKit.zip";
 
 			mainForm.newVers = newVers;
