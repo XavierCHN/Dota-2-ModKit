@@ -39,8 +39,6 @@
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.toolsTab = new MetroFramework.Controls.MetroTabPage();
 			this.findSoundNameBtn = new MetroFramework.Controls.MetroButton();
-			this.decompileVtexButton = new MetroFramework.Controls.MetroButton();
-			this.compileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
 			this.particleDesignBtn = new MetroFramework.Controls.MetroButton();
 			this.helpTab = new MetroFramework.Controls.MetroTabPage();
@@ -72,12 +70,15 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.spellLibraryBtn = new MetroFramework.Controls.MetroButton();
+			this.tools2Tab = new MetroFramework.Controls.MetroTabPage();
+			this.compileVtexButton = new MetroFramework.Controls.MetroButton();
+			this.decompileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
 			this.helpTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.tools2Tab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// generateAddonLangsBtn
@@ -146,13 +147,14 @@
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.toolsTab);
+			this.tabControl.Controls.Add(this.tools2Tab);
 			this.tabControl.Controls.Add(this.helpTab);
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 1;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -160,9 +162,8 @@
 			// 
 			// toolsTab
 			// 
+			this.toolsTab.Controls.Add(this.spellLibraryBtn);
 			this.toolsTab.Controls.Add(this.findSoundNameBtn);
-			this.toolsTab.Controls.Add(this.decompileVtexButton);
-			this.toolsTab.Controls.Add(this.compileVtexButton);
 			this.toolsTab.Controls.Add(this.combineKVBtn);
 			this.toolsTab.Controls.Add(this.particleDesignBtn);
 			this.toolsTab.Controls.Add(this.generateAddonLangsBtn);
@@ -173,7 +174,7 @@
 			this.toolsTab.Name = "toolsTab";
 			this.toolsTab.Size = new System.Drawing.Size(258, 183);
 			this.toolsTab.TabIndex = 0;
-			this.toolsTab.Text = "Tools";
+			this.toolsTab.Text = "Tools 1";
 			this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.toolsTab.VerticalScrollbarBarColor = true;
 			this.toolsTab.VerticalScrollbarHighlightOnWheel = false;
@@ -193,36 +194,6 @@
 			this.metroToolTip1.SetToolTip(this.findSoundNameBtn, "Decompiles .vtex_c files to .tga files");
 			this.findSoundNameBtn.UseSelectable = true;
 			this.findSoundNameBtn.Click += new System.EventHandler(this.findSoundNameBtn_Click);
-			// 
-			// decompileVtexButton
-			// 
-			this.decompileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.decompileVtexButton.Location = new System.Drawing.Point(130, 82);
-			this.decompileVtexButton.Margin = new System.Windows.Forms.Padding(4);
-			this.decompileVtexButton.Name = "decompileVtexButton";
-			this.decompileVtexButton.Size = new System.Drawing.Size(125, 33);
-			this.decompileVtexButton.TabIndex = 5;
-			this.decompileVtexButton.TabStop = false;
-			this.decompileVtexButton.Text = ".vtex_c -> .tga";
-			this.decompileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.decompileVtexButton, "Decompiles .vtex_c files to .tga files");
-			this.decompileVtexButton.UseSelectable = true;
-			this.decompileVtexButton.Click += new System.EventHandler(this.decompileVtexButton_Click);
-			// 
-			// compileVtexButton
-			// 
-			this.compileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.compileVtexButton.Location = new System.Drawing.Point(130, 44);
-			this.compileVtexButton.Margin = new System.Windows.Forms.Padding(4);
-			this.compileVtexButton.Name = "compileVtexButton";
-			this.compileVtexButton.Size = new System.Drawing.Size(125, 33);
-			this.compileVtexButton.TabIndex = 4;
-			this.compileVtexButton.TabStop = false;
-			this.compileVtexButton.Text = ".tga -> .vtex_c";
-			this.compileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.compileVtexButton, "Compiles .tga files to .vtex, and auto-creates the .vtex_c\'s");
-			this.compileVtexButton.UseSelectable = true;
-			this.compileVtexButton.Click += new System.EventHandler(this.compileVtexButton_Click);
 			// 
 			// combineKVBtn
 			// 
@@ -522,7 +493,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-4, 273);
+			this.notificationLabel.Location = new System.Drawing.Point(-2, 270);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -610,7 +581,7 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(51, 197);
+			this.metroTile1.Location = new System.Drawing.Point(50, 197);
 			this.metroTile1.Name = "metroTile1";
 			this.metroTile1.Size = new System.Drawing.Size(37, 27);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
@@ -625,7 +596,7 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(92, 197);
+			this.optionsBtn.Location = new System.Drawing.Point(91, 197);
 			this.optionsBtn.Name = "optionsBtn";
 			this.optionsBtn.Size = new System.Drawing.Size(29, 27);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Yellow;
@@ -637,22 +608,70 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
-			// pictureBox1
+			// spellLibraryBtn
 			// 
-			this.pictureBox1.Image = global::Dota2ModKit.Properties.Resources.d2modkit;
-			this.pictureBox1.Location = new System.Drawing.Point(178, 15);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.pictureBox1.TabIndex = 7;
-			this.pictureBox1.TabStop = false;
+			this.spellLibraryBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.spellLibraryBtn.Location = new System.Drawing.Point(130, 44);
+			this.spellLibraryBtn.Margin = new System.Windows.Forms.Padding(4);
+			this.spellLibraryBtn.Name = "spellLibraryBtn";
+			this.spellLibraryBtn.Size = new System.Drawing.Size(125, 33);
+			this.spellLibraryBtn.TabIndex = 7;
+			this.spellLibraryBtn.TabStop = false;
+			this.spellLibraryBtn.Text = "SpellLibrary";
+			this.spellLibraryBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.spellLibraryBtn, "Decompiles .vtex_c files to .tga files");
+			this.spellLibraryBtn.UseSelectable = true;
+			// 
+			// tools2Tab
+			// 
+			this.tools2Tab.Controls.Add(this.decompileVtexButton);
+			this.tools2Tab.Controls.Add(this.compileVtexButton);
+			this.tools2Tab.HorizontalScrollbarBarColor = true;
+			this.tools2Tab.HorizontalScrollbarHighlightOnWheel = false;
+			this.tools2Tab.HorizontalScrollbarSize = 10;
+			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
+			this.tools2Tab.Name = "tools2Tab";
+			this.tools2Tab.Size = new System.Drawing.Size(258, 183);
+			this.tools2Tab.TabIndex = 4;
+			this.tools2Tab.Text = "Tools 2";
+			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.tools2Tab.VerticalScrollbarBarColor = true;
+			this.tools2Tab.VerticalScrollbarHighlightOnWheel = false;
+			this.tools2Tab.VerticalScrollbarSize = 10;
+			// 
+			// compileVtexButton
+			// 
+			this.compileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.compileVtexButton.Location = new System.Drawing.Point(0, 6);
+			this.compileVtexButton.Margin = new System.Windows.Forms.Padding(4);
+			this.compileVtexButton.Name = "compileVtexButton";
+			this.compileVtexButton.Size = new System.Drawing.Size(125, 33);
+			this.compileVtexButton.TabIndex = 5;
+			this.compileVtexButton.TabStop = false;
+			this.compileVtexButton.Text = ".tga -> .vtex_c";
+			this.compileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.compileVtexButton, "Compiles .tga files to .vtex, and auto-creates the .vtex_c\'s");
+			this.compileVtexButton.UseSelectable = true;
+			// 
+			// decompileVtexButton
+			// 
+			this.decompileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.decompileVtexButton.Location = new System.Drawing.Point(0, 44);
+			this.decompileVtexButton.Margin = new System.Windows.Forms.Padding(4);
+			this.decompileVtexButton.Name = "decompileVtexButton";
+			this.decompileVtexButton.Size = new System.Drawing.Size(125, 33);
+			this.decompileVtexButton.TabIndex = 6;
+			this.decompileVtexButton.TabStop = false;
+			this.decompileVtexButton.Text = ".vtex_c -> .tga";
+			this.decompileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.decompileVtexButton, "Decompiles .vtex_c files to .tga files");
+			this.decompileVtexButton.UseSelectable = true;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
-			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
@@ -681,7 +700,7 @@
 			this.toolsTab.ResumeLayout(false);
 			this.helpTab.ResumeLayout(false);
 			this.helpTab.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.tools2Tab.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -726,12 +745,13 @@
 		private System.Windows.Forms.ToolStripMenuItem changePictureToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteAddonToolStripMenuItem;
 		private MetroFramework.Controls.MetroTile metroTile1;
-		private MetroFramework.Controls.MetroButton decompileVtexButton;
-		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroTile optionsBtn;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private MetroFramework.Controls.MetroButton findSoundNameBtn;
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private MetroFramework.Controls.MetroButton spellLibraryBtn;
+		private MetroFramework.Controls.MetroTabPage tools2Tab;
+		private MetroFramework.Controls.MetroButton decompileVtexButton;
+		private MetroFramework.Controls.MetroButton compileVtexButton;
 	}
 }
 

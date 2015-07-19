@@ -428,7 +428,23 @@ namespace Dota2ModKit {
 		private void generateAddonLangsBtn_Click(object sender, EventArgs e) {
 			fixButton();
 
-			bool success = currAddon.generateAddonLangs(this);
+			bool success = true;
+
+			try {
+				success = currAddon.generateAddonLangs(this);
+			} catch (Exception ex) {
+				var ex2 = ex;
+				ex2 = ex2 as KeyValueParsingException;
+
+				if (ex2 == null) {
+					ex2 = ex;
+				}
+				MetroMessageBox.Show(this, ex2.Message,
+				ex2.ToString(),
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Error);
+				success = false;
+			}
 
 			if (success) {
 				text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
@@ -485,8 +501,15 @@ namespace Dota2ModKit {
 
 		private void combineKVBtn_Click(object sender, EventArgs e) {
 			fixButton();
-
-			kvFeatures.combine();
+			try {
+				kvFeatures.combine();
+			} catch (Exception ex) {
+				MetroMessageBox.Show(this,
+					ex.Message,
+					ex.ToString(),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+			}
 		}
 
 		/// <summary>

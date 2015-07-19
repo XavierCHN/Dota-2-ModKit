@@ -67,23 +67,15 @@ namespace Dota2ModKit
 			heroEntries.Clear();
 			alreadyHasKeys.Clear();
 
-			try {
-				// these functions populate the data structures with the tooltips before writing to the addon_lang file.
-				// items
-				generateAbilityTooltips(true);
-				// abils
-				generateAbilityTooltips(false);
-				generateUnitTooltips();
-				generateHeroTooltips();
+			// these functions populate the data structures with the tooltips before writing to the addon_lang file.
+			// items
+			generateAbilityTooltips(true);
+			// abils
+			generateAbilityTooltips(false);
+			generateUnitTooltips();
+			generateHeroTooltips();
 
-				writeTooltips();
-			} catch(Exception ex) {
-				MetroMessageBox.Show(mainForm, ex.Message,
-				ex.ToString(), //"Error while generating tooltips"
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
-				return false;
-			}
+			writeTooltips();
 			return true;
 		}
 
@@ -224,36 +216,25 @@ namespace Dota2ModKit
 				return;
 			}
 
-			try {
-				KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
+			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
 
-				foreach (KeyValue kv in kvs.Children) {
-					if (kv.Key == "Version") {
-						continue;
-					}
-
-					string name = kv.Key;
-
-					foreach (KeyValue kv2 in kv.Children) {
-						if (kv2.Key == "override_hero") {
-							heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
-							break;
-						}
-
-					}
-
-					unitEntries.Add(new UnitEntry(this, kv.Key));
+			foreach (KeyValue kv in kvs.Children) {
+				if (kv.Key == "Version") {
+					continue;
 				}
 
-			} catch (Exception e) {
-				Debug.WriteLine("Error: " + e.StackTrace);
-				/*MetroMessageBox.Show(this, 
-					"Error parsing npc_abilities_custom.txt: " + e.StackTrace, 
-					"", 
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);*/
-			}
+				string name = kv.Key;
 
+				foreach (KeyValue kv2 in kv.Children) {
+					if (kv2.Key == "override_hero") {
+						heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
+						break;
+					}
+
+				}
+
+				unitEntries.Add(new UnitEntry(this, kv.Key));
+			}
 		}
 
 		private void generateUnitTooltips() {
@@ -263,26 +244,14 @@ namespace Dota2ModKit
 				return;
 			}
 
-			try {
-				KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
+			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
 
-				foreach (KeyValue kv in kvs.Children) {
-					if (kv.Key == "Version") {
-						continue;
-					}
-					unitEntries.Add(new UnitEntry(this, kv.Key));
+			foreach (KeyValue kv in kvs.Children) {
+				if (kv.Key == "Version") {
+					continue;
 				}
-
-			} catch (Exception e) {
-				Debug.WriteLine("Error: " + e.StackTrace);
-				/*MetroMessageBox.Show(this, 
-					"Error parsing npc_abilities_custom.txt: " + e.StackTrace, 
-					"", 
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);*/
+				unitEntries.Add(new UnitEntry(this, kv.Key));
 			}
-
-
 		}
 
 		internal void deserializeSettings(KeyValue kv) {
@@ -341,61 +310,52 @@ namespace Dota2ModKit
 				return;
 			}
 
-			try {
-				KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
+			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
 
-				foreach (KeyValue kv in kvs.Children) {
-					if (kv.Key == "Version") {
-						continue;
-					}
+			foreach (KeyValue kv in kvs.Children) {
+				if (kv.Key == "Version") {
+					continue;
+				}
 
-					string abilName = kv.Key;
-					List<string> abilitySpecialNames = new List<string>();
+				string abilName = kv.Key;
+				List<string> abilitySpecialNames = new List<string>();
 
-					foreach (KeyValue kv2 in kv.Children) {
-						if (kv2.Key == "AbilitySpecial") {
-							foreach (KeyValue kv3 in kv2.Children) {
-								foreach (KeyValue kv4 in kv3.Children) {
-									if (kv4.Key != "var_type") {
-										string abilitySpecialName = kv4.Key;
-										abilitySpecialNames.Add(abilitySpecialName);
-									}
+				foreach (KeyValue kv2 in kv.Children) {
+					if (kv2.Key == "AbilitySpecial") {
+						foreach (KeyValue kv3 in kv2.Children) {
+							foreach (KeyValue kv4 in kv3.Children) {
+								if (kv4.Key != "var_type") {
+									string abilitySpecialName = kv4.Key;
+									abilitySpecialNames.Add(abilitySpecialName);
 								}
-
 							}
-						} else if (kv2.Key == "Modifiers") {
-							foreach (KeyValue kv3 in kv2.Children) {
-								string modifierName = kv3.Key;
-								bool hiddenModifier = false;
-								foreach (KeyValue kv4 in kv3.Children) {
-									if (kv4.Key == "IsHidden" && kv4.GetString() == "1") {
-										hiddenModifier = true;
-									}
-								}
-								if (!hiddenModifier) {
-									if (!item) {
-										abilityModifierNames.Add(modifierName);
-									} else {
-										itemModifierNames.Add(modifierName);
-									}
-								}
 
+						}
+					} else if (kv2.Key == "Modifiers") {
+						foreach (KeyValue kv3 in kv2.Children) {
+							string modifierName = kv3.Key;
+							bool hiddenModifier = false;
+							foreach (KeyValue kv4 in kv3.Children) {
+								if (kv4.Key == "IsHidden" && kv4.GetString() == "1") {
+									hiddenModifier = true;
+								}
 							}
+							if (!hiddenModifier) {
+								if (!item) {
+									abilityModifierNames.Add(modifierName);
+								} else {
+									itemModifierNames.Add(modifierName);
+								}
+							}
+
 						}
 					}
-					if (!item) {
-						abilityEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
-					} else {
-						itemEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
-					}
 				}
-			} catch (Exception e) {
-				Debug.WriteLine("Error: " + e.StackTrace);
-				/*MetroMessageBox.Show(this, 
-					"Error parsing npc_abilities_custom.txt: " + e.StackTrace, 
-					"", 
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);*/
+				if (!item) {
+					abilityEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
+				} else {
+					itemEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
+				}
 			}
 		}
 
