@@ -25,6 +25,8 @@ namespace Dota2ModKit.Forms {
 			npcPath = Path.Combine(spellLibPath, "game", "scripts", "npc");
 
 			InitializeComponent();
+			metroScrollBar1.Region = textBox1.Region;
+			//textBox1.AutoScrollOffset
 
 			if (!Directory.Exists(spellLibPath)) {
 				DialogResult dr = MetroMessageBox.Show(mainForm, "SpellLibrary will now be cloned into " + spellLibPath,
@@ -178,6 +180,19 @@ namespace Dota2ModKit.Forms {
 
 
 			}
+		}
+
+		private void copySpellBtn_Click(object sender, EventArgs e) {
+			Clipboard.SetText(textBox1.Text);
+		}
+
+		private void luaBtn_Click(object sender, EventArgs e) {
+
+		}
+
+		private void metroScrollBar1_Scroll(object sender, ScrollEventArgs e) {
+			Console.WriteLine(e.NewValue);
+			Console.WriteLine(textBox1.AutoScrollOffset.X + ", " + textBox1.AutoScrollOffset.Y);
 		}
 	}
 }
