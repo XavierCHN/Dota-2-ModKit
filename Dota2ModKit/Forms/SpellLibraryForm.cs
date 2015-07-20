@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,11 +24,11 @@ namespace Dota2ModKit.Forms {
 			this.mainForm = mainForm;
 			npcPath = Path.Combine(spellLibPath, "game", "scripts", "npc");
 
-            InitializeComponent();
-			
+			InitializeComponent();
+
 			if (!Directory.Exists(spellLibPath)) {
-				DialogResult dr = MetroMessageBox.Show(this, "SpellLibrary not found",
-					"SpellLibrary will now be cloned into " + spellLibPath,
+				DialogResult dr = MetroMessageBox.Show(mainForm, "SpellLibrary will now be cloned into " + spellLibPath,
+					"SpellLibrary not found",
 					MessageBoxButtons.OKCancel,
 					MessageBoxIcon.Information);
 
@@ -35,10 +36,34 @@ namespace Dota2ModKit.Forms {
 					return;
 				}
 
-				string repo = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
-				Console.WriteLine("repo path:" + repo);
+				mainForm._spellLibBtn.Enabled = false;
+				mainForm._progressSpinner1.Value = 60;
+				mainForm._progressSpinner1.Visible = true;
+				mainForm.text_notification("Cloning SpellLibrary...", MetroColorStyle.Blue, 999999);
 
+				using (var cloneWorker = new BackgroundWorker()) {
+					cloneWorker.RunWorkerCompleted += CloneWorker_RunWorkerCompleted;
+					cloneWorker.DoWork += CloneWorker_DoWork;
+					cloneWorker.RunWorkerAsync();
+				}
+
+			} else {
+				initTreeView();
 			}
+		}
+
+		private void CloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+			Console.WriteLine("Cloneworker ocmpleted.");
+			mainForm.text_notification("Clone complete!", MetroColorStyle.Green, 2500);
+			mainForm._progressSpinner1.Visible = false;
+			mainForm._spellLibBtn.Enabled = true;
+
+			initTreeView();
+		}
+
+		private void CloneWorker_DoWork(object sender, DoWorkEventArgs e) {
+			string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
+			Console.WriteLine("repo path:" + gitPath);
 
 			// pull from the repo
 			using (var repo = new Repository(spellLibPath)) {
@@ -47,9 +72,10 @@ namespace Dota2ModKit.Forms {
 				MergeStatus ms = mr.Status;
 				Console.WriteLine("MergeStatus: " + ms.ToString());
 			}
+		}
 
+		private void initTreeView() {
 			populateTreeView();
-
 			treeView1.Nodes[0].Expand();
 
 			treeView1.NodeMouseClick += TreeView1_NodeMouseClick;
@@ -57,6 +83,7 @@ namespace Dota2ModKit.Forms {
 			treeView1.KeyDown += TreeView1_KeyDown;
 
 			treeView1.ExpandAll();
+			this.ShowDialog();
 		}
 
 		private void TreeView1_KeyDown(object sender, KeyEventArgs e) {

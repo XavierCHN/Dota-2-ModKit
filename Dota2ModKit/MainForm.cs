@@ -41,8 +41,10 @@ namespace Dota2ModKit {
 
 		// helpers to make things accessible in other forms.
 		public MetroTile _addonTile;
+		public MetroProgressSpinner _progressSpinner1;
+		public MetroButton _spellLibBtn;
 
-        public MainForm() {
+		public MainForm() {
 			// refresh the debug_log
 			refreshDebugLog();
 
@@ -75,6 +77,8 @@ namespace Dota2ModKit {
 
 			// allow public accessibility to these
 			_addonTile = addonTile;
+			_progressSpinner1 = progressSpinner1;
+			_spellLibBtn = spellLibraryBtn;
 
 			// init mainform controls stuff
 			Size size = new Size(steamTile.Width, steamTile.Height);
@@ -748,7 +752,6 @@ namespace Dota2ModKit {
 
 			//try {
 				SpellLibraryForm slf = new SpellLibraryForm(this);
-				DialogResult dr = slf.ShowDialog();
 			/*} catch (Exception ex) {
 				MetroMessageBox.Show(this, ex.Message,
 					ex.ToString(),

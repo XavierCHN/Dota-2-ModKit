@@ -74,6 +74,7 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
+			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -247,7 +248,7 @@
 			this.tools2Tab.Controls.Add(this.compileVtexButton);
 			this.tools2Tab.HorizontalScrollbarBarColor = true;
 			this.tools2Tab.HorizontalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.HorizontalScrollbarSize = 6;
+			this.tools2Tab.HorizontalScrollbarSize = 3;
 			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
 			this.tools2Tab.Name = "tools2Tab";
 			this.tools2Tab.Size = new System.Drawing.Size(258, 183);
@@ -256,7 +257,7 @@
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tools2Tab.VerticalScrollbarBarColor = true;
 			this.tools2Tab.VerticalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.VerticalScrollbarSize = 8;
+			this.tools2Tab.VerticalScrollbarSize = 4;
 			// 
 			// decompileVtexButton
 			// 
@@ -539,7 +540,7 @@
 			// versionLabel
 			// 
 			this.versionLabel.AutoSize = true;
-			this.versionLabel.Location = new System.Drawing.Point(402, 277);
+			this.versionLabel.Location = new System.Drawing.Point(401, 275);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(49, 19);
 			this.versionLabel.TabIndex = 4;
@@ -553,7 +554,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-2, 270);
+			this.notificationLabel.Location = new System.Drawing.Point(-3, 271);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -668,11 +669,23 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
+			// progressSpinner1
+			// 
+			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
+			this.progressSpinner1.Maximum = 100;
+			this.progressSpinner1.Name = "progressSpinner1";
+			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
+			this.progressSpinner1.TabIndex = 19;
+			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.progressSpinner1.UseSelectable = true;
+			this.progressSpinner1.Visible = false;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
+			this.Controls.Add(this.progressSpinner1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
@@ -753,6 +766,7 @@
 		private MetroFramework.Controls.MetroTabPage tools2Tab;
 		private MetroFramework.Controls.MetroButton decompileVtexButton;
 		private MetroFramework.Controls.MetroButton compileVtexButton;
+		private MetroFramework.Controls.MetroProgressSpinner progressSpinner1;
 	}
 }
 

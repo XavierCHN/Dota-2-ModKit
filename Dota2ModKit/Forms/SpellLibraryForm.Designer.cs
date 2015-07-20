@@ -44,7 +44,7 @@
 			this.textBox1.MaxLength = 32767;
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
-			this.textBox1.PasswordChar = '\0';
+			//this.textBox1.PasswordChar = '\0';
 			this.textBox1.ReadOnly = true;
 			this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBox1.SelectedText = "";
