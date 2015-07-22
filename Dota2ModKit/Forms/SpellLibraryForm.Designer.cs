@@ -182,7 +182,7 @@
 			this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.textBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.textBox1.IsReplaceMode = false;
-			this.textBox1.Language = FastColoredTextBoxNS.Language.Lua;
+			this.textBox1.Language = FastColoredTextBoxNS.Language.JS;
 			this.textBox1.LeftBracket = '(';
 			this.textBox1.LeftBracket2 = '{';
 			this.textBox1.Location = new System.Drawing.Point(417, 63);

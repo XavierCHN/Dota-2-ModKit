@@ -270,7 +270,7 @@ namespace Dota2ModKit.Forms {
 
 			} else {
 				// open kv
-				textBox1.Language = Language.Lua;
+				textBox1.Language = Language.JS;
 				textBox1.Text = File.ReadAllText(currKVPath);
 				luaKVBtn.Text = "Lua Script";
 				metroToolTip1.SetToolTip(luaKVBtn, "Opens the Lua script for this spell");
