@@ -48,10 +48,14 @@ namespace Dota2ModKit {
 			mts.Add(metroTile10);
 			mts.Add(metroTile11);
 			mts.Add(metroTile12);
+			mts.Add(metroTile13);
+			mts.Add(metroTile14);
+			mts.Add(metroTile15);
+			mts.Add(metroTile16);
 
-			totalPages = mainForm.addons.Count / 12;
+			totalPages = mainForm.addons.Count / 16;
 
-			if (mainForm.addons.Count % 12 != 0) {
+			if (mainForm.addons.Count % 16 != 0) {
 				totalPages++;
 			}
 
@@ -74,7 +78,7 @@ namespace Dota2ModKit {
 
 				pos++;
 
-				if (addonCount % 12 == 0) {
+				if (addonCount % 16 == 0) {
 					page++;
 					pos = 1;
 				}
@@ -385,6 +389,10 @@ namespace Dota2ModKit {
 					File.WriteAllLines(files[i], lines, enc);
 				}
 			}
+		}
+
+		private void addonNameTextBox_Click(object sender, EventArgs e) {
+
 		}
 	}
 }

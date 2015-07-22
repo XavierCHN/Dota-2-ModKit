@@ -169,15 +169,36 @@ namespace Dota2ModKit {
 			return img;
 		}
 
-				/*string[] versionSplit = version.Split('.');
-		string newVers = "v";
-		for (int i = 0; i < versionSplit.Count(); i++) {
-			if (i == versionSplit.Count() - 1) {
-				continue;
+		internal static string MakeUnderscoreStringNice(string str) {
+			string[] split = str.Split('_');
+			StringBuilder newS = new StringBuilder();
+			for (int i = 0; i < split.Length; i++) {
+				string s = split[i];
+				if (s.Length == 0) {
+					continue;
+				}
+
+				newS.Append(s[0].ToString().ToUpper());
+				if (s.Length > 1) {
+					newS.Append(s.Substring(1, s.Length-1));
+				}
+
+				if (i < split.Length-1) {
+					newS.Append(" ");
+				}
 			}
-			newVers += versionSplit[i] + ".";
+			return newS.ToString();
 		}
-		newVers = newVers.Substring(0, newVers.Length - 1);*/
+
+		/*string[] versionSplit = version.Split('.');
+string newVers = "v";
+for (int i = 0; i < versionSplit.Count(); i++) {
+	if (i == versionSplit.Count() - 1) {
+		continue;
+	}
+	newVers += versionSplit[i] + ".";
+}
+newVers = newVers.Substring(0, newVers.Length - 1);*/
 
 	}
 }

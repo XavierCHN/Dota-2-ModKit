@@ -75,6 +75,7 @@
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+			this.metroButton2 = new MetroFramework.Controls.MetroButton();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -192,14 +193,14 @@
 			this.spellLibraryBtn.TabStop = false;
 			this.spellLibraryBtn.Text = "SpellLibrary";
 			this.spellLibraryBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.spellLibraryBtn, "Decompiles .vtex_c files to .tga files");
+			this.metroToolTip1.SetToolTip(this.spellLibraryBtn, "Open up the SpellLibrary Browser");
 			this.spellLibraryBtn.UseSelectable = true;
 			this.spellLibraryBtn.Click += new System.EventHandler(this.spellLibraryBtn_Click);
 			// 
 			// findSoundNameBtn
 			// 
 			this.findSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.findSoundNameBtn.Location = new System.Drawing.Point(0, 82);
+			this.findSoundNameBtn.Location = new System.Drawing.Point(130, 82);
 			this.findSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.findSoundNameBtn.Name = "findSoundNameBtn";
 			this.findSoundNameBtn.Size = new System.Drawing.Size(125, 33);
@@ -207,7 +208,7 @@
 			this.findSoundNameBtn.TabStop = false;
 			this.findSoundNameBtn.Text = "Find SoundName";
 			this.findSoundNameBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.findSoundNameBtn, "Decompiles .vtex_c files to .tga files");
+			this.metroToolTip1.SetToolTip(this.findSoundNameBtn, "Search for Sound Names with a .vsnd path");
 			this.findSoundNameBtn.UseSelectable = true;
 			this.findSoundNameBtn.Click += new System.EventHandler(this.findSoundNameBtn_Click);
 			// 
@@ -244,11 +245,12 @@
 			// 
 			// tools2Tab
 			// 
+			this.tools2Tab.Controls.Add(this.metroButton2);
 			this.tools2Tab.Controls.Add(this.decompileVtexButton);
 			this.tools2Tab.Controls.Add(this.compileVtexButton);
 			this.tools2Tab.HorizontalScrollbarBarColor = true;
 			this.tools2Tab.HorizontalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.HorizontalScrollbarSize = 3;
+			this.tools2Tab.HorizontalScrollbarSize = 2;
 			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
 			this.tools2Tab.Name = "tools2Tab";
 			this.tools2Tab.Size = new System.Drawing.Size(258, 183);
@@ -257,7 +259,7 @@
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tools2Tab.VerticalScrollbarBarColor = true;
 			this.tools2Tab.VerticalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.VerticalScrollbarSize = 4;
+			this.tools2Tab.VerticalScrollbarSize = 3;
 			// 
 			// decompileVtexButton
 			// 
@@ -635,6 +637,9 @@
 			// 
 			// metroToolTip1
 			// 
+			this.metroToolTip1.AutoPopDelay = 8000;
+			this.metroToolTip1.InitialDelay = 500;
+			this.metroToolTip1.ReshowDelay = 100;
 			this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
 			this.metroToolTip1.StyleManager = null;
 			this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -679,6 +684,21 @@
 			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.progressSpinner1.UseSelectable = true;
 			this.progressSpinner1.Visible = false;
+			// 
+			// metroButton2
+			// 
+			this.metroButton2.Enabled = false;
+			this.metroButton2.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.metroButton2.Location = new System.Drawing.Point(130, 6);
+			this.metroButton2.Margin = new System.Windows.Forms.Padding(4);
+			this.metroButton2.Name = "metroButton2";
+			this.metroButton2.Size = new System.Drawing.Size(125, 33);
+			this.metroButton2.TabIndex = 9;
+			this.metroButton2.TabStop = false;
+			this.metroButton2.Text = "Master Toolbox";
+			this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.metroButton2, "Opens up a page containing all the tools");
+			this.metroButton2.UseSelectable = true;
 			// 
 			// MainForm
 			// 
@@ -767,6 +787,7 @@
 		private MetroFramework.Controls.MetroButton decompileVtexButton;
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroProgressSpinner progressSpinner1;
+		private MetroFramework.Controls.MetroButton metroButton2;
 	}
 }
 
