@@ -48,9 +48,6 @@ namespace Dota2ModKit {
 			// refresh the debug_log
 			refreshDebugLog();
 
-			// Check if application is already running.
-			if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
-
 			// bring up the UI
 			InitializeComponent();
 
@@ -495,26 +492,26 @@ namespace Dota2ModKit {
 			notificationLabelTimer.SynchronizingObject = this;
 			notificationLabelTimer.AutoReset = false;
 			notificationLabelTimer.Start();
-			notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+			notificationLabelTimer.Elapsed += notificationLabelTimer_Elapsed;
 			notificationLabel.Style = color;
 			notificationLabel.Text = text;
 		}
 
-		private void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+		private void notificationLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
 			notificationLabel.Text = "";
 		}
 
 		private void combineKVBtn_Click(object sender, EventArgs e) {
 			fixButton();
-			try {
+			//try {
 				kvFeatures.combine();
-			} catch (Exception ex) {
+			/*} catch (Exception ex) {
 				MetroMessageBox.Show(this,
 					ex.Message,
 					ex.ToString(),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
-			}
+			}*/
 		}
 
 		/// <summary>
@@ -749,6 +746,12 @@ namespace Dota2ModKit {
 
 		private void spellLibraryBtn_Click(object sender, EventArgs e) {
 			fixButton();
+
+			if (Application.OpenForms["SpellLibraryForm"] != null) {
+				Application.OpenForms["SpellLibraryForm"].BringToFront();
+                Application.OpenForms["SpellLibraryForm"].WindowState = FormWindowState.Normal;
+				return;
+            }
 
 			//try {
 				SpellLibraryForm slf = new SpellLibraryForm(this);

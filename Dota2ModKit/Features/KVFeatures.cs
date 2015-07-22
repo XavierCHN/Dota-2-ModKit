@@ -18,46 +18,62 @@ namespace Dota2ModKit.Features {
 		}
 
 		internal void combine() {
-			string[] items = { "Heroes", "Units", "Items", "Abilities" };
+			string[] items = { "heroes", "units", "items", "abilities" };
 			for (int i = 0; i < items.Length; i++) {
-				string itemStr = items[i].ToLowerInvariant();
-				string fold = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", itemStr);
-				string foldName = fold.Substring(fold.LastIndexOf('\\') + 1);
-				string parentFolder = fold.Substring(0, fold.LastIndexOf('\\'));
-				string bigKVPath = Path.Combine(parentFolder, "npc_" + foldName + "_custom.txt");
+				string item = items[i];
+				string foldPath = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", item);
+				string foldName = foldPath.Substring(foldPath.LastIndexOf('\\') + 1);
+				string foldParent = foldPath.Substring(0, foldPath.LastIndexOf('\\'));
+				string bigKVPath = Path.Combine(foldParent, "npc_" + foldName + "_custom.txt");
 
-				if (!File.Exists(bigKVPath)) {
-					continue;
-				}
+				//if (!File.Exists(bigKVPath)) {
+				//	continue;
+				//}
 
-				if (!Directory.Exists(fold)) {
-					DialogResult dr = MetroMessageBox.Show(mainForm, "npc_" + itemStr + "_custom.txt has not been broken up. Break it up now?",
-						"Break up KV file",
-						MessageBoxButtons.OKCancel,
-						MessageBoxIcon.Information);
-					if (dr != DialogResult.OK) {
-						continue;
+				bool doBreakUp = false;
+				if (File.Exists(bigKVPath)) {
+					if (!Directory.Exists(foldPath)) {
+						DialogResult dr = MetroMessageBox.Show(mainForm, "npc_" + item + "_custom.txt has not been broken up. Break it up now?",
+							"Break Up KV File",
+							MessageBoxButtons.OKCancel,
+							MessageBoxIcon.Information);
+
+						if (dr != DialogResult.OK) {
+							// nothings been broken up, so nothing to combine
+							continue;
+						} else {
+							doBreakUp = true;
+						}
+					} else {
+						if (mainForm.currAddon.askToBreakUp) {
+							DialogResult dr = MetroMessageBox.Show(mainForm, "Do you want to break up npc_" + item + "_custom.txt?",
+								"Break Up KV File",
+								MessageBoxButtons.YesNo,
+								MessageBoxIcon.Information);
+							if (dr == DialogResult.Yes) {
+								doBreakUp = true;
+							}
+						}
 					}
-					breakUp(itemStr);
+
+					if (doBreakUp) {
+						breakUp(item);
+					}
 				}
 
 				string currText = File.ReadAllText(bigKVPath);
 
 				// so now we have the big KV file created and ready to be populated.
-				string[] files = Directory.GetFiles(fold, "*.txt", SearchOption.AllDirectories);
+				string[] files = Directory.GetFiles(foldPath, "*.txt", SearchOption.AllDirectories);
 				StringBuilder text = new StringBuilder("\"DOTAAbilities\"" + "\n{\n");
 				if (foldName == "heroes") {
 					text = new StringBuilder("\"DOTAHeroes\"" + "\n{\n");
 				} else if (foldName == "units") {
 					text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
 				}
-				bool hasPrecacheEverything = false;
+
 				foreach (string file in files) {
-					if (file.Contains("npc_precache_everything.txt")) {
-						// skip this, save it for last
-						hasPrecacheEverything = true;
-						continue;
-					}
+
 					bool addTab = false;
 					string[] lines = File.ReadAllLines(file);
 					for (int j = 0; j < lines.Length; j++) {
@@ -72,22 +88,7 @@ namespace Dota2ModKit.Features {
 						text.AppendLine(newLine);
 					}
 				}
-				// now do npc_precache_everything.txt
-				if (hasPrecacheEverything) {
-					bool addTab = false;
-					string[] lines = File.ReadAllLines(Path.Combine(fold, "npc_precache_everything.txt"));
-					for (int j = 0; j < lines.Length; j++) {
-						string line = lines[j];
-						if (j == 0 && line.StartsWith("\t") == false && line.StartsWith("  ") == false) {
-							addTab = true;
-						}
-						string newLine = line;
-						if (addTab) {
-							newLine = "\t" + line;
-						}
-						text.AppendLine(newLine);
-					}
-				}
+
 				text.Append("}");
 
 				// check if they're different before writing
@@ -102,21 +103,24 @@ namespace Dota2ModKit.Features {
 			mainForm.text_notification("Combine success", MetroColorStyle.Green, 1500);
 		}
 
-		private void breakUp(string itemStr) {
+		public void breakUp(string itemStr) {
 			string file = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", "npc_" + itemStr + "_custom.txt");
-			string folderPath = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", itemStr);
+			string foldPath = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", itemStr);
 
 			// Ensure the npc_ file exists.
 			if (!File.Exists(file)) {
 				return;
 			}
 
-			string folderName = file.Substring(file.LastIndexOf('\\') + 1);
+			string foldName = file.Substring(file.LastIndexOf('\\') + 1);
 			// get rid of extension.
-			folderName = folderName.Substring(0, folderName.LastIndexOf('.'));
-			if (!Directory.Exists(folderPath)) {
-				Directory.CreateDirectory(folderPath);
+			foldName = foldName.Substring(0, foldName.LastIndexOf('.'));
+
+			if (Directory.Exists(foldPath)) {
+				Directory.Delete(foldPath, true);
 			}
+			Directory.CreateDirectory(foldPath);
+
 			string allText = File.ReadAllText(file);
 			allText = allText.Replace("\r", "");
 			KeyValue[] kvs = KVLib.KVParser.KV1.ParseAll(allText);
@@ -174,7 +178,7 @@ namespace Dota2ModKit.Features {
 
 						// generate break-down kv files and write text
 						for (int p = startPtr; p < kvArr.Length; p++) {
-							string filePath = Path.Combine(folderPath, kvArr[p].Key + ".txt");
+							string filePath = Path.Combine(foldPath, kvArr[p].Key + ".txt");
 							File.Create(filePath).Close();
 							StringBuilder sb = new StringBuilder();
 

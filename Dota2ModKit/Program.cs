@@ -1,30 +1,32 @@
-﻿using MetroFramework;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
 
-namespace Dota2ModKit
-{
-    static class Program
+namespace Dota2ModKit {
+	static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
         static void Main()
         {
-
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            Application.EnableVisualStyles();
+			// Check if application is already running.
+			if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Count() > 1) {
+				MessageBox.Show("An instance of D2ModKit is already running. Exiting.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				Process.GetCurrentProcess().Kill();
+			}
+
+			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 			MainForm mainForm = new MainForm();
             Application.Run(mainForm);
-			//mainForm.
-
         }
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {

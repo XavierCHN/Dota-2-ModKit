@@ -1,17 +1,10 @@
-﻿using KVLib;
-using LibGit2Sharp;
+﻿using LibGit2Sharp;
 using MetroFramework;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dota2ModKit.Forms {
@@ -71,7 +64,7 @@ namespace Dota2ModKit.Forms {
 
 		private void CloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 			Console.WriteLine("Cloneworker completed.");
-			mainForm.text_notification("", MetroColorStyle.Blue, 1000);
+			mainForm.text_notification("", MetroColorStyle.Blue, 500);
 			mainForm._progressSpinner1.Visible = false;
 			mainForm._spellLibBtn.Enabled = true;
 
@@ -185,7 +178,7 @@ namespace Dota2ModKit.Forms {
 				abilName = abilName.Replace(".txt", "").Replace("_datadriven", "");
 				string heroName = abilName.Substring(0, abilName.IndexOf('_'));
 
-				if (heroName =="phantom" || heroName == "shadow") {
+				if (heroName =="phantom" || heroName == "shadow" || heroName == "dark") {
 					// hardcode these
 					string[] split = abilName.Split('_');
 					heroName = split[0] + "_" + split[1];
@@ -261,7 +254,7 @@ namespace Dota2ModKit.Forms {
 			metroRadioButton1.Select();
 
 			Clipboard.SetText(textBox1.Text);
-			text_notification("Copied!", MetroColorStyle.Blue, 1500);
+			text_notification("Copied!", MetroColorStyle.Blue, 500);
 		}
 
 		private void luaKVBtn_Click(object sender, EventArgs e) {
@@ -292,12 +285,12 @@ namespace Dota2ModKit.Forms {
 			notificationLabelTimer.SynchronizingObject = this;
 			notificationLabelTimer.AutoReset = false;
 			notificationLabelTimer.Start();
-			notificationLabelTimer.Elapsed += kvLabelTimer_Elapsed;
+			notificationLabelTimer.Elapsed += notificationLabelTimer_Elapsed;
 			notificationLabel.Style = color;
 			notificationLabel.Text = text;
 		}
 
-		private void kvLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+		private void notificationLabelTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
 			notificationLabel.Text = "";
 		}
 

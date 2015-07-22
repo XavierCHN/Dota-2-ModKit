@@ -28,10 +28,11 @@
 			this.note0CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.addonOptionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.askToBreakUpCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.modkitOptionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.openChangelogCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
-			this.openChangelogCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -68,7 +69,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(23, 63);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 1;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(497, 341);
 			this.tabControl.TabIndex = 15;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -76,6 +77,7 @@
 			// 
 			// addonOptionsTab
 			// 
+			this.addonOptionsTab.Controls.Add(this.askToBreakUpCheckBox);
 			this.addonOptionsTab.Controls.Add(this.loreCheckBox);
 			this.addonOptionsTab.Controls.Add(this.note0CheckBox);
 			this.addonOptionsTab.HorizontalScrollbarBarColor = true;
@@ -90,6 +92,17 @@
 			this.addonOptionsTab.VerticalScrollbarBarColor = true;
 			this.addonOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.addonOptionsTab.VerticalScrollbarSize = 2;
+			// 
+			// alwaysBreakUpCheckBox
+			// 
+			this.askToBreakUpCheckBox.AutoSize = true;
+			this.askToBreakUpCheckBox.Location = new System.Drawing.Point(0, 55);
+			this.askToBreakUpCheckBox.Name = "alwaysBreakUpCheckBox";
+			this.askToBreakUpCheckBox.Size = new System.Drawing.Size(282, 15);
+			this.askToBreakUpCheckBox.TabIndex = 16;
+			this.askToBreakUpCheckBox.Text = "Always ask to break up before combining KV files";
+			this.askToBreakUpCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.askToBreakUpCheckBox.UseSelectable = true;
 			// 
 			// modkitOptionsTab
 			// 
@@ -106,6 +119,17 @@
 			this.modkitOptionsTab.VerticalScrollbarBarColor = true;
 			this.modkitOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.modkitOptionsTab.VerticalScrollbarSize = 2;
+			// 
+			// openChangelogCheckBox
+			// 
+			this.openChangelogCheckBox.AutoSize = true;
+			this.openChangelogCheckBox.Location = new System.Drawing.Point(0, 13);
+			this.openChangelogCheckBox.Name = "openChangelogCheckBox";
+			this.openChangelogCheckBox.Size = new System.Drawing.Size(229, 15);
+			this.openChangelogCheckBox.TabIndex = 15;
+			this.openChangelogCheckBox.Text = "Open changelog webpage after update";
+			this.openChangelogCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.openChangelogCheckBox.UseSelectable = true;
 			// 
 			// saveBtn
 			// 
@@ -131,17 +155,6 @@
 			this.metroRadioButton1.Text = "metroRadioButton1";
 			this.metroRadioButton1.UseSelectable = true;
 			this.metroRadioButton1.Visible = false;
-			// 
-			// openChangelogCheckBox
-			// 
-			this.openChangelogCheckBox.AutoSize = true;
-			this.openChangelogCheckBox.Location = new System.Drawing.Point(0, 13);
-			this.openChangelogCheckBox.Name = "openChangelogCheckBox";
-			this.openChangelogCheckBox.Size = new System.Drawing.Size(229, 15);
-			this.openChangelogCheckBox.TabIndex = 15;
-			this.openChangelogCheckBox.Text = "Open changelog webpage after update";
-			this.openChangelogCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.openChangelogCheckBox.UseSelectable = true;
 			// 
 			// OptionsForm
 			// 
@@ -180,5 +193,6 @@
 		private MetroFramework.Controls.MetroButton saveBtn;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Controls.MetroCheckBox openChangelogCheckBox;
+		private MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
 	}
 }

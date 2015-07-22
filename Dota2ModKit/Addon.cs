@@ -34,6 +34,7 @@ namespace Dota2ModKit
 		HashSet<string> alreadyHasKeys = new HashSet<string>();
 		internal bool generateNote0;
 		internal bool generateLore;
+		internal bool askToBreakUp;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -281,6 +282,15 @@ namespace Dota2ModKit
 							this.generateLore = false;
 						}
 					}
+				} else if (kv2.Key == "askToBreakUp") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.askToBreakUp = true;
+						} else {
+							this.askToBreakUp = false;
+						}
+					}
 				}
 			}
 		}
@@ -297,6 +307,10 @@ namespace Dota2ModKit
 			KeyValue generateLoreKV = new KeyValue("generateLore");
 			generateLoreKV.AddChild(new KeyValue(this.generateLore.ToString()));
 			addonKV.AddChild(generateLoreKV);
+
+			KeyValue askToBreakUp = new KeyValue("askToBreakUp");
+			askToBreakUp.AddChild(new KeyValue(this.askToBreakUp.ToString()));
+			addonKV.AddChild(askToBreakUp);
 		}
 
 		private void generateAbilityTooltips(bool item) {

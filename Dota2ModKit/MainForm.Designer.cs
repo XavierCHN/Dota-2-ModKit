@@ -43,6 +43,7 @@
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
 			this.particleDesignBtn = new MetroFramework.Controls.MetroButton();
 			this.tools2Tab = new MetroFramework.Controls.MetroTabPage();
+			this.metroButton2 = new MetroFramework.Controls.MetroButton();
 			this.decompileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.compileVtexButton = new MetroFramework.Controls.MetroButton();
 			this.helpTab = new MetroFramework.Controls.MetroTabPage();
@@ -75,7 +76,6 @@
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
-			this.metroButton2 = new MetroFramework.Controls.MetroButton();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -156,7 +156,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 1;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -250,7 +250,7 @@
 			this.tools2Tab.Controls.Add(this.compileVtexButton);
 			this.tools2Tab.HorizontalScrollbarBarColor = true;
 			this.tools2Tab.HorizontalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.HorizontalScrollbarSize = 2;
+			this.tools2Tab.HorizontalScrollbarSize = 1;
 			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
 			this.tools2Tab.Name = "tools2Tab";
 			this.tools2Tab.Size = new System.Drawing.Size(258, 183);
@@ -259,7 +259,22 @@
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tools2Tab.VerticalScrollbarBarColor = true;
 			this.tools2Tab.VerticalScrollbarHighlightOnWheel = false;
-			this.tools2Tab.VerticalScrollbarSize = 3;
+			this.tools2Tab.VerticalScrollbarSize = 2;
+			// 
+			// metroButton2
+			// 
+			this.metroButton2.Enabled = false;
+			this.metroButton2.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.metroButton2.Location = new System.Drawing.Point(130, 6);
+			this.metroButton2.Margin = new System.Windows.Forms.Padding(4);
+			this.metroButton2.Name = "metroButton2";
+			this.metroButton2.Size = new System.Drawing.Size(125, 33);
+			this.metroButton2.TabIndex = 9;
+			this.metroButton2.TabStop = false;
+			this.metroButton2.Text = "Master Toolbox";
+			this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.metroButton2, "Opens up a page containing all the tools");
+			this.metroButton2.UseSelectable = true;
 			// 
 			// decompileVtexButton
 			// 
@@ -686,21 +701,6 @@
 			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.progressSpinner1.UseSelectable = true;
 			this.progressSpinner1.Visible = false;
-			// 
-			// metroButton2
-			// 
-			this.metroButton2.Enabled = false;
-			this.metroButton2.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.metroButton2.Location = new System.Drawing.Point(130, 6);
-			this.metroButton2.Margin = new System.Windows.Forms.Padding(4);
-			this.metroButton2.Name = "metroButton2";
-			this.metroButton2.Size = new System.Drawing.Size(125, 33);
-			this.metroButton2.TabIndex = 9;
-			this.metroButton2.TabStop = false;
-			this.metroButton2.Text = "Master Toolbox";
-			this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.metroButton2, "Opens up a page containing all the tools");
-			this.metroButton2.UseSelectable = true;
 			// 
 			// MainForm
 			// 
