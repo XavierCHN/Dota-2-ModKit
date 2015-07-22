@@ -1,4 +1,5 @@
-﻿using LibGit2Sharp;
+﻿using FastColoredTextBoxNS;
+using LibGit2Sharp;
 using MetroFramework;
 using MetroFramework.Forms;
 using System;
@@ -262,12 +263,14 @@ namespace Dota2ModKit.Forms {
 
 			if (luaKVBtn.Text == "Lua Script") {
 				// open lua
+				textBox1.Language = Language.Lua;
 				textBox1.Text = File.ReadAllText(currLuaPath);
 				luaKVBtn.Text = "KeyValues";
 				metroToolTip1.SetToolTip(luaKVBtn, "Open the KV entry for this spell");
 
 			} else {
 				// open kv
+				textBox1.Language = Language.Lua;
 				textBox1.Text = File.ReadAllText(currKVPath);
 				luaKVBtn.Text = "Lua Script";
 				metroToolTip1.SetToolTip(luaKVBtn, "Opens the Lua script for this spell");

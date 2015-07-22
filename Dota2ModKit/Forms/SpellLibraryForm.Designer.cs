@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpellLibraryForm));
 			this.treeView1 = new System.Windows.Forms.TreeView();
-			this.textBox1 = new MetroFramework.Controls.MetroTextBox();
 			this.copySpellBtn = new MetroFramework.Controls.MetroButton();
 			this.luaKVBtn = new MetroFramework.Controls.MetroButton();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -35,6 +35,8 @@
 			this.metroButton1 = new MetroFramework.Controls.MetroButton();
 			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+			this.textBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
+			((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// treeView1
@@ -47,23 +49,6 @@
 			this.treeView1.Name = "treeView1";
 			this.treeView1.Size = new System.Drawing.Size(267, 673);
 			this.treeView1.TabIndex = 0;
-			// 
-			// textBox1
-			// 
-			this.textBox1.Lines = new string[0];
-			this.textBox1.Location = new System.Drawing.Point(456, 63);
-			this.textBox1.MaxLength = 32767;
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.PasswordChar = '\0';
-			this.textBox1.ReadOnly = true;
-			this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBox1.SelectedText = "";
-			this.textBox1.Size = new System.Drawing.Size(784, 673);
-			this.textBox1.TabIndex = 1;
-			this.textBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.textBox1.UseSelectable = true;
-			this.textBox1.WordWrap = false;
 			// 
 			// copySpellBtn
 			// 
@@ -174,11 +159,50 @@
     "es.";
 			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
+			// textBox1
+			// 
+			this.textBox1.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+			this.textBox1.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>.+)\r\n";
+			this.textBox1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+			this.textBox1.BackBrush = null;
+			this.textBox1.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+			this.textBox1.CharHeight = 14;
+			this.textBox1.CharWidth = 8;
+			this.textBox1.CommentPrefix = "--";
+			this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+			this.textBox1.IsReplaceMode = false;
+			this.textBox1.Language = FastColoredTextBoxNS.Language.Lua;
+			this.textBox1.LeftBracket = '(';
+			this.textBox1.LeftBracket2 = '{';
+			this.textBox1.Location = new System.Drawing.Point(456, 63);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Paddings = new System.Windows.Forms.Padding(0);
+			this.textBox1.ReadOnly = true;
+			this.textBox1.RightBracket = ')';
+			this.textBox1.RightBracket2 = '}';
+			this.textBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+			this.textBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("textBox1.ServiceColors")));
+			this.textBox1.Size = new System.Drawing.Size(784, 673);
+			this.textBox1.TabIndex = 23;
+			this.textBox1.Zoom = 100;
+			// 
 			// SpellLibraryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1263, 759);
+			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.metroLabel3);
 			this.Controls.Add(this.metroLabel2);
 			this.Controls.Add(this.metroButton1);
@@ -187,7 +211,6 @@
 			this.Controls.Add(this.metroLabel1);
 			this.Controls.Add(this.luaKVBtn);
 			this.Controls.Add(this.copySpellBtn);
-			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.treeView1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
@@ -197,6 +220,7 @@
 			this.Style = MetroFramework.MetroColorStyle.Magenta;
 			this.Text = "Spell Library Browser";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
+			((System.ComponentModel.ISupportInitialize)(this.textBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -205,7 +229,6 @@
 		#endregion
 
 		private System.Windows.Forms.TreeView treeView1;
-		private MetroFramework.Controls.MetroTextBox textBox1;
 		private MetroFramework.Controls.MetroButton copySpellBtn;
 		private MetroFramework.Controls.MetroButton luaKVBtn;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
@@ -215,5 +238,6 @@
 		private MetroFramework.Controls.MetroButton metroButton1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private MetroFramework.Controls.MetroLabel metroLabel3;
+		private FastColoredTextBoxNS.FastColoredTextBox textBox1;
 	}
 }

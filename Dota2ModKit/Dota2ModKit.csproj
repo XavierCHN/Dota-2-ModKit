@@ -44,6 +44,9 @@
     <ApplicationIcon>d2modkit.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="KVLib">
       <HintPath>..\..\..\..\Desktop\KVLib-master\KVLib\bin\Debug\KVLib.dll</HintPath>
     </Reference>
