@@ -274,6 +274,7 @@
 			this.decompileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroToolTip1.SetToolTip(this.decompileVtexButton, "Decompiles .vtex_c files to .tga files");
 			this.decompileVtexButton.UseSelectable = true;
+			this.decompileVtexButton.Click += new System.EventHandler(this.decompileVtexButton_Click);
 			// 
 			// compileVtexButton
 			// 
@@ -288,6 +289,7 @@
 			this.compileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroToolTip1.SetToolTip(this.compileVtexButton, "Compiles .tga files to .vtex, and auto-creates the .vtex_c\'s");
 			this.compileVtexButton.UseSelectable = true;
+			this.compileVtexButton.Click += new System.EventHandler(this.compileVtexButton_Click);
 			// 
 			// helpTab
 			// 
