@@ -118,6 +118,7 @@ namespace Dota2ModKit.Forms {
 				string heroName = node.Parent.Name;
 				string p = Path.Combine(npcPath, "abilities", abilName);
                 if (File.Exists(p)) {
+					changeToKV();
 					textBox1.Text = File.ReadAllText(p);
 					currKVPath = p;
 
@@ -138,6 +139,7 @@ namespace Dota2ModKit.Forms {
 				string itemName = node.Name;
 				string p = Path.Combine(npcPath, "items", itemName);
 				if (File.Exists(p)) {
+					changeToKV();
 					textBox1.Text = File.ReadAllText(p);
 					currKVPath = p;
 
@@ -153,8 +155,6 @@ namespace Dota2ModKit.Forms {
 				} else {
 					Console.WriteLine(itemName + " path wasn't found!");
 				}
-
-
             }
 		}
 
@@ -263,19 +263,26 @@ namespace Dota2ModKit.Forms {
 
 			if (luaKVBtn.Text == "Lua Script") {
 				// open lua
-				textBox1.Language = Language.Lua;
+				changeToLua();
 				textBox1.Text = File.ReadAllText(currLuaPath);
-				luaKVBtn.Text = "KeyValues";
-				metroToolTip1.SetToolTip(luaKVBtn, "Open the KV entry for this spell");
-
 			} else {
 				// open kv
-				textBox1.Language = Language.JS;
+				changeToKV();
 				textBox1.Text = File.ReadAllText(currKVPath);
-				luaKVBtn.Text = "Lua Script";
-				metroToolTip1.SetToolTip(luaKVBtn, "Opens the Lua script for this spell");
 			}
 
+		}
+
+		void changeToKV() {
+			textBox1.Language = Language.JS;
+			luaKVBtn.Text = "Lua Script";
+			metroToolTip1.SetToolTip(luaKVBtn, "Opens the Lua script for this spell");
+		}
+
+		void changeToLua() {
+			textBox1.Language = Language.Lua;
+			luaKVBtn.Text = "KeyValues";
+			metroToolTip1.SetToolTip(luaKVBtn, "Open the KV entry for this spell");
 		}
 
 		private void metroScrollBar1_Scroll(object sender, ScrollEventArgs e) {
