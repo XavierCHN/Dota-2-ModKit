@@ -34,6 +34,7 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroButton1 = new MetroFramework.Controls.MetroButton();
 			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
 			this.SuspendLayout();
 			// 
 			// treeView1
@@ -111,7 +112,7 @@
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.notificationLabel.Location = new System.Drawing.Point(297, 235);
+			this.notificationLabel.Location = new System.Drawing.Point(296, 235);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(101, 25);
 			this.notificationLabel.TabIndex = 18;
@@ -139,7 +140,7 @@
 			// metroButton1
 			// 
 			this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.metroButton1.Location = new System.Drawing.Point(297, 343);
+			this.metroButton1.Location = new System.Drawing.Point(297, 540);
 			this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
 			this.metroButton1.Name = "metroButton1";
 			this.metroButton1.Size = new System.Drawing.Size(152, 40);
@@ -162,11 +163,23 @@
 			this.metroLabel2.Text = "Note: Only the entries\r\ncurrently shown have\r\nbeen worked on in\r\nSpellLibrary.";
 			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
+			// metroLabel3
+			// 
+			this.metroLabel3.AutoSize = true;
+			this.metroLabel3.Location = new System.Drawing.Point(296, 660);
+			this.metroLabel3.Name = "metroLabel3";
+			this.metroLabel3.Size = new System.Drawing.Size(140, 76);
+			this.metroLabel3.TabIndex = 22;
+			this.metroLabel3.Text = "Note: There is no\r\n\"file open\" button\r\nin order to discourage\r\nmodifying repo fil" +
+    "es.";
+			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// SpellLibraryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1263, 759);
+			this.Controls.Add(this.metroLabel3);
 			this.Controls.Add(this.metroLabel2);
 			this.Controls.Add(this.metroButton1);
 			this.Controls.Add(this.metroRadioButton1);
@@ -181,7 +194,7 @@
 			this.Name = "SpellLibraryForm";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Style = MetroFramework.MetroColorStyle.Green;
+			this.Style = MetroFramework.MetroColorStyle.Magenta;
 			this.Text = "Spell Library Browser";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.ResumeLayout(false);
@@ -201,5 +214,6 @@
 		private MetroFramework.Components.MetroToolTip metroToolTip1;
 		private MetroFramework.Controls.MetroButton metroButton1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
+		private MetroFramework.Controls.MetroLabel metroLabel3;
 	}
 }

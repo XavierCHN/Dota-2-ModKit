@@ -97,8 +97,10 @@ namespace Dota2ModKit.Forms {
 
 		private void initTreeView() {
 			populateTreeView();
-			treeView1.Nodes[0].Expand();
-			treeView1.Nodes[1].Expand();
+			treeView1.Nodes[0].ExpandAll();
+			treeView1.Nodes[1].ExpandAll();
+			treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
+			//treeView1.Nodes[0].Nodes[0].Nodes[0].sele
 
 			treeView1.NodeMouseClick += TreeView1_NodeMouseClick;
 			treeView1.AfterSelect += TreeView1_AfterSelect;
@@ -125,7 +127,7 @@ namespace Dota2ModKit.Forms {
 					textBox1.Text = File.ReadAllText(p);
 					currKVPath = p;
 
-					string lua = Path.Combine(luaHeroesPath, "hero_" + heroName, abilName + ".lua");
+					string lua = Path.Combine(luaHeroesPath, "hero_" + heroName, abilName.Replace(heroName + "_", "").Replace("_datadriven.txt", ".lua"));
 					if (!File.Exists(lua)) {
 						luaKVBtn.Enabled = false;
 
@@ -180,8 +182,6 @@ namespace Dota2ModKit.Forms {
 			foreach (string abilPath in abilPaths) {
 				string abilName = abilPath.Substring(abilPath.LastIndexOf('\\') + 1);
 
-				//allAbils.AppendLine("\"" + abilName + "\"");
-
 				abilName = abilName.Replace(".txt", "").Replace("_datadriven", "");
 				string heroName = abilName.Substring(0, abilName.IndexOf('_'));
 
@@ -207,21 +207,17 @@ namespace Dota2ModKit.Forms {
 					}
 					commonHeroName = commonHeroName.Replace(".txt", "").Replace("_datadriven", "");
 
-					// has this KV file actually been modified in spell library?
-					bool hasBeenModified = false;
 					TreeNode heroNode = null;
 					for (int i = 0; i < abilArr.Count; i++) {
 						string abilName2 = abilArr[i];
 						string abilName3 = abilName2.Replace("_datadriven", "").Replace(".txt", "");
 						string path2 = Path.Combine(npcPath, "abilities", abilName2);
+						string txt = File.ReadAllText(path2);
 
-						if (!hasBeenModified) {
-							string txt = File.ReadAllText(path2);
-                            if (txt.StartsWith("//") || txt.Contains("precache") || txt.Contains("RunScript")) {
-								hasBeenModified = true;
-							}
-                        }
-
+                        if (!txt.StartsWith("//") && !Util.ContainsKVKey(txt)) {
+							continue;
+						}
+                        
 						string com = commonHeroName + "_";
 						if (abilName3.StartsWith(com)) {
 							abilName3 = abilName3.Substring(com.Length, abilName3.Length - com.Length);
@@ -233,17 +229,7 @@ namespace Dota2ModKit.Forms {
 							heroNode = abilities.Nodes.Add(Util.MakeUnderscoreStringNice(commonHeroName));
 							heroNode.Name = commonHeroName;
                             heroNames.Add(commonHeroName, heroNode);
-						}
-
-						// is it even worth showing this hero in the treeView?
-						if (!hasBeenModified && i == abilArr.Count-1) {
-							// this hero has 0 modified abils.
-							heroNode.Remove();
-						}
-
-						// expand the heroNode if an ability inside it has been modified.
-						if (hasBeenModified && heroNode != null && !heroNode.IsExpanded) {
-							heroNode.Expand();
+							//heroNode.Expand();
 						}
 
 						// add the abil to the hero node
@@ -263,10 +249,10 @@ namespace Dota2ModKit.Forms {
 
 				string txt = File.ReadAllText(itemPath);
 				// ensure this item was actually completed by devs of spell library.
-				if (txt.StartsWith("//") || txt.Contains("precache") || txt.Contains("RunScript")) {
+				if (txt.StartsWith("//") || Util.ContainsKVKey(txt)) {
 					TreeNode itemNode = items.Nodes.Add(niceName);
 					itemNode.Name = itemName;
-					itemNode.Expand();
+					//itemNode.Expand();
 				}
 			}
 		}

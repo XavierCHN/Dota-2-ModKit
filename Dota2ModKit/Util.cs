@@ -190,15 +190,21 @@ namespace Dota2ModKit {
 			return newS.ToString();
 		}
 
-		/*string[] versionSplit = version.Split('.');
-string newVers = "v";
-for (int i = 0; i < versionSplit.Count(); i++) {
-	if (i == versionSplit.Count() - 1) {
-		continue;
-	}
-	newVers += versionSplit[i] + ".";
-}
-newVers = newVers.Substring(0, newVers.Length - 1);*/
-
+		internal static bool ContainsKVKey(string txt) {
+			string[] kvKeys = new string[] {
+				//"precache",
+				"OnSpellStart",
+				"Modifiers",
+				"RunScript",
+				".vpcf",
+				".vsndevts",
+			};
+			for (int i = 0; i < kvKeys.Length; i++) {
+				if (txt.Contains(kvKeys[i])) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }
