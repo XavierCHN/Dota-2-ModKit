@@ -556,7 +556,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-3, 271);
+			this.notificationLabel.Location = new System.Drawing.Point(-1, 268);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -662,7 +662,7 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(91, 197);
+			this.optionsBtn.Location = new System.Drawing.Point(90, 197);
 			this.optionsBtn.Name = "optionsBtn";
 			this.optionsBtn.Size = new System.Drawing.Size(29, 27);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Yellow;

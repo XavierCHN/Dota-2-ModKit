@@ -40,10 +40,6 @@ namespace Dota2ModKit.Features {
 
 			ParticleDesignForm pdf = new ParticleDesignForm(mainForm, particlePaths);
 			dr = pdf.ShowDialog();
-
-			if (dr == DialogResult.OK) {
-				mainForm.text_notification("Particles successfully redesigned", MetroColorStyle.Green, 2500);
-			}
 		}
 	}
 }

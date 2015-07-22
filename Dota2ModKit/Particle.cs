@@ -53,9 +53,9 @@ namespace Dota2ModKit {
 						"Error parsing .vpcf",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error);
+						error = true;
+						break;
 					}
-					error = true;
-					break;
 				}
 
 				if (colorKeyFound && changeColor) {
@@ -132,6 +132,7 @@ namespace Dota2ModKit {
 
 			if (!error) {
 				lines = newLines.ToArray();
+				File.WriteAllLines(path, lines);
 			} else {
 				return false;
 			}
