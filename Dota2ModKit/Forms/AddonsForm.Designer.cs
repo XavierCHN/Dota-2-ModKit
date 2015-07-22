@@ -65,7 +65,7 @@
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.Location = new System.Drawing.Point(23, 63);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 1;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(495, 472);
 			this.tabControl.TabIndex = 1;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -401,6 +401,7 @@
 			this.metroTile13.Text = "metroTile13";
 			this.metroTile13.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroTile13.UseSelectable = true;
+			this.metroTile13.Click += new System.EventHandler(this.metroTile_Click);
 			// 
 			// metroTile14
 			// 
@@ -413,6 +414,7 @@
 			this.metroTile14.Text = "metroTile14";
 			this.metroTile14.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroTile14.UseSelectable = true;
+			this.metroTile14.Click += new System.EventHandler(this.metroTile_Click);
 			// 
 			// metroTile15
 			// 
@@ -425,6 +427,7 @@
 			this.metroTile15.Text = "metroTile15";
 			this.metroTile15.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroTile15.UseSelectable = true;
+			this.metroTile15.Click += new System.EventHandler(this.metroTile_Click);
 			// 
 			// metroTile16
 			// 
@@ -437,6 +440,7 @@
 			this.metroTile16.Text = "metroTile16";
 			this.metroTile16.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroTile16.UseSelectable = true;
+			this.metroTile16.Click += new System.EventHandler(this.metroTile_Click);
 			// 
 			// AddonsForm
 			// 
