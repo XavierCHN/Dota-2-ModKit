@@ -47,13 +47,13 @@
 			this.treeView1.LineColor = System.Drawing.Color.White;
 			this.treeView1.Location = new System.Drawing.Point(23, 63);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(267, 673);
+			this.treeView1.Size = new System.Drawing.Size(228, 673);
 			this.treeView1.TabIndex = 0;
 			// 
 			// copySpellBtn
 			// 
 			this.copySpellBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.copySpellBtn.Location = new System.Drawing.Point(297, 143);
+			this.copySpellBtn.Location = new System.Drawing.Point(258, 143);
 			this.copySpellBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.copySpellBtn.Name = "copySpellBtn";
 			this.copySpellBtn.Size = new System.Drawing.Size(152, 40);
@@ -68,7 +68,7 @@
 			// luaKVBtn
 			// 
 			this.luaKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.luaKVBtn.Location = new System.Drawing.Point(297, 191);
+			this.luaKVBtn.Location = new System.Drawing.Point(258, 191);
 			this.luaKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.luaKVBtn.Name = "luaKVBtn";
 			this.luaKVBtn.Size = new System.Drawing.Size(152, 40);
@@ -97,7 +97,7 @@
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.notificationLabel.Location = new System.Drawing.Point(296, 235);
+			this.notificationLabel.Location = new System.Drawing.Point(257, 235);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(101, 25);
 			this.notificationLabel.TabIndex = 18;
@@ -125,7 +125,7 @@
 			// metroButton1
 			// 
 			this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.metroButton1.Location = new System.Drawing.Point(297, 540);
+			this.metroButton1.Location = new System.Drawing.Point(258, 578);
 			this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
 			this.metroButton1.Name = "metroButton1";
 			this.metroButton1.Size = new System.Drawing.Size(152, 40);
@@ -141,7 +141,7 @@
 			// metroLabel2
 			// 
 			this.metroLabel2.AutoSize = true;
-			this.metroLabel2.Location = new System.Drawing.Point(296, 63);
+			this.metroLabel2.Location = new System.Drawing.Point(257, 63);
 			this.metroLabel2.Name = "metroLabel2";
 			this.metroLabel2.Size = new System.Drawing.Size(136, 76);
 			this.metroLabel2.TabIndex = 21;
@@ -151,7 +151,7 @@
 			// metroLabel3
 			// 
 			this.metroLabel3.AutoSize = true;
-			this.metroLabel3.Location = new System.Drawing.Point(296, 660);
+			this.metroLabel3.Location = new System.Drawing.Point(257, 660);
 			this.metroLabel3.Name = "metroLabel3";
 			this.metroLabel3.Size = new System.Drawing.Size(140, 76);
 			this.metroLabel3.TabIndex = 22;
@@ -185,7 +185,7 @@
 			this.textBox1.Language = FastColoredTextBoxNS.Language.Lua;
 			this.textBox1.LeftBracket = '(';
 			this.textBox1.LeftBracket2 = '{';
-			this.textBox1.Location = new System.Drawing.Point(456, 63);
+			this.textBox1.Location = new System.Drawing.Point(417, 63);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Paddings = new System.Windows.Forms.Padding(0);
 			this.textBox1.ReadOnly = true;
@@ -193,7 +193,7 @@
 			this.textBox1.RightBracket2 = '}';
 			this.textBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.textBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("textBox1.ServiceColors")));
-			this.textBox1.Size = new System.Drawing.Size(784, 673);
+			this.textBox1.Size = new System.Drawing.Size(823, 673);
 			this.textBox1.TabIndex = 23;
 			this.textBox1.Zoom = 100;
 			// 
