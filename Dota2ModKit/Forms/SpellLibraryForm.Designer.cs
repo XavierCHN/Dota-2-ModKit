@@ -84,7 +84,7 @@
 			this.metroLabel1.AutoSize = true;
 			this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.metroLabel1.Location = new System.Drawing.Point(806, 35);
+			this.metroLabel1.Location = new System.Drawing.Point(782, 35);
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Size = new System.Drawing.Size(76, 25);
 			this.metroLabel1.TabIndex = 17;
