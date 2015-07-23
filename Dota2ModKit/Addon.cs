@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Dota2ModKit
 {
@@ -35,6 +36,10 @@ namespace Dota2ModKit
 		internal bool generateNote0;
 		internal bool generateLore;
 		internal bool askToBreakUp;
+		internal bool autoDeleteBin;
+		private string gameSizeStr = "";
+		private string contentSizeStr = "";
+		private MainForm mainForm;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -54,9 +59,7 @@ namespace Dota2ModKit
 					Debug.WriteLine("Couldn't auto-create content path for " + name);
 					hasContentPath = false;
 				}
-
 			}
-
 		}
 
 		internal bool generateAddonLangs(MainForm mainForm) {
@@ -194,6 +197,20 @@ namespace Dota2ModKit
 
 		}
 
+		internal void deleteBinFiles() {
+			if (!autoDeleteBin) {
+				return;
+			}
+
+			string[] binFilePaths = Directory.GetFiles(gamePath, "*.bin", SearchOption.TopDirectoryOnly);
+			foreach (string binFilePath in binFilePaths) {
+				try {
+					File.Delete(binFilePath);
+				} catch (Exception) { }
+			}
+
+		}
+
 		private List<string> getAddonLangPaths() {
 			string[] resourceFiles = Directory.GetFiles(Path.Combine(gamePath, "resource"));
 			List<string> langFiles = new List<string>();
@@ -291,6 +308,15 @@ namespace Dota2ModKit
 							this.askToBreakUp = false;
 						}
 					}
+				} else if (kv2.Key == "autoDeleteBin") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.autoDeleteBin = true;
+						} else {
+							this.autoDeleteBin = false;
+						}
+					}
 				}
 			}
 		}
@@ -311,6 +337,10 @@ namespace Dota2ModKit
 			KeyValue askToBreakUp = new KeyValue("askToBreakUp");
 			askToBreakUp.AddChild(new KeyValue(this.askToBreakUp.ToString()));
 			addonKV.AddChild(askToBreakUp);
+
+			KeyValue autoDeleteBin = new KeyValue("autoDeleteBin");
+			autoDeleteBin.AddChild(new KeyValue(this.autoDeleteBin.ToString()));
+			addonKV.AddChild(autoDeleteBin);
 		}
 
 		private void generateAbilityTooltips(bool item) {
@@ -371,6 +401,35 @@ namespace Dota2ModKit
 					itemEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
 				}
 			}
+		}
+
+		internal void onChangedTo(MainForm mainForm) {
+			this.mainForm = mainForm;
+
+			// delete .bin files if the option is checked.
+			if (autoDeleteBin) {
+				deleteBinFiles();
+			}
+
+			BackgroundWorker addonSizeWorker = new BackgroundWorker();
+			addonSizeWorker.DoWork += AddonSizeWorker_DoWork;
+			addonSizeWorker.RunWorkerCompleted += AddonSizeWorker_RunWorkerCompleted;
+			addonSizeWorker.RunWorkerAsync();
+		}
+
+		private void AddonSizeWorker_DoWork(object sender, DoWorkEventArgs e) {
+			double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
+			gameSize = Math.Round(gameSize, 1);
+			gameSizeStr = gameSize.ToString();
+
+			double contentSize = (Util.GetDirectorySize(contentPath) / 1024.0) / 1024.0;
+			contentSize = Math.Round(contentSize, 1);
+			contentSizeStr = contentSize.ToString();
+		}
+
+		private void AddonSizeWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+			mainForm._metroToolTip1.SetToolTip(mainForm._gameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
+			mainForm._metroToolTip1.SetToolTip(mainForm._contentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
 		}
 
 		#endregion

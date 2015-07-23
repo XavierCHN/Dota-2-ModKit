@@ -33,6 +33,7 @@
 			this.openChangelogCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
+			this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -77,6 +78,7 @@
 			// 
 			// addonOptionsTab
 			// 
+			this.addonOptionsTab.Controls.Add(this.autoDeleteBinCheckBox);
 			this.addonOptionsTab.Controls.Add(this.askToBreakUpCheckBox);
 			this.addonOptionsTab.Controls.Add(this.loreCheckBox);
 			this.addonOptionsTab.Controls.Add(this.note0CheckBox);
@@ -93,11 +95,11 @@
 			this.addonOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.addonOptionsTab.VerticalScrollbarSize = 2;
 			// 
-			// alwaysBreakUpCheckBox
+			// askToBreakUpCheckBox
 			// 
 			this.askToBreakUpCheckBox.AutoSize = true;
 			this.askToBreakUpCheckBox.Location = new System.Drawing.Point(0, 55);
-			this.askToBreakUpCheckBox.Name = "alwaysBreakUpCheckBox";
+			this.askToBreakUpCheckBox.Name = "askToBreakUpCheckBox";
 			this.askToBreakUpCheckBox.Size = new System.Drawing.Size(282, 15);
 			this.askToBreakUpCheckBox.TabIndex = 16;
 			this.askToBreakUpCheckBox.Text = "Always ask to break up before combining KV files";
@@ -156,6 +158,17 @@
 			this.metroRadioButton1.UseSelectable = true;
 			this.metroRadioButton1.Visible = false;
 			// 
+			// autoDeleteBinCheckBox
+			// 
+			this.autoDeleteBinCheckBox.AutoSize = true;
+			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(0, 76);
+			this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
+			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(426, 15);
+			this.autoDeleteBinCheckBox.TabIndex = 17;
+			this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon when selected";
+			this.autoDeleteBinCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.autoDeleteBinCheckBox.UseSelectable = true;
+			// 
 			// OptionsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,5 +207,6 @@
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Controls.MetroCheckBox openChangelogCheckBox;
 		private MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
+		private MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
 	}
 }

@@ -16,6 +16,7 @@ using System.Text;
 using Dota2ModKit.Features;
 using VPKExtract;
 using Dota2ModKit.Forms;
+using MetroFramework.Components;
 
 namespace Dota2ModKit {
 	public partial class MainForm : MetroForm {
@@ -43,6 +44,9 @@ namespace Dota2ModKit {
 		public MetroTile _addonTile;
 		public MetroProgressSpinner _progressSpinner1;
 		public MetroButton _spellLibBtn;
+		public MetroToolTip _metroToolTip1;
+		public MetroTile _gameTile;
+		public MetroTile _contentTile;
 
 		public MainForm() {
 			// refresh the debug_log
@@ -76,6 +80,9 @@ namespace Dota2ModKit {
 			_addonTile = addonTile;
 			_progressSpinner1 = progressSpinner1;
 			_spellLibBtn = spellLibraryBtn;
+			_metroToolTip1 = metroToolTip1;
+			_gameTile = gameTile;
+			_contentTile = contentTile;
 
 			// init mainform controls stuff
 			Size size = new Size(steamTile.Width, steamTile.Height);
@@ -320,8 +327,19 @@ namespace Dota2ModKit {
 				addon.serializeSettings(addonKV);
 				rootKV.AddChild(addonKV);
 			}
+
+			// compress string to take up less space.
+			/*StringBuilder sb = new StringBuilder();
+			string[] split = rootKV.ToString().Split('\n');
+			for (int i = 0; i < split.Length; i++) {
+				string l = split[i];
+				l = l.Trim();
+				sb.AppendLine(l);
+			}*/
+
 			Settings.Default.AddonsKV = rootKV.ToString();
-        }
+			Settings.Default.Save();
+		}
 
 		/// <summary>
 		/// String -> Addon object conversion
@@ -355,8 +373,9 @@ namespace Dota2ModKit {
 					//Debug.WriteLine(a.tileColor.GetType().ToString());
 				}
 			}
-
 			currAddon = a;
+			currAddon.onChangedTo(this);
+
 			Settings.Default.LastAddon = a.name;
 			//text_notification("Selected addon: " + a.name, MetroColorStyle.Green, 2500);
 		}
@@ -408,7 +427,6 @@ namespace Dota2ModKit {
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
 			serializeSettings();
-			Settings.Default.Save();
 		}
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -761,6 +779,10 @@ namespace Dota2ModKit {
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 			}*/
+		}
+
+		private void librariesToolStripMenuItem_Click(object sender, EventArgs e) {
+
 		}
 	}
 }

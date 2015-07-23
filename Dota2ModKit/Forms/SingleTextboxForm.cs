@@ -9,8 +9,10 @@ namespace Dota2ModKit {
 		public MetroTextBox textBox;
 		public MetroLabel label;
 		public MetroButton btn;
+		//private MainForm mainForm;
 
 		public SingleTextboxForm() {
+			//this.mainForm = mainForm;
 			InitializeComponent();
 
 			textBox = metroTextBox1;
@@ -25,7 +27,11 @@ namespace Dota2ModKit {
 			metroRadioButton1.Select();
 
 			if (textBox.Text == null || textBox.Text == "") {
-				MetroMessageBox.Show(this, "Invalid text!", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MetroMessageBox.Show(this,
+					"No text inputted!",
+					"",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
 			} else {
 				this.DialogResult = DialogResult.OK;
 				Close();

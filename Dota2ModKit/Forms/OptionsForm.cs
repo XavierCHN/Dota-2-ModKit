@@ -29,25 +29,29 @@ namespace Dota2ModKit {
 		}
 
 		private void getAddonOptions() {
+			openChangelogCheckBox.Checked = Settings.Default.OpenChangelog;
+
 			note0CheckBox.Checked = currAddon.generateNote0;
 			loreCheckBox.Checked = currAddon.generateLore;
-			openChangelogCheckBox.Checked = Settings.Default.OpenChangelog;
 			askToBreakUpCheckBox.Checked = currAddon.askToBreakUp;
+			autoDeleteBinCheckBox.Checked = currAddon.autoDeleteBin;
 
 		}
 
 		private void saveBtn_Click(object sender, EventArgs e) {
 			metroRadioButton1.Select();
 
+			// d2modkit options
+			Settings.Default.OpenChangelog = openChangelogCheckBox.Checked;
+
+			// addon options
 			currAddon.generateLore = loreCheckBox.Checked;
 			currAddon.generateNote0 = note0CheckBox.Checked;
 			currAddon.askToBreakUp = askToBreakUpCheckBox.Checked;
-
-			Settings.Default.OpenChangelog = openChangelogCheckBox.Checked;
+			currAddon.autoDeleteBin = autoDeleteBinCheckBox.Checked;
 
 			// save stuff
 			mainForm.serializeSettings();
-			Settings.Default.Save();
 
 			// close options form
 			this.DialogResult = DialogResult.OK;

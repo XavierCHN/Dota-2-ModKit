@@ -34,7 +34,6 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroButton1 = new MetroFramework.Controls.MetroButton();
 			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
 			this.textBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
 			this.SuspendLayout();
@@ -53,10 +52,10 @@
 			// copySpellBtn
 			// 
 			this.copySpellBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.copySpellBtn.Location = new System.Drawing.Point(258, 143);
+			this.copySpellBtn.Location = new System.Drawing.Point(258, 181);
 			this.copySpellBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.copySpellBtn.Name = "copySpellBtn";
-			this.copySpellBtn.Size = new System.Drawing.Size(152, 40);
+			this.copySpellBtn.Size = new System.Drawing.Size(120, 40);
 			this.copySpellBtn.TabIndex = 14;
 			this.copySpellBtn.TabStop = false;
 			this.copySpellBtn.Text = "Copy";
@@ -68,10 +67,10 @@
 			// luaKVBtn
 			// 
 			this.luaKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.luaKVBtn.Location = new System.Drawing.Point(258, 191);
+			this.luaKVBtn.Location = new System.Drawing.Point(258, 229);
 			this.luaKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.luaKVBtn.Name = "luaKVBtn";
-			this.luaKVBtn.Size = new System.Drawing.Size(152, 40);
+			this.luaKVBtn.Size = new System.Drawing.Size(120, 40);
 			this.luaKVBtn.TabIndex = 15;
 			this.luaKVBtn.TabStop = false;
 			this.luaKVBtn.Text = "Lua Script";
@@ -97,7 +96,7 @@
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.notificationLabel.Location = new System.Drawing.Point(257, 235);
+			this.notificationLabel.Location = new System.Drawing.Point(257, 273);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(101, 25);
 			this.notificationLabel.TabIndex = 18;
@@ -125,10 +124,10 @@
 			// metroButton1
 			// 
 			this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.metroButton1.Location = new System.Drawing.Point(258, 578);
+			this.metroButton1.Location = new System.Drawing.Point(258, 582);
 			this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
 			this.metroButton1.Name = "metroButton1";
-			this.metroButton1.Size = new System.Drawing.Size(152, 40);
+			this.metroButton1.Size = new System.Drawing.Size(120, 40);
 			this.metroButton1.TabIndex = 20;
 			this.metroButton1.TabStop = false;
 			this.metroButton1.Text = "Open File";
@@ -143,21 +142,10 @@
 			this.metroLabel2.AutoSize = true;
 			this.metroLabel2.Location = new System.Drawing.Point(257, 63);
 			this.metroLabel2.Name = "metroLabel2";
-			this.metroLabel2.Size = new System.Drawing.Size(136, 76);
+			this.metroLabel2.Size = new System.Drawing.Size(101, 114);
 			this.metroLabel2.TabIndex = 21;
-			this.metroLabel2.Text = "Note: Only the entries\r\ncurrently shown have\r\nbeen worked on in\r\nSpellLibrary.";
+			this.metroLabel2.Text = "Note: Only the\r\nentries currently\r\nshown have\r\nbeen worked\r\non in\r\nSpellLibrary.";
 			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
-			// metroLabel3
-			// 
-			this.metroLabel3.AutoSize = true;
-			this.metroLabel3.Location = new System.Drawing.Point(257, 660);
-			this.metroLabel3.Name = "metroLabel3";
-			this.metroLabel3.Size = new System.Drawing.Size(140, 76);
-			this.metroLabel3.TabIndex = 22;
-			this.metroLabel3.Text = "Note: There is no\r\n\"file open\" button\r\nin order to discourage\r\nmodifying repo fil" +
-    "es.";
-			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// textBox1
 			// 
@@ -172,20 +160,19 @@
         '\"',
         '\'',
         '\''};
-			this.textBox1.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>.+)\r\n";
+			this.textBox1.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n";
 			this.textBox1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
 			this.textBox1.BackBrush = null;
 			this.textBox1.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
 			this.textBox1.CharHeight = 14;
 			this.textBox1.CharWidth = 8;
-			this.textBox1.CommentPrefix = "--";
 			this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.textBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.textBox1.IsReplaceMode = false;
 			this.textBox1.Language = FastColoredTextBoxNS.Language.JS;
 			this.textBox1.LeftBracket = '(';
 			this.textBox1.LeftBracket2 = '{';
-			this.textBox1.Location = new System.Drawing.Point(417, 63);
+			this.textBox1.Location = new System.Drawing.Point(385, 63);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Paddings = new System.Windows.Forms.Padding(0);
 			this.textBox1.ReadOnly = true;
@@ -193,7 +180,8 @@
 			this.textBox1.RightBracket2 = '}';
 			this.textBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.textBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("textBox1.ServiceColors")));
-			this.textBox1.Size = new System.Drawing.Size(823, 673);
+			this.textBox1.ShowFoldingLines = true;
+			this.textBox1.Size = new System.Drawing.Size(855, 673);
 			this.textBox1.TabIndex = 23;
 			this.textBox1.Zoom = 100;
 			// 
@@ -203,7 +191,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1263, 759);
 			this.Controls.Add(this.textBox1);
-			this.Controls.Add(this.metroLabel3);
 			this.Controls.Add(this.metroLabel2);
 			this.Controls.Add(this.metroButton1);
 			this.Controls.Add(this.metroRadioButton1);
@@ -237,7 +224,6 @@
 		private MetroFramework.Components.MetroToolTip metroToolTip1;
 		private MetroFramework.Controls.MetroButton metroButton1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
-		private MetroFramework.Controls.MetroLabel metroLabel3;
 		private FastColoredTextBoxNS.FastColoredTextBox textBox1;
 	}
 }

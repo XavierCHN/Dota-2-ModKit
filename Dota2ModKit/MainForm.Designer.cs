@@ -34,6 +34,7 @@
 			this.addonTile = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.librariesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
@@ -68,13 +69,14 @@
 			this.versionLabel = new MetroFramework.Controls.MetroLabel();
 			this.notificationLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
-			this.vscriptsTile = new MetroFramework.Controls.MetroTile();
+			this.gameTile = new MetroFramework.Controls.MetroTile();
 			this.contentTile = new MetroFramework.Controls.MetroTile();
 			this.metroTile3 = new MetroFramework.Controls.MetroTile();
 			this.steamTile = new MetroFramework.Controls.MetroTile();
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
+			this.libsTile = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
@@ -119,10 +121,11 @@
 			// 
 			this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changePictureToolStripMenuItem,
+            this.librariesToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(156, 70);
+			this.metroContextMenu1.Size = new System.Drawing.Size(156, 92);
 			// 
 			// changePictureToolStripMenuItem
 			// 
@@ -131,6 +134,13 @@
 			this.changePictureToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
 			this.changePictureToolStripMenuItem.Text = "Change Picture";
 			this.changePictureToolStripMenuItem.Click += new System.EventHandler(this.changePictureToolStripMenuItem_Click);
+			// 
+			// librariesToolStripMenuItem
+			// 
+			this.librariesToolStripMenuItem.Name = "librariesToolStripMenuItem";
+			this.librariesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.librariesToolStripMenuItem.Text = "Libraries";
+			this.librariesToolStripMenuItem.Click += new System.EventHandler(this.librariesToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
@@ -156,7 +166,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 1;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -593,20 +603,20 @@
 			this.metroRadioButton1.UseSelectable = true;
 			this.metroRadioButton1.Visible = false;
 			// 
-			// vscriptsTile
+			// gameTile
 			// 
-			this.vscriptsTile.ActiveControl = null;
-			this.vscriptsTile.Location = new System.Drawing.Point(149, 57);
-			this.vscriptsTile.Name = "vscriptsTile";
-			this.vscriptsTile.Size = new System.Drawing.Size(29, 29);
-			this.vscriptsTile.Style = MetroFramework.MetroColorStyle.Blue;
-			this.vscriptsTile.TabIndex = 7;
-			this.vscriptsTile.Text = "G";
-			this.vscriptsTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.vscriptsTile, "Open the game directory of this addon.");
-			this.vscriptsTile.UseSelectable = true;
-			this.vscriptsTile.UseTileImage = true;
-			this.vscriptsTile.Click += new System.EventHandler(this.shortcutTile_Click);
+			this.gameTile.ActiveControl = null;
+			this.gameTile.Location = new System.Drawing.Point(149, 57);
+			this.gameTile.Name = "gameTile";
+			this.gameTile.Size = new System.Drawing.Size(29, 29);
+			this.gameTile.Style = MetroFramework.MetroColorStyle.Blue;
+			this.gameTile.TabIndex = 7;
+			this.gameTile.Text = "G";
+			this.gameTile.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.gameTile, "Open the game directory of this addon.");
+			this.gameTile.UseSelectable = true;
+			this.gameTile.UseTileImage = true;
+			this.gameTile.Click += new System.EventHandler(this.shortcutTile_Click);
 			// 
 			// contentTile
 			// 
@@ -691,6 +701,21 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
+			// libsTile
+			// 
+			this.libsTile.ActiveControl = null;
+			this.libsTile.Location = new System.Drawing.Point(149, 157);
+			this.libsTile.Name = "libsTile";
+			this.libsTile.Size = new System.Drawing.Size(29, 27);
+			this.libsTile.Style = MetroFramework.MetroColorStyle.Yellow;
+			this.libsTile.TabIndex = 20;
+			this.libsTile.Text = "L";
+			this.libsTile.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.libsTile, "This addon has unupdated libraries");
+			this.libsTile.UseSelectable = true;
+			this.libsTile.UseTileImage = true;
+			this.libsTile.Visible = false;
+			// 
 			// progressSpinner1
 			// 
 			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
@@ -707,13 +732,14 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
+			this.Controls.Add(this.libsTile);
 			this.Controls.Add(this.progressSpinner1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
 			this.Controls.Add(this.metroTile3);
 			this.Controls.Add(this.contentTile);
-			this.Controls.Add(this.vscriptsTile);
+			this.Controls.Add(this.gameTile);
 			this.Controls.Add(this.versionLabel);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.notificationLabel);
@@ -771,7 +797,7 @@
 		private MetroFramework.Controls.MetroLink metroLink9;
 		private MetroFramework.Controls.MetroLink metroLink10;
 		private MetroFramework.Controls.MetroLink metroLink11;
-		private MetroFramework.Controls.MetroTile vscriptsTile;
+		private MetroFramework.Controls.MetroTile gameTile;
 		private MetroFramework.Controls.MetroTile contentTile;
 		private MetroFramework.Controls.MetroTile metroTile3;
 		private MetroFramework.Controls.MetroTile steamTile;
@@ -790,6 +816,8 @@
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroProgressSpinner progressSpinner1;
 		private MetroFramework.Controls.MetroButton metroButton2;
+		private System.Windows.Forms.ToolStripMenuItem librariesToolStripMenuItem;
+		private MetroFramework.Controls.MetroTile libsTile;
 	}
 }
 
