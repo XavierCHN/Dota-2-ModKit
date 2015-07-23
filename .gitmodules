@@ -1,0 +1,3 @@
+[submodule "KVLib"]
+	path = KVLib
+	url = https://github.com/RoyAwesome/KVLib.git
