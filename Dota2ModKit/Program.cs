@@ -14,6 +14,9 @@ namespace Dota2ModKit {
 		[STAThread]
         static void Main()
         {
+			// refresh the debug log
+			//Util.Log("", true);
+
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 			// Check if application is already running.
@@ -37,16 +40,9 @@ namespace Dota2ModKit {
 		}
 
 		private static void WriteCrash(Exception ex) {
-			string crashesDir = Path.Combine(Environment.CurrentDirectory, "Crashes");
-			if (!Directory.Exists(crashesDir)) {
-				Directory.CreateDirectory(crashesDir);
-			}
-			
-			string header = "Please report this crash to https://github.com/Myll/Dota-2-ModKit/issues \n";
+			Util.LogException(ex);
 
-			File.WriteAllText("Crashes/Crash_" + DateTime.Now.ToString("dd-mm-yy_h-mm-ss") + ".txt", header + ex.ToString());
-
-			MessageBox.Show("D2ModKit has crashed. A crash report has been created in " + crashesDir + "\nExiting.",
+			MessageBox.Show("D2ModKit has crashed. A crash report has been created in " + Util.logPath,
 				"Error",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Error);

@@ -35,7 +35,6 @@ namespace Dota2ModKit {
 		VTEXFeatures vtexFeatures;
 		ParticleFeatures particleFeatures;
 		SoundFeatures soundFeatures;
-		string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
 
 		// for updating modkit
 		Updater updater;
@@ -52,9 +51,6 @@ namespace Dota2ModKit {
 		internal bool firstAddonChange;
 
 		public MainForm() {
-			// refresh the debug_log
-			refreshDebugLog();
-
 			// bring up the UI
 			InitializeComponent();
 
@@ -248,7 +244,9 @@ namespace Dota2ModKit {
 						}
 					}
 				}
-			} catch (Exception ex) { }
+			} catch (Exception ex) {
+				Util.LogException(ex);
+			}
 
 			return defaultAddonName;
 		}
@@ -427,7 +425,7 @@ namespace Dota2ModKit {
 				}
 			}
 
-			log(addons_constructed);
+			//Util.Log(addons_constructed, false);
 			return addons;
 		}
 
@@ -453,30 +451,7 @@ namespace Dota2ModKit {
 
 		private void generateAddonLangsBtn_Click(object sender, EventArgs e) {
 			fixButton();
-
-			bool success = true;
-
-			try {
-				success = currAddon.generateAddonLangs(this);
-			} catch (Exception ex) {
-				var ex2 = ex;
-				ex2 = ex2 as KeyValueParsingException;
-
-				if (ex2 == null) {
-					ex2 = ex;
-				}
-				MetroMessageBox.Show(this, ex2.Message,
-				ex2.ToString(),
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
-				success = false;
-			}
-
-			if (success) {
-				text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
-			} else {
-				text_notification("Tooltip generation failed", MetroColorStyle.Red, 2500);
-			}
+			currAddon.generateAddonLangs(this);
 		}
 
 		private void workshopPageBtn_Click(object sender, EventArgs e) {
@@ -745,27 +720,6 @@ namespace Dota2ModKit {
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 			}
-		}
-
-		void log(string text) {
-			try {
-				if (!File.Exists(logPath)) {
-					File.Create(logPath).Close();
-				}
-
-				string logText = File.ReadAllText(logPath);
-
-				logText += text + "\n\n";
-				File.WriteAllText(logPath, logText);
-			} catch (Exception) { }
-		}
-
-		private void refreshDebugLog() {
-			try {
-				if (File.Exists(logPath)) {
-					File.Delete(logPath);
-				}
-			} catch (Exception) { }
 		}
 
 		private void spellLibraryBtn_Click(object sender, EventArgs e) {

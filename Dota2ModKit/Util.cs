@@ -9,6 +9,43 @@ using System.Windows.Forms;
 
 namespace Dota2ModKit {
 	public static class Util {
+		public static string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
+
+		public static void Log(string text) {
+			try {
+				// if log file is over xxx KB, delete.
+				if (File.Exists(logPath) && new FileInfo(logPath).Length > 1024 * 400) {
+					File.Delete(logPath);
+				}
+
+				if (!File.Exists(logPath)) {
+					File.Create(logPath).Close();
+				}
+
+				StringBuilder logText = new StringBuilder(File.ReadAllText(logPath));
+				if (logText.Length == 0) {
+					logText.AppendLine("REPORT THIS TO https://github.com/Myll/Dota-2-ModKit/issues IF CRASHES OCCUR.\n");
+                }
+
+				logText.AppendLine("\n\nNEW ENTRY: " + DateTime.Now.ToString("mm-dd-yy_h-mm-ss"));
+				logText.AppendLine(text);
+
+				File.WriteAllText(logPath, logText.ToString());
+			} catch (Exception) { }
+		}
+
+		internal static void LogException(Exception ex) {
+			StringBuilder txt = new StringBuilder();
+			txt.AppendLine("ex.toString(): " + ex.ToString());
+			// toString() includes the Message and StackTrace.
+			//txt.AppendLine("Message: " + ex.Message);
+			//txt.AppendLine("StackTrace: " + ex.StackTrace);
+			if (ex.InnerException != null) {
+				txt.AppendLine("InnerException.toString(): " + ex.InnerException.ToString());
+			}
+
+			Log(txt.ToString());
+		}
 
 		public static string Relative(string str) {
 			if (str.Contains(Path.Combine("game", "dota_addons"))) {

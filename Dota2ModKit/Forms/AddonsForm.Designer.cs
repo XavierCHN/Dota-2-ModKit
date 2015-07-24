@@ -65,14 +65,16 @@
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.Location = new System.Drawing.Point(23, 63);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 1;
-			this.tabControl.Size = new System.Drawing.Size(495, 472);
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(495, 521);
 			this.tabControl.TabIndex = 1;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
 			// 
 			// myAddonsTab
 			// 
+			this.myAddonsTab.Controls.Add(this.backBtn);
+			this.myAddonsTab.Controls.Add(this.nextBtn);
 			this.myAddonsTab.Controls.Add(this.metroTile16);
 			this.myAddonsTab.Controls.Add(this.metroTile15);
 			this.myAddonsTab.Controls.Add(this.metroTile14);
@@ -94,7 +96,7 @@
 			this.myAddonsTab.HorizontalScrollbarSize = 10;
 			this.myAddonsTab.Location = new System.Drawing.Point(4, 44);
 			this.myAddonsTab.Name = "myAddonsTab";
-			this.myAddonsTab.Size = new System.Drawing.Size(487, 424);
+			this.myAddonsTab.Size = new System.Drawing.Size(487, 473);
 			this.myAddonsTab.TabIndex = 0;
 			this.myAddonsTab.Text = "My Addons";
 			this.myAddonsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -323,7 +325,7 @@
 			this.newAddonTab.HorizontalScrollbarSize = 10;
 			this.newAddonTab.Location = new System.Drawing.Point(4, 44);
 			this.newAddonTab.Name = "newAddonTab";
-			this.newAddonTab.Size = new System.Drawing.Size(487, 424);
+			this.newAddonTab.Size = new System.Drawing.Size(487, 473);
 			this.newAddonTab.TabIndex = 1;
 			this.newAddonTab.Text = "New Addon";
 			this.newAddonTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -383,7 +385,7 @@
 			// createAddonBtn
 			// 
 			this.createAddonBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.createAddonBtn.Location = new System.Drawing.Point(156, 379);
+			this.createAddonBtn.Location = new System.Drawing.Point(156, 360);
 			this.createAddonBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.createAddonBtn.Name = "createAddonBtn";
 			this.createAddonBtn.Size = new System.Drawing.Size(176, 41);
@@ -410,7 +412,7 @@
 			// backBtn
 			// 
 			this.backBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.backBtn.Location = new System.Drawing.Point(58, 541);
+			this.backBtn.Location = new System.Drawing.Point(31, 429);
 			this.backBtn.Name = "backBtn";
 			this.backBtn.Size = new System.Drawing.Size(88, 32);
 			this.backBtn.TabIndex = 14;
@@ -422,7 +424,7 @@
 			// nextBtn
 			// 
 			this.nextBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.nextBtn.Location = new System.Drawing.Point(396, 541);
+			this.nextBtn.Location = new System.Drawing.Point(369, 429);
 			this.nextBtn.Name = "nextBtn";
 			this.nextBtn.Size = new System.Drawing.Size(88, 32);
 			this.nextBtn.TabIndex = 3;
@@ -447,11 +449,9 @@
 			this.AcceptButton = this.createAddonBtn;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(541, 591);
+			this.ClientSize = new System.Drawing.Size(541, 586);
 			this.Controls.Add(this.dummyRadioBtn);
 			this.Controls.Add(this.tabControl);
-			this.Controls.Add(this.nextBtn);
-			this.Controls.Add(this.backBtn);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;

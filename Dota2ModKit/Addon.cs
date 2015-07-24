@@ -262,7 +262,7 @@ namespace Dota2ModKit
 			}
 		}
 
-		internal bool generateAddonLangs(MainForm mainForm) {
+		internal void generateAddonLangs(MainForm mainForm) {
 			abilityModifierNames.Clear();
 			itemModifierNames.Clear();
 			abilityEntries.Clear();
@@ -271,16 +271,33 @@ namespace Dota2ModKit
 			heroEntries.Clear();
 			alreadyHasKeys.Clear();
 
-			// these functions populate the data structures with the tooltips before writing to the addon_lang file.
-			// items
-			generateAbilityTooltips(true);
-			// abils
-			generateAbilityTooltips(false);
-			generateUnitTooltips();
-			generateHeroTooltips();
+			string curr = "";
+			try {
+				// these functions populate the data structures with the tooltips before writing to the addon_lang file.
+				// items
+				curr = "npc_abilities_custom.txt";
+				generateAbilityTooltips(true);
+				// abils
+				curr = "npc_items_custom.txt";
+				generateAbilityTooltips(false);
+				curr = "npc_units_custom.txt";
+				generateUnitTooltips();
+				curr = "npc_heroes_custom.txt";
+				generateHeroTooltips();
+				writeTooltips();
+				mainForm.text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
+			} catch (Exception ex) {
+				string msg = ex.Message;
+				if (ex.InnerException != null) {
+					msg = ex.InnerException.Message;
+				}
 
-			writeTooltips();
-			return true;
+				MetroMessageBox.Show(mainForm, msg,
+					"Parse error: " + curr,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+
+			}
 		}
 
 		private void writeTooltips() {

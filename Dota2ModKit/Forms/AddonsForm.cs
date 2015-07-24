@@ -21,7 +21,6 @@ namespace Dota2ModKit {
 
 		// for addon forking
 		string newAddonName;
-		string abbrev;
 		bool remove_print = false;
 		bool remove_items = false;
 		bool remove_heroes = false;
@@ -183,6 +182,19 @@ namespace Dota2ModKit {
 		}
 
 		private void createAddonBtn_Click(object sender, EventArgs e) {
+			try {
+				createAddon();
+			} catch (Exception ex) {
+				MetroMessageBox.Show(this, ex.ToString() + "\n" + ex.Message,
+					"Error while creating addon.",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				Util.LogException(ex);
+			}
+            
+        }
+
+		private void createAddon() {
 			dummyRadioBtn.Select();
 
 			// ensure an addon is selected.
@@ -192,9 +204,9 @@ namespace Dota2ModKit {
 
 			if (version == "") {
 				MetroMessageBox.Show(this, "No base addon selected.",
-				"Error",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
+					"Error",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
 				return;
 			}
 
@@ -212,9 +224,9 @@ namespace Dota2ModKit {
 			string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
 			string newBarebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
 
-            if (!Directory.Exists(barebonesDir)) {
-                return;
-            }
+			if (!Directory.Exists(barebonesDir)) {
+				return;
+			}
 
 			if (Directory.Exists(newBarebonesDir)) {
 				Directory.Delete(newBarebonesDir, true);
@@ -242,32 +254,30 @@ namespace Dota2ModKit {
 
 			fork();
 
-            // now move the addon to the game and content dirs.
-            string lower = newAddonName.ToLowerInvariant();
-            string upper = newAddonName.ToUpperInvariant();
+			// now move the addon to the game and content dirs.
+			string lower = newAddonName.ToLowerInvariant();
+			string upper = newAddonName.ToUpperInvariant();
 
-            string newG = Path.Combine(mainForm.gamePath, lower);
-            string newC = Path.Combine(mainForm.contentPath, lower);
+			string newG = Path.Combine(mainForm.gamePath, lower);
+			string newC = Path.Combine(mainForm.contentPath, lower);
 
-            string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
-            string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
-            Directory.Move(game, newG);
-            Directory.Move(content, newC);
-            // delete the old dir now.
-            Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
+			string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
+			string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
+			Directory.Move(game, newG);
+			Directory.Move(content, newC);
+			// delete the old dir now.
+			Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
 
-            // change currAddon on the main form.
-            Addon newAddon = new Addon(newG);
-            mainForm.addons.Add(lower, newAddon);
-            mainForm.changeCurrAddon(newAddon);
+			// change currAddon on the main form.
+			Addon newAddon = new Addon(newG);
+			mainForm.addons.Add(lower, newAddon);
+			mainForm.changeCurrAddon(newAddon);
 
-            mainForm.text_notification("Successfully created new addon: " + newAddonName.ToLowerInvariant(), MetroColorStyle.Green, 2500);
-            Process.Start(Path.Combine(newG, "scripts", "vscripts"));
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-            
-
-        }
+			mainForm.text_notification("Successfully created new addon: " + newAddonName.ToLowerInvariant(), MetroColorStyle.Green, 2500);
+			Process.Start(Path.Combine(newG, "scripts", "vscripts"));
+			this.DialogResult = DialogResult.OK;
+			this.Close();
+		}
 
 		private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
 			metroProgressBar1.Value = metroProgressBar1.Value + (e.ProgressPercentage - metroProgressBar1.Value);
