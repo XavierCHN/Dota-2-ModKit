@@ -98,6 +98,8 @@ namespace Dota2ModKit
 						libFileName = defaultLibPath.Substring(defaultLibPath.LastIndexOf('\\') + 1);
 					}
 					return libFileName;
+				} set {
+					libFileName = value;
 				}
 			}
 
@@ -114,7 +116,7 @@ namespace Dota2ModKit
 					}
 					return libName;
 				} set {
-					//libName = ;
+					libName = value;
 				}
 			}
 
@@ -169,7 +171,7 @@ namespace Dota2ModKit
 
 					exception = null;
 				} else {
-					addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1000);
+					addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1500);
 				}
 			}
 

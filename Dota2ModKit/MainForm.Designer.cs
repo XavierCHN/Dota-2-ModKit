@@ -34,8 +34,8 @@
 			this.addonTile = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.libraryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.libraryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.toolsTab = new MetroFramework.Controls.MetroTabPage();
@@ -76,8 +76,8 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
-			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.libraryManagerBtn = new MetroFramework.Controls.MetroTile();
+			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -135,19 +135,20 @@
 			this.changePictureToolStripMenuItem.Text = "Change Picture";
 			this.changePictureToolStripMenuItem.Click += new System.EventHandler(this.changePictureToolStripMenuItem_Click);
 			// 
-			// libraryManagerToolStripMenuItem
-			// 
-			this.libraryManagerToolStripMenuItem.Name = "libraryManagerToolStripMenuItem";
-			this.libraryManagerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-			this.libraryManagerToolStripMenuItem.Text = "Library Manager";
-			this.libraryManagerToolStripMenuItem.Click += new System.EventHandler(this.libraryManagerToolStripMenuItem_Click);
-			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.optionsToolStripMenuItem.Text = "Options";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+			// 
+			// libraryManagerToolStripMenuItem
+			// 
+			this.libraryManagerToolStripMenuItem.Enabled = false;
+			this.libraryManagerToolStripMenuItem.Name = "libraryManagerToolStripMenuItem";
+			this.libraryManagerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+			this.libraryManagerToolStripMenuItem.Text = "Library Manager";
+			this.libraryManagerToolStripMenuItem.Click += new System.EventHandler(this.libraryManagerToolStripMenuItem_Click);
 			// 
 			// deleteAddonToolStripMenuItem
 			// 
@@ -701,17 +702,6 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
-			// progressSpinner1
-			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
-			this.progressSpinner1.Maximum = 100;
-			this.progressSpinner1.Name = "progressSpinner1";
-			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
-			this.progressSpinner1.TabIndex = 19;
-			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.progressSpinner1.UseSelectable = true;
-			this.progressSpinner1.Visible = false;
-			// 
 			// libraryManagerBtn
 			// 
 			this.libraryManagerBtn.ActiveControl = null;
@@ -725,7 +715,19 @@
 			this.metroToolTip1.SetToolTip(this.libraryManagerBtn, "Opens the library manager");
 			this.libraryManagerBtn.UseSelectable = true;
 			this.libraryManagerBtn.UseTileImage = true;
+			this.libraryManagerBtn.Visible = false;
 			this.libraryManagerBtn.Click += new System.EventHandler(this.libraryManagerBtn_Click);
+			// 
+			// progressSpinner1
+			// 
+			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
+			this.progressSpinner1.Maximum = 100;
+			this.progressSpinner1.Name = "progressSpinner1";
+			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
+			this.progressSpinner1.TabIndex = 19;
+			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.progressSpinner1.UseSelectable = true;
+			this.progressSpinner1.Visible = false;
 			// 
 			// MainForm
 			// 
