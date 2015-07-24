@@ -81,6 +81,42 @@ namespace Dota2ModKit
 			public bool neverCheckForUpdates;
 			public string name;
 			public bool isDummyLib;
+			private Exception exception;
+			private string defaultLibTxt;
+			private string localTxt;
+			private bool needsUpdate;
+			private string libName;
+			private string libFileName;
+
+			public string LibFileName {
+				get {
+					if (libFileName != null) {
+						return libFileName;
+					}
+
+					if (defaultLibPath != null) {
+						libFileName = defaultLibPath.Substring(defaultLibPath.LastIndexOf('\\') + 1);
+					}
+					return libFileName;
+				}
+			}
+
+			public string LibName {
+				get {
+					if (libName != null) {
+						return libName;
+					}
+
+					if (defaultLibPath != null) {
+						if (defaultLibPath.Contains(Path.Combine("dota_addons", "barebones"))) {
+							libName = "barebones";
+						}
+					}
+					return libName;
+				} set {
+					//libName = ;
+				}
+			}
 
 			public Library(string local, Addon a) {
 				this.local = local;
@@ -92,12 +128,49 @@ namespace Dota2ModKit
 				using (var libUpdateWorker = new BackgroundWorker()) {
 					libUpdateWorker.DoWork += LibUpdateWorker_DoWork;
 					libUpdateWorker.RunWorkerCompleted += LibUpdateWorker_RunWorkerCompleted;
+					libUpdateWorker.RunWorkerAsync();
 				}
 			}
 
 			private void LibUpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-				
+				if (!needsUpdate) {
+					return;
+				}
+				needsUpdate = false;
 
+				DialogResult dr = MetroMessageBox.Show(addon.mainForm,
+					name + " in " + addon.name +
+					" does not match the contents of " + LibFileName + " in " + LibName + ". " +
+					"Replace the contents now? Press 'Cancel' to never see this again.",
+					"Library Update",
+					MessageBoxButtons.YesNoCancel,
+					MessageBoxIcon.Information);
+
+				if (dr == DialogResult.Cancel) {
+					this.neverCheckForUpdates = true;
+					return;
+				} else if (dr == DialogResult.No) {
+					return;
+				}
+
+				try {
+					File.WriteAllText(local, defaultLibTxt);
+					defaultLibTxt = null; // clear from memory
+				} catch (Exception ex) {
+					this.exception = ex;
+				}
+
+				if (exception != null) {
+					MetroMessageBox.Show(addon.mainForm,
+						exception.Message,
+						exception.ToString(),
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+
+					exception = null;
+				} else {
+					addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1000);
+				}
 			}
 
 			private void LibUpdateWorker_DoWork(object sender, DoWorkEventArgs e) {
@@ -115,24 +188,10 @@ namespace Dota2ModKit
 				}
 
 				if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
-					string defaultLibTxt = File.ReadAllText(defaultLibPath);
-					string localTxt = File.ReadAllText(local);
+					defaultLibTxt = File.ReadAllText(defaultLibPath);
+					localTxt = File.ReadAllText(local);
 					if (localTxt != defaultLibTxt) {
-						DialogResult dr = MetroMessageBox.Show(addon.mainForm,
-							Util.Relative(local) + " does not match the contents of " + Util.Relative(defaultLibPath) + ". " +
-							"Replace the contents now? Press 'Cancel' to never see this again.",
-							"Library Update",
-							MessageBoxButtons.YesNoCancel,
-							MessageBoxIcon.Information);
-
-						if (dr == DialogResult.Cancel) {
-							this.neverCheckForUpdates = true;
-							return;
-						} else if (dr == DialogResult.No) {
-							return;
-						}
-						File.WriteAllText(local, defaultLibTxt);
-						addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1000);
+						needsUpdate = true;
 					}
 
 					return;
@@ -160,7 +219,7 @@ namespace Dota2ModKit
 		/// <summary>
 		/// Default libs are mainly libs that are local.
 		/// </summary>
-		private void checkForDefaultLibs() {
+		public void checkForDefaultLibs() {
 			string vscriptsPath = Path.Combine(gamePath, "scripts", "vscripts");
 			string barebonesLibsPath = Path.Combine(Environment.CurrentDirectory, "barebones", "game", "dota_addons",
 				"barebones", "scripts", "vscripts", "libraries");
@@ -466,8 +525,9 @@ namespace Dota2ModKit
 									if (kv4.Key == "Remote") {
 										lib.remote = kv4.GetString();
 									} else if (kv4.Key == "DefaultLibPath") {
-										string defaultLibPath = kv4.GetString();
 										lib.defaultLibPath = kv4.GetString();
+									} else if (kv4.Key == "NeverCheckForUpdates" && kv4.GetBool()) {
+										lib.neverCheckForUpdates = true;
 									}
 								}
 							}
@@ -522,6 +582,9 @@ namespace Dota2ModKit
 					kv.Set(lib.defaultLibPath);
 					libKV.AddChild(kv);
 				}
+				var kv2 = new KeyValue("NeverCheckForUpdates");
+				kv2.Set(lib.neverCheckForUpdates);
+				libKV.AddChild(kv2);
 			}
 		}
 
@@ -599,6 +662,13 @@ namespace Dota2ModKit
 				addonSizeWorker.RunWorkerAsync();
 			}
 
+			// we need to allot time to pull or clone barebones, before checking for lib updates.
+			// lib update code is called in Updater.cs in this case.
+			if (!mainForm.firstAddonChange) {
+				mainForm.firstAddonChange = true;
+				return;
+			}
+
 			Timer onChangedToTimer = new Timer();
 			onChangedToTimer.Interval = 500;
 			onChangedToTimer.Tick += OnChangedToTimer_Tick;
@@ -618,7 +688,7 @@ namespace Dota2ModKit
 
 			}
 
-			//t.Dispose();
+			t.Dispose();
 		}
 
 		private void AddonSizeWorker_DoWork(object sender, DoWorkEventArgs e) {

@@ -20,6 +20,8 @@ using MetroFramework.Components;
 
 namespace Dota2ModKit {
 	public partial class MainForm : MetroForm {
+		public bool DEBUG = false;
+
         public Addon currAddon;
 		public Dictionary<string, Addon> addons;
 		public string dotaDir = "";
@@ -47,6 +49,7 @@ namespace Dota2ModKit {
 		public MetroToolTip _metroToolTip1;
 		public MetroTile _gameTile;
 		public MetroTile _contentTile;
+		internal bool firstAddonChange;
 
 		public MainForm() {
 			// refresh the debug_log
@@ -61,7 +64,7 @@ namespace Dota2ModKit {
 				Settings.Default.UpdateRequired = false;
 				Settings.Default.Save();
 				// open up changelog
-				if (Settings.Default.OpenChangelog) {
+				if (Settings.Default.OpenChangelog && !DEBUG) {
 					Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
 				}
 			}

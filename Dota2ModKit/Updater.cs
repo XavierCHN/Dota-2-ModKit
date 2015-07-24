@@ -108,6 +108,14 @@ namespace Dota2ModKit {
 		private void BarebonesCloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 			mainForm.text_notification("", MetroColorStyle.Blue, 500);
 			mainForm._progressSpinner1.Visible = false;
+
+			if (mainForm.currAddon != null) {
+				mainForm.currAddon.checkForDefaultLibs();
+				foreach (var lib in mainForm.currAddon.libraries) {
+					lib.Value.checkForUpdates();
+				}
+			}
+
 		}
 
 		private void BarebonesCloneWorker_DoWork(object sender, DoWorkEventArgs e) {
