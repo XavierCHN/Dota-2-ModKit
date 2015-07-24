@@ -274,10 +274,10 @@ namespace Dota2ModKit
 			try {
 				// these functions populate the data structures with the tooltips before writing to the addon_lang file.
 				// items
-				curr = "npc_abilities_custom.txt";
+				curr = "npc_items_custom.txt";
 				generateAbilityTooltips(true);
 				// abils
-				curr = "npc_items_custom.txt";
+				curr = "npc_abilities_custom.txt";
 				generateAbilityTooltips(false);
 				curr = "npc_units_custom.txt";
 				generateUnitTooltips();
