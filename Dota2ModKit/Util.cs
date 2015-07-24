@@ -10,23 +10,41 @@ using System.Windows.Forms;
 namespace Dota2ModKit {
 	public static class Util {
 
-		public static long GetDirectorySize(string p) {
+		public static string Relative(string str) {
+			if (str.Contains(Path.Combine("game", "dota_addons"))) {
+				return str.Substring(str.IndexOf(Path.Combine("game", "dota_addons")));
+			} else if (str.Contains(Path.Combine("content", "dota_addons"))) {
+				return str.Substring(str.IndexOf(Path.Combine("content", "dota_addons")));
+			}
+			return null;
+		}
+
+		public static string DoUniqueString() {
+			Guid g = Guid.NewGuid();
+			string GuidString = Convert.ToBase64String(g.ToByteArray());
+			GuidString = GuidString.Replace("=", "");
+			GuidString = GuidString.Replace("+", "");
+
+			return GuidString;
+		}
+
+		public static long GetDirectorySize(string dirPath) {
 			// 1.
 			// Get array of all file names.
-			string[] a = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
+			string[] filePaths = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories);
 
 			// 2.
 			// Calculate total bytes of all files in a loop.
-			long b = 0;
-			foreach (string name in a) {
+			long totalBytes = 0;
+			foreach (string filePath in filePaths) {
 				// 3.
 				// Use FileInfo to get length of each file.
-				FileInfo info = new FileInfo(name);
-				b += info.Length;
+				FileInfo info = new FileInfo(filePath);
+				totalBytes += info.Length;
 			}
 			// 4.
 			// Return total size
-			return b;
+			return totalBytes;
 		}
 
 		public static string findCommonBeginning(string[] strs) {

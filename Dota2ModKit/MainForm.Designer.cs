@@ -34,7 +34,7 @@
 			this.addonTile = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.librariesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.libraryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
@@ -76,8 +76,8 @@
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
-			this.libsTile = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+			this.libraryManagerBtn = new MetroFramework.Controls.MetroTile();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -121,38 +121,38 @@
 			// 
 			this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changePictureToolStripMenuItem,
-            this.librariesToolStripMenuItem,
             this.optionsToolStripMenuItem,
+            this.libraryManagerToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(156, 92);
+			this.metroContextMenu1.Size = new System.Drawing.Size(161, 114);
 			// 
 			// changePictureToolStripMenuItem
 			// 
 			this.changePictureToolStripMenuItem.Enabled = false;
 			this.changePictureToolStripMenuItem.Name = "changePictureToolStripMenuItem";
-			this.changePictureToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.changePictureToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.changePictureToolStripMenuItem.Text = "Change Picture";
 			this.changePictureToolStripMenuItem.Click += new System.EventHandler(this.changePictureToolStripMenuItem_Click);
 			// 
-			// librariesToolStripMenuItem
+			// libraryManagerToolStripMenuItem
 			// 
-			this.librariesToolStripMenuItem.Name = "librariesToolStripMenuItem";
-			this.librariesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-			this.librariesToolStripMenuItem.Text = "Libraries";
-			this.librariesToolStripMenuItem.Click += new System.EventHandler(this.librariesToolStripMenuItem_Click);
+			this.libraryManagerToolStripMenuItem.Name = "libraryManagerToolStripMenuItem";
+			this.libraryManagerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+			this.libraryManagerToolStripMenuItem.Text = "Library Manager";
+			this.libraryManagerToolStripMenuItem.Click += new System.EventHandler(this.libraryManagerToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.optionsToolStripMenuItem.Text = "Options";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
 			// 
 			// deleteAddonToolStripMenuItem
 			// 
 			this.deleteAddonToolStripMenuItem.Name = "deleteAddonToolStripMenuItem";
-			this.deleteAddonToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.deleteAddonToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.deleteAddonToolStripMenuItem.Text = "Delete Addon";
 			this.deleteAddonToolStripMenuItem.Click += new System.EventHandler(this.deleteAddonBtn_Click);
 			// 
@@ -654,7 +654,7 @@
 			this.steamTile.Location = new System.Drawing.Point(149, 123);
 			this.steamTile.Name = "steamTile";
 			this.steamTile.Size = new System.Drawing.Size(29, 29);
-			this.steamTile.Style = MetroFramework.MetroColorStyle.Green;
+			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
 			this.steamTile.TabIndex = 14;
 			this.steamTile.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroToolTip1.SetToolTip(this.steamTile, "Open the steam workshop page for this addon.");
@@ -701,21 +701,6 @@
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
 			// 
-			// libsTile
-			// 
-			this.libsTile.ActiveControl = null;
-			this.libsTile.Location = new System.Drawing.Point(149, 157);
-			this.libsTile.Name = "libsTile";
-			this.libsTile.Size = new System.Drawing.Size(29, 27);
-			this.libsTile.Style = MetroFramework.MetroColorStyle.Yellow;
-			this.libsTile.TabIndex = 20;
-			this.libsTile.Text = "L";
-			this.libsTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.libsTile, "This addon has unupdated libraries");
-			this.libsTile.UseSelectable = true;
-			this.libsTile.UseTileImage = true;
-			this.libsTile.Visible = false;
-			// 
 			// progressSpinner1
 			// 
 			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
@@ -727,12 +712,27 @@
 			this.progressSpinner1.UseSelectable = true;
 			this.progressSpinner1.Visible = false;
 			// 
+			// libraryManagerBtn
+			// 
+			this.libraryManagerBtn.ActiveControl = null;
+			this.libraryManagerBtn.Location = new System.Drawing.Point(149, 156);
+			this.libraryManagerBtn.Name = "libraryManagerBtn";
+			this.libraryManagerBtn.Size = new System.Drawing.Size(29, 29);
+			this.libraryManagerBtn.Style = MetroFramework.MetroColorStyle.Lime;
+			this.libraryManagerBtn.TabIndex = 20;
+			this.libraryManagerBtn.Text = "L";
+			this.libraryManagerBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.libraryManagerBtn, "Opens the library manager");
+			this.libraryManagerBtn.UseSelectable = true;
+			this.libraryManagerBtn.UseTileImage = true;
+			this.libraryManagerBtn.Click += new System.EventHandler(this.libraryManagerBtn_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
-			this.Controls.Add(this.libsTile);
+			this.Controls.Add(this.libraryManagerBtn);
 			this.Controls.Add(this.progressSpinner1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
@@ -816,8 +816,8 @@
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroProgressSpinner progressSpinner1;
 		private MetroFramework.Controls.MetroButton metroButton2;
-		private System.Windows.Forms.ToolStripMenuItem librariesToolStripMenuItem;
-		private MetroFramework.Controls.MetroTile libsTile;
+		private System.Windows.Forms.ToolStripMenuItem libraryManagerToolStripMenuItem;
+		private MetroFramework.Controls.MetroTile libraryManagerBtn;
 	}
 }
 

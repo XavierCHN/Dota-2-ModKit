@@ -36,7 +36,6 @@ namespace Dota2ModKit {
 			}
 
 			bool colorKeyFound = false;
-			bool sizeKeyFound = false;
 			int count = 0;
 			int r, g, b, a;
 			//int rIndex, gIndex, bIndex, aIndex;

@@ -74,18 +74,27 @@ namespace Dota2ModKit.Forms {
 
 		private void CloneWorker_DoWork(object sender, DoWorkEventArgs e) {
 			if (!Directory.Exists(spellLibPath)) {
-				string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
-				Console.WriteLine("repo path:" + gitPath);
+				try {
+					string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
+					Console.WriteLine("repo path:" + gitPath);
+				} catch (Exception ex) {
 
+				}
 				return;
 			}
 
 			// pull from the repo
 			using (var repo = new Repository(spellLibPath)) {
-				//var remote = repo.Network.Remotes["origin"];
-				MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"), new DateTimeOffset()), new PullOptions());
-				MergeStatus ms = mr.Status;
-				Console.WriteLine("MergeStatus: " + ms.ToString());
+				try {
+					//var remote = repo.Network.Remotes["origin"];
+					MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"),
+						new DateTimeOffset()),
+						new PullOptions());
+					MergeStatus ms = mr.Status;
+					Console.WriteLine("MergeStatus: " + ms.ToString());
+				} catch (Exception ex) {
+
+				}
 			}
 		}
 

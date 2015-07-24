@@ -1,7 +1,9 @@
-﻿using MetroFramework;
+﻿using LibGit2Sharp;
+using MetroFramework;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,6 +15,7 @@ namespace Dota2ModKit {
 		string url = "";
 		string newVers = "";
 		bool newVersFound = false;
+		string barebonesPath = Path.Combine(Environment.CurrentDirectory, "barebones");
 
 		public Updater(MainForm mainForm) {
 			this.mainForm = mainForm;
@@ -20,10 +23,11 @@ namespace Dota2ModKit {
         }
 
 		public void checkForUpdates() {
-			BackgroundWorker updatesWorker = new BackgroundWorker();
-			updatesWorker.DoWork += UpdatesWorker_DoWork;
-			updatesWorker.RunWorkerCompleted += UpdatesWorker_RunWorkerCompleted;
-			updatesWorker.RunWorkerAsync();
+			using (var updatesWorker = new BackgroundWorker()) {
+				updatesWorker.DoWork += UpdatesWorker_DoWork;
+				updatesWorker.RunWorkerCompleted += UpdatesWorker_RunWorkerCompleted;
+				updatesWorker.RunWorkerAsync();
+			}
 		}
 
 		private void UpdatesWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
@@ -81,6 +85,53 @@ namespace Dota2ModKit {
 			newVers = Util.incrementVers(version, count - 1);
 			url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 			url += newVers + "/D2ModKit.zip";
+		}
+
+		internal void clonePullBarebones() {
+			mainForm._progressSpinner1.Value = 60;
+			mainForm._progressSpinner1.Visible = true;
+
+			if (!Directory.Exists(barebonesPath)) {
+				mainForm.text_notification("Cloning Barebones...", MetroColorStyle.Blue, 999999);
+			} else {
+				mainForm.text_notification("Pulling Barebones...", MetroColorStyle.Blue, 999999);
+			}
+
+			using (var barebonesCloneWorker = new BackgroundWorker()) {
+				
+				barebonesCloneWorker.RunWorkerCompleted += BarebonesCloneWorker_RunWorkerCompleted;
+				barebonesCloneWorker.DoWork += BarebonesCloneWorker_DoWork;
+				barebonesCloneWorker.RunWorkerAsync();
+			}
+		}
+
+		private void BarebonesCloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+			mainForm.text_notification("", MetroColorStyle.Blue, 500);
+			mainForm._progressSpinner1.Visible = false;
+		}
+
+		private void BarebonesCloneWorker_DoWork(object sender, DoWorkEventArgs e) {
+			if (!Directory.Exists(barebonesPath)) {
+				try {
+					string gitPath = Repository.Clone("https://github.com/bmddota/barebones", barebonesPath);
+					Console.WriteLine("repo path:" + gitPath);
+				} catch (Exception ex) {
+
+				}
+				return;
+			}
+
+			// pull from the repo
+			using (var repo = new Repository(barebonesPath)) {
+				try {
+					//var remote = repo.Network.Remotes["origin"];
+					MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"), new DateTimeOffset()), new PullOptions());
+					MergeStatus ms = mr.Status;
+					Console.WriteLine("MergeStatus: " + ms.ToString());
+				} catch (Exception ex) {
+
+				}
+			}
 		}
 	}
 }

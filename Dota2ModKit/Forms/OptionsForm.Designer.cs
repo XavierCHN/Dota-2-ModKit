@@ -28,12 +28,13 @@
 			this.note0CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.addonOptionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.askToBreakUpCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.modkitOptionsTab = new MetroFramework.Controls.MetroTabPage();
 			this.openChangelogCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
-			this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.cancelButton = new MetroFramework.Controls.MetroButton();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -95,6 +96,17 @@
 			this.addonOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.addonOptionsTab.VerticalScrollbarSize = 2;
 			// 
+			// autoDeleteBinCheckBox
+			// 
+			this.autoDeleteBinCheckBox.AutoSize = true;
+			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(0, 76);
+			this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
+			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(426, 15);
+			this.autoDeleteBinCheckBox.TabIndex = 17;
+			this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon when selected";
+			this.autoDeleteBinCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.autoDeleteBinCheckBox.UseSelectable = true;
+			// 
 			// askToBreakUpCheckBox
 			// 
 			this.askToBreakUpCheckBox.AutoSize = true;
@@ -136,10 +148,10 @@
 			// saveBtn
 			// 
 			this.saveBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.saveBtn.Location = new System.Drawing.Point(198, 414);
+			this.saveBtn.Location = new System.Drawing.Point(234, 414);
 			this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.saveBtn.Name = "saveBtn";
-			this.saveBtn.Size = new System.Drawing.Size(148, 35);
+			this.saveBtn.Size = new System.Drawing.Size(135, 35);
 			this.saveBtn.TabIndex = 16;
 			this.saveBtn.TabStop = false;
 			this.saveBtn.Text = "Save";
@@ -158,22 +170,28 @@
 			this.metroRadioButton1.UseSelectable = true;
 			this.metroRadioButton1.Visible = false;
 			// 
-			// autoDeleteBinCheckBox
+			// cancelButton
 			// 
-			this.autoDeleteBinCheckBox.AutoSize = true;
-			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(0, 76);
-			this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
-			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(426, 15);
-			this.autoDeleteBinCheckBox.TabIndex = 17;
-			this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon when selected";
-			this.autoDeleteBinCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.autoDeleteBinCheckBox.UseSelectable = true;
+			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.cancelButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.cancelButton.Location = new System.Drawing.Point(152, 414);
+			this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
+			this.cancelButton.Name = "cancelButton";
+			this.cancelButton.Size = new System.Drawing.Size(74, 35);
+			this.cancelButton.TabIndex = 18;
+			this.cancelButton.TabStop = false;
+			this.cancelButton.Text = "Cancel";
+			this.cancelButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.cancelButton.UseSelectable = true;
+			this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
 			// 
 			// OptionsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.cancelButton;
 			this.ClientSize = new System.Drawing.Size(543, 473);
+			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.saveBtn);
 			this.Controls.Add(this.tabControl);
@@ -208,5 +226,6 @@
 		private MetroFramework.Controls.MetroCheckBox openChangelogCheckBox;
 		private MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
 		private MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
+		private MetroFramework.Controls.MetroButton cancelButton;
 	}
 }

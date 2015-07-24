@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.ComponentModel;
+using System.Net;
+using MetroFramework.Controls;
 
 namespace Dota2ModKit
 {
@@ -40,6 +42,10 @@ namespace Dota2ModKit
 		private string gameSizeStr = "";
 		private string contentSizeStr = "";
 		private MainForm mainForm;
+		//public List<Library> libraries = new List<Library>();
+		public Dictionary<string, Library> libraries = new Dictionary<string, Library>();
+		HashSet<string> NotDefaultLibs = new HashSet<string>();
+		public string relativeGamePath;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -47,6 +53,7 @@ namespace Dota2ModKit
 			// extract other info from the gamePath
 			name = gamePath.Substring(gamePath.LastIndexOf('\\')+1);
 			Debug.WriteLine("New Addon detected: " + name);
+			this.relativeGamePath = gamePath.Substring(gamePath.IndexOf(Path.Combine("game", "dota_addons")));
 
 			string dotaDir = Settings.Default.DotaDir;
 
@@ -58,6 +65,138 @@ namespace Dota2ModKit
 				} catch (Exception) {
 					Debug.WriteLine("Couldn't auto-create content path for " + name);
 					hasContentPath = false;
+				}
+			}
+		}
+
+		public class Library {
+			public string local;
+			public string remote;
+			internal int gridRow;
+			public bool updateAvailable;
+			internal MetroGrid grid;
+			string tempFile = "";
+			internal string defaultLibPath;
+			public Addon addon;
+			public bool neverCheckForUpdates;
+			public string name;
+			public bool isDummyLib;
+
+			public Library(string local, Addon a) {
+				this.local = local;
+				this.addon = a;
+				name = local.Substring(local.LastIndexOf('\\') + 1);
+			}
+
+			public void checkForUpdates() {
+				using (var libUpdateWorker = new BackgroundWorker()) {
+					libUpdateWorker.DoWork += LibUpdateWorker_DoWork;
+					libUpdateWorker.RunWorkerCompleted += LibUpdateWorker_RunWorkerCompleted;
+				}
+			}
+
+			private void LibUpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+				
+
+			}
+
+			private void LibUpdateWorker_DoWork(object sender, DoWorkEventArgs e) {
+				if (!File.Exists(local)) {
+					// this shouldn't even be a library
+					addon.libraries.Remove(local);
+
+					return;
+				}
+
+				// check for dummy lib
+				if (defaultLibPath == null && remote == null) {
+					isDummyLib = true;
+					return;
+				}
+
+				if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
+					string defaultLibTxt = File.ReadAllText(defaultLibPath);
+					string localTxt = File.ReadAllText(local);
+					if (localTxt != defaultLibTxt) {
+						DialogResult dr = MetroMessageBox.Show(addon.mainForm,
+							Util.Relative(local) + " does not match the contents of " + Util.Relative(defaultLibPath) + ". " +
+							"Replace the contents now? Press 'Cancel' to never see this again.",
+							"Library Update",
+							MessageBoxButtons.YesNoCancel,
+							MessageBoxIcon.Information);
+
+						if (dr == DialogResult.Cancel) {
+							this.neverCheckForUpdates = true;
+							return;
+						} else if (dr == DialogResult.No) {
+							return;
+						}
+						File.WriteAllText(local, defaultLibTxt);
+						addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1000);
+					}
+
+					return;
+				}
+
+				// lib wasn't a local lib. do remote stuff
+				WebClient wc = new WebClient();
+
+				try {
+					tempFile = Path.Combine(Environment.CurrentDirectory, "temp", Util.DoUniqueString());
+                    wc.DownloadFile(remote, tempFile);
+					byte[] responseBytes = wc.DownloadData(remote);
+
+					if (new FileInfo(tempFile).Length != new FileInfo(local).Length) {
+						updateAvailable = true;
+					}
+
+					//File.Delete(tempFile);
+
+				} catch (Exception) { }
+				
+			}
+		}
+
+		/// <summary>
+		/// Default libs are mainly libs that are local.
+		/// </summary>
+		private void checkForDefaultLibs() {
+			string vscriptsPath = Path.Combine(gamePath, "scripts", "vscripts");
+			string barebonesLibsPath = Path.Combine(Environment.CurrentDirectory, "barebones", "game", "dota_addons",
+				"barebones", "scripts", "vscripts", "libraries");
+
+            if (!Directory.Exists(vscriptsPath) || !Directory.Exists(barebonesLibsPath)) {
+				return;
+			}
+
+			Dictionary<string, string> libNameToPath = new Dictionary<string, string>();
+			foreach (string barebonesLib in Directory.GetFiles(barebonesLibsPath, "*.lua", SearchOption.AllDirectories)) {
+				string fn = barebonesLib.Substring(barebonesLib.LastIndexOf('\\') + 1);
+				libNameToPath.Add(fn, barebonesLib);
+
+			}
+
+            string[] vscripts = Directory.GetFiles(vscriptsPath, "*.lua", SearchOption.AllDirectories);
+			foreach (string path in vscripts) {
+				string fn = path.Substring(path.LastIndexOf('\\') + 1);
+				if (libNameToPath.ContainsKey(fn)) {
+					if (libraries.ContainsKey(path) || NotDefaultLibs.Contains(path)) {
+						// this has already been checked and it's not a default lib. don't waste user's time
+						continue;
+					}
+
+					Library lib = new Library(path, this);
+					DialogResult dr = MetroMessageBox.Show(mainForm,
+						Util.Relative(path) + " has been detected to be a Barebones library. Enable auto update checker for this library?",
+						"Library detected",
+						MessageBoxButtons.YesNo,
+						MessageBoxIcon.Information);
+
+					if (dr == DialogResult.Yes) {
+						lib.defaultLibPath = libNameToPath[fn];
+					} // if it's No, still add it as a dummy library, to remember this decision later.
+
+					libraries.Add(path, lib);
 				}
 			}
 		}
@@ -317,6 +456,30 @@ namespace Dota2ModKit
 							this.autoDeleteBin = false;
 						}
 					}
+				} else if (kv2.Key == "libraries") {
+					if (kv2.HasChildren) {
+						foreach (KeyValue kv3 in kv2.Children) {
+							string localPath = kv3.Key;
+							Library lib = new Library(localPath, this);
+							if (kv3.HasChildren) {
+								foreach (KeyValue kv4 in kv3.Children) {
+									if (kv4.Key == "Remote") {
+										lib.remote = kv4.GetString();
+									} else if (kv4.Key == "DefaultLibPath") {
+										string defaultLibPath = kv4.GetString();
+										lib.defaultLibPath = kv4.GetString();
+									}
+								}
+							}
+							libraries.Add(lib.local, lib);
+
+							if (lib.remote == null && lib.defaultLibPath == null) {
+								// this was checked to be a default addon, but the user said it wasn't a default addon.
+								// we still need to store it so we don't ask user "is this a default addon?" later again
+								NotDefaultLibs.Add(lib.local);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -341,6 +504,25 @@ namespace Dota2ModKit
 			KeyValue autoDeleteBin = new KeyValue("autoDeleteBin");
 			autoDeleteBin.AddChild(new KeyValue(this.autoDeleteBin.ToString()));
 			addonKV.AddChild(autoDeleteBin);
+
+			KeyValue libraries = new KeyValue("libraries");
+			addonKV.AddChild(libraries);
+			foreach (KeyValuePair<string, Library> libraryKV in this.libraries) {
+				Library lib = libraryKV.Value;
+				KeyValue libKV = new KeyValue(lib.local);
+				libraries.AddChild(libKV);
+				// populate libKV
+				if (lib.remote != null) {
+					KeyValue remoteKV = new KeyValue("Remote");
+					remoteKV.Set(lib.remote);
+					libKV.AddChild(remoteKV);
+				}
+				if (lib.defaultLibPath != null) {
+					KeyValue kv = new KeyValue("DefaultLibPath");
+					kv.Set(lib.defaultLibPath);
+					libKV.AddChild(kv);
+				}
+			}
 		}
 
 		private void generateAbilityTooltips(bool item) {
@@ -411,10 +593,32 @@ namespace Dota2ModKit
 				deleteBinFiles();
 			}
 
-			BackgroundWorker addonSizeWorker = new BackgroundWorker();
-			addonSizeWorker.DoWork += AddonSizeWorker_DoWork;
-			addonSizeWorker.RunWorkerCompleted += AddonSizeWorker_RunWorkerCompleted;
-			addonSizeWorker.RunWorkerAsync();
+			using (var addonSizeWorker = new BackgroundWorker()) {
+				addonSizeWorker.DoWork += AddonSizeWorker_DoWork;
+				addonSizeWorker.RunWorkerCompleted += AddonSizeWorker_RunWorkerCompleted;
+				addonSizeWorker.RunWorkerAsync();
+			}
+
+			Timer onChangedToTimer = new Timer();
+			onChangedToTimer.Interval = 500;
+			onChangedToTimer.Tick += OnChangedToTimer_Tick;
+			onChangedToTimer.Start();
+		}
+
+		private void OnChangedToTimer_Tick(object sender, EventArgs e) {
+			// run it once
+			Timer t = (Timer)sender;
+			t.Stop();
+
+			checkForDefaultLibs();
+
+			foreach (KeyValuePair<string, Library> libKV in libraries) {
+				Library lib = libKV.Value;
+				lib.checkForUpdates();
+
+			}
+
+			//t.Dispose();
 		}
 
 		private void AddonSizeWorker_DoWork(object sender, DoWorkEventArgs e) {

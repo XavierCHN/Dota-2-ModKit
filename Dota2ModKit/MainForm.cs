@@ -124,6 +124,9 @@ namespace Dota2ModKit {
 				Environment.Exit(0);
 			}
 
+			// clone a barebones repo if we don't have one, pull if we do
+			updater.clonePullBarebones();
+
 			// deserialize settings
 			deserializeSettings();
 
@@ -781,7 +784,13 @@ namespace Dota2ModKit {
 			}*/
 		}
 
-		private void librariesToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void libraryManagerBtn_Click(object sender, EventArgs e) {
+			LibraryManagerForm lmf = new LibraryManagerForm(this);
+			lmf.ShowDialog();
+
+		}
+
+		private void libraryManagerToolStripMenuItem_Click(object sender, EventArgs e) {
 
 		}
 	}

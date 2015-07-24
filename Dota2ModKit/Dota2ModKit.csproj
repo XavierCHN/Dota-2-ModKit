@@ -99,11 +99,11 @@
     <Compile Include="Forms\FindSoundForm.Designer.cs">
       <DependentUpon>FindSoundForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LibrariesForm.cs">
+    <Compile Include="Forms\LibraryManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LibrariesForm.Designer.cs">
-      <DependentUpon>LibrariesForm.cs</DependentUpon>
+    <Compile Include="Forms\LibraryManagerForm.Designer.cs">
+      <DependentUpon>LibraryManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MasterToolboxForm.cs">
       <SubType>Form</SubType>
@@ -169,8 +169,8 @@
     <EmbeddedResource Include="Forms\FindSoundForm.resx">
       <DependentUpon>FindSoundForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LibrariesForm.resx">
-      <DependentUpon>LibrariesForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\LibraryManagerForm.resx">
+      <DependentUpon>LibraryManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MasterToolboxForm.resx">
       <DependentUpon>MasterToolboxForm.cs</DependentUpon>
