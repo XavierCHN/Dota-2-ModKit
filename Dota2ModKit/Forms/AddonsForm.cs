@@ -163,10 +163,8 @@ namespace Dota2ModKit {
 									mt.Style = mainForm._addonTile.Style;
 								} else {
 									a.tileColor = mt.Style;
-								}
-								
+								}	
 							}
-
 							break;
 						}
 					}
@@ -187,133 +185,96 @@ namespace Dota2ModKit {
 		private void createAddonBtn_Click(object sender, EventArgs e) {
 			dummyRadioBtn.Select();
 
-			try {
-				WebClient wc = new WebClient();
-
-				// ensure an addon is selected.
-				string link = "";
-				if (bmdRadioButton.Checked) {
-					version = "bmd";
-					link = "https://github.com/bmddota/barebones/archive/source2.zip";
-				}
-
-				if (version == "") {
-					MetroMessageBox.Show(this, "No base addon selected.",
-					"Error",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-					return;
-				}
-
-				// check if stuff in textbox is fine.
-				newAddonName = addonNameTextBox.Text;
-				if (newAddonName == "" || newAddonName.Length <= 3) {
-					MetroMessageBox.Show(this, "Length must be > 3 characters.",
-					"Invalid addon name",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-					return;
-				}
-
-				// done with all the checks, now procede to fork addon
-				createAddonBtn.Enabled = false;
-
-				// delete barebones.zip if it already exists.
-				if (File.Exists(Path.Combine(Environment.CurrentDirectory, "barebones.zip"))) {
-					File.Delete(Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
-				}
-
-				// delete barebones folder if it exists
-				if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "barebones"))) {
-					Directory.Delete(Path.Combine(Environment.CurrentDirectory, "barebones"), true);
-				}
-
-				// delete barebones folder if it exists
-				if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "barebones-source2"))) {
-					Directory.Delete(Path.Combine(Environment.CurrentDirectory, "barebones-source2"), true);
-				}
-
-				// download the latest barebones from github
-				wc.DownloadFileAsync(new Uri(link), Path.Combine(Environment.CurrentDirectory, "barebones.zip"));
-				wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
-				wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
-
-				metroProgressBar1.Visible = true;
-				progressLabel.Text = "Downloading...";
-				progressLabel.Visible = true;
-
-			} catch (Exception ex) {
-				MetroMessageBox.Show(this, ex.Message,
-				ex.ToString(),
-                MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
-				this.Close();
+			// ensure an addon is selected.
+			if (bmdRadioButton.Checked) {
+				version = "bmd";
 			}
 
-		}
+			if (version == "") {
+				MetroMessageBox.Show(this, "No base addon selected.",
+				"Error",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Error);
+				return;
+			}
+
+			// check if stuff in textbox is fine.
+			newAddonName = addonNameTextBox.Text;
+			if (newAddonName == "" || newAddonName.Length <= 3) {
+				MetroMessageBox.Show(this, "Length must be > 3 characters.",
+				"Invalid addon name",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Error);
+				return;
+			}
+
+			// done with all the checks, now procede to fork addon
+			string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
+			string newBarebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
+
+            if (!Directory.Exists(barebonesDir)) {
+                return;
+            }
+
+			if (Directory.Exists(newBarebonesDir)) {
+				Directory.Delete(newBarebonesDir, true);
+			}
+
+			// copy everything from barebonesDir to a new dir.
+			//Now Create all of the directories
+			foreach (string dir in Directory.GetDirectories(barebonesDir, "*", SearchOption.AllDirectories)) {
+				// don't copy git dir
+				if (dir.Contains(".git")) {
+					continue;
+				}
+
+				Directory.CreateDirectory(dir.Replace(barebonesDir, newBarebonesDir));
+			}
+
+			//Copy all the files & Replaces any files with the same name
+			foreach (string oldPath in Directory.GetFiles(barebonesDir, "*.*", SearchOption.AllDirectories)) {
+				if (oldPath.Contains(Path.Combine("barebones", ".git"))) {
+					continue;
+				}
+
+				File.Copy(oldPath, oldPath.Replace(barebonesDir, newBarebonesDir), true);
+			}
+
+			fork();
+
+            // now move the addon to the game and content dirs.
+            string lower = newAddonName.ToLowerInvariant();
+            string upper = newAddonName.ToUpperInvariant();
+
+            string newG = Path.Combine(mainForm.gamePath, lower);
+            string newC = Path.Combine(mainForm.contentPath, lower);
+
+            string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
+            string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
+            Directory.Move(game, newG);
+            Directory.Move(content, newC);
+            // delete the old dir now.
+            Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
+
+            // change currAddon on the main form.
+            Addon newAddon = new Addon(newG);
+            mainForm.addons.Add(lower, newAddon);
+            mainForm.changeCurrAddon(newAddon);
+
+            mainForm.text_notification("Successfully created new addon: " + newAddonName.ToLowerInvariant(), MetroColorStyle.Green, 2500);
+            Process.Start(Path.Combine(newG, "scripts", "vscripts"));
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+            
+
+        }
 
 		private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
 			metroProgressBar1.Value = metroProgressBar1.Value + (e.ProgressPercentage - metroProgressBar1.Value);
 		}
 
 		private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-			try {
-				// extract it now
-				string zipPath = Path.Combine(Environment.CurrentDirectory, "barebones.zip");
-				ZipFile.ExtractToDirectory(zipPath, Environment.CurrentDirectory);
-
-				// rename it
-				string oldPath = Path.Combine(Environment.CurrentDirectory, "barebones-source2");
-				Directory.Move(oldPath, Path.Combine(Environment.CurrentDirectory, "barebones"));
-
-				// delete the zip
-				File.Delete(zipPath);
-
-				progressLabel.Text = "Creating addon...";
-
-				fork();
-
-				// now move the addon to the game and content dirs.
-				string lower = newAddonName.ToLowerInvariant();
-				string upper = newAddonName.ToUpperInvariant();
-
-				string newG = Path.Combine(mainForm.gamePath, lower);
-				string newC = Path.Combine(mainForm.contentPath, lower);
-
-				string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
-				string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
-				Directory.Move(game, newG);
-				Directory.Move(content, newC);
-				// delete the old dir now.
-				Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
-
-				// change currAddon on the main form.
-				Addon newAddon = new Addon(newG);
-				mainForm.addons.Add(lower, newAddon);
-				mainForm.changeCurrAddon(newAddon);
-
-				mainForm.text_notification("Successfully created new addon: " + newAddonName.ToLowerInvariant(), MetroColorStyle.Green, 2500);
-				Process.Start(Path.Combine(newG, "scripts", "vscripts"));
-				this.DialogResult = DialogResult.OK;
-				this.Close();
-			} catch (Exception ex) {
-				/*string text = ex.ToString() + "\n\n";
-				text += ex.Message + "\n\n";
-				text += "StackTrace: " + ex.StackTrace + "\n\n";
-				text += "ex.Data:\n";
-				foreach (DictionaryEntry item in ex.Data) {
-					text += "\n";
-					text += item.Key.ToString() + " | " + item.Value.ToString();
-				}
-
-				File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "error.txt"), text);*/
-
-				MetroMessageBox.Show(this, ex.Message,
-				ex.ToString(),
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
-				this.Close();
-			}
+	
 		}
 
 		private void fork() {
@@ -322,8 +283,8 @@ namespace Dota2ModKit {
 			string newUpper = newAddonName.ToUpperInvariant();
 
 			// first move the root dir.
-			string rootDir = Path.Combine(Environment.CurrentDirectory, "barebones");
-			string newRootDir = rootDir.Replace("barebones", newLower);
+			string rootDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
+			string newRootDir = rootDir.Replace("barebones_temp", newLower);
 			Directory.Move(rootDir, newRootDir);
 
 			// next modify subdirectory names.
