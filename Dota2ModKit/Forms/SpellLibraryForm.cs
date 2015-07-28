@@ -5,6 +5,7 @@ using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -313,5 +314,13 @@ namespace Dota2ModKit.Forms {
 			notificationLabel.Text = "";
 		}
 
+		private void openFileBtn_Click(object sender, EventArgs e) {
+			if (luaKVBtn.Text == "Lua Script") {
+				Process.Start(currKVPath);
+			} else {
+				// open kv
+				Process.Start(currLuaPath);
+			}
+		}
 	}
 }

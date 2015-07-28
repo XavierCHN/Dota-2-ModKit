@@ -32,9 +32,9 @@
 			this.notificationLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
-			this.metroButton1 = new MetroFramework.Controls.MetroButton();
 			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.textBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
+			this.openFileBtn = new MetroFramework.Controls.MetroButton();
 			((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -52,10 +52,10 @@
 			// copySpellBtn
 			// 
 			this.copySpellBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.copySpellBtn.Location = new System.Drawing.Point(258, 181);
+			this.copySpellBtn.Location = new System.Drawing.Point(258, 162);
 			this.copySpellBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.copySpellBtn.Name = "copySpellBtn";
-			this.copySpellBtn.Size = new System.Drawing.Size(120, 40);
+			this.copySpellBtn.Size = new System.Drawing.Size(111, 36);
 			this.copySpellBtn.TabIndex = 14;
 			this.copySpellBtn.TabStop = false;
 			this.copySpellBtn.Text = "Copy";
@@ -67,10 +67,10 @@
 			// luaKVBtn
 			// 
 			this.luaKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.luaKVBtn.Location = new System.Drawing.Point(258, 229);
+			this.luaKVBtn.Location = new System.Drawing.Point(258, 206);
 			this.luaKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.luaKVBtn.Name = "luaKVBtn";
-			this.luaKVBtn.Size = new System.Drawing.Size(120, 40);
+			this.luaKVBtn.Size = new System.Drawing.Size(111, 36);
 			this.luaKVBtn.TabIndex = 15;
 			this.luaKVBtn.TabStop = false;
 			this.luaKVBtn.Text = "Lua Script";
@@ -96,7 +96,7 @@
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.notificationLabel.Location = new System.Drawing.Point(257, 273);
+			this.notificationLabel.Location = new System.Drawing.Point(257, 246);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(101, 25);
 			this.notificationLabel.TabIndex = 18;
@@ -121,30 +121,14 @@
 			this.metroToolTip1.StyleManager = null;
 			this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Light;
 			// 
-			// metroButton1
-			// 
-			this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.metroButton1.Location = new System.Drawing.Point(258, 582);
-			this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
-			this.metroButton1.Name = "metroButton1";
-			this.metroButton1.Size = new System.Drawing.Size(120, 40);
-			this.metroButton1.TabIndex = 20;
-			this.metroButton1.TabStop = false;
-			this.metroButton1.Text = "Open File";
-			this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.metroButton1, "Opens the file associated with the contents in the\r\ntextbox on the right. NOTE: D" +
-        "on\'t change anything\r\nin the file!");
-			this.metroButton1.UseSelectable = true;
-			this.metroButton1.Visible = false;
-			// 
 			// metroLabel2
 			// 
 			this.metroLabel2.AutoSize = true;
 			this.metroLabel2.Location = new System.Drawing.Point(257, 63);
 			this.metroLabel2.Name = "metroLabel2";
-			this.metroLabel2.Size = new System.Drawing.Size(101, 114);
+			this.metroLabel2.Size = new System.Drawing.Size(104, 95);
 			this.metroLabel2.TabIndex = 21;
-			this.metroLabel2.Text = "Note: Only the\r\nentries currently\r\nshown have\r\nbeen worked\r\non in\r\nSpellLibrary.";
+			this.metroLabel2.Text = "Note: Spells that\r\nhave not been\r\nworked on in\r\nSpellLibrary are\r\nnot shown.";
 			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// textBox1
@@ -172,7 +156,7 @@
 			this.textBox1.Language = FastColoredTextBoxNS.Language.JS;
 			this.textBox1.LeftBracket = '(';
 			this.textBox1.LeftBracket2 = '{';
-			this.textBox1.Location = new System.Drawing.Point(385, 63);
+			this.textBox1.Location = new System.Drawing.Point(376, 63);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Paddings = new System.Windows.Forms.Padding(0);
 			this.textBox1.ReadOnly = true;
@@ -181,18 +165,33 @@
 			this.textBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.textBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("textBox1.ServiceColors")));
 			this.textBox1.ShowFoldingLines = true;
-			this.textBox1.Size = new System.Drawing.Size(855, 673);
+			this.textBox1.Size = new System.Drawing.Size(864, 673);
 			this.textBox1.TabIndex = 23;
 			this.textBox1.Zoom = 100;
+			// 
+			// openFileBtn
+			// 
+			this.openFileBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.openFileBtn.Location = new System.Drawing.Point(258, 275);
+			this.openFileBtn.Margin = new System.Windows.Forms.Padding(4);
+			this.openFileBtn.Name = "openFileBtn";
+			this.openFileBtn.Size = new System.Drawing.Size(111, 36);
+			this.openFileBtn.TabIndex = 24;
+			this.openFileBtn.TabStop = false;
+			this.openFileBtn.Text = "Open File";
+			this.openFileBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.openFileBtn, "NOTE: Do not edit the file.");
+			this.openFileBtn.UseSelectable = true;
+			this.openFileBtn.Click += new System.EventHandler(this.openFileBtn_Click);
 			// 
 			// SpellLibraryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1263, 759);
+			this.Controls.Add(this.openFileBtn);
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.metroLabel2);
-			this.Controls.Add(this.metroButton1);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.notificationLabel);
 			this.Controls.Add(this.metroLabel1);
@@ -222,8 +221,8 @@
 		private MetroFramework.Controls.MetroLabel notificationLabel;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Components.MetroToolTip metroToolTip1;
-		private MetroFramework.Controls.MetroButton metroButton1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private FastColoredTextBoxNS.FastColoredTextBox textBox1;
+		private MetroFramework.Controls.MetroButton openFileBtn;
 	}
 }
