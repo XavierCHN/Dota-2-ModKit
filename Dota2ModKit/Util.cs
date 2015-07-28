@@ -27,7 +27,7 @@ namespace Dota2ModKit {
 					logText.AppendLine("REPORT THIS TO https://github.com/Myll/Dota-2-ModKit/issues IF CRASHES OCCUR.\n");
                 }
 
-				logText.AppendLine("\n\nNEW ENTRY: " + DateTime.Now.ToString("mm-dd-yy_h-mm-ss"));
+				logText.AppendLine("\n\nNEW ENTRY: " + DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToLongTimeString());
 				logText.AppendLine(text);
 
 				File.WriteAllText(logPath, logText.ToString());

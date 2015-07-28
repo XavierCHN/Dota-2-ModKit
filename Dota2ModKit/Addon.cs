@@ -82,7 +82,6 @@ namespace Dota2ModKit
 			public string name;
 			public bool isDummyLib;
 			private Exception exception;
-			private string defaultLibTxt;
 			private bool needsUpdate;
 			private string libName;
 			private string libFileName;
@@ -155,8 +154,7 @@ namespace Dota2ModKit
 				}
 
 				try {
-					File.WriteAllText(local, defaultLibTxt);
-					defaultLibTxt = null; // clear from memory
+					File.WriteAllText(local, File.ReadAllText(defaultLibPath));
 				} catch (Exception ex) {
 					this.exception = ex;
 				}
@@ -189,7 +187,7 @@ namespace Dota2ModKit
 				}
 
 				if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
-					defaultLibTxt = File.ReadAllText(defaultLibPath);
+					string defaultLibTxt = File.ReadAllText(defaultLibPath);
 					string localTxt = File.ReadAllText(local);
 					if (localTxt != defaultLibTxt) {
 						needsUpdate = true;

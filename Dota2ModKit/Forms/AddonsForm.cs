@@ -24,7 +24,8 @@ namespace Dota2ModKit {
 		bool remove_print = false;
 		bool remove_items = false;
 		bool remove_heroes = false;
-        string version = "";
+        string version = "bmd";
+		string existingAddonName = "";
 
 		public AddonsForm(MainForm mainForm) {
 			this.mainForm = mainForm;
@@ -198,73 +199,75 @@ namespace Dota2ModKit {
 			dummyRadioBtn.Select();
 
 			// ensure an addon is selected.
-			if (bmdRadioButton.Checked) {
-				version = "bmd";
+			if (existingAddonRadioButton1.Checked) {
+				version = "existing";
 			}
 
-			if (version == "") {
-				MetroMessageBox.Show(this, "No base addon selected.",
-					"Error",
+			// check if stuff in textbox is fine.
+			newAddonName = addonNameTextBox.Text;
+			if (newAddonName == "" || !(newAddonName.Length > 2)) {
+				MetroMessageBox.Show(this, "Length must be > 2 characters.",
+					"Invalid addon name",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 				return;
 			}
 
-			// check if stuff in textbox is fine.
-			newAddonName = addonNameTextBox.Text;
-			if (newAddonName == "" || newAddonName.Length <= 3) {
-				MetroMessageBox.Show(this, "Length must be > 3 characters.",
-				"Invalid addon name",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Error);
-				return;
-			}
-
-			// done with all the checks, now procede to fork addon
-			string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
-			string newBarebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
-
-			if (!Directory.Exists(barebonesDir)) {
-				return;
-			}
-
-			if (Directory.Exists(newBarebonesDir)) {
-				Directory.Delete(newBarebonesDir, true);
-			}
-
-			// copy everything from barebonesDir to a new dir.
-			//Now Create all of the directories
-			foreach (string dir in Directory.GetDirectories(barebonesDir, "*", SearchOption.AllDirectories)) {
-				// don't copy git dir
-				if (dir.Contains(".git")) {
-					continue;
-				}
-
-				Directory.CreateDirectory(dir.Replace(barebonesDir, newBarebonesDir));
-			}
-
-			//Copy all the files & Replaces any files with the same name
-			foreach (string oldPath in Directory.GetFiles(barebonesDir, "*.*", SearchOption.AllDirectories)) {
-				if (oldPath.Contains(Path.Combine("barebones", ".git"))) {
-					continue;
-				}
-
-				File.Copy(oldPath, oldPath.Replace(barebonesDir, newBarebonesDir), true);
-			}
-
-			fork();
-
-			// now move the addon to the game and content dirs.
+			// init some of the new addon stuff
 			string lower = newAddonName.ToLowerInvariant();
 			string upper = newAddonName.ToUpperInvariant();
 
 			string newG = Path.Combine(mainForm.gamePath, lower);
 			string newC = Path.Combine(mainForm.contentPath, lower);
 
+			// Ensure the addon doesn't already exist.
+			if (Directory.Exists(newG)) {
+				MetroMessageBox.Show(this, newG + " already exists!",
+					"Directory already exists",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				return;
+			} else if (Directory.Exists(newC)) {
+				MetroMessageBox.Show(this, newC + " already exists!",
+					"Directory already exists",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				return;
+			}
+
+			// do inital specific forking stuff
+			bool dontContinue = false;
+			if (version == "existing") {
+				if (!forkExisting()) {
+					dontContinue = true;
+				}
+
+
+			} else if (version == "bmd") {
+				//stringToReplaceTextbox.ReadOnly = true;
+				//stringToReplaceTextbox.Text = "barebones";
+				if (!forkBMD()) {
+					dontContinue = true;
+				}
+			}
+
+			if (dontContinue) {
+				MetroMessageBox.Show(this, "Addon was not created.",
+					"Error",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				return;
+			}
+
+			// do general forking stuff
+			fork();
+
+			// move the game and content dirs to the actual dirs
 			string game = Path.Combine(Environment.CurrentDirectory, lower, "game", "dota_addons", lower);
 			string content = Path.Combine(Environment.CurrentDirectory, lower, "content", "dota_addons", lower);
 			Directory.Move(game, newG);
 			Directory.Move(content, newC);
+
 			// delete the old dir now.
 			Directory.Delete(Path.Combine(Environment.CurrentDirectory, lower), true);
 
@@ -277,6 +280,61 @@ namespace Dota2ModKit {
 			Process.Start(Path.Combine(newG, "scripts", "vscripts"));
 			this.DialogResult = DialogResult.OK;
 			this.Close();
+		}
+
+		private bool forkExisting() {
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+			fbd.Description = "Browse to the existing addon's 'game' directory";
+			DialogResult dr = fbd.ShowDialog();
+			if (dr != DialogResult.OK) {
+				return false;
+			}
+			var path = fbd.SelectedPath;
+			existingAddonName = path.Substring(path.LastIndexOf('\\') + 1);
+
+
+			return true;
+		}
+
+		private bool forkBMD() {
+			// done with all the checks, now procede to fork addon
+			string barebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones");
+			string newBarebonesDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
+
+			if (!Directory.Exists(barebonesDir)) {
+				MetroMessageBox.Show(this, "Error",
+					barebonesDir + " doesn't exist!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				return false;
+			}
+
+			// maybe this can exist if forking went wrong before.
+			if (Directory.Exists(newBarebonesDir)) {
+				Directory.Delete(newBarebonesDir, true);
+			}
+
+			// copy everything from barebonesDir to a new dir.
+			// Create all of the directories
+			foreach (string dir in Directory.GetDirectories(barebonesDir, "*", SearchOption.AllDirectories)) {
+				// don't copy git dir
+				if (dir.Contains(".git")) {
+					continue;
+				}
+
+				Directory.CreateDirectory(dir.Replace(barebonesDir, newBarebonesDir));
+			}
+
+			// Copy all the files & Replaces any files with the same name
+			foreach (string oldPath in Directory.GetFiles(barebonesDir, "*.*", SearchOption.AllDirectories)) {
+				if (oldPath.Contains(Path.Combine("barebones", ".git"))) {
+					continue;
+				}
+
+				File.Copy(oldPath, oldPath.Replace(barebonesDir, newBarebonesDir), true);
+			}
+
+			return true;
 		}
 
 		private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
@@ -295,6 +353,13 @@ namespace Dota2ModKit {
 			// first move the root dir.
 			string rootDir = Path.Combine(Environment.CurrentDirectory, "barebones_temp");
 			string newRootDir = rootDir.Replace("barebones_temp", newLower);
+
+			// this could happen if there was an error before when forking an addon.
+			if (Directory.Exists(newRootDir)) {
+				Directory.Delete(newRootDir, true);
+			}
+
+			// TODO: sometimes this causes a "access denied" error.
 			Directory.Move(rootDir, newRootDir);
 
 			// next modify subdirectory names.
@@ -304,61 +369,58 @@ namespace Dota2ModKit {
 				Directory.Move(dirs[i], newDir);
 			}
 
-			// now modify the files.
-			if (version != "noya") {
-				List<string> files = Util.getFiles(newRootDir, "*.txt;*.lua;*.vmap");
-				for (int i = 0; i < files.Count; i++) {
-					// let's change the filename first, before modifying the contents.
-					string newFileName = files[i].Replace("barebones", newLower);
-					newFileName = newFileName.Replace("reflex", newLower);
-					newFileName = newFileName.Replace("gamemode", newLower);
-					File.Move(files[i], newFileName);
-					files[i] = newFileName;
+			List<string> files = Util.getFiles(newRootDir, "*.txt;*.lua;*.vmap");
+			for (int i = 0; i < files.Count; i++) {
+				// let's change the filename first, before modifying the contents.
+				string newFileName = files[i].Replace("barebones", newLower);
+				newFileName = newFileName.Replace("reflex", newLower);
+				newFileName = newFileName.Replace("gamemode", newLower);
+				File.Move(files[i], newFileName);
+				files[i] = newFileName;
 
-					// don't modify contents of these files.
-					if (newFileName.Contains(".vmap")) {
-						continue;
-					}
-
-					// now modify file contents
-					Encoding enc = Util.GetEncoding(files[i]);
-					string[] lines = File.ReadAllLines(files[i], enc);
-
-					for (int j = 0; j < lines.Length; j++) {
-						string l = lines[j];
-
-						// special cases for special files
-						if (remove_items && newFileName.EndsWith("npc_abilities_override.txt")) {
-							l = l.Replace("//\"item_", "\"item_");
-						}
-						if (remove_heroes && newFileName.EndsWith("herolist.txt")) {
-							if (!l.Contains("npc_dota_hero_ancient_apparition")) {
-								l = l.Replace("\"npc_dota_hero_", "//\"npc_dota_hero_");
-							}
-						}
-
-						l = l.Replace("barebones", newLower);
-						l = l.Replace("BAREBONES", newUpper);
-						l = l.Replace("Barebones", newAddonName);
-						l = l.Replace("BareBones", newAddonName);
-						l = l.Replace("reflex", newLower);
-						l = l.Replace("Reflex", newAddonName);
-						l = l.Replace("REFLEX", newUpper);
-						if (newFileName.EndsWith(newLower + ".lua") && remove_print) {
-							string trimmed = l.Trim();
-							if (trimmed.StartsWith("print") || trimmed.StartsWith("Print")) {
-								l = l.Replace("Print", "--Print");
-								l = l.Replace("print", "--print");
-							}
-						}
-						if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity")) {
-							l = l.Replace("GameMode", newAddonName);
-						}
-						lines[j] = l;
-					}
-
-					File.WriteAllLines(files[i], lines, enc);
+				// don't modify contents of these files.
+				if (newFileName.Contains(".vmap")) {
+					continue;
 				}
+
+				// now modify file contents
+				Encoding enc = Util.GetEncoding(files[i]);
+				string[] lines = File.ReadAllLines(files[i], enc);
+
+				for (int j = 0; j < lines.Length; j++) {
+					string l = lines[j];
+
+					// special cases for special files
+					if (remove_items && newFileName.EndsWith("npc_abilities_override.txt")) {
+						l = l.Replace("//\"item_", "\"item_");
+					}
+					if (remove_heroes && newFileName.EndsWith("herolist.txt")) {
+						if (!l.Contains("npc_dota_hero_ancient_apparition")) {
+							l = l.Replace("\"npc_dota_hero_", "//\"npc_dota_hero_");
+						}
+					}
+
+					l = l.Replace("barebones", newLower);
+					l = l.Replace("BAREBONES", newUpper);
+					l = l.Replace("Barebones", newAddonName);
+					l = l.Replace("BareBones", newAddonName);
+					l = l.Replace("reflex", newLower);
+					l = l.Replace("Reflex", newAddonName);
+					l = l.Replace("REFLEX", newUpper);
+					if (newFileName.EndsWith(newLower + ".lua") && remove_print) {
+						string trimmed = l.Trim();
+						if (trimmed.StartsWith("print") || trimmed.StartsWith("Print")) {
+							l = l.Replace("Print", "--Print");
+							l = l.Replace("print", "--print");
+						}
+					}
+					if (l.Contains("GameMode") && !l.Contains("GetGameModeEntity")) {
+						l = l.Replace("GameMode", newAddonName);
+					}
+					lines[j] = l;
+				}
+
+				File.WriteAllLines(files[i], lines, enc);
 			}
 		}
 
