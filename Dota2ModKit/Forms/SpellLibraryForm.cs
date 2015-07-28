@@ -315,6 +315,8 @@ namespace Dota2ModKit.Forms {
 		}
 
 		private void openFileBtn_Click(object sender, EventArgs e) {
+			metroRadioButton1.Select();
+
 			if (luaKVBtn.Text == "Lua Script") {
 				Process.Start(currKVPath);
 			} else {
