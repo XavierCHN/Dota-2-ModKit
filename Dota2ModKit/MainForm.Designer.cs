@@ -66,7 +66,6 @@
 			this.metroLink3 = new MetroFramework.Controls.MetroLink();
 			this.metroLink2 = new MetroFramework.Controls.MetroLink();
 			this.metroLink1 = new MetroFramework.Controls.MetroLink();
-			this.versionLabel = new MetroFramework.Controls.MetroLabel();
 			this.notificationLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.gameTile = new MetroFramework.Controls.MetroTile();
@@ -78,6 +77,7 @@
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.libraryManagerBtn = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+			this.versionLabel = new MetroFramework.Controls.MetroLink();
 			this.metroContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -125,7 +125,7 @@
             this.libraryManagerToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(161, 114);
+			this.metroContextMenu1.Size = new System.Drawing.Size(161, 92);
 			// 
 			// changePictureToolStripMenuItem
 			// 
@@ -567,24 +567,13 @@
 			this.metroLink1.UseSelectable = true;
 			this.metroLink1.Click += new System.EventHandler(this.onLink_Click);
 			// 
-			// versionLabel
-			// 
-			this.versionLabel.AutoSize = true;
-			this.versionLabel.Location = new System.Drawing.Point(401, 275);
-			this.versionLabel.Name = "versionLabel";
-			this.versionLabel.Size = new System.Drawing.Size(49, 19);
-			this.versionLabel.TabIndex = 4;
-			this.versionLabel.Text = "v2.x.x.x";
-			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
 			// notificationLabel
 			// 
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-1, 268);
+			this.notificationLabel.Location = new System.Drawing.Point(-2, 268);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -720,7 +709,7 @@
 			// 
 			// progressSpinner1
 			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(373, 270);
+			this.progressSpinner1.Location = new System.Drawing.Point(370, 269);
 			this.progressSpinner1.Maximum = 100;
 			this.progressSpinner1.Name = "progressSpinner1";
 			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
@@ -729,11 +718,25 @@
 			this.progressSpinner1.UseSelectable = true;
 			this.progressSpinner1.Visible = false;
 			// 
+			// versionLabel
+			// 
+			this.versionLabel.FontSize = MetroFramework.MetroLinkSize.Medium;
+			this.versionLabel.FontWeight = MetroFramework.MetroLinkWeight.Light;
+			this.versionLabel.Location = new System.Drawing.Point(400, 274);
+			this.versionLabel.Name = "versionLabel";
+			this.versionLabel.Size = new System.Drawing.Size(53, 21);
+			this.versionLabel.TabIndex = 21;
+			this.versionLabel.Text = "v2.x.x.x";
+			this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.versionLabel.UseSelectable = true;
+			this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(450, 295);
+			this.Controls.Add(this.versionLabel);
 			this.Controls.Add(this.libraryManagerBtn);
 			this.Controls.Add(this.progressSpinner1);
 			this.Controls.Add(this.optionsBtn);
@@ -742,7 +745,6 @@
 			this.Controls.Add(this.metroTile3);
 			this.Controls.Add(this.contentTile);
 			this.Controls.Add(this.gameTile);
-			this.Controls.Add(this.versionLabel);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.notificationLabel);
 			this.Controls.Add(this.tabControl);
@@ -778,7 +780,6 @@
 		private MetroFramework.Controls.MetroTabPage toolsTab;
 		private MetroFramework.Controls.MetroButton particleDesignBtn;
 		private MetroFramework.Controls.MetroButton combineKVBtn;
-		private MetroFramework.Controls.MetroLabel versionLabel;
 		private MetroFramework.Controls.MetroLabel notificationLabel;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Controls.MetroTabPage helpTab;
@@ -820,6 +821,7 @@
 		private MetroFramework.Controls.MetroButton metroButton2;
 		private System.Windows.Forms.ToolStripMenuItem libraryManagerToolStripMenuItem;
 		private MetroFramework.Controls.MetroTile libraryManagerBtn;
+		private MetroFramework.Controls.MetroLink versionLabel;
 	}
 }
 

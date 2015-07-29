@@ -750,5 +750,9 @@ namespace Dota2ModKit {
 		private void libraryManagerToolStripMenuItem_Click(object sender, EventArgs e) {
 
 		}
+
+		private void versionLabel_Click(object sender, EventArgs e) {
+			Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/releases/tag/v" + version);
+        }
 	}
 }
