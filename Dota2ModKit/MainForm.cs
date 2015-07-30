@@ -162,19 +162,21 @@ namespace Dota2ModKit {
 				// try to auto-get the dir
 				dotaDir = Util.getDotaDir();
 
-				// ensure valid dota dir retrieved.
-				if (dotaDir == "") {
-					MetroMessageBox.Show(this, "Could not auto-detect the Dota 2 directory. " +
-						"Please browse to the Dota 2 folder which houses the 'game' and 'content' directories " +
-						"(i.e. 'dota 2 beta').",
-						"Error",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
+				DialogResult dr = DialogResult.No;
+				if (dotaDir != "") {
+					dr = MetroMessageBox.Show(this, "Dota directory has been set to: " + dotaDir +
+						". Is this correct?",
+						"Confirmation",
+						MessageBoxButtons.YesNo,
+						MessageBoxIcon.Information);
+				}
 
+				if (dr == DialogResult.No) {
 					FolderBrowserDialog fbd = new FolderBrowserDialog();
-					DialogResult dr = fbd.ShowDialog();
+					fbd.Description = "Dota 2 directory (i.e. 'dota 2 beta')";
+					var dr2 = fbd.ShowDialog();
 
-					if (dr != DialogResult.OK) {
+					if (dr2 != DialogResult.OK) {
 						MetroMessageBox.Show(this, "No folder selected. Exiting.",
 							"Error",
 							MessageBoxButtons.OK,
