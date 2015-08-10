@@ -49,6 +49,7 @@ namespace Dota2ModKit {
 		public MetroTile _gameTile;
 		public MetroTile _contentTile;
 		internal bool firstAddonChange;
+		private bool firstRun = false;
 
 		public MainForm() {
 			// bring up the UI
@@ -123,6 +124,19 @@ namespace Dota2ModKit {
 				Environment.Exit(0);
 			}
 
+			// some functions in the Tick try and use mainform's controls on another thread. so we need to allot a very small amount of time for
+			// mainform to init its controls. this is mainly for the very first run of modkit.
+			Timer initTimer = new Timer();
+			initTimer.Interval = 100;
+			initTimer.Tick += InitTimer_Tick;
+			initTimer.Start();
+		}
+
+		private void InitTimer_Tick(object sender, EventArgs e) {
+			// run it once
+			Timer t = (Timer)sender;
+			t.Stop();
+
 			// clone a barebones repo if we don't have one, pull if we do
 			updater.clonePullBarebones();
 
@@ -138,7 +152,7 @@ namespace Dota2ModKit {
 				if (a != null) {
 					changeCurrAddon(a);
 				}
-            }
+			}
 
 			// basically, if this is first run of modkit, set the currAddon to w/e the default addon is in the workshop tools.
 			if (currAddon == null) {
@@ -164,6 +178,7 @@ namespace Dota2ModKit {
 
 				DialogResult dr = DialogResult.No;
 				if (dotaDir != "") {
+					firstRun = true;
 					dr = MetroMessageBox.Show(this, "Dota directory has been set to: " + dotaDir +
 						". Is this correct?",
 						"Confirmation",

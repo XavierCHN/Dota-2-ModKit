@@ -35,6 +35,7 @@
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.cancelButton = new MetroFramework.Controls.MetroButton();
+			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -45,7 +46,7 @@
 			this.loreCheckBox.AutoSize = true;
 			this.loreCheckBox.Location = new System.Drawing.Point(0, 34);
 			this.loreCheckBox.Name = "loreCheckBox";
-			this.loreCheckBox.Size = new System.Drawing.Size(148, 15);
+			this.loreCheckBox.Size = new System.Drawing.Size(147, 15);
 			this.loreCheckBox.TabIndex = 14;
 			this.loreCheckBox.Text = "Generate \'Lore\' Tooltips";
 			this.loreCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -56,7 +57,7 @@
 			this.note0CheckBox.AutoSize = true;
 			this.note0CheckBox.Location = new System.Drawing.Point(0, 13);
 			this.note0CheckBox.Name = "note0CheckBox";
-			this.note0CheckBox.Size = new System.Drawing.Size(157, 15);
+			this.note0CheckBox.Size = new System.Drawing.Size(156, 15);
 			this.note0CheckBox.TabIndex = 13;
 			this.note0CheckBox.Text = "Generate \'Note0\' Tooltips";
 			this.note0CheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -79,6 +80,7 @@
 			// 
 			// addonOptionsTab
 			// 
+			this.addonOptionsTab.Controls.Add(this.metroCheckBox1);
 			this.addonOptionsTab.Controls.Add(this.autoDeleteBinCheckBox);
 			this.addonOptionsTab.Controls.Add(this.askToBreakUpCheckBox);
 			this.addonOptionsTab.Controls.Add(this.loreCheckBox);
@@ -101,9 +103,9 @@
 			this.autoDeleteBinCheckBox.AutoSize = true;
 			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(0, 76);
 			this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
-			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(426, 15);
+			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(348, 15);
 			this.autoDeleteBinCheckBox.TabIndex = 17;
-			this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon when selected";
+			this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon";
 			this.autoDeleteBinCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.autoDeleteBinCheckBox.UseSelectable = true;
 			// 
@@ -185,6 +187,18 @@
 			this.cancelButton.UseSelectable = true;
 			this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
 			// 
+			// metroCheckBox1
+			// 
+			this.metroCheckBox1.AutoSize = true;
+			this.metroCheckBox1.Location = new System.Drawing.Point(0, 97);
+			this.metroCheckBox1.Name = "metroCheckBox1";
+			this.metroCheckBox1.Size = new System.Drawing.Size(242, 15);
+			this.metroCheckBox1.TabIndex = 18;
+			this.metroCheckBox1.Text = "Auto-check for Barebones library updates";
+			this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroCheckBox1.UseSelectable = true;
+			this.metroCheckBox1.Visible = false;
+			// 
 			// OptionsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,5 +241,6 @@
 		private MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
 		private MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
 		private MetroFramework.Controls.MetroButton cancelButton;
+		private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
 	}
 }
