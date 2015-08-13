@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,8 +25,8 @@ namespace Dota2ModKit.Features {
 		public void findSoundName() {
 			if (!File.Exists(vsnd_to_soundname_Path)) {
 				DialogResult dr = MetroMessageBox.Show(mainForm,
-					"Couldn't find " + vsnd_to_soundname_Path + ". A link will now open to DL the file. In the future, this will be auto-generated.",
-					"Couldn't find sound mapping file.",
+					"Couldn't find required file: " + vsnd_to_soundname_Path + ". D2ModKit will download it now.",
+					"Couldn't find required file",
 					MessageBoxButtons.OKCancel,
 					MessageBoxIcon.Error);
 
@@ -33,10 +34,18 @@ namespace Dota2ModKit.Features {
 					return;
 				}
 
-				Process.Start("https://mega.co.nz/#!VxYnQQBK!HewGiE2idCqaELGffHVbv1ihhg0U7se-BAdkynRAulU");
-				return; //remove this for auto-generate
-				//extractScripts();
-				//generateSoundMapFile();
+				using (WebClient SoundMapFileWC = new WebClient()) {
+					SoundMapFileWC.DownloadFileCompleted += SoundMapFileWC_DownloadFileCompleted;
+					mainForm.ProgressSpinner1.Visible = true;
+					mainForm.FindSoundNameBtn.Enabled = false;
+					try {
+						SoundMapFileWC.DownloadFileAsync(new Uri("https://github.com/stephenfournier/Dota-2-ModKit/raw/326ebd10a117c5f58c20b412a6e2f5e221800330/Dota2ModKit/Libs/vsnd_to_soundname_v2.txt"), "vsnd_to_soundname_v2.txt");
+					} catch (Exception) {
+						mainForm.ProgressSpinner1.Visible = false;
+						mainForm.FindSoundNameBtn.Enabled = true;
+					}
+                }
+				return;
 			}
 
 			// we have a vsnd_to_soundname.txt at this point.
@@ -47,6 +56,12 @@ namespace Dota2ModKit.Features {
 			FindSoundForm fsf = new FindSoundForm(mainForm);
 			DialogResult dr2 = fsf.ShowDialog();
 
+		}
+
+		private void SoundMapFileWC_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
+			mainForm.ProgressSpinner1.Visible = false;
+			mainForm.FindSoundNameBtn.Enabled = true;
+			findSoundName();
 		}
 
 		private void populateVsndToName() {

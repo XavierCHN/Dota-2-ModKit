@@ -41,9 +41,9 @@ namespace Dota2ModKit.Forms {
 				}
 			}
 			// user wants to continue, clone if necessary, and pull
-			mainForm._spellLibBtn.Enabled = false;
-			mainForm._progressSpinner1.Value = 60;
-			mainForm._progressSpinner1.Visible = true;
+			mainForm.SpellLibBtn.Enabled = false;
+			mainForm.ProgressSpinner1.Value = 60;
+			mainForm.ProgressSpinner1.Visible = true;
 
 			if (!Directory.Exists(spellLibPath)) {
 				mainForm.text_notification("Cloning SpellLibrary...", MetroColorStyle.Blue, 999999);
@@ -67,8 +67,8 @@ namespace Dota2ModKit.Forms {
 		private void CloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 			Console.WriteLine("Cloneworker completed.");
 			mainForm.text_notification("", MetroColorStyle.Blue, 500);
-			mainForm._progressSpinner1.Visible = false;
-			mainForm._spellLibBtn.Enabled = true;
+			mainForm.ProgressSpinner1.Visible = false;
+			mainForm.SpellLibBtn.Enabled = true;
 
 			initTreeView();
 		}

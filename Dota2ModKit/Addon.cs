@@ -764,8 +764,8 @@ namespace Dota2ModKit
 		}
 
 		private void AddonSizeWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			mainForm._metroToolTip1.SetToolTip(mainForm._gameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
-			mainForm._metroToolTip1.SetToolTip(mainForm._contentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
+			mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
+			mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
 		}
 
 		#endregion

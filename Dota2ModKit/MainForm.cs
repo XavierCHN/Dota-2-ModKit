@@ -35,21 +35,22 @@ namespace Dota2ModKit {
 		VTEXFeatures vtexFeatures;
 		ParticleFeatures particleFeatures;
 		SoundFeatures soundFeatures;
+		internal bool firstAddonChange;
+		private bool firstRun = false;
+
+		// helpers to make things accessible in other forms.
+		public MetroTile AddonTile;
+		public MetroProgressSpinner ProgressSpinner1;
+		public MetroButton SpellLibBtn;
+		public MetroToolTip MetroToolTip1;
+		public MetroTile GameTile;
+		public MetroTile ContentTile;
+		public MetroButton FindSoundNameBtn;
 
 		// for updating modkit
 		Updater updater;
 		public string newVers = "";
 		public string newVersUrl = "";
-
-		// helpers to make things accessible in other forms.
-		public MetroTile _addonTile;
-		public MetroProgressSpinner _progressSpinner1;
-		public MetroButton _spellLibBtn;
-		public MetroToolTip _metroToolTip1;
-		public MetroTile _gameTile;
-		public MetroTile _contentTile;
-		internal bool firstAddonChange;
-		private bool firstRun = false;
 
 		public MainForm() {
 			// bring up the UI
@@ -77,12 +78,13 @@ namespace Dota2ModKit {
 			updater.checkForUpdates();
 
 			// allow public accessibility to these
-			_addonTile = addonTile;
-			_progressSpinner1 = progressSpinner1;
-			_spellLibBtn = spellLibraryBtn;
-			_metroToolTip1 = metroToolTip1;
-			_gameTile = gameTile;
-			_contentTile = contentTile;
+			AddonTile = addonTile;
+			ProgressSpinner1 = progressSpinner1;
+			SpellLibBtn = spellLibraryBtn;
+			MetroToolTip1 = metroToolTip1;
+			GameTile = gameTile;
+			ContentTile = contentTile;
+			FindSoundNameBtn = findSoundNameBtn;
 
 			// init mainform controls stuff
 			Size size = new Size(steamTile.Width, steamTile.Height);
