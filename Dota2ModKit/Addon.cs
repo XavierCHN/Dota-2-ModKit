@@ -47,7 +47,7 @@ namespace Dota2ModKit
 		public Dictionary<string, Library> libraries = new Dictionary<string, Library>();
 		HashSet<string> NotDefaultLibs = new HashSet<string>();
 		public string relativeGamePath;
-		internal bool generateUTF8;
+		internal bool generateUTF8 = true;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
