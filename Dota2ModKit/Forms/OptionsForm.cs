@@ -35,6 +35,7 @@ namespace Dota2ModKit {
 			loreCheckBox.Checked = currAddon.generateLore;
 			askToBreakUpCheckBox.Checked = currAddon.askToBreakUp;
 			autoDeleteBinCheckBox.Checked = currAddon.autoDeleteBin;
+			barebonesLibUpdatesCheckBox.Checked = currAddon.barebonesLibUpdates;
 
 		}
 
@@ -49,6 +50,7 @@ namespace Dota2ModKit {
 			currAddon.generateNote0 = note0CheckBox.Checked;
 			currAddon.askToBreakUp = askToBreakUpCheckBox.Checked;
 			currAddon.autoDeleteBin = autoDeleteBinCheckBox.Checked;
+			currAddon.barebonesLibUpdates = barebonesLibUpdatesCheckBox.Checked;
 
 			// save stuff
 			mainForm.serializeSettings();

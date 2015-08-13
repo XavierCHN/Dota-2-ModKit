@@ -109,7 +109,7 @@ namespace Dota2ModKit {
 			mainForm.text_notification("", MetroColorStyle.Blue, 500);
 			mainForm._progressSpinner1.Visible = false;
 
-			if (mainForm.currAddon != null) {
+			if (mainForm.currAddon != null && mainForm.currAddon.barebonesLibUpdates) {
 				mainForm.currAddon.checkForDefaultLibs();
 				foreach (var lib in mainForm.currAddon.libraries) {
 					lib.Value.checkForUpdates();

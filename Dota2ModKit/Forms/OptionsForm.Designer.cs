@@ -28,6 +28,7 @@
 			this.note0CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.addonOptionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.barebonesLibUpdatesCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.askToBreakUpCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.modkitOptionsTab = new MetroFramework.Controls.MetroTabPage();
@@ -35,7 +36,6 @@
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.cancelButton = new MetroFramework.Controls.MetroButton();
-			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -80,7 +80,7 @@
 			// 
 			// addonOptionsTab
 			// 
-			this.addonOptionsTab.Controls.Add(this.metroCheckBox1);
+			this.addonOptionsTab.Controls.Add(this.barebonesLibUpdatesCheckBox);
 			this.addonOptionsTab.Controls.Add(this.autoDeleteBinCheckBox);
 			this.addonOptionsTab.Controls.Add(this.askToBreakUpCheckBox);
 			this.addonOptionsTab.Controls.Add(this.loreCheckBox);
@@ -97,6 +97,17 @@
 			this.addonOptionsTab.VerticalScrollbarBarColor = true;
 			this.addonOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.addonOptionsTab.VerticalScrollbarSize = 2;
+			// 
+			// barebonesLibUpdatesCheckBox
+			// 
+			this.barebonesLibUpdatesCheckBox.AutoSize = true;
+			this.barebonesLibUpdatesCheckBox.Location = new System.Drawing.Point(0, 97);
+			this.barebonesLibUpdatesCheckBox.Name = "barebonesLibUpdatesCheckBox";
+			this.barebonesLibUpdatesCheckBox.Size = new System.Drawing.Size(242, 15);
+			this.barebonesLibUpdatesCheckBox.TabIndex = 18;
+			this.barebonesLibUpdatesCheckBox.Text = "Auto-check for Barebones library updates";
+			this.barebonesLibUpdatesCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.barebonesLibUpdatesCheckBox.UseSelectable = true;
 			// 
 			// autoDeleteBinCheckBox
 			// 
@@ -187,18 +198,6 @@
 			this.cancelButton.UseSelectable = true;
 			this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
 			// 
-			// metroCheckBox1
-			// 
-			this.metroCheckBox1.AutoSize = true;
-			this.metroCheckBox1.Location = new System.Drawing.Point(0, 97);
-			this.metroCheckBox1.Name = "metroCheckBox1";
-			this.metroCheckBox1.Size = new System.Drawing.Size(242, 15);
-			this.metroCheckBox1.TabIndex = 18;
-			this.metroCheckBox1.Text = "Auto-check for Barebones library updates";
-			this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroCheckBox1.UseSelectable = true;
-			this.metroCheckBox1.Visible = false;
-			// 
 			// OptionsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,6 +240,6 @@
 		private MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
 		private MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
 		private MetroFramework.Controls.MetroButton cancelButton;
-		private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
+		private MetroFramework.Controls.MetroCheckBox barebonesLibUpdatesCheckBox;
 	}
 }

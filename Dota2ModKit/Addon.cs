@@ -39,6 +39,7 @@ namespace Dota2ModKit
 		internal bool generateLore;
 		internal bool askToBreakUp;
 		internal bool autoDeleteBin;
+		internal bool barebonesLibUpdates;
 		private string gameSizeStr = "";
 		private string contentSizeStr = "";
 		private MainForm mainForm;
@@ -531,6 +532,15 @@ namespace Dota2ModKit
 							this.autoDeleteBin = false;
 						}
 					}
+				} else if (kv2.Key == "barebonesLibUpdates") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.barebonesLibUpdates = true;
+						} else {
+							this.barebonesLibUpdates = false;
+						}
+					}
 				} else if (kv2.Key == "libraries") {
 					if (kv2.HasChildren) {
 						foreach (KeyValue kv3 in kv2.Children) {
@@ -580,6 +590,10 @@ namespace Dota2ModKit
 			KeyValue autoDeleteBin = new KeyValue("autoDeleteBin");
 			autoDeleteBin.AddChild(new KeyValue(this.autoDeleteBin.ToString()));
 			addonKV.AddChild(autoDeleteBin);
+
+			KeyValue barebonesLibUpdates = new KeyValue("barebonesLibUpdates");
+			barebonesLibUpdates.AddChild(new KeyValue(this.barebonesLibUpdates.ToString()));
+			addonKV.AddChild(barebonesLibUpdates);
 
 			KeyValue libraries = new KeyValue("libraries");
 			addonKV.AddChild(libraries);
@@ -678,17 +692,19 @@ namespace Dota2ModKit
 				addonSizeWorker.RunWorkerAsync();
 			}
 
-			// we need to allot time to pull or clone barebones, before checking for lib updates.
-			// lib update code is called in Updater.cs in this case.
-			if (!mainForm.firstAddonChange) {
-				mainForm.firstAddonChange = true;
-				return;
-			}
+			if (barebonesLibUpdates) {
+				// we need to allot time to pull or clone barebones, before checking for lib updates.
+				// lib update code is called in Updater.cs in this case.
+				if (!mainForm.firstAddonChange) {
+					mainForm.firstAddonChange = true;
+					return;
+				}
 
-			Timer onChangedToTimer = new Timer();
-			onChangedToTimer.Interval = 500;
-			onChangedToTimer.Tick += OnChangedToTimer_Tick;
-			onChangedToTimer.Start();
+				Timer onChangedToTimer = new Timer();
+				onChangedToTimer.Interval = 500;
+				onChangedToTimer.Tick += OnChangedToTimer_Tick;
+				onChangedToTimer.Start();
+			}
 		}
 
 		private void OnChangedToTimer_Tick(object sender, EventArgs e) {
