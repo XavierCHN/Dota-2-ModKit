@@ -47,6 +47,7 @@ namespace Dota2ModKit
 		public Dictionary<string, Library> libraries = new Dictionary<string, Library>();
 		HashSet<string> NotDefaultLibs = new HashSet<string>();
 		public string relativeGamePath;
+		internal bool generateUTF8;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -296,6 +297,22 @@ namespace Dota2ModKit
 					MessageBoxIcon.Error);
 
 			}
+
+			// utf8 code
+			if (generateUTF8) {
+				string[] files = Directory.GetFiles(Path.Combine(gamePath, "resource"));
+				foreach (string file in files) {
+					// skip the existing utf8 files.
+					if (file.Contains("utf8")) {
+						continue;
+					}
+					string name = file.Substring(file.LastIndexOf("\\") + 1);
+					name = name.Replace(".txt", "");
+					//string firstPart = file.Substring(0, file.LastIndexOf("\\"));
+					name += "_utf8.txt";
+					File.WriteAllText(Path.Combine(contentPath, name), File.ReadAllText(file), Encoding.UTF8);
+				}
+			}
 		}
 
 		private void writeTooltips() {
@@ -541,6 +558,15 @@ namespace Dota2ModKit
 							this.barebonesLibUpdates = false;
 						}
 					}
+				} else if (kv2.Key == "generateUTF8") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.generateUTF8 = true;
+						} else {
+							this.generateUTF8 = false;
+						}
+					}
 				} else if (kv2.Key == "libraries") {
 					if (kv2.HasChildren) {
 						foreach (KeyValue kv3 in kv2.Children) {
@@ -594,6 +620,10 @@ namespace Dota2ModKit
 			KeyValue barebonesLibUpdates = new KeyValue("barebonesLibUpdates");
 			barebonesLibUpdates.AddChild(new KeyValue(this.barebonesLibUpdates.ToString()));
 			addonKV.AddChild(barebonesLibUpdates);
+
+			KeyValue generateUTF8 = new KeyValue("generateUTF8");
+			generateUTF8.AddChild(new KeyValue(this.generateUTF8.ToString()));
+			addonKV.AddChild(generateUTF8);
 
 			KeyValue libraries = new KeyValue("libraries");
 			addonKV.AddChild(libraries);

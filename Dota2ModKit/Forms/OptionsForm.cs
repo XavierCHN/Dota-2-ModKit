@@ -36,6 +36,7 @@ namespace Dota2ModKit {
 			askToBreakUpCheckBox.Checked = currAddon.askToBreakUp;
 			autoDeleteBinCheckBox.Checked = currAddon.autoDeleteBin;
 			barebonesLibUpdatesCheckBox.Checked = currAddon.barebonesLibUpdates;
+			utf8CheckBox.Checked = currAddon.generateUTF8;
 
 		}
 
@@ -51,6 +52,7 @@ namespace Dota2ModKit {
 			currAddon.askToBreakUp = askToBreakUpCheckBox.Checked;
 			currAddon.autoDeleteBin = autoDeleteBinCheckBox.Checked;
 			currAddon.barebonesLibUpdates = barebonesLibUpdatesCheckBox.Checked;
+			currAddon.generateUTF8 = utf8CheckBox.Checked;
 
 			// save stuff
 			mainForm.serializeSettings();

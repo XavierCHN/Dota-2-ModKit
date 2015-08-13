@@ -36,6 +36,7 @@
 			this.saveBtn = new MetroFramework.Controls.MetroButton();
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.cancelButton = new MetroFramework.Controls.MetroButton();
+			this.utf8CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl.SuspendLayout();
 			this.addonOptionsTab.SuspendLayout();
 			this.modkitOptionsTab.SuspendLayout();
@@ -80,6 +81,7 @@
 			// 
 			// addonOptionsTab
 			// 
+			this.addonOptionsTab.Controls.Add(this.utf8CheckBox);
 			this.addonOptionsTab.Controls.Add(this.barebonesLibUpdatesCheckBox);
 			this.addonOptionsTab.Controls.Add(this.autoDeleteBinCheckBox);
 			this.addonOptionsTab.Controls.Add(this.askToBreakUpCheckBox);
@@ -198,6 +200,17 @@
 			this.cancelButton.UseSelectable = true;
 			this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
 			// 
+			// utf8CheckBox
+			// 
+			this.utf8CheckBox.AutoSize = true;
+			this.utf8CheckBox.Location = new System.Drawing.Point(0, 118);
+			this.utf8CheckBox.Name = "utf8CheckBox";
+			this.utf8CheckBox.Size = new System.Drawing.Size(391, 15);
+			this.utf8CheckBox.TabIndex = 19;
+			this.utf8CheckBox.Text = "Auto-generate UTF-8 addon_language files during tooltips generation";
+			this.utf8CheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.utf8CheckBox.UseSelectable = true;
+			// 
 			// OptionsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,5 +254,6 @@
 		private MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
 		private MetroFramework.Controls.MetroButton cancelButton;
 		private MetroFramework.Controls.MetroCheckBox barebonesLibUpdatesCheckBox;
+		private MetroFramework.Controls.MetroCheckBox utf8CheckBox;
 	}
 }
