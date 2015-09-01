@@ -104,12 +104,13 @@ namespace Dota2ModKit {
 			using (StreamWriter sw = File.CreateText(batPath)) {
 				sw.WriteLine("taskkill /f /im \"D2ModKit.exe\"");
 				sw.WriteLine("del /F /Q " + dest);
-				sw.WriteLine("move /Y \"d2modkit_new.exe\" \"D2ModKit.exe\"");
-				sw.WriteLine("start d2modkit.exe");
+				sw.WriteLine("move /Y \"D2ModKit_new.exe\" \"D2ModKit.exe\"");
+				sw.WriteLine("start D2ModKit.exe");
 				//sw.WriteLine("timeout 10");
 				sw.WriteLine("del /F /Q updater.bat");
 			}
 			Process.Start(batPath);
+			Application.Exit();
 		}
 
 
