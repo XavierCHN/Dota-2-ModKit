@@ -2,6 +2,8 @@
 
 ### [Download the latest version here!](https://github.com/Myll/Dota-2-ModKit/releases)
 
+*Note:* D2ModKit may have trouble updating on Windows 10 due to permission issues. After updating there may be both a D2ModKit_new.exe and D2ModKit.exe. Delete D2ModKit.exe and rename D2ModKit_new.exe to D2ModKit.exe.
+
 ## Dota 2 ModKit is now...
 
 ### Re-coded.
