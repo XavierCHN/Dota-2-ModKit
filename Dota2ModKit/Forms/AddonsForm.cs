@@ -406,6 +406,7 @@ namespace Dota2ModKit {
 					l = l.Replace("BareBones", newAddonName);
 					l = l.Replace("reflex", newLower);
 					l = l.Replace("Reflex", newAddonName);
+					l = l.Replace("gamemode", newLower);
 					l = l.Replace("REFLEX", newUpper);
 					if (newFileName.EndsWith(newLower + ".lua") && remove_print) {
 						string trimmed = l.Trim();

@@ -189,7 +189,7 @@
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.cancelButton.Location = new System.Drawing.Point(152, 414);
+			this.cancelButton.Location = new System.Drawing.Point(155, 414);
 			this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(74, 35);
