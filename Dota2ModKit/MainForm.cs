@@ -799,7 +799,7 @@ namespace Dota2ModKit {
 
 			foreach (var coffeePath in coffeePaths) {
 				string coffeeCode = File.ReadAllText(coffeePath, Util.GetEncoding(coffeePath));
-				string js = cse.Compile(coffeeCode);
+				string js = cse.Compile(coffeeCode, true);
 
 				string relativePath = coffeePath.Substring(coffeePath.IndexOf("coffeescript")+13);
 
