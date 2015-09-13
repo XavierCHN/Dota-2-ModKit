@@ -47,6 +47,8 @@ namespace Dota2ModKit {
 		public MetroTile ContentTile;
 		public MetroButton FindSoundNameBtn;
 
+		public CoffeeSharp.CoffeeScriptEngine cse = null;
+
 		// for updating modkit
 		Updater updater;
 		public string newVers = "";
@@ -773,5 +775,47 @@ namespace Dota2ModKit {
 		private void versionLabel_Click(object sender, EventArgs e) {
 			Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/releases/tag/v" + version);
         }
+
+		private void compileCoffeeBtn_Click(object sender, EventArgs e) {
+			fixButton();
+			var coffeeScriptDir = Path.Combine(currAddon.contentPath, "panorama", "scripts", "coffeescript");
+
+			if (!Directory.Exists(coffeeScriptDir)) {
+				MetroMessageBox.Show(this,
+					coffeeScriptDir + " doesn't exist!",
+					"Directory doesn't exist",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				return;
+			}
+
+			if (cse == null) {
+				cse = new CoffeeSharp.CoffeeScriptEngine();
+			}
+
+            var coffeePaths = Directory.GetFiles(coffeeScriptDir, "*.coffee", SearchOption.AllDirectories);
+
+			foreach (var coffeePath in coffeePaths) {
+				string coffeeCode = File.ReadAllText(coffeePath, Util.GetEncoding(coffeePath));
+				string js = cse.Compile(coffeeCode);
+
+				string relativePath = coffeePath.Substring(coffeePath.IndexOf("coffeescript")+13);
+
+				var jsPath = Path.Combine(currAddon.contentPath, "panorama", "scripts", relativePath);
+				jsPath = jsPath.Replace(".coffee", ".js");
+
+				// ensure the dir housing the new js file exists.
+				string foldPath = jsPath.Substring(0, jsPath.LastIndexOf('\\') + 1);
+				if (!Directory.Exists(foldPath)) {
+					Directory.CreateDirectory(foldPath);
+				}
+
+				File.WriteAllText(jsPath, js, Encoding.UTF8);
+			}
+
+			
+			//string js = cse.Compile("square = (x) -> x * x");
+
+		}
 	}
 }

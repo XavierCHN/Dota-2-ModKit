@@ -47,8 +47,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CoffeeScriptHttpHandler, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoffeeSharp.0.6\lib\CoffeeScriptHttpHandler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CoffeeSharp, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoffeeSharp.0.6\lib\CoffeeSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FastColoredTextBox">
       <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Jurassic, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoffeeSharp.0.6\lib\Jurassic.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="KVLib">
       <HintPath>..\..\..\..\Desktop\KVLib-master\KVLib\bin\Debug\KVLib.dll</HintPath>

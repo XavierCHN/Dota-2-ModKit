@@ -39,6 +39,7 @@
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.toolsTab = new MetroFramework.Controls.MetroTabPage();
+			this.compileCoffeeBtn = new MetroFramework.Controls.MetroButton();
 			this.spellLibraryBtn = new MetroFramework.Controls.MetroButton();
 			this.findSoundNameBtn = new MetroFramework.Controls.MetroButton();
 			this.combineKVBtn = new MetroFramework.Controls.MetroButton();
@@ -175,6 +176,7 @@
 			// 
 			// toolsTab
 			// 
+			this.toolsTab.Controls.Add(this.compileCoffeeBtn);
 			this.toolsTab.Controls.Add(this.spellLibraryBtn);
 			this.toolsTab.Controls.Add(this.findSoundNameBtn);
 			this.toolsTab.Controls.Add(this.combineKVBtn);
@@ -192,6 +194,22 @@
 			this.toolsTab.VerticalScrollbarBarColor = true;
 			this.toolsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.toolsTab.VerticalScrollbarSize = 2;
+			// 
+			// compileCoffeeBtn
+			// 
+			this.compileCoffeeBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+			this.compileCoffeeBtn.Location = new System.Drawing.Point(130, 120);
+			this.compileCoffeeBtn.Margin = new System.Windows.Forms.Padding(4);
+			this.compileCoffeeBtn.Name = "compileCoffeeBtn";
+			this.compileCoffeeBtn.Size = new System.Drawing.Size(125, 33);
+			this.compileCoffeeBtn.TabIndex = 8;
+			this.compileCoffeeBtn.TabStop = false;
+			this.compileCoffeeBtn.Text = "CoffeeScript -> JS";
+			this.compileCoffeeBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.compileCoffeeBtn, "Compiles CoffeeScript files in the panorama/scripts/coffeescript\r\ndirectory to Ja" +
+        "vaScript files in panorama/scripts");
+			this.compileCoffeeBtn.UseSelectable = true;
+			this.compileCoffeeBtn.Click += new System.EventHandler(this.compileCoffeeBtn_Click);
 			// 
 			// spellLibraryBtn
 			// 
@@ -822,6 +840,7 @@
 		private System.Windows.Forms.ToolStripMenuItem libraryManagerToolStripMenuItem;
 		private MetroFramework.Controls.MetroTile libraryManagerBtn;
 		private MetroFramework.Controls.MetroLink versionLabel;
+		private MetroFramework.Controls.MetroButton compileCoffeeBtn;
 	}
 }
 
