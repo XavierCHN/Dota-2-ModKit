@@ -479,7 +479,11 @@ namespace Dota2ModKit {
 			fixButton();
 
 			if (currAddon.workshopID != 0) {
-				Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + currAddon.workshopID);
+				try {
+					Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + currAddon.workshopID);
+				} catch (Exception ex) {
+					// TODO.... 9/12/15
+				}
 				return;
 			}
 
