@@ -71,7 +71,6 @@
 			this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.gameTile = new MetroFramework.Controls.MetroTile();
 			this.contentTile = new MetroFramework.Controls.MetroTile();
-			this.metroTile3 = new MetroFramework.Controls.MetroTile();
 			this.steamTile = new MetroFramework.Controls.MetroTile();
 			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
@@ -641,21 +640,6 @@
 			this.contentTile.UseTileImage = true;
 			this.contentTile.Click += new System.EventHandler(this.shortcutTile_Click);
 			// 
-			// metroTile3
-			// 
-			this.metroTile3.ActiveControl = null;
-			this.metroTile3.Location = new System.Drawing.Point(9, 197);
-			this.metroTile3.Name = "metroTile3";
-			this.metroTile3.Size = new System.Drawing.Size(37, 27);
-			this.metroTile3.Style = MetroFramework.MetroColorStyle.Teal;
-			this.metroTile3.TabIndex = 13;
-			this.metroTile3.Text = "S1V";
-			this.metroTile3.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.metroTile3, "Open the Source 1 VPK (requires GCFScape)");
-			this.metroTile3.UseSelectable = true;
-			this.metroTile3.UseTileImage = true;
-			this.metroTile3.Click += new System.EventHandler(this.shortcutTile_Click);
-			// 
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
@@ -682,14 +666,14 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(50, 197);
+			this.metroTile1.Location = new System.Drawing.Point(9, 197);
 			this.metroTile1.Name = "metroTile1";
 			this.metroTile1.Size = new System.Drawing.Size(37, 27);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
 			this.metroTile1.TabIndex = 16;
 			this.metroTile1.Text = "S2V";
 			this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.metroTile1, "Open the Source 2 VPK (requires GCFScape)");
+			this.metroToolTip1.SetToolTip(this.metroTile1, "Open the Source 2 Dota VPK (requires GCFScape)");
 			this.metroTile1.UseSelectable = true;
 			this.metroTile1.UseTileImage = true;
 			this.metroTile1.Click += new System.EventHandler(this.shortcutTile_Click);
@@ -697,7 +681,7 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(90, 197);
+			this.optionsBtn.Location = new System.Drawing.Point(49, 197);
 			this.optionsBtn.Name = "optionsBtn";
 			this.optionsBtn.Size = new System.Drawing.Size(29, 27);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Yellow;
@@ -760,7 +744,6 @@
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
-			this.Controls.Add(this.metroTile3);
 			this.Controls.Add(this.contentTile);
 			this.Controls.Add(this.gameTile);
 			this.Controls.Add(this.metroRadioButton1);
@@ -820,7 +803,6 @@
 		private MetroFramework.Controls.MetroLink metroLink11;
 		private MetroFramework.Controls.MetroTile gameTile;
 		private MetroFramework.Controls.MetroTile contentTile;
-		private MetroFramework.Controls.MetroTile metroTile3;
 		private MetroFramework.Controls.MetroTile steamTile;
 		private MetroFramework.Controls.MetroLink metroLink12;
 		private MetroFramework.Components.MetroToolTip metroToolTip1;

@@ -662,10 +662,8 @@ namespace Dota2ModKit {
 					Process.Start(Path.Combine(currAddon.contentPath, "panorama"));
 				} else if (text.EndsWith("R")) {
 					Process.Start(Path.Combine(currAddon.gamePath, "resource"));
-				} else if (text.EndsWith("S1V")) {
-					Process.Start(Path.Combine(dotaDir, "dota", "pak01_dir.vpk"));
 				} else if (text.EndsWith("S2V")) {
-					Process.Start(Path.Combine(dotaDir, "game", "dota_imported", "pak01_dir.vpk"));
+					Process.Start(Path.Combine(dotaDir, "game", "dota", "pak01_dir.vpk"));
 				} else if (text.EndsWith("E")) {
 					//dota_english.txt
 				}
