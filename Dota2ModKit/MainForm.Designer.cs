@@ -167,7 +167,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(180, 39);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 2;
 			this.tabControl.Size = new System.Drawing.Size(266, 225);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -590,7 +590,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-2, 268);
+			this.notificationLabel.Location = new System.Drawing.Point(-3, 270);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -649,7 +649,7 @@
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
 			this.steamTile.TabIndex = 14;
 			this.steamTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.steamTile, "Open the steam workshop page for this addon.");
+			this.metroToolTip1.SetToolTip(this.steamTile, "Open the Steam Workshop page for this addon.");
 			this.steamTile.UseSelectable = true;
 			this.steamTile.UseTileImage = true;
 			this.steamTile.Click += new System.EventHandler(this.workshopPageBtn_Click);
@@ -688,7 +688,7 @@
 			this.optionsBtn.TabIndex = 18;
 			this.optionsBtn.Text = "O";
 			this.optionsBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.optionsBtn, "Open Options page");
+			this.metroToolTip1.SetToolTip(this.optionsBtn, "Open the Options page");
 			this.optionsBtn.UseSelectable = true;
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);

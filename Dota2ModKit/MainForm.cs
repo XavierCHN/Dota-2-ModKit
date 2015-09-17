@@ -814,10 +814,7 @@ namespace Dota2ModKit {
 
 				File.WriteAllText(jsPath, js, Encoding.UTF8);
 			}
-
-			
-			//string js = cse.Compile("square = (x) -> x * x");
-
+			text_notification("CoffeeScript files compiled!", MetroColorStyle.Green, 1500);
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace Dota2ModKit.Features {
 			ofd.InitialDirectory = particleDir;
 			ofd.Multiselect = true;
 			ofd.Title = "Select Particles To Design";
-			ofd.Filter = "Particle Files|*.vpcf";
+			ofd.Filter = "Particle Files (*.vpcf)|*.vpcf";
 			DialogResult dr = ofd.ShowDialog();
 
 			if (dr != DialogResult.OK) {

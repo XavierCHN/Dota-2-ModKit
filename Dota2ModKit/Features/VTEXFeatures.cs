@@ -140,40 +140,59 @@ namespace Dota2ModKit.Features {
 			fd.Multiselect = true;
 			fd.InitialDirectory = Path.Combine(dotaDir, "game", "dota_imported", "materials");
 			fd.Filter = "Valve Texture File(*.vtex_c)|*.vtex_c";
-			if (fd.ShowDialog() == DialogResult.OK) {
-				string[] vtexCPaths = fd.FileNames;
-				foreach (string path in vtexCPaths) {
-					//resourceinfo.exe -i <your vtex_c file> -debug tga -mip
-					System.Diagnostics.Process process = new System.Diagnostics.Process();
-					System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-					startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-					startInfo.UseShellExecute = true;
-					startInfo.FileName = "cmd.exe";
-					startInfo.WorkingDirectory = Path.Combine(Path.Combine(dotaDir, "game"), "bin", "win64");
-					startInfo.Arguments = "/c resourceinfo.exe -i \"" + path + "\" -debug tga -mip";
-					Debug.WriteLine(startInfo.Arguments);
-					process.StartInfo = startInfo;
-					process.Start();
-					process.WaitForExit();
+
+			if (fd.ShowDialog() != DialogResult.OK) {
+				return;
+			}
+
+			// 9/16/15: resourceinfo.exe uses an old path to retrieve the required file gameinfo.gi. So we need to
+			// make sure it's in the right spot.
+			string oldPath = Path.Combine(dotaDir, "game", "dota_imported", "gameinfo.gi");
+            if (!File.Exists(oldPath)) {
+				string newPath = Path.Combine(dotaDir, "game", "dota", "gameinfo.gi");
+                if (File.Exists(newPath)) {
+					File.Copy(newPath, oldPath);
+				} else {
+					return;
+				}
+			}
+
+			string[] vtexCPaths = fd.FileNames;
+			foreach (string path in vtexCPaths) {
+				//resourceinfo.exe -i <your vtex_c file> -debug tga -mip
+				Process process = new Process();
+				ProcessStartInfo startInfo = new ProcessStartInfo();
+				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				//startInfo.UseShellExecute = true;
+				startInfo.FileName = "cmd.exe";
+				startInfo.WorkingDirectory = Path.Combine(dotaDir, "game", "bin", "win64");
+				startInfo.Arguments = "/c resourceinfo.exe -i \"" + path + "\" -debug tga -mip";
+				Debug.WriteLine(startInfo.Arguments);
+				process.StartInfo = startInfo;
+				process.Start();
+				process.WaitForExit();
+
+				// Prepare to move the tga files 
+				string vtexcName = path.Substring(path.LastIndexOf('\\') + 1);
+
+				string fold = Path.Combine(mainForm.currAddon.contentPath, "materials", vtexcName);
+				if (!Directory.Exists(fold)) {
+					Directory.CreateDirectory(fold);
 				}
 
-				// Prepare to move the tga files to the addon's content dir.
-				string materialsPath = Path.Combine(mainForm.currAddon.contentPath, "materials");
-				if (!Directory.Exists(materialsPath)) {
-					Directory.CreateDirectory(materialsPath);
-				}
-				//move the tga files to the addon's content dir.
+				//move the tga files
 				string[] tgaFiles = Directory.GetFiles(Path.Combine(Path.Combine(dotaDir, "game"), "bin", "win64"), "*.tga");
 				foreach (string file in tgaFiles) {
 					string fileName = file.Remove(0, file.LastIndexOf('\\') + 1);
 					// prepare for moving file
-					if (File.Exists(fileName)) {
-						File.Delete(fileName);
+					string dest = Path.Combine(fold, fileName);
+                    if (!File.Exists(dest)) {
+						File.Move(file, dest);
 					}
-					File.Move(file, Path.Combine(materialsPath, fileName));
 				}
-				Process.Start(materialsPath);
 			}
+
+			Process.Start(Path.Combine(mainForm.currAddon.contentPath, "materials"));
 		}
 
 
