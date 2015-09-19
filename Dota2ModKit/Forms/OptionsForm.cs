@@ -37,6 +37,7 @@ namespace Dota2ModKit {
 			autoDeleteBinCheckBox.Checked = currAddon.autoDeleteBin;
 			barebonesLibUpdatesCheckBox.Checked = currAddon.barebonesLibUpdates;
 			utf8CheckBox.Checked = currAddon.generateUTF8;
+			autoCompileCoffeeCheckbox.Checked = currAddon.autoCompileCoffeeScript;
 
 		}
 
@@ -53,6 +54,7 @@ namespace Dota2ModKit {
 			currAddon.autoDeleteBin = autoDeleteBinCheckBox.Checked;
 			currAddon.barebonesLibUpdates = barebonesLibUpdatesCheckBox.Checked;
 			currAddon.generateUTF8 = utf8CheckBox.Checked;
+			currAddon.autoCompileCoffeeScript = autoCompileCoffeeCheckbox.Checked;
 
 			// save stuff
 			mainForm.serializeSettings();

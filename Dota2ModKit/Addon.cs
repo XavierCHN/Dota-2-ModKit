@@ -48,6 +48,7 @@ namespace Dota2ModKit
 		HashSet<string> NotDefaultLibs = new HashSet<string>();
 		public string relativeGamePath;
 		internal bool generateUTF8 = true;
+		internal bool autoCompileCoffeeScript;
 
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
@@ -558,6 +559,15 @@ namespace Dota2ModKit
 							this.barebonesLibUpdates = false;
 						}
 					}
+				} else if (kv2.Key == "autoCompileCoffeeScript") {
+					if (kv2.HasChildren) {
+						string value = kv2.Children.ElementAt(0).Key;
+						if (value == "True") {
+							this.autoCompileCoffeeScript = true;
+						} else {
+							this.autoCompileCoffeeScript = false;
+						}
+					}
 				} else if (kv2.Key == "generateUTF8") {
 					if (kv2.HasChildren) {
 						string value = kv2.Children.ElementAt(0).Key;
@@ -624,6 +634,10 @@ namespace Dota2ModKit
 			KeyValue generateUTF8 = new KeyValue("generateUTF8");
 			generateUTF8.AddChild(new KeyValue(this.generateUTF8.ToString()));
 			addonKV.AddChild(generateUTF8);
+
+			KeyValue autoCompileCoffeeScript = new KeyValue("autoCompileCoffeeScript");
+			autoCompileCoffeeScript.AddChild(new KeyValue(this.autoCompileCoffeeScript.ToString()));
+			addonKV.AddChild(autoCompileCoffeeScript);
 
 			KeyValue libraries = new KeyValue("libraries");
 			addonKV.AddChild(libraries);

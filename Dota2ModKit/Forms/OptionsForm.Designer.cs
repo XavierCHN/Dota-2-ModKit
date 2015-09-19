@@ -28,6 +28,7 @@
 			this.note0CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.addonOptionsTab = new MetroFramework.Controls.MetroTabPage();
+			this.autoCompileCoffeeCheckbox = new MetroFramework.Controls.MetroCheckBox();
 			this.utf8CheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.barebonesLibUpdatesCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
@@ -81,6 +82,7 @@
 			// 
 			// addonOptionsTab
 			// 
+			this.addonOptionsTab.Controls.Add(this.autoCompileCoffeeCheckbox);
 			this.addonOptionsTab.Controls.Add(this.utf8CheckBox);
 			this.addonOptionsTab.Controls.Add(this.barebonesLibUpdatesCheckBox);
 			this.addonOptionsTab.Controls.Add(this.autoDeleteBinCheckBox);
@@ -99,6 +101,18 @@
 			this.addonOptionsTab.VerticalScrollbarBarColor = true;
 			this.addonOptionsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.addonOptionsTab.VerticalScrollbarSize = 2;
+			// 
+			// autoCompileCoffeeCheckbox
+			// 
+			this.autoCompileCoffeeCheckbox.AutoSize = true;
+			this.autoCompileCoffeeCheckbox.Location = new System.Drawing.Point(0, 139);
+			this.autoCompileCoffeeCheckbox.Name = "autoCompileCoffeeCheckbox";
+			this.autoCompileCoffeeCheckbox.Size = new System.Drawing.Size(336, 15);
+			this.autoCompileCoffeeCheckbox.TabIndex = 20;
+			this.autoCompileCoffeeCheckbox.Text = "Auto-compile CoffeeScript files when changes are detected";
+			this.autoCompileCoffeeCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.autoCompileCoffeeCheckbox.UseSelectable = true;
+			this.autoCompileCoffeeCheckbox.Visible = false;
 			// 
 			// utf8CheckBox
 			// 
@@ -152,7 +166,7 @@
 			this.modkitOptionsTab.HorizontalScrollbarSize = 1;
 			this.modkitOptionsTab.Location = new System.Drawing.Point(4, 38);
 			this.modkitOptionsTab.Name = "modkitOptionsTab";
-			this.modkitOptionsTab.Size = new System.Drawing.Size(489, 299);
+			this.modkitOptionsTab.Size = new System.Drawing.Size(495, 302);
 			this.modkitOptionsTab.TabIndex = 2;
 			this.modkitOptionsTab.Text = "D2ModKit";
 			this.modkitOptionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -255,5 +269,6 @@
 		private MetroFramework.Controls.MetroButton cancelButton;
 		private MetroFramework.Controls.MetroCheckBox barebonesLibUpdatesCheckBox;
 		private MetroFramework.Controls.MetroCheckBox utf8CheckBox;
+		private MetroFramework.Controls.MetroCheckBox autoCompileCoffeeCheckbox;
 	}
 }
