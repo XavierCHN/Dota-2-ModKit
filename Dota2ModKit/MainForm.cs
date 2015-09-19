@@ -69,7 +69,7 @@ namespace Dota2ModKit {
 					Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
 				}
 				// display notification
-				text_notification("D2ModKit updated!", MetroColorStyle.Green, 1500);
+				//text_notification("D2ModKit updated!", MetroColorStyle.Green, 1500);
 			}
 
 			// setup hooks
