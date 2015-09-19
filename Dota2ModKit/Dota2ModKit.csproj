@@ -132,6 +132,12 @@
     <Compile Include="Forms\SpellLibraryForm.Designer.cs">
       <DependentUpon>SpellLibraryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UpdateInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateInfoForm.Designer.cs">
+      <DependentUpon>UpdateInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Initializer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -166,12 +172,6 @@
     <Compile Include="Forms\SingleTextboxForm.Designer.cs">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UpdateForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\UpdateForm.Designer.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="VPKExtract\VpkFile.cs" />
@@ -193,6 +193,9 @@
     <EmbeddedResource Include="Forms\SpellLibraryForm.resx">
       <DependentUpon>SpellLibraryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateInfoForm.resx">
+      <DependentUpon>UpdateInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,9 +212,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SingleTextboxForm.resx">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateForm.resx">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>

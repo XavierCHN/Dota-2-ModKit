@@ -1,22 +1,71 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Dota2ModKit {
-	public partial class UpdateForm : MetroForm {
+namespace Dota2ModKit.Forms {
+	public partial class UpdateInfoForm : MetroForm {
 		MainForm mainForm;
-		public UpdateForm(MainForm mainForm) {
+		string changelog = "";
+
+		public UpdateInfoForm(MainForm mainForm) {
+			// when this constructor is called, a new version of ModKit is available.
 			this.mainForm = mainForm;
-			InitializeComponent();
+
+			// parse out the changelog from releases_page_source.
+			changelog = getChangelog();
+
+            InitializeComponent();
+
+			this.Text = "Update Available! (v" + mainForm.newVers + ")";
+			changelogTextBox.Text = "CHANGELOG:\n" + changelog;
+
+		}
+
+		private string getChangelog() {
+			var source = mainForm.releases_page_source;
+			StringBuilder changelog = new StringBuilder();
+
+			var split = source.Split('\n');
+			bool startFound = false;
+
+			foreach (var line in split) {
+				if (startFound) {
+					// check if end of changelog
+					if (line.Contains("</div>")) {
+						break;
+					}
+					string line2 = line.Replace("<ul>", "");
+					line2 = line2.Replace("</ul>", "");
+					line2 = line2.Replace("<li>", "* ");
+					line2 = line2.Replace("</li>", "");
+					changelog.AppendLine(line2.Trim());
+				}
+
+				if (line.Contains("<div class=\"markdown-body\">")) {
+					startFound = true;
+				}
+			}
+
+			return changelog.ToString();
+
+		}
+
+		private void updateBtn_Click(object sender, EventArgs e) {
+			metroRadioButton1.Select();
 
 			// the user wants to update D2ModKit.
-
 			try {
 				// delete D2ModKit.zip if exists.
 				if (File.Exists(Path.Combine(Environment.CurrentDirectory, "D2ModKit.zip"))) {
@@ -24,6 +73,10 @@ namespace Dota2ModKit {
 				}
 
 				progressLabel.Text = "Downloading v" + mainForm.newVers + "...";
+				progressLabel.Visible = true;
+				metroProgressBar1.Visible = true;
+				updateBtn.Enabled = false;
+				dontUpdateBtn.Enabled = false;
 
 				WebClient wc = new WebClient();
 				wc.DownloadFileCompleted += wc_DownloadFileCompleted;
@@ -65,7 +118,7 @@ namespace Dota2ModKit {
 			string[] files = Directory.GetFiles(tempDir);
 			for (int i = 0; i < files.Length; i++) {
 				string name = files[i].Substring(files[i].LastIndexOf('\\') + 1);
-				
+
 				// it will raise an exception if file is already there.
 				try {
 					File.Move(files[i], Path.Combine(Environment.CurrentDirectory, name));
@@ -109,13 +162,25 @@ namespace Dota2ModKit {
 				//sw.WriteLine("timeout 10");
 				sw.WriteLine("del /F /Q updater.bat");
 			}
-			Process.Start(batPath);
+
+			Process p = new Process();
+			p.StartInfo.FileName = batPath;
+			//p.StartInfo.CreateNoWindow = true;
+			p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			p.Start();
+
 			Application.Exit();
 		}
 
 
 		private void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
 			metroProgressBar1.Value = metroProgressBar1.Value + (e.ProgressPercentage - metroProgressBar1.Value);
+		}
+
+		private void dontUpdateBtn_Click(object sender, EventArgs e) {
+			metroRadioButton1.Select();
+
+			this.Close();
 		}
 	}
 }

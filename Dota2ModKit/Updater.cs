@@ -1,4 +1,5 @@
-﻿using LibGit2Sharp;
+﻿using Dota2ModKit.Forms;
+using LibGit2Sharp;
 using MetroFramework;
 using System;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ namespace Dota2ModKit {
 		string newVers = "";
 		bool newVersFound = false;
 		string barebonesPath = Path.Combine(Environment.CurrentDirectory, "barebones");
+		string releases_page_source;
 
 		public Updater(MainForm mainForm) {
 			this.mainForm = mainForm;
@@ -38,17 +40,10 @@ namespace Dota2ModKit {
 
 			mainForm.newVers = newVers;
 			mainForm.newVersUrl = url;
+			mainForm.releases_page_source = releases_page_source;
 
-			DialogResult dr = MetroMessageBox.Show(mainForm, "Version " + newVers + " of Dota 2 ModKit is now available. Would you like to update now?",
-				"Update is available",
-				MessageBoxButtons.YesNo,
-				MessageBoxIcon.Information);
-
-			if (dr == DialogResult.Yes) {
-				Debug.WriteLine("Url: " + url);
-				UpdateForm uf = new UpdateForm(mainForm);
-				uf.ShowDialog();
-			}
+			UpdateInfoForm uif = new UpdateInfoForm(mainForm);
+			uif.ShowDialog();
 		}
 
 		private void UpdatesWorker_DoWork(object sender, DoWorkEventArgs e) {
@@ -69,7 +64,7 @@ namespace Dota2ModKit {
 
 				try {
 					byte[] responseBytes = wc.DownloadData("https://github.com/stephenfournier/Dota-2-ModKit/releases/tag/v" + newVers);
-					string source = System.Text.Encoding.ASCII.GetString(responseBytes);
+					releases_page_source = System.Text.Encoding.ASCII.GetString(responseBytes);
 				} catch (Exception) {
 					if (j < 10) {
 						j++;

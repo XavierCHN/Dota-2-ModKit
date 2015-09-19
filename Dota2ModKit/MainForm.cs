@@ -53,6 +53,7 @@ namespace Dota2ModKit {
 		Updater updater;
 		public string newVers = "";
 		public string newVersUrl = "";
+		public string releases_page_source = "";
 
 		public MainForm() {
 			// bring up the UI
@@ -67,6 +68,8 @@ namespace Dota2ModKit {
 				if (Settings.Default.OpenChangelog && !DEBUG) {
 					Process.Start("https://github.com/Myll/Dota-2-ModKit/releases");
 				}
+				// display notification
+				text_notification("D2ModKit updated!", MetroColorStyle.Green, 1500);
 			}
 
 			// setup hooks
@@ -666,7 +669,7 @@ namespace Dota2ModKit {
 					Process.Start(Path.Combine(currAddon.contentPath, "panorama"));
 				} else if (text.EndsWith("R")) {
 					Process.Start(Path.Combine(currAddon.gamePath, "resource"));
-				} else if (text.EndsWith("S2V")) {
+				} else if (text.EndsWith("VPK")) {
 					Process.Start(Path.Combine(dotaDir, "game", "dota", "pak01_dir.vpk"));
 				} else if (text.EndsWith("E")) {
 					//dota_english.txt
