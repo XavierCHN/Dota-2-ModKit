@@ -81,7 +81,7 @@
 			// generateAddonLangsBtn
 			// 
 			this.generateAddonLangsBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.generateAddonLangsBtn.Location = new System.Drawing.Point(129, 4);
+			this.generateAddonLangsBtn.Location = new System.Drawing.Point(129, 3);
 			this.generateAddonLangsBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.generateAddonLangsBtn.Name = "generateAddonLangsBtn";
 			this.generateAddonLangsBtn.Size = new System.Drawing.Size(125, 33);
@@ -98,7 +98,7 @@
 			// 
 			this.addonTile.ActiveControl = null;
 			this.addonTile.ContextMenuStrip = this.metroContextMenu1;
-			this.addonTile.Location = new System.Drawing.Point(9, 57);
+			this.addonTile.Location = new System.Drawing.Point(6, 53);
 			this.addonTile.Name = "addonTile";
 			this.addonTile.Size = new System.Drawing.Size(136, 136);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
@@ -158,11 +158,12 @@
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
-			this.tabControl.Location = new System.Drawing.Point(177, 32);
+			this.tabControl.Location = new System.Drawing.Point(173, 20);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 1;
-			this.tabControl.Size = new System.Drawing.Size(262, 223);
+			this.tabControl.Size = new System.Drawing.Size(264, 235);
 			this.tabControl.TabIndex = 2;
+			this.tabControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
 			// 
@@ -179,7 +180,7 @@
 			this.toolsTab.HorizontalScrollbarSize = 1;
 			this.toolsTab.Location = new System.Drawing.Point(4, 38);
 			this.toolsTab.Name = "toolsTab";
-			this.toolsTab.Size = new System.Drawing.Size(254, 182);
+			this.toolsTab.Size = new System.Drawing.Size(256, 193);
 			this.toolsTab.TabIndex = 0;
 			this.toolsTab.Text = "Tools 1";
 			this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -190,7 +191,7 @@
 			// compileCoffeeBtn
 			// 
 			this.compileCoffeeBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.compileCoffeeBtn.Location = new System.Drawing.Point(129, 115);
+			this.compileCoffeeBtn.Location = new System.Drawing.Point(129, 114);
 			this.compileCoffeeBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.compileCoffeeBtn.Name = "compileCoffeeBtn";
 			this.compileCoffeeBtn.Size = new System.Drawing.Size(125, 33);
@@ -206,7 +207,7 @@
 			// spellLibraryBtn
 			// 
 			this.spellLibraryBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.spellLibraryBtn.Location = new System.Drawing.Point(129, 41);
+			this.spellLibraryBtn.Location = new System.Drawing.Point(129, 40);
 			this.spellLibraryBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.spellLibraryBtn.Name = "spellLibraryBtn";
 			this.spellLibraryBtn.Size = new System.Drawing.Size(125, 33);
@@ -221,7 +222,7 @@
 			// findSoundNameBtn
 			// 
 			this.findSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.findSoundNameBtn.Location = new System.Drawing.Point(129, 78);
+			this.findSoundNameBtn.Location = new System.Drawing.Point(129, 77);
 			this.findSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.findSoundNameBtn.Name = "findSoundNameBtn";
 			this.findSoundNameBtn.Size = new System.Drawing.Size(125, 33);
@@ -236,7 +237,7 @@
 			// combineKVBtn
 			// 
 			this.combineKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.combineKVBtn.Location = new System.Drawing.Point(0, 4);
+			this.combineKVBtn.Location = new System.Drawing.Point(0, 3);
 			this.combineKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.combineKVBtn.Name = "combineKVBtn";
 			this.combineKVBtn.Size = new System.Drawing.Size(125, 33);
@@ -252,7 +253,7 @@
 			// particleDesignBtn
 			// 
 			this.particleDesignBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.particleDesignBtn.Location = new System.Drawing.Point(0, 41);
+			this.particleDesignBtn.Location = new System.Drawing.Point(0, 40);
 			this.particleDesignBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.particleDesignBtn.Name = "particleDesignBtn";
 			this.particleDesignBtn.Size = new System.Drawing.Size(125, 33);
@@ -273,7 +274,7 @@
 			this.tools2Tab.HorizontalScrollbarSize = 1;
 			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
 			this.tools2Tab.Name = "tools2Tab";
-			this.tools2Tab.Size = new System.Drawing.Size(254, 181);
+			this.tools2Tab.Size = new System.Drawing.Size(256, 193);
 			this.tools2Tab.TabIndex = 4;
 			this.tools2Tab.Text = "Tools 2";
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -284,7 +285,7 @@
 			// decompileVtexButton
 			// 
 			this.decompileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.decompileVtexButton.Location = new System.Drawing.Point(0, 41);
+			this.decompileVtexButton.Location = new System.Drawing.Point(0, 40);
 			this.decompileVtexButton.Margin = new System.Windows.Forms.Padding(4);
 			this.decompileVtexButton.Name = "decompileVtexButton";
 			this.decompileVtexButton.Size = new System.Drawing.Size(125, 33);
@@ -299,7 +300,7 @@
 			// compileVtexButton
 			// 
 			this.compileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.compileVtexButton.Location = new System.Drawing.Point(0, 4);
+			this.compileVtexButton.Location = new System.Drawing.Point(0, 3);
 			this.compileVtexButton.Margin = new System.Windows.Forms.Padding(4);
 			this.compileVtexButton.Name = "compileVtexButton";
 			this.compileVtexButton.Size = new System.Drawing.Size(125, 33);
@@ -336,7 +337,7 @@
 			this.helpTab.HorizontalScrollbarSize = 1;
 			this.helpTab.Location = new System.Drawing.Point(4, 38);
 			this.helpTab.Name = "helpTab";
-			this.helpTab.Size = new System.Drawing.Size(254, 182);
+			this.helpTab.Size = new System.Drawing.Size(256, 193);
 			this.helpTab.TabIndex = 3;
 			this.helpTab.Text = "Help";
 			this.helpTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -348,7 +349,7 @@
 			// 
 			this.metroLink12.Location = new System.Drawing.Point(79, 94);
 			this.metroLink12.Name = "metroLink12";
-			this.metroLink12.Size = new System.Drawing.Size(55, 18);
+			this.metroLink12.Size = new System.Drawing.Size(62, 18);
 			this.metroLink12.TabIndex = 19;
 			this.metroLink12.Text = "dev.dota";
 			this.metroLink12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -527,7 +528,7 @@
 			// 
 			// metroLink3
 			// 
-			this.metroLink3.Location = new System.Drawing.Point(140, 94);
+			this.metroLink3.Location = new System.Drawing.Point(147, 94);
 			this.metroLink3.Name = "metroLink3";
 			this.metroLink3.Size = new System.Drawing.Size(100, 18);
 			this.metroLink3.TabIndex = 4;
@@ -567,7 +568,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-3, 261);
+			this.notificationLabel.Location = new System.Drawing.Point(-2, 261);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -590,7 +591,7 @@
 			// gameTile
 			// 
 			this.gameTile.ActiveControl = null;
-			this.gameTile.Location = new System.Drawing.Point(148, 57);
+			this.gameTile.Location = new System.Drawing.Point(145, 53);
 			this.gameTile.Name = "gameTile";
 			this.gameTile.Size = new System.Drawing.Size(29, 29);
 			this.gameTile.Style = MetroFramework.MetroColorStyle.Blue;
@@ -605,7 +606,7 @@
 			// contentTile
 			// 
 			this.contentTile.ActiveControl = null;
-			this.contentTile.Location = new System.Drawing.Point(148, 88);
+			this.contentTile.Location = new System.Drawing.Point(145, 84);
 			this.contentTile.Name = "contentTile";
 			this.contentTile.Size = new System.Drawing.Size(29, 29);
 			this.contentTile.Style = MetroFramework.MetroColorStyle.Orange;
@@ -620,7 +621,7 @@
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
-			this.steamTile.Location = new System.Drawing.Point(148, 119);
+			this.steamTile.Location = new System.Drawing.Point(145, 115);
 			this.steamTile.Name = "steamTile";
 			this.steamTile.Size = new System.Drawing.Size(29, 29);
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
@@ -643,7 +644,7 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(41, 196);
+			this.metroTile1.Location = new System.Drawing.Point(38, 192);
 			this.metroTile1.Name = "metroTile1";
 			this.metroTile1.Size = new System.Drawing.Size(38, 27);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
@@ -658,7 +659,7 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(9, 196);
+			this.optionsBtn.Location = new System.Drawing.Point(6, 192);
 			this.optionsBtn.Name = "optionsBtn";
 			this.optionsBtn.Size = new System.Drawing.Size(29, 27);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Silver;
@@ -672,7 +673,7 @@
 			// 
 			// progressSpinner1
 			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(370, 260);
+			this.progressSpinner1.Location = new System.Drawing.Point(366, 260);
 			this.progressSpinner1.Maximum = 100;
 			this.progressSpinner1.Name = "progressSpinner1";
 			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
@@ -684,7 +685,7 @@
 			// 
 			// versionLabel
 			// 
-			this.versionLabel.Location = new System.Drawing.Point(393, 267);
+			this.versionLabel.Location = new System.Drawing.Point(389, 268);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(52, 19);
 			this.versionLabel.TabIndex = 21;
@@ -697,7 +698,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(443, 285);
+			this.ClientSize = new System.Drawing.Size(438, 285);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.progressSpinner1);
 			this.Controls.Add(this.versionLabel);
