@@ -52,10 +52,10 @@
 			// copySpellBtn
 			// 
 			this.copySpellBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.copySpellBtn.Location = new System.Drawing.Point(237, 162);
+			this.copySpellBtn.Location = new System.Drawing.Point(235, 167);
 			this.copySpellBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.copySpellBtn.Name = "copySpellBtn";
-			this.copySpellBtn.Size = new System.Drawing.Size(111, 36);
+			this.copySpellBtn.Size = new System.Drawing.Size(102, 32);
 			this.copySpellBtn.TabIndex = 14;
 			this.copySpellBtn.TabStop = false;
 			this.copySpellBtn.Text = "Copy";
@@ -67,10 +67,10 @@
 			// luaKVBtn
 			// 
 			this.luaKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.luaKVBtn.Location = new System.Drawing.Point(237, 204);
+			this.luaKVBtn.Location = new System.Drawing.Point(235, 204);
 			this.luaKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.luaKVBtn.Name = "luaKVBtn";
-			this.luaKVBtn.Size = new System.Drawing.Size(111, 36);
+			this.luaKVBtn.Size = new System.Drawing.Size(102, 32);
 			this.luaKVBtn.TabIndex = 15;
 			this.luaKVBtn.TabStop = false;
 			this.luaKVBtn.Text = "Lua Script";
@@ -96,7 +96,7 @@
 			this.notificationLabel.AutoSize = true;
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.notificationLabel.Location = new System.Drawing.Point(236, 287);
+			this.notificationLabel.Location = new System.Drawing.Point(236, 281);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(101, 25);
 			this.notificationLabel.TabIndex = 18;
@@ -124,10 +124,10 @@
 			// openFileBtn
 			// 
 			this.openFileBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.openFileBtn.Location = new System.Drawing.Point(237, 246);
+			this.openFileBtn.Location = new System.Drawing.Point(235, 241);
 			this.openFileBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.openFileBtn.Name = "openFileBtn";
-			this.openFileBtn.Size = new System.Drawing.Size(111, 36);
+			this.openFileBtn.Size = new System.Drawing.Size(102, 32);
 			this.openFileBtn.TabIndex = 24;
 			this.openFileBtn.TabStop = false;
 			this.openFileBtn.Text = "Open File";
@@ -171,7 +171,7 @@
 			this.textBox1.Language = FastColoredTextBoxNS.Language.JS;
 			this.textBox1.LeftBracket = '(';
 			this.textBox1.LeftBracket2 = '{';
-			this.textBox1.Location = new System.Drawing.Point(355, 63);
+			this.textBox1.Location = new System.Drawing.Point(345, 63);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Paddings = new System.Windows.Forms.Padding(0);
 			this.textBox1.ReadOnly = true;
@@ -180,7 +180,7 @@
 			this.textBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.textBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("textBox1.ServiceColors")));
 			this.textBox1.ShowFoldingLines = true;
-			this.textBox1.Size = new System.Drawing.Size(922, 714);
+			this.textBox1.Size = new System.Drawing.Size(932, 714);
 			this.textBox1.TabIndex = 23;
 			this.textBox1.Zoom = 100;
 			// 

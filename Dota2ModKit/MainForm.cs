@@ -732,7 +732,7 @@ namespace Dota2ModKit {
 				return;
 			}
 
-			text_notification("Options saved", MetroColorStyle.Green, 2500);
+			text_notification("Options saved!", MetroColorStyle.Green, 2500);
 		}
 
 		private void findSoundNameBtn_Click(object sender, EventArgs e) {
