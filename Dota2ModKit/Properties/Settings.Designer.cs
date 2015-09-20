@@ -106,5 +106,17 @@ namespace Dota2ModKit.Properties {
                 this["OpenChangelog"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string CustomTileInfo {
+            get {
+                return ((string)(this["CustomTileInfo"]));
+            }
+            set {
+                this["CustomTileInfo"] = value;
+            }
+        }
     }
 }

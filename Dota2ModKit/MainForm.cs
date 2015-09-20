@@ -37,6 +37,7 @@ namespace Dota2ModKit {
 		SoundFeatures soundFeatures;
 		internal bool firstAddonChange;
 		private bool firstRun = false;
+		public CustomTile[] customTiles = new CustomTile[5];
 
 		// helpers to make things accessible in other forms.
 		public MetroTile AddonTile;
@@ -121,6 +122,9 @@ namespace Dota2ModKit {
 
 			// get all the addons in the 'game' dir.
 			addons = getAddons();
+
+			// setup custom tiles
+			setupCustomTiles();
 
 			// does this computer have any dota addons?
 			if (addons.Count == 0) {
@@ -356,16 +360,14 @@ namespace Dota2ModKit {
 				rootKV.AddChild(addonKV);
 			}
 
-			// compress string to take up less space.
-			/*StringBuilder sb = new StringBuilder();
-			string[] split = rootKV.ToString().Split('\n');
-			for (int i = 0; i < split.Length; i++) {
-				string l = split[i];
-				l = l.Trim();
-				sb.AppendLine(l);
-			}*/
-
 			Settings.Default.AddonsKV = rootKV.ToString();
+
+			// serialize the customTiles
+			string customTilesSerialized = "";
+			for (int i = 0; i < customTiles.Length; i++) {
+				customTilesSerialized += customTiles[i].serializedTileInfo + "|";
+			}
+			Settings.Default.CustomTileInfo = customTilesSerialized;
 			Settings.Default.Save();
 		}
 
@@ -818,6 +820,36 @@ namespace Dota2ModKit {
 				File.WriteAllText(jsPath, js, Encoding.UTF8);
 			}
 			text_notification("CoffeeScript files compiled!", MetroColorStyle.Green, 1500);
+		}
+
+		private void setupCustomTiles() {
+			var str_customTileInfos = Settings.Default.CustomTileInfo;
+			string[] serializedTileInfos = null;
+
+			if (str_customTileInfos.Contains('|')) {
+				serializedTileInfos = str_customTileInfos.Split('|');
+			}
+
+			for (int i = 0; i < customTiles.Length; i++) {
+				int tileNum = i + 1;
+				MetroTile tile = (MetroTile)this.Controls["customTile" + tileNum];
+				CustomTile customTile = null;
+				if (serializedTileInfos != null) {
+					customTile = new CustomTile(this, tile, tileNum, serializedTileInfos[i]);
+				} else {
+					customTile = new CustomTile(this, tile, tileNum, "");
+				}
+				customTiles[i] = customTile;
+			}
+		}
+
+		private void editTileToolStripMenuItem_Click(object sender, EventArgs e) {
+			ToolStripMenuItem item = (ToolStripMenuItem)sender;
+			var owner = (ContextMenuStrip)item.Owner;
+			MetroTile tile = (MetroTile)(owner.SourceControl);
+			string name = tile.Name;
+			int tileNum = Int32.Parse(name.Substring(name.LastIndexOf('e')+1))-1;
+			customTiles[tileNum].editTile();
 		}
 	}
 }
