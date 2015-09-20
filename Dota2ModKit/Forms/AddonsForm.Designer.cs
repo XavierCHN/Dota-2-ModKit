@@ -45,6 +45,9 @@
 			this.metroTile2 = new MetroFramework.Controls.MetroTile();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.newAddonTab = new MetroFramework.Controls.MetroTabPage();
+			this.stringToReplaceTextbox = new MetroFramework.Controls.MetroTextBox();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+			this.existingAddonRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
 			this.progressLabel = new MetroFramework.Controls.MetroLabel();
 			this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
 			this.addonNameTextBox = new MetroFramework.Controls.MetroTextBox();
@@ -52,9 +55,6 @@
 			this.createAddonBtn = new MetroFramework.Controls.MetroButton();
 			this.bmdRadioButton = new MetroFramework.Controls.MetroRadioButton();
 			this.dummyRadioBtn = new MetroFramework.Controls.MetroRadioButton();
-			this.existingAddonRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.stringToReplaceTextbox = new MetroFramework.Controls.MetroTextBox();
 			this.tabControl.SuspendLayout();
 			this.myAddonsTab.SuspendLayout();
 			this.newAddonTab.SuspendLayout();
@@ -363,6 +363,48 @@
 			this.newAddonTab.VerticalScrollbarHighlightOnWheel = false;
 			this.newAddonTab.VerticalScrollbarSize = 10;
 			// 
+			// stringToReplaceTextbox
+			// 
+			this.stringToReplaceTextbox.Lines = new string[0];
+			this.stringToReplaceTextbox.Location = new System.Drawing.Point(114, 46);
+			this.stringToReplaceTextbox.MaxLength = 32767;
+			this.stringToReplaceTextbox.Name = "stringToReplaceTextbox";
+			this.stringToReplaceTextbox.PasswordChar = '\0';
+			this.stringToReplaceTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+			this.stringToReplaceTextbox.SelectedText = "";
+			this.stringToReplaceTextbox.Size = new System.Drawing.Size(173, 23);
+			this.stringToReplaceTextbox.TabIndex = 14;
+			this.stringToReplaceTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.stringToReplaceTextbox.UseSelectable = true;
+			this.stringToReplaceTextbox.Visible = false;
+			// 
+			// metroLabel1
+			// 
+			this.metroLabel1.AutoSize = true;
+			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+			this.metroLabel1.Location = new System.Drawing.Point(-4, 50);
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Size = new System.Drawing.Size(112, 19);
+			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
+			this.metroLabel1.TabIndex = 13;
+			this.metroLabel1.Text = "String to replace:";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroLabel1.Visible = false;
+			// 
+			// existingAddonRadioButton1
+			// 
+			this.existingAddonRadioButton1.AutoSize = true;
+			this.existingAddonRadioButton1.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
+			this.existingAddonRadioButton1.Location = new System.Drawing.Point(139, 21);
+			this.existingAddonRadioButton1.Name = "existingAddonRadioButton1";
+			this.existingAddonRadioButton1.Size = new System.Drawing.Size(152, 19);
+			this.existingAddonRadioButton1.TabIndex = 12;
+			this.existingAddonRadioButton1.Text = "From Existing Addon";
+			this.existingAddonRadioButton1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			this.existingAddonRadioButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.existingAddonRadioButton1.UseSelectable = true;
+			this.existingAddonRadioButton1.Visible = false;
+			// 
 			// progressLabel
 			// 
 			this.progressLabel.AutoSize = true;
@@ -419,11 +461,13 @@
 			this.createAddonBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.createAddonBtn.Name = "createAddonBtn";
 			this.createAddonBtn.Size = new System.Drawing.Size(176, 41);
+			this.createAddonBtn.Style = MetroFramework.MetroColorStyle.Blue;
 			this.createAddonBtn.TabIndex = 5;
 			this.createAddonBtn.TabStop = false;
 			this.createAddonBtn.Text = "Create Addon";
 			this.createAddonBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.createAddonBtn.UseSelectable = true;
+			this.createAddonBtn.UseStyleColors = true;
 			this.createAddonBtn.Click += new System.EventHandler(this.createAddonBtn_Click);
 			// 
 			// bmdRadioButton
@@ -449,48 +493,6 @@
 			this.dummyRadioBtn.Text = "metroRadioButton2";
 			this.dummyRadioBtn.UseSelectable = true;
 			this.dummyRadioBtn.Visible = false;
-			// 
-			// existingAddonRadioButton1
-			// 
-			this.existingAddonRadioButton1.AutoSize = true;
-			this.existingAddonRadioButton1.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-			this.existingAddonRadioButton1.Location = new System.Drawing.Point(139, 21);
-			this.existingAddonRadioButton1.Name = "existingAddonRadioButton1";
-			this.existingAddonRadioButton1.Size = new System.Drawing.Size(152, 19);
-			this.existingAddonRadioButton1.TabIndex = 12;
-			this.existingAddonRadioButton1.Text = "From Existing Addon";
-			this.existingAddonRadioButton1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			this.existingAddonRadioButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.existingAddonRadioButton1.UseSelectable = true;
-			this.existingAddonRadioButton1.Visible = false;
-			// 
-			// metroLabel1
-			// 
-			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.metroLabel1.Location = new System.Drawing.Point(-4, 50);
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(112, 19);
-			this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroLabel1.TabIndex = 13;
-			this.metroLabel1.Text = "String to replace:";
-			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroLabel1.Visible = false;
-			// 
-			// stringToReplaceTextbox
-			// 
-			this.stringToReplaceTextbox.Lines = new string[0];
-			this.stringToReplaceTextbox.Location = new System.Drawing.Point(114, 46);
-			this.stringToReplaceTextbox.MaxLength = 32767;
-			this.stringToReplaceTextbox.Name = "stringToReplaceTextbox";
-			this.stringToReplaceTextbox.PasswordChar = '\0';
-			this.stringToReplaceTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.stringToReplaceTextbox.SelectedText = "";
-			this.stringToReplaceTextbox.Size = new System.Drawing.Size(173, 23);
-			this.stringToReplaceTextbox.TabIndex = 14;
-			this.stringToReplaceTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.stringToReplaceTextbox.UseSelectable = true;
-			this.stringToReplaceTextbox.Visible = false;
 			// 
 			// AddonsForm
 			// 

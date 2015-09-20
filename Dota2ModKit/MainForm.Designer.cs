@@ -69,14 +69,15 @@
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.customTile1 = new MetroFramework.Controls.MetroTile();
+			this.tileContextMenu2 = new MetroFramework.Controls.MetroContextMenu(this.components);
+			this.editTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.customTile2 = new MetroFramework.Controls.MetroTile();
 			this.customTile3 = new MetroFramework.Controls.MetroTile();
 			this.customTile4 = new MetroFramework.Controls.MetroTile();
+			this.customTile5 = new MetroFramework.Controls.MetroTile();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.versionLabel = new MetroFramework.Controls.MetroLink();
-			this.customTile5 = new MetroFramework.Controls.MetroTile();
-			this.tileContextMenu2 = new MetroFramework.Controls.MetroContextMenu(this.components);
-			this.editTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.metroLink13 = new MetroFramework.Controls.MetroLink();
 			this.addonTileContextMenu1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -107,7 +108,7 @@
 			this.addonTile.ContextMenuStrip = this.addonTileContextMenu1;
 			this.addonTile.Location = new System.Drawing.Point(6, 53);
 			this.addonTile.Name = "addonTile";
-			this.addonTile.Size = new System.Drawing.Size(136, 136);
+			this.addonTile.Size = new System.Drawing.Size(138, 136);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.addonTile.TabIndex = 0;
 			this.addonTile.Text = "AddonName";
@@ -156,10 +157,10 @@
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
-			this.tabControl.Location = new System.Drawing.Point(175, 25);
+			this.tabControl.Location = new System.Drawing.Point(179, 26);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(260, 230);
+			this.tabControl.Size = new System.Drawing.Size(261, 222);
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -177,7 +178,7 @@
 			this.toolsTab.HorizontalScrollbarSize = 1;
 			this.toolsTab.Location = new System.Drawing.Point(4, 38);
 			this.toolsTab.Name = "toolsTab";
-			this.toolsTab.Size = new System.Drawing.Size(252, 188);
+			this.toolsTab.Size = new System.Drawing.Size(253, 180);
 			this.toolsTab.TabIndex = 0;
 			this.toolsTab.Text = "Tools 1";
 			this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -271,7 +272,7 @@
 			this.tools2Tab.HorizontalScrollbarSize = 1;
 			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
 			this.tools2Tab.Name = "tools2Tab";
-			this.tools2Tab.Size = new System.Drawing.Size(252, 188);
+			this.tools2Tab.Size = new System.Drawing.Size(253, 180);
 			this.tools2Tab.TabIndex = 4;
 			this.tools2Tab.Text = "Tools 2";
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -334,7 +335,7 @@
 			this.helpTab.HorizontalScrollbarSize = 1;
 			this.helpTab.Location = new System.Drawing.Point(4, 38);
 			this.helpTab.Name = "helpTab";
-			this.helpTab.Size = new System.Drawing.Size(252, 188);
+			this.helpTab.Size = new System.Drawing.Size(253, 180);
 			this.helpTab.TabIndex = 3;
 			this.helpTab.Text = "Help";
 			this.helpTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -565,14 +566,15 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-2, 261);
+			this.notificationLabel.Location = new System.Drawing.Point(-4, 260);
 			this.notificationLabel.Name = "notificationLabel";
-			this.notificationLabel.Size = new System.Drawing.Size(142, 25);
+			this.notificationLabel.Size = new System.Drawing.Size(153, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
 			this.notificationLabel.TabIndex = 5;
-			this.notificationLabel.Text = "notificationLabel";
+			this.notificationLabel.Text = "notificationLabelg";
 			this.notificationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.notificationLabel.UseStyleColors = true;
+			this.notificationLabel.Click += new System.EventHandler(this.notificationLabel_Click);
 			// 
 			// metroRadioButton1
 			// 
@@ -588,9 +590,9 @@
 			// gameTile
 			// 
 			this.gameTile.ActiveControl = null;
-			this.gameTile.Location = new System.Drawing.Point(144, 53);
+			this.gameTile.Location = new System.Drawing.Point(146, 53);
 			this.gameTile.Name = "gameTile";
-			this.gameTile.Size = new System.Drawing.Size(29, 27);
+			this.gameTile.Size = new System.Drawing.Size(33, 27);
 			this.gameTile.Style = MetroFramework.MetroColorStyle.Blue;
 			this.gameTile.TabIndex = 7;
 			this.gameTile.Text = "G";
@@ -603,9 +605,9 @@
 			// contentTile
 			// 
 			this.contentTile.ActiveControl = null;
-			this.contentTile.Location = new System.Drawing.Point(144, 82);
+			this.contentTile.Location = new System.Drawing.Point(146, 82);
 			this.contentTile.Name = "contentTile";
-			this.contentTile.Size = new System.Drawing.Size(29, 27);
+			this.contentTile.Size = new System.Drawing.Size(33, 27);
 			this.contentTile.Style = MetroFramework.MetroColorStyle.Orange;
 			this.contentTile.TabIndex = 10;
 			this.contentTile.Text = "C";
@@ -618,9 +620,9 @@
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
-			this.steamTile.Location = new System.Drawing.Point(144, 111);
+			this.steamTile.Location = new System.Drawing.Point(146, 111);
 			this.steamTile.Name = "steamTile";
-			this.steamTile.Size = new System.Drawing.Size(29, 26);
+			this.steamTile.Size = new System.Drawing.Size(33, 26);
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
 			this.steamTile.TabIndex = 14;
 			this.steamTile.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -641,9 +643,9 @@
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(39, 191);
+			this.metroTile1.Location = new System.Drawing.Point(35, 191);
 			this.metroTile1.Name = "metroTile1";
-			this.metroTile1.Size = new System.Drawing.Size(39, 23);
+			this.metroTile1.Size = new System.Drawing.Size(39, 24);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
 			this.metroTile1.TabIndex = 16;
 			this.metroTile1.Text = "VPK";
@@ -658,7 +660,7 @@
 			this.optionsBtn.ActiveControl = null;
 			this.optionsBtn.Location = new System.Drawing.Point(6, 191);
 			this.optionsBtn.Name = "optionsBtn";
-			this.optionsBtn.Size = new System.Drawing.Size(30, 23);
+			this.optionsBtn.Size = new System.Drawing.Size(26, 24);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Silver;
 			this.optionsBtn.TabIndex = 18;
 			this.optionsBtn.Text = "O";
@@ -672,9 +674,9 @@
 			// 
 			this.customTile1.ActiveControl = null;
 			this.customTile1.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile1.Location = new System.Drawing.Point(144, 139);
+			this.customTile1.Location = new System.Drawing.Point(146, 139);
 			this.customTile1.Name = "customTile1";
-			this.customTile1.Size = new System.Drawing.Size(29, 24);
+			this.customTile1.Size = new System.Drawing.Size(33, 24);
 			this.customTile1.Style = MetroFramework.MetroColorStyle.Purple;
 			this.customTile1.TabIndex = 22;
 			this.customTile1.Text = "?";
@@ -682,89 +684,6 @@
 			this.metroToolTip1.SetToolTip(this.customTile1, "Click to customize this tile!");
 			this.customTile1.UseSelectable = true;
 			this.customTile1.UseTileImage = true;
-			// 
-			// customTile2
-			// 
-			this.customTile2.ActiveControl = null;
-			this.customTile2.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile2.Location = new System.Drawing.Point(80, 191);
-			this.customTile2.Name = "customTile2";
-			this.customTile2.Size = new System.Drawing.Size(30, 23);
-			this.customTile2.Style = MetroFramework.MetroColorStyle.Brown;
-			this.customTile2.TabIndex = 23;
-			this.customTile2.Text = "?";
-			this.customTile2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile2, "Click to customize this tile!");
-			this.customTile2.UseSelectable = true;
-			this.customTile2.UseTileImage = true;
-			// 
-			// customTile3
-			// 
-			this.customTile3.ActiveControl = null;
-			this.customTile3.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile3.Location = new System.Drawing.Point(112, 191);
-			this.customTile3.Name = "customTile3";
-			this.customTile3.Size = new System.Drawing.Size(30, 23);
-			this.customTile3.Style = MetroFramework.MetroColorStyle.Yellow;
-			this.customTile3.TabIndex = 24;
-			this.customTile3.Text = "?";
-			this.customTile3.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile3, "Click to customize this tile!");
-			this.customTile3.UseSelectable = true;
-			this.customTile3.UseTileImage = true;
-			// 
-			// customTile4
-			// 
-			this.customTile4.ActiveControl = null;
-			this.customTile4.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile4.Location = new System.Drawing.Point(144, 165);
-			this.customTile4.Name = "customTile4";
-			this.customTile4.Size = new System.Drawing.Size(29, 24);
-			this.customTile4.Style = MetroFramework.MetroColorStyle.Lime;
-			this.customTile4.TabIndex = 25;
-			this.customTile4.Text = "?";
-			this.customTile4.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile4, "Click to customize this tile!");
-			this.customTile4.UseSelectable = true;
-			this.customTile4.UseTileImage = true;
-			// 
-			// progressSpinner1
-			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(366, 260);
-			this.progressSpinner1.Maximum = 100;
-			this.progressSpinner1.Name = "progressSpinner1";
-			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
-			this.progressSpinner1.TabIndex = 19;
-			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.progressSpinner1.UseSelectable = true;
-			this.progressSpinner1.Value = 70;
-			this.progressSpinner1.Visible = false;
-			// 
-			// versionLabel
-			// 
-			this.versionLabel.Location = new System.Drawing.Point(389, 268);
-			this.versionLabel.Name = "versionLabel";
-			this.versionLabel.Size = new System.Drawing.Size(52, 19);
-			this.versionLabel.TabIndex = 21;
-			this.versionLabel.Text = "v2.x.x.x";
-			this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.versionLabel.UseSelectable = true;
-			this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
-			// 
-			// customTile5
-			// 
-			this.customTile5.ActiveControl = null;
-			this.customTile5.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile5.Location = new System.Drawing.Point(144, 191);
-			this.customTile5.Name = "customTile5";
-			this.customTile5.Size = new System.Drawing.Size(29, 23);
-			this.customTile5.Style = MetroFramework.MetroColorStyle.Magenta;
-			this.customTile5.TabIndex = 26;
-			this.customTile5.Text = "?";
-			this.customTile5.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile5, "Click to customize this tile!");
-			this.customTile5.UseSelectable = true;
-			this.customTile5.UseTileImage = true;
 			// 
 			// tileContextMenu2
 			// 
@@ -780,11 +699,108 @@
 			this.editTileToolStripMenuItem.Text = "Edit Tile";
 			this.editTileToolStripMenuItem.Click += new System.EventHandler(this.editTileToolStripMenuItem_Click);
 			// 
+			// customTile2
+			// 
+			this.customTile2.ActiveControl = null;
+			this.customTile2.ContextMenuStrip = this.tileContextMenu2;
+			this.customTile2.Location = new System.Drawing.Point(76, 191);
+			this.customTile2.Name = "customTile2";
+			this.customTile2.Size = new System.Drawing.Size(33, 24);
+			this.customTile2.Style = MetroFramework.MetroColorStyle.Brown;
+			this.customTile2.TabIndex = 23;
+			this.customTile2.Text = "?";
+			this.customTile2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.customTile2, "Click to customize this tile!");
+			this.customTile2.UseSelectable = true;
+			this.customTile2.UseTileImage = true;
+			// 
+			// customTile3
+			// 
+			this.customTile3.ActiveControl = null;
+			this.customTile3.ContextMenuStrip = this.tileContextMenu2;
+			this.customTile3.Location = new System.Drawing.Point(111, 191);
+			this.customTile3.Name = "customTile3";
+			this.customTile3.Size = new System.Drawing.Size(33, 24);
+			this.customTile3.Style = MetroFramework.MetroColorStyle.Yellow;
+			this.customTile3.TabIndex = 24;
+			this.customTile3.Text = "?";
+			this.customTile3.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.customTile3, "Click to customize this tile!");
+			this.customTile3.UseSelectable = true;
+			this.customTile3.UseTileImage = true;
+			// 
+			// customTile4
+			// 
+			this.customTile4.ActiveControl = null;
+			this.customTile4.ContextMenuStrip = this.tileContextMenu2;
+			this.customTile4.Location = new System.Drawing.Point(146, 165);
+			this.customTile4.Name = "customTile4";
+			this.customTile4.Size = new System.Drawing.Size(33, 24);
+			this.customTile4.Style = MetroFramework.MetroColorStyle.Lime;
+			this.customTile4.TabIndex = 25;
+			this.customTile4.Text = "?";
+			this.customTile4.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.customTile4, "Click to customize this tile!");
+			this.customTile4.UseSelectable = true;
+			this.customTile4.UseTileImage = true;
+			// 
+			// customTile5
+			// 
+			this.customTile5.ActiveControl = null;
+			this.customTile5.ContextMenuStrip = this.tileContextMenu2;
+			this.customTile5.Location = new System.Drawing.Point(146, 191);
+			this.customTile5.Name = "customTile5";
+			this.customTile5.Size = new System.Drawing.Size(33, 24);
+			this.customTile5.Style = MetroFramework.MetroColorStyle.Magenta;
+			this.customTile5.TabIndex = 26;
+			this.customTile5.Text = "?";
+			this.customTile5.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroToolTip1.SetToolTip(this.customTile5, "Click to customize this tile!");
+			this.customTile5.UseSelectable = true;
+			this.customTile5.UseTileImage = true;
+			// 
+			// progressSpinner1
+			// 
+			this.progressSpinner1.Location = new System.Drawing.Point(374, 265);
+			this.progressSpinner1.Maximum = 100;
+			this.progressSpinner1.Name = "progressSpinner1";
+			this.progressSpinner1.Size = new System.Drawing.Size(20, 20);
+			this.progressSpinner1.TabIndex = 19;
+			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.progressSpinner1.UseSelectable = true;
+			this.progressSpinner1.Value = 80;
+			this.progressSpinner1.Visible = false;
+			// 
+			// versionLabel
+			// 
+			this.versionLabel.Location = new System.Drawing.Point(393, 268);
+			this.versionLabel.Name = "versionLabel";
+			this.versionLabel.Size = new System.Drawing.Size(52, 19);
+			this.versionLabel.TabIndex = 21;
+			this.versionLabel.Text = "v2.x.x.x";
+			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.versionLabel.UseSelectable = true;
+			this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
+			// 
+			// metroLink13
+			// 
+			this.metroLink13.Location = new System.Drawing.Point(399, 256);
+			this.metroLink13.Name = "metroLink13";
+			this.metroLink13.Size = new System.Drawing.Size(48, 15);
+			this.metroLink13.TabIndex = 27;
+			this.metroLink13.Text = "About!";
+			this.metroLink13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.metroLink13.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroLink13.UseSelectable = true;
+			this.metroLink13.Click += new System.EventHandler(this.metroLink13_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(438, 285);
+			this.ClientSize = new System.Drawing.Size(442, 285);
+			this.Controls.Add(this.metroLink13);
 			this.Controls.Add(this.customTile5);
 			this.Controls.Add(this.customTile4);
 			this.Controls.Add(this.customTile3);
@@ -879,5 +895,6 @@
 		private MetroFramework.Controls.MetroTile customTile5;
 		private MetroFramework.Controls.MetroContextMenu tileContextMenu2;
 		private System.Windows.Forms.ToolStripMenuItem editTileToolStripMenuItem;
+		private MetroFramework.Controls.MetroLink metroLink13;
 	}
 }

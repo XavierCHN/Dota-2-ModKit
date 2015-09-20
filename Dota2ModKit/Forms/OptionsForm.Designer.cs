@@ -192,11 +192,13 @@
 			this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.saveBtn.Name = "saveBtn";
 			this.saveBtn.Size = new System.Drawing.Size(124, 35);
+			this.saveBtn.Style = MetroFramework.MetroColorStyle.Blue;
 			this.saveBtn.TabIndex = 16;
 			this.saveBtn.TabStop = false;
 			this.saveBtn.Text = "Save";
 			this.saveBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.saveBtn.UseSelectable = true;
+			this.saveBtn.UseStyleColors = true;
 			this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
 			// 
 			// metroRadioButton1
@@ -214,7 +216,7 @@
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.cancelButton.Location = new System.Drawing.Point(141, 414);
+			this.cancelButton.Location = new System.Drawing.Point(143, 414);
 			this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(78, 35);

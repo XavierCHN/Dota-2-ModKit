@@ -851,5 +851,14 @@ namespace Dota2ModKit {
 			int tileNum = Int32.Parse(name.Substring(name.LastIndexOf('e')+1))-1;
 			customTiles[tileNum].editTile();
 		}
+
+		private void notificationLabel_Click(object sender, EventArgs e) {
+
+		}
+
+		private void metroLink13_Click(object sender, EventArgs e) {
+			AboutForm af = new AboutForm(this);
+			af.ShowDialog();
+		}
 	}
 }
