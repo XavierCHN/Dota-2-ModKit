@@ -50,6 +50,8 @@ namespace Dota2ModKit.Forms {
 					line2 = line2.Replace("</ul>", "");
 					line2 = line2.Replace("<li>", "* ");
 					line2 = line2.Replace("</li>", "");
+					line2 = line2.Replace("<p>", "");
+					line2 = line2.Replace("</p>", "");
 					changelog.AppendLine(line2.Trim());
 				}
 
