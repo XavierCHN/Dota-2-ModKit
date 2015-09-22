@@ -27,7 +27,7 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.generateAddonLangsBtn = new MetroFramework.Controls.MetroButton();
 			this.addonTile = new MetroFramework.Controls.MetroTile();
-			this.addonTileContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
+			this.addonTileContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,31 +65,36 @@
 			this.gameTile = new MetroFramework.Controls.MetroTile();
 			this.contentTile = new MetroFramework.Controls.MetroTile();
 			this.steamTile = new MetroFramework.Controls.MetroTile();
-			this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
+			this.mainFormToolTip = new MetroFramework.Components.MetroToolTip();
 			this.metroTile1 = new MetroFramework.Controls.MetroTile();
 			this.optionsBtn = new MetroFramework.Controls.MetroTile();
 			this.customTile1 = new MetroFramework.Controls.MetroTile();
-			this.tileContextMenu2 = new MetroFramework.Controls.MetroContextMenu(this.components);
+			this.tileContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.editTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.customTile2 = new MetroFramework.Controls.MetroTile();
 			this.customTile3 = new MetroFramework.Controls.MetroTile();
 			this.customTile4 = new MetroFramework.Controls.MetroTile();
 			this.customTile5 = new MetroFramework.Controls.MetroTile();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.versionLabel = new MetroFramework.Controls.MetroLink();
-			this.metroLink13 = new MetroFramework.Controls.MetroLink();
-			this.addonTileContextMenu1.SuspendLayout();
+			this.donateBtn = new MetroFramework.Controls.MetroLink();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+			this.addonTileContextMenu.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
 			this.tools2Tab.SuspendLayout();
 			this.helpTab.SuspendLayout();
-			this.tileContextMenu2.SuspendLayout();
+			this.tileContextMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// generateAddonLangsBtn
 			// 
 			this.generateAddonLangsBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.generateAddonLangsBtn.Location = new System.Drawing.Point(127, 3);
+			this.generateAddonLangsBtn.Location = new System.Drawing.Point(128, 4);
 			this.generateAddonLangsBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.generateAddonLangsBtn.Name = "generateAddonLangsBtn";
 			this.generateAddonLangsBtn.Size = new System.Drawing.Size(125, 33);
@@ -97,7 +102,7 @@
 			this.generateAddonLangsBtn.TabStop = false;
 			this.generateAddonLangsBtn.Text = "Generate Tooltips";
 			this.generateAddonLangsBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.generateAddonLangsBtn, "Generates tooltips from the scripts/npc files of this addon,\r\nwhich you can easil" +
+			this.mainFormToolTip.SetToolTip(this.generateAddonLangsBtn, "Generates tooltips from the scripts/npc files of this addon,\r\nwhich you can easil" +
         "y transfer over to addon_language.txt\r\nfiles.");
 			this.generateAddonLangsBtn.UseSelectable = true;
 			this.generateAddonLangsBtn.Click += new System.EventHandler(this.generateAddonLangsBtn_Click);
@@ -105,27 +110,28 @@
 			// addonTile
 			// 
 			this.addonTile.ActiveControl = null;
-			this.addonTile.ContextMenuStrip = this.addonTileContextMenu1;
-			this.addonTile.Location = new System.Drawing.Point(6, 53);
+			this.addonTile.ContextMenuStrip = this.addonTileContextMenu;
+			this.addonTile.Location = new System.Drawing.Point(8, 56);
 			this.addonTile.Name = "addonTile";
-			this.addonTile.Size = new System.Drawing.Size(138, 136);
+			this.addonTile.Size = new System.Drawing.Size(160, 124);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.addonTile.TabIndex = 0;
 			this.addonTile.Text = "AddonName";
 			this.addonTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.addonTile, "Left-click to change current addon. Right-click for\r\nmore options.");
+			this.mainFormToolTip.SetToolTip(this.addonTile, "Left-click to change current addon. Right-click for\r\nmore options.");
 			this.addonTile.UseSelectable = true;
 			this.addonTile.UseTileImage = true;
 			this.addonTile.Click += new System.EventHandler(this.addonTile_Click);
 			// 
-			// addonTileContextMenu1
+			// addonTileContextMenu
 			// 
-			this.addonTileContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.addonTileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changePictureToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
-			this.addonTileContextMenu1.Name = "metroContextMenu1";
-			this.addonTileContextMenu1.Size = new System.Drawing.Size(156, 70);
+			this.addonTileContextMenu.Name = "metroContextMenu1";
+			this.addonTileContextMenu.Size = new System.Drawing.Size(156, 70);
+			this.addonTileContextMenu.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// changePictureToolStripMenuItem
 			// 
@@ -156,11 +162,13 @@
 			this.tabControl.Controls.Add(this.helpTab);
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
-			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
-			this.tabControl.Location = new System.Drawing.Point(179, 26);
+			this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
+			this.tabControl.Location = new System.Drawing.Point(212, 48);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(261, 222);
+			this.tabControl.ShowToolTips = true;
+			this.tabControl.Size = new System.Drawing.Size(264, 196);
+			this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl.TabIndex = 2;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -176,12 +184,13 @@
 			this.toolsTab.HorizontalScrollbarBarColor = true;
 			this.toolsTab.HorizontalScrollbarHighlightOnWheel = false;
 			this.toolsTab.HorizontalScrollbarSize = 1;
-			this.toolsTab.Location = new System.Drawing.Point(4, 38);
+			this.toolsTab.Location = new System.Drawing.Point(4, 29);
 			this.toolsTab.Name = "toolsTab";
-			this.toolsTab.Size = new System.Drawing.Size(253, 180);
+			this.toolsTab.Size = new System.Drawing.Size(256, 163);
 			this.toolsTab.TabIndex = 0;
-			this.toolsTab.Text = "Tools 1";
+			this.toolsTab.Text = "T1";
 			this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.toolsTab.ToolTipText = "Tools page 1";
 			this.toolsTab.VerticalScrollbarBarColor = true;
 			this.toolsTab.VerticalScrollbarHighlightOnWheel = false;
 			this.toolsTab.VerticalScrollbarSize = 2;
@@ -189,7 +198,7 @@
 			// compileCoffeeBtn
 			// 
 			this.compileCoffeeBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.compileCoffeeBtn.Location = new System.Drawing.Point(127, 108);
+			this.compileCoffeeBtn.Location = new System.Drawing.Point(128, 112);
 			this.compileCoffeeBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.compileCoffeeBtn.Name = "compileCoffeeBtn";
 			this.compileCoffeeBtn.Size = new System.Drawing.Size(125, 33);
@@ -197,7 +206,7 @@
 			this.compileCoffeeBtn.TabStop = false;
 			this.compileCoffeeBtn.Text = "CoffeeScript -> JS";
 			this.compileCoffeeBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.compileCoffeeBtn, "Compiles CoffeeScript files in the panorama/scripts/coffeescript\r\ndirectory to Ja" +
+			this.mainFormToolTip.SetToolTip(this.compileCoffeeBtn, "Compiles CoffeeScript files in the panorama/scripts/coffeescript\r\ndirectory to Ja" +
         "vaScript files in panorama/scripts");
 			this.compileCoffeeBtn.UseSelectable = true;
 			this.compileCoffeeBtn.Click += new System.EventHandler(this.compileCoffeeBtn_Click);
@@ -205,7 +214,7 @@
 			// spellLibraryBtn
 			// 
 			this.spellLibraryBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.spellLibraryBtn.Location = new System.Drawing.Point(127, 38);
+			this.spellLibraryBtn.Location = new System.Drawing.Point(128, 40);
 			this.spellLibraryBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.spellLibraryBtn.Name = "spellLibraryBtn";
 			this.spellLibraryBtn.Size = new System.Drawing.Size(125, 33);
@@ -213,14 +222,14 @@
 			this.spellLibraryBtn.TabStop = false;
 			this.spellLibraryBtn.Text = "SpellLibrary";
 			this.spellLibraryBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.spellLibraryBtn, "Open up the SpellLibrary Browser");
+			this.mainFormToolTip.SetToolTip(this.spellLibraryBtn, "Open up the SpellLibrary Browser");
 			this.spellLibraryBtn.UseSelectable = true;
 			this.spellLibraryBtn.Click += new System.EventHandler(this.spellLibraryBtn_Click);
 			// 
 			// findSoundNameBtn
 			// 
 			this.findSoundNameBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.findSoundNameBtn.Location = new System.Drawing.Point(127, 73);
+			this.findSoundNameBtn.Location = new System.Drawing.Point(128, 76);
 			this.findSoundNameBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.findSoundNameBtn.Name = "findSoundNameBtn";
 			this.findSoundNameBtn.Size = new System.Drawing.Size(125, 33);
@@ -228,14 +237,14 @@
 			this.findSoundNameBtn.TabStop = false;
 			this.findSoundNameBtn.Text = "Find SoundName";
 			this.findSoundNameBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.findSoundNameBtn, "Search for Sound Names with a .vsnd path");
+			this.mainFormToolTip.SetToolTip(this.findSoundNameBtn, "Search for Sound Names with a .vsnd path");
 			this.findSoundNameBtn.UseSelectable = true;
 			this.findSoundNameBtn.Click += new System.EventHandler(this.findSoundNameBtn_Click);
 			// 
 			// combineKVBtn
 			// 
 			this.combineKVBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.combineKVBtn.Location = new System.Drawing.Point(0, 3);
+			this.combineKVBtn.Location = new System.Drawing.Point(0, 4);
 			this.combineKVBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.combineKVBtn.Name = "combineKVBtn";
 			this.combineKVBtn.Size = new System.Drawing.Size(125, 33);
@@ -243,7 +252,7 @@
 			this.combineKVBtn.TabStop = false;
 			this.combineKVBtn.Text = "Combine KV Files";
 			this.combineKVBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.combineKVBtn, "Combines KV files in the scripts/npc directory of this\r\naddon. Prompts to break u" +
+			this.mainFormToolTip.SetToolTip(this.combineKVBtn, "Combines KV files in the scripts/npc directory of this\r\naddon. Prompts to break u" +
         "p the KV files if not done so\r\nalready.");
 			this.combineKVBtn.UseSelectable = true;
 			this.combineKVBtn.Click += new System.EventHandler(this.combineKVBtn_Click);
@@ -251,7 +260,7 @@
 			// particleDesignBtn
 			// 
 			this.particleDesignBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.particleDesignBtn.Location = new System.Drawing.Point(0, 38);
+			this.particleDesignBtn.Location = new System.Drawing.Point(0, 40);
 			this.particleDesignBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.particleDesignBtn.Name = "particleDesignBtn";
 			this.particleDesignBtn.Size = new System.Drawing.Size(125, 33);
@@ -259,7 +268,7 @@
 			this.particleDesignBtn.TabStop = false;
 			this.particleDesignBtn.Text = "Particle Designer";
 			this.particleDesignBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.particleDesignBtn, "Provides options to bulk modify the color, size, etc of\r\nselected particles.");
+			this.mainFormToolTip.SetToolTip(this.particleDesignBtn, "Provides options to bulk modify the color, size, etc of\r\nselected particles.");
 			this.particleDesignBtn.UseSelectable = true;
 			this.particleDesignBtn.Click += new System.EventHandler(this.particleDesignBtn_Click);
 			// 
@@ -270,12 +279,13 @@
 			this.tools2Tab.HorizontalScrollbarBarColor = true;
 			this.tools2Tab.HorizontalScrollbarHighlightOnWheel = false;
 			this.tools2Tab.HorizontalScrollbarSize = 1;
-			this.tools2Tab.Location = new System.Drawing.Point(4, 38);
+			this.tools2Tab.Location = new System.Drawing.Point(4, 29);
 			this.tools2Tab.Name = "tools2Tab";
-			this.tools2Tab.Size = new System.Drawing.Size(253, 180);
+			this.tools2Tab.Size = new System.Drawing.Size(256, 163);
 			this.tools2Tab.TabIndex = 4;
-			this.tools2Tab.Text = "Tools 2";
+			this.tools2Tab.Text = "T2";
 			this.tools2Tab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.tools2Tab.ToolTipText = "Tools page 2";
 			this.tools2Tab.VerticalScrollbarBarColor = true;
 			this.tools2Tab.VerticalScrollbarHighlightOnWheel = false;
 			this.tools2Tab.VerticalScrollbarSize = 2;
@@ -291,7 +301,6 @@
 			this.decompileVtexButton.TabStop = false;
 			this.decompileVtexButton.Text = ".vtex_c -> .tga";
 			this.decompileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.decompileVtexButton, "Decompiles .vtex_c files to .tga files");
 			this.decompileVtexButton.UseSelectable = true;
 			this.decompileVtexButton.Click += new System.EventHandler(this.decompileVtexButton_Click);
 			// 
@@ -306,7 +315,6 @@
 			this.compileVtexButton.TabStop = false;
 			this.compileVtexButton.Text = ".tga -> .vtex_c";
 			this.compileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.compileVtexButton, "Compiles .tga files to .vtex, and auto-creates the .vtex_c\'s");
 			this.compileVtexButton.UseSelectable = true;
 			this.compileVtexButton.Click += new System.EventHandler(this.compileVtexButton_Click);
 			// 
@@ -333,19 +341,20 @@
 			this.helpTab.HorizontalScrollbarBarColor = true;
 			this.helpTab.HorizontalScrollbarHighlightOnWheel = false;
 			this.helpTab.HorizontalScrollbarSize = 1;
-			this.helpTab.Location = new System.Drawing.Point(4, 38);
+			this.helpTab.Location = new System.Drawing.Point(4, 29);
 			this.helpTab.Name = "helpTab";
-			this.helpTab.Size = new System.Drawing.Size(253, 180);
+			this.helpTab.Size = new System.Drawing.Size(256, 163);
 			this.helpTab.TabIndex = 3;
 			this.helpTab.Text = "Help";
 			this.helpTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.helpTab.ToolTipText = "Help related tools";
 			this.helpTab.VerticalScrollbarBarColor = true;
 			this.helpTab.VerticalScrollbarHighlightOnWheel = false;
 			this.helpTab.VerticalScrollbarSize = 2;
 			// 
 			// metroLink12
 			// 
-			this.metroLink12.Location = new System.Drawing.Point(79, 94);
+			this.metroLink12.Location = new System.Drawing.Point(80, 100);
 			this.metroLink12.Name = "metroLink12";
 			this.metroLink12.Size = new System.Drawing.Size(62, 18);
 			this.metroLink12.TabIndex = 19;
@@ -357,7 +366,7 @@
 			// 
 			// metroLink11
 			// 
-			this.metroLink11.Location = new System.Drawing.Point(0, 94);
+			this.metroLink11.Location = new System.Drawing.Point(1, 100);
 			this.metroLink11.Name = "metroLink11";
 			this.metroLink11.Size = new System.Drawing.Size(73, 18);
 			this.metroLink11.TabIndex = 18;
@@ -369,7 +378,7 @@
 			// 
 			// metroLink10
 			// 
-			this.metroLink10.Location = new System.Drawing.Point(182, 46);
+			this.metroLink10.Location = new System.Drawing.Point(183, 52);
 			this.metroLink10.Name = "metroLink10";
 			this.metroLink10.Size = new System.Drawing.Size(31, 18);
 			this.metroLink10.TabIndex = 17;
@@ -381,7 +390,7 @@
 			// 
 			// metroLink9
 			// 
-			this.metroLink9.Location = new System.Drawing.Point(67, 70);
+			this.metroLink9.Location = new System.Drawing.Point(68, 76);
 			this.metroLink9.Name = "metroLink9";
 			this.metroLink9.Size = new System.Drawing.Size(83, 18);
 			this.metroLink9.TabIndex = 16;
@@ -393,7 +402,7 @@
 			// 
 			// metroLink8
 			// 
-			this.metroLink8.Location = new System.Drawing.Point(57, 46);
+			this.metroLink8.Location = new System.Drawing.Point(58, 52);
 			this.metroLink8.Name = "metroLink8";
 			this.metroLink8.Size = new System.Drawing.Size(84, 18);
 			this.metroLink8.TabIndex = 15;
@@ -405,7 +414,7 @@
 			// 
 			// metroLink7
 			// 
-			this.metroLink7.Location = new System.Drawing.Point(0, 46);
+			this.metroLink7.Location = new System.Drawing.Point(1, 52);
 			this.metroLink7.Name = "metroLink7";
 			this.metroLink7.Size = new System.Drawing.Size(51, 18);
 			this.metroLink7.TabIndex = 14;
@@ -417,7 +426,7 @@
 			// 
 			// metroLink6
 			// 
-			this.metroLink6.Location = new System.Drawing.Point(156, 70);
+			this.metroLink6.Location = new System.Drawing.Point(157, 76);
 			this.metroLink6.Name = "metroLink6";
 			this.metroLink6.Size = new System.Drawing.Size(82, 18);
 			this.metroLink6.TabIndex = 13;
@@ -429,7 +438,7 @@
 			// 
 			// goBtn
 			// 
-			this.goBtn.Location = new System.Drawing.Point(208, 3);
+			this.goBtn.Location = new System.Drawing.Point(212, 4);
 			this.goBtn.Name = "goBtn";
 			this.goBtn.Size = new System.Drawing.Size(28, 23);
 			this.goBtn.TabIndex = 7;
@@ -441,7 +450,7 @@
 			// jsRadioButton
 			// 
 			this.jsRadioButton.AutoSize = true;
-			this.jsRadioButton.Location = new System.Drawing.Point(135, 30);
+			this.jsRadioButton.Location = new System.Drawing.Point(140, 32);
 			this.jsRadioButton.Name = "jsRadioButton";
 			this.jsRadioButton.Size = new System.Drawing.Size(33, 15);
 			this.jsRadioButton.TabIndex = 12;
@@ -453,7 +462,7 @@
 			// textRadioButton
 			// 
 			this.textRadioButton.AutoSize = true;
-			this.textRadioButton.Location = new System.Drawing.Point(96, 30);
+			this.textRadioButton.Location = new System.Drawing.Point(100, 32);
 			this.textRadioButton.Name = "textRadioButton";
 			this.textRadioButton.Size = new System.Drawing.Size(37, 15);
 			this.textRadioButton.TabIndex = 11;
@@ -465,7 +474,7 @@
 			// luaRadioBtn
 			// 
 			this.luaRadioBtn.AutoSize = true;
-			this.luaRadioBtn.Location = new System.Drawing.Point(53, 30);
+			this.luaRadioBtn.Location = new System.Drawing.Point(56, 32);
 			this.luaRadioBtn.Name = "luaRadioBtn";
 			this.luaRadioBtn.Size = new System.Drawing.Size(42, 15);
 			this.luaRadioBtn.TabIndex = 10;
@@ -478,7 +487,7 @@
 			// 
 			this.addonNameLabel.AutoSize = true;
 			this.addonNameLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-			this.addonNameLabel.Location = new System.Drawing.Point(-3, 4);
+			this.addonNameLabel.Location = new System.Drawing.Point(0, 4);
 			this.addonNameLabel.Name = "addonNameLabel";
 			this.addonNameLabel.Size = new System.Drawing.Size(56, 19);
 			this.addonNameLabel.Style = MetroFramework.MetroColorStyle.Blue;
@@ -489,7 +498,7 @@
 			// githubTextBox
 			// 
 			this.githubTextBox.Lines = new string[0];
-			this.githubTextBox.Location = new System.Drawing.Point(53, 3);
+			this.githubTextBox.Location = new System.Drawing.Point(56, 4);
 			this.githubTextBox.MaxLength = 32767;
 			this.githubTextBox.Name = "githubTextBox";
 			this.githubTextBox.PasswordChar = '\0';
@@ -502,7 +511,7 @@
 			// 
 			// metroLink5
 			// 
-			this.metroLink5.Location = new System.Drawing.Point(0, 118);
+			this.metroLink5.Location = new System.Drawing.Point(1, 124);
 			this.metroLink5.Name = "metroLink5";
 			this.metroLink5.Size = new System.Drawing.Size(83, 18);
 			this.metroLink5.TabIndex = 6;
@@ -514,7 +523,7 @@
 			// 
 			// metroLink4
 			// 
-			this.metroLink4.Location = new System.Drawing.Point(147, 46);
+			this.metroLink4.Location = new System.Drawing.Point(148, 52);
 			this.metroLink4.Name = "metroLink4";
 			this.metroLink4.Size = new System.Drawing.Size(29, 18);
 			this.metroLink4.TabIndex = 5;
@@ -526,7 +535,7 @@
 			// 
 			// metroLink3
 			// 
-			this.metroLink3.Location = new System.Drawing.Point(147, 94);
+			this.metroLink3.Location = new System.Drawing.Point(148, 100);
 			this.metroLink3.Name = "metroLink3";
 			this.metroLink3.Size = new System.Drawing.Size(100, 18);
 			this.metroLink3.TabIndex = 4;
@@ -538,7 +547,7 @@
 			// 
 			// metroLink2
 			// 
-			this.metroLink2.Location = new System.Drawing.Point(89, 118);
+			this.metroLink2.Location = new System.Drawing.Point(90, 124);
 			this.metroLink2.Name = "metroLink2";
 			this.metroLink2.Size = new System.Drawing.Size(64, 18);
 			this.metroLink2.TabIndex = 3;
@@ -550,7 +559,7 @@
 			// 
 			// metroLink1
 			// 
-			this.metroLink1.Location = new System.Drawing.Point(0, 70);
+			this.metroLink1.Location = new System.Drawing.Point(1, 76);
 			this.metroLink1.Name = "metroLink1";
 			this.metroLink1.Size = new System.Drawing.Size(61, 18);
 			this.metroLink1.TabIndex = 2;
@@ -566,7 +575,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-4, 260);
+			this.notificationLabel.Location = new System.Drawing.Point(-4, 252);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(153, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -579,7 +588,7 @@
 			// metroRadioButton1
 			// 
 			this.metroRadioButton1.AutoSize = true;
-			this.metroRadioButton1.Location = new System.Drawing.Point(250, -1);
+			this.metroRadioButton1.Location = new System.Drawing.Point(200, -5);
 			this.metroRadioButton1.Name = "metroRadioButton1";
 			this.metroRadioButton1.Size = new System.Drawing.Size(127, 15);
 			this.metroRadioButton1.TabIndex = 6;
@@ -590,14 +599,14 @@
 			// gameTile
 			// 
 			this.gameTile.ActiveControl = null;
-			this.gameTile.Location = new System.Drawing.Point(146, 53);
+			this.gameTile.Location = new System.Drawing.Point(172, 56);
 			this.gameTile.Name = "gameTile";
-			this.gameTile.Size = new System.Drawing.Size(33, 27);
+			this.gameTile.Size = new System.Drawing.Size(36, 28);
 			this.gameTile.Style = MetroFramework.MetroColorStyle.Blue;
 			this.gameTile.TabIndex = 7;
 			this.gameTile.Text = "G";
 			this.gameTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.gameTile, "Open the game directory of this addon.");
+			this.mainFormToolTip.SetToolTip(this.gameTile, "Open the game directory of this addon.");
 			this.gameTile.UseSelectable = true;
 			this.gameTile.UseTileImage = true;
 			this.gameTile.Click += new System.EventHandler(this.shortcutTile_Click);
@@ -605,14 +614,14 @@
 			// contentTile
 			// 
 			this.contentTile.ActiveControl = null;
-			this.contentTile.Location = new System.Drawing.Point(146, 82);
+			this.contentTile.Location = new System.Drawing.Point(172, 88);
 			this.contentTile.Name = "contentTile";
-			this.contentTile.Size = new System.Drawing.Size(33, 27);
+			this.contentTile.Size = new System.Drawing.Size(36, 28);
 			this.contentTile.Style = MetroFramework.MetroColorStyle.Orange;
 			this.contentTile.TabIndex = 10;
 			this.contentTile.Text = "C";
 			this.contentTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.contentTile, "Open the content directory of this addon.");
+			this.mainFormToolTip.SetToolTip(this.contentTile, "Open the content directory of this addon.");
 			this.contentTile.UseSelectable = true;
 			this.contentTile.UseTileImage = true;
 			this.contentTile.Click += new System.EventHandler(this.shortcutTile_Click);
@@ -620,37 +629,37 @@
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
-			this.steamTile.Location = new System.Drawing.Point(146, 111);
+			this.steamTile.Location = new System.Drawing.Point(172, 120);
 			this.steamTile.Name = "steamTile";
-			this.steamTile.Size = new System.Drawing.Size(33, 26);
+			this.steamTile.Size = new System.Drawing.Size(36, 28);
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
 			this.steamTile.TabIndex = 14;
 			this.steamTile.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.steamTile, "Open the Steam Workshop page for this addon.");
+			this.mainFormToolTip.SetToolTip(this.steamTile, "Open the Steam Workshop page for this addon.");
 			this.steamTile.UseSelectable = true;
 			this.steamTile.UseTileImage = true;
 			this.steamTile.Click += new System.EventHandler(this.workshopPageBtn_Click);
 			// 
-			// metroToolTip1
+			// mainFormToolTip
 			// 
-			this.metroToolTip1.AutoPopDelay = 8000;
-			this.metroToolTip1.InitialDelay = 500;
-			this.metroToolTip1.ReshowDelay = 100;
-			this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroToolTip1.StyleManager = null;
-			this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Light;
+			this.mainFormToolTip.AutoPopDelay = 8000;
+			this.mainFormToolTip.InitialDelay = 500;
+			this.mainFormToolTip.ReshowDelay = 100;
+			this.mainFormToolTip.Style = MetroFramework.MetroColorStyle.Blue;
+			this.mainFormToolTip.StyleManager = null;
+			this.mainFormToolTip.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// metroTile1
 			// 
 			this.metroTile1.ActiveControl = null;
-			this.metroTile1.Location = new System.Drawing.Point(35, 191);
+			this.metroTile1.Location = new System.Drawing.Point(48, 184);
 			this.metroTile1.Name = "metroTile1";
-			this.metroTile1.Size = new System.Drawing.Size(39, 24);
+			this.metroTile1.Size = new System.Drawing.Size(40, 28);
 			this.metroTile1.Style = MetroFramework.MetroColorStyle.Red;
 			this.metroTile1.TabIndex = 16;
 			this.metroTile1.Text = "VPK";
 			this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.metroTile1, "Open the Dota 2 VPK (requires GCFScape)");
+			this.mainFormToolTip.SetToolTip(this.metroTile1, "Open the Dota 2 VPK (requires GCFScape)");
 			this.metroTile1.UseSelectable = true;
 			this.metroTile1.UseTileImage = true;
 			this.metroTile1.Click += new System.EventHandler(this.shortcutTile_Click);
@@ -658,14 +667,14 @@
 			// optionsBtn
 			// 
 			this.optionsBtn.ActiveControl = null;
-			this.optionsBtn.Location = new System.Drawing.Point(6, 191);
+			this.optionsBtn.Location = new System.Drawing.Point(8, 184);
 			this.optionsBtn.Name = "optionsBtn";
-			this.optionsBtn.Size = new System.Drawing.Size(26, 24);
+			this.optionsBtn.Size = new System.Drawing.Size(36, 28);
 			this.optionsBtn.Style = MetroFramework.MetroColorStyle.Silver;
 			this.optionsBtn.TabIndex = 18;
 			this.optionsBtn.Text = "O";
 			this.optionsBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.optionsBtn, "Open the Options page");
+			this.mainFormToolTip.SetToolTip(this.optionsBtn, "Open the Options page");
 			this.optionsBtn.UseSelectable = true;
 			this.optionsBtn.UseTileImage = true;
 			this.optionsBtn.Click += new System.EventHandler(this.optionsBtn_Click);
@@ -673,24 +682,25 @@
 			// customTile1
 			// 
 			this.customTile1.ActiveControl = null;
-			this.customTile1.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile1.Location = new System.Drawing.Point(146, 139);
+			this.customTile1.ContextMenuStrip = this.tileContextMenu;
+			this.customTile1.Location = new System.Drawing.Point(172, 152);
 			this.customTile1.Name = "customTile1";
-			this.customTile1.Size = new System.Drawing.Size(33, 24);
+			this.customTile1.Size = new System.Drawing.Size(36, 28);
 			this.customTile1.Style = MetroFramework.MetroColorStyle.Purple;
 			this.customTile1.TabIndex = 22;
 			this.customTile1.Text = "?";
 			this.customTile1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile1, "Click to customize this tile!");
+			this.mainFormToolTip.SetToolTip(this.customTile1, "Click to customize this tile!");
 			this.customTile1.UseSelectable = true;
 			this.customTile1.UseTileImage = true;
 			// 
-			// tileContextMenu2
+			// tileContextMenu
 			// 
-			this.tileContextMenu2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editTileToolStripMenuItem});
-			this.tileContextMenu2.Name = "metroContextMenu2";
-			this.tileContextMenu2.Size = new System.Drawing.Size(117, 26);
+			this.tileContextMenu.Name = "metroContextMenu2";
+			this.tileContextMenu.Size = new System.Drawing.Size(117, 26);
+			this.tileContextMenu.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// editTileToolStripMenuItem
 			// 
@@ -702,69 +712,82 @@
 			// customTile2
 			// 
 			this.customTile2.ActiveControl = null;
-			this.customTile2.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile2.Location = new System.Drawing.Point(76, 191);
+			this.customTile2.ContextMenuStrip = this.tileContextMenu;
+			this.customTile2.Location = new System.Drawing.Point(172, 216);
 			this.customTile2.Name = "customTile2";
-			this.customTile2.Size = new System.Drawing.Size(33, 24);
+			this.customTile2.Size = new System.Drawing.Size(36, 28);
 			this.customTile2.Style = MetroFramework.MetroColorStyle.Brown;
 			this.customTile2.TabIndex = 23;
 			this.customTile2.Text = "?";
 			this.customTile2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile2, "Click to customize this tile!");
+			this.mainFormToolTip.SetToolTip(this.customTile2, "Click to customize this tile!");
 			this.customTile2.UseSelectable = true;
 			this.customTile2.UseTileImage = true;
 			// 
 			// customTile3
 			// 
 			this.customTile3.ActiveControl = null;
-			this.customTile3.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile3.Location = new System.Drawing.Point(111, 191);
+			this.customTile3.ContextMenuStrip = this.tileContextMenu;
+			this.customTile3.Location = new System.Drawing.Point(92, 184);
 			this.customTile3.Name = "customTile3";
-			this.customTile3.Size = new System.Drawing.Size(33, 24);
+			this.customTile3.Size = new System.Drawing.Size(36, 28);
 			this.customTile3.Style = MetroFramework.MetroColorStyle.Yellow;
 			this.customTile3.TabIndex = 24;
 			this.customTile3.Text = "?";
 			this.customTile3.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile3, "Click to customize this tile!");
+			this.mainFormToolTip.SetToolTip(this.customTile3, "Click to customize this tile!");
 			this.customTile3.UseSelectable = true;
 			this.customTile3.UseTileImage = true;
 			// 
 			// customTile4
 			// 
 			this.customTile4.ActiveControl = null;
-			this.customTile4.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile4.Location = new System.Drawing.Point(146, 165);
+			this.customTile4.ContextMenuStrip = this.tileContextMenu;
+			this.customTile4.Location = new System.Drawing.Point(172, 184);
 			this.customTile4.Name = "customTile4";
-			this.customTile4.Size = new System.Drawing.Size(33, 24);
+			this.customTile4.Size = new System.Drawing.Size(36, 28);
 			this.customTile4.Style = MetroFramework.MetroColorStyle.Lime;
 			this.customTile4.TabIndex = 25;
 			this.customTile4.Text = "?";
 			this.customTile4.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile4, "Click to customize this tile!");
+			this.mainFormToolTip.SetToolTip(this.customTile4, "Click to customize this tile!");
 			this.customTile4.UseSelectable = true;
 			this.customTile4.UseTileImage = true;
 			// 
 			// customTile5
 			// 
 			this.customTile5.ActiveControl = null;
-			this.customTile5.ContextMenuStrip = this.tileContextMenu2;
-			this.customTile5.Location = new System.Drawing.Point(146, 191);
+			this.customTile5.ContextMenuStrip = this.tileContextMenu;
+			this.customTile5.Location = new System.Drawing.Point(132, 184);
 			this.customTile5.Name = "customTile5";
-			this.customTile5.Size = new System.Drawing.Size(33, 24);
+			this.customTile5.Size = new System.Drawing.Size(36, 28);
 			this.customTile5.Style = MetroFramework.MetroColorStyle.Magenta;
 			this.customTile5.TabIndex = 26;
 			this.customTile5.Text = "?";
 			this.customTile5.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroToolTip1.SetToolTip(this.customTile5, "Click to customize this tile!");
+			this.mainFormToolTip.SetToolTip(this.customTile5, "Click to customize this tile!");
 			this.customTile5.UseSelectable = true;
 			this.customTile5.UseTileImage = true;
 			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(284, 28);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox2.TabIndex = 31;
+			this.pictureBox2.TabStop = false;
+			this.mainFormToolTip.SetToolTip(this.pictureBox2, "Report a bug!");
+			this.pictureBox2.Click += new System.EventHandler(this.reportBug_Click);
+			// 
 			// progressSpinner1
 			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(374, 265);
+			this.progressSpinner1.Location = new System.Drawing.Point(452, 252);
 			this.progressSpinner1.Maximum = 100;
 			this.progressSpinner1.Name = "progressSpinner1";
-			this.progressSpinner1.Size = new System.Drawing.Size(20, 20);
+			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
 			this.progressSpinner1.TabIndex = 19;
 			this.progressSpinner1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.progressSpinner1.UseSelectable = true;
@@ -773,9 +796,10 @@
 			// 
 			// versionLabel
 			// 
-			this.versionLabel.Location = new System.Drawing.Point(393, 268);
+			this.versionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.versionLabel.Location = new System.Drawing.Point(176, 28);
 			this.versionLabel.Name = "versionLabel";
-			this.versionLabel.Size = new System.Drawing.Size(52, 19);
+			this.versionLabel.Size = new System.Drawing.Size(52, 20);
 			this.versionLabel.TabIndex = 21;
 			this.versionLabel.Text = "v2.x.x.x";
 			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -783,24 +807,55 @@
 			this.versionLabel.UseSelectable = true;
 			this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
 			// 
-			// metroLink13
+			// donateBtn
 			// 
-			this.metroLink13.Location = new System.Drawing.Point(399, 256);
-			this.metroLink13.Name = "metroLink13";
-			this.metroLink13.Size = new System.Drawing.Size(48, 15);
-			this.metroLink13.TabIndex = 27;
-			this.metroLink13.Text = "About!";
-			this.metroLink13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.metroLink13.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroLink13.UseSelectable = true;
-			this.metroLink13.Click += new System.EventHandler(this.metroLink13_Click);
+			this.donateBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.donateBtn.Location = new System.Drawing.Point(228, 28);
+			this.donateBtn.Name = "donateBtn";
+			this.donateBtn.Size = new System.Drawing.Size(56, 20);
+			this.donateBtn.Style = MetroFramework.MetroColorStyle.Yellow;
+			this.donateBtn.TabIndex = 28;
+			this.donateBtn.Text = "Donate!";
+			this.donateBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.donateBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.mainFormToolTip.SetToolTip(this.donateBtn, "Consider a donation to the developer!");
+			this.donateBtn.UseSelectable = true;
+			this.donateBtn.UseStyleColors = true;
+			this.donateBtn.Click += new System.EventHandler(this.donateBtn_Click);
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(240, 244);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox1.TabIndex = 29;
+			this.pictureBox1.TabStop = false;
+			this.pictureBox1.Visible = false;
+			// 
+			// metroComboBox1
+			// 
+			this.metroComboBox1.FormattingEnabled = true;
+			this.metroComboBox1.ItemHeight = 23;
+			this.metroComboBox1.Location = new System.Drawing.Point(0, 216);
+			this.metroComboBox1.Name = "metroComboBox1";
+			this.metroComboBox1.Size = new System.Drawing.Size(121, 29);
+			this.metroComboBox1.TabIndex = 30;
+			this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroComboBox1.UseSelectable = true;
+			this.metroComboBox1.Visible = false;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(442, 285);
-			this.Controls.Add(this.metroLink13);
+			this.ClientSize = new System.Drawing.Size(477, 278);
+			this.Controls.Add(this.pictureBox2);
+			this.Controls.Add(this.donateBtn);
+			this.Controls.Add(this.versionLabel);
+			this.Controls.Add(this.metroComboBox1);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.customTile5);
 			this.Controls.Add(this.customTile4);
 			this.Controls.Add(this.customTile3);
@@ -808,7 +863,6 @@
 			this.Controls.Add(this.customTile1);
 			this.Controls.Add(this.optionsBtn);
 			this.Controls.Add(this.progressSpinner1);
-			this.Controls.Add(this.versionLabel);
 			this.Controls.Add(this.metroTile1);
 			this.Controls.Add(this.steamTile);
 			this.Controls.Add(this.contentTile);
@@ -829,13 +883,15 @@
 			this.Text = "Dota 2 ModKit";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.Load += new System.EventHandler(this.Form1_Load);
-			this.addonTileContextMenu1.ResumeLayout(false);
+			this.addonTileContextMenu.ResumeLayout(false);
 			this.tabControl.ResumeLayout(false);
 			this.toolsTab.ResumeLayout(false);
 			this.tools2Tab.ResumeLayout(false);
 			this.helpTab.ResumeLayout(false);
 			this.helpTab.PerformLayout();
-			this.tileContextMenu2.ResumeLayout(false);
+			this.tileContextMenu.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -873,8 +929,8 @@
 		private MetroFramework.Controls.MetroTile contentTile;
 		private MetroFramework.Controls.MetroTile steamTile;
 		private MetroFramework.Controls.MetroLink metroLink12;
-		private MetroFramework.Components.MetroToolTip metroToolTip1;
-		private MetroFramework.Controls.MetroContextMenu addonTileContextMenu1;
+		private MetroFramework.Components.MetroToolTip mainFormToolTip;
+		private MetroFramework.Controls.MetroContextMenu addonTileContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem changePictureToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteAddonToolStripMenuItem;
 		private MetroFramework.Controls.MetroTile metroTile1;
@@ -893,8 +949,11 @@
 		private MetroFramework.Controls.MetroTile customTile3;
 		private MetroFramework.Controls.MetroTile customTile4;
 		private MetroFramework.Controls.MetroTile customTile5;
-		private MetroFramework.Controls.MetroContextMenu tileContextMenu2;
+		private MetroFramework.Controls.MetroContextMenu tileContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem editTileToolStripMenuItem;
-		private MetroFramework.Controls.MetroLink metroLink13;
+		private MetroFramework.Controls.MetroLink donateBtn;
+		private System.Windows.Forms.PictureBox pictureBox1;
+		private MetroFramework.Controls.MetroComboBox metroComboBox1;
+		private System.Windows.Forms.PictureBox pictureBox2;
 	}
 }

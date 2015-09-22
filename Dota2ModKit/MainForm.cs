@@ -87,7 +87,7 @@ namespace Dota2ModKit {
 			AddonTile = addonTile;
 			ProgressSpinner1 = progressSpinner1;
 			SpellLibBtn = spellLibraryBtn;
-			MetroToolTip1 = metroToolTip1;
+			MetroToolTip1 = mainFormToolTip;
 			GameTile = gameTile;
 			ContentTile = contentTile;
 			FindSoundNameBtn = findSoundNameBtn;
@@ -856,9 +856,13 @@ namespace Dota2ModKit {
 
 		}
 
-		private void metroLink13_Click(object sender, EventArgs e) {
-			AboutForm af = new AboutForm(this);
-			af.ShowDialog();
+		private void reportBug_Click(object sender, EventArgs e) {
+			Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/issues/new");
+		}
+
+		private void donateBtn_Click(object sender, EventArgs e) {
+			DonateForm df = new DonateForm(this);
+			df.ShowDialog();
 		}
 	}
 }

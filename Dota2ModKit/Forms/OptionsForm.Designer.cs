@@ -46,7 +46,7 @@
 			// loreCheckBox
 			// 
 			this.loreCheckBox.AutoSize = true;
-			this.loreCheckBox.Location = new System.Drawing.Point(0, 34);
+			this.loreCheckBox.Location = new System.Drawing.Point(4, 32);
 			this.loreCheckBox.Name = "loreCheckBox";
 			this.loreCheckBox.Size = new System.Drawing.Size(147, 15);
 			this.loreCheckBox.TabIndex = 14;
@@ -57,7 +57,7 @@
 			// note0CheckBox
 			// 
 			this.note0CheckBox.AutoSize = true;
-			this.note0CheckBox.Location = new System.Drawing.Point(0, 13);
+			this.note0CheckBox.Location = new System.Drawing.Point(4, 11);
 			this.note0CheckBox.Name = "note0CheckBox";
 			this.note0CheckBox.Size = new System.Drawing.Size(156, 15);
 			this.note0CheckBox.TabIndex = 13;
@@ -74,8 +74,8 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(10, 34);
 			this.tabControl.Location = new System.Drawing.Point(8, 60);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(503, 344);
+			this.tabControl.SelectedIndex = 1;
+			this.tabControl.Size = new System.Drawing.Size(472, 376);
 			this.tabControl.TabIndex = 15;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -94,7 +94,7 @@
 			this.addonOptionsTab.HorizontalScrollbarSize = 1;
 			this.addonOptionsTab.Location = new System.Drawing.Point(4, 38);
 			this.addonOptionsTab.Name = "addonOptionsTab";
-			this.addonOptionsTab.Size = new System.Drawing.Size(495, 302);
+			this.addonOptionsTab.Size = new System.Drawing.Size(464, 334);
 			this.addonOptionsTab.TabIndex = 0;
 			this.addonOptionsTab.Text = "addonname";
 			this.addonOptionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -105,7 +105,7 @@
 			// autoCompileCoffeeCheckbox
 			// 
 			this.autoCompileCoffeeCheckbox.AutoSize = true;
-			this.autoCompileCoffeeCheckbox.Location = new System.Drawing.Point(0, 139);
+			this.autoCompileCoffeeCheckbox.Location = new System.Drawing.Point(4, 136);
 			this.autoCompileCoffeeCheckbox.Name = "autoCompileCoffeeCheckbox";
 			this.autoCompileCoffeeCheckbox.Size = new System.Drawing.Size(336, 15);
 			this.autoCompileCoffeeCheckbox.TabIndex = 20;
@@ -117,7 +117,7 @@
 			// utf8CheckBox
 			// 
 			this.utf8CheckBox.AutoSize = true;
-			this.utf8CheckBox.Location = new System.Drawing.Point(0, 118);
+			this.utf8CheckBox.Location = new System.Drawing.Point(4, 116);
 			this.utf8CheckBox.Name = "utf8CheckBox";
 			this.utf8CheckBox.Size = new System.Drawing.Size(391, 15);
 			this.utf8CheckBox.TabIndex = 19;
@@ -128,7 +128,7 @@
 			// barebonesLibUpdatesCheckBox
 			// 
 			this.barebonesLibUpdatesCheckBox.AutoSize = true;
-			this.barebonesLibUpdatesCheckBox.Location = new System.Drawing.Point(0, 97);
+			this.barebonesLibUpdatesCheckBox.Location = new System.Drawing.Point(4, 95);
 			this.barebonesLibUpdatesCheckBox.Name = "barebonesLibUpdatesCheckBox";
 			this.barebonesLibUpdatesCheckBox.Size = new System.Drawing.Size(242, 15);
 			this.barebonesLibUpdatesCheckBox.TabIndex = 18;
@@ -139,7 +139,7 @@
 			// autoDeleteBinCheckBox
 			// 
 			this.autoDeleteBinCheckBox.AutoSize = true;
-			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(0, 76);
+			this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(4, 74);
 			this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
 			this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(348, 15);
 			this.autoDeleteBinCheckBox.TabIndex = 17;
@@ -150,7 +150,7 @@
 			// askToBreakUpCheckBox
 			// 
 			this.askToBreakUpCheckBox.AutoSize = true;
-			this.askToBreakUpCheckBox.Location = new System.Drawing.Point(0, 55);
+			this.askToBreakUpCheckBox.Location = new System.Drawing.Point(4, 53);
 			this.askToBreakUpCheckBox.Name = "askToBreakUpCheckBox";
 			this.askToBreakUpCheckBox.Size = new System.Drawing.Size(282, 15);
 			this.askToBreakUpCheckBox.TabIndex = 16;
@@ -166,7 +166,7 @@
 			this.modkitOptionsTab.HorizontalScrollbarSize = 1;
 			this.modkitOptionsTab.Location = new System.Drawing.Point(4, 38);
 			this.modkitOptionsTab.Name = "modkitOptionsTab";
-			this.modkitOptionsTab.Size = new System.Drawing.Size(495, 302);
+			this.modkitOptionsTab.Size = new System.Drawing.Size(464, 334);
 			this.modkitOptionsTab.TabIndex = 2;
 			this.modkitOptionsTab.Text = "D2ModKit";
 			this.modkitOptionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -177,7 +177,7 @@
 			// openChangelogCheckBox
 			// 
 			this.openChangelogCheckBox.AutoSize = true;
-			this.openChangelogCheckBox.Location = new System.Drawing.Point(0, 13);
+			this.openChangelogCheckBox.Location = new System.Drawing.Point(4, 11);
 			this.openChangelogCheckBox.Name = "openChangelogCheckBox";
 			this.openChangelogCheckBox.Size = new System.Drawing.Size(229, 15);
 			this.openChangelogCheckBox.TabIndex = 15;
@@ -188,10 +188,10 @@
 			// saveBtn
 			// 
 			this.saveBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.saveBtn.Location = new System.Drawing.Point(225, 414);
+			this.saveBtn.Location = new System.Drawing.Point(228, 440);
 			this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.saveBtn.Name = "saveBtn";
-			this.saveBtn.Size = new System.Drawing.Size(124, 35);
+			this.saveBtn.Size = new System.Drawing.Size(96, 40);
 			this.saveBtn.Style = MetroFramework.MetroColorStyle.Blue;
 			this.saveBtn.TabIndex = 16;
 			this.saveBtn.TabStop = false;
@@ -216,10 +216,10 @@
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-			this.cancelButton.Location = new System.Drawing.Point(143, 414);
+			this.cancelButton.Location = new System.Drawing.Point(172, 440);
 			this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
 			this.cancelButton.Name = "cancelButton";
-			this.cancelButton.Size = new System.Drawing.Size(78, 35);
+			this.cancelButton.Size = new System.Drawing.Size(52, 40);
 			this.cancelButton.TabIndex = 18;
 			this.cancelButton.TabStop = false;
 			this.cancelButton.Text = "Cancel";
@@ -232,7 +232,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(510, 473);
+			this.ClientSize = new System.Drawing.Size(487, 493);
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.metroRadioButton1);
 			this.Controls.Add(this.saveBtn);
