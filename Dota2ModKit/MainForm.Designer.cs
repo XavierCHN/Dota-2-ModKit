@@ -77,9 +77,9 @@
 			this.customTile5 = new MetroFramework.Controls.MetroTile();
 			this.versionLabel = new MetroFramework.Controls.MetroLink();
 			this.donateBtn = new MetroFramework.Controls.MetroLink();
+			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
-			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.addonTileContextMenu.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -163,7 +163,7 @@
 			this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
 			this.tabControl.Location = new System.Drawing.Point(208, 44);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 1;
 			this.tabControl.ShowToolTips = true;
 			this.tabControl.Size = new System.Drawing.Size(268, 196);
 			this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
@@ -503,6 +503,19 @@
 			// 
 			// githubTextBox
 			// 
+			// 
+			// 
+			// 
+			this.githubTextBox.CustomButton.Image = null;
+			this.githubTextBox.CustomButton.Location = new System.Drawing.Point(98, 1);
+			this.githubTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.githubTextBox.CustomButton.Name = "";
+			this.githubTextBox.CustomButton.Size = new System.Drawing.Size(16, 14);
+			this.githubTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+			this.githubTextBox.CustomButton.TabIndex = 1;
+			this.githubTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+			this.githubTextBox.CustomButton.UseSelectable = true;
+			this.githubTextBox.CustomButton.Visible = false;
 			this.githubTextBox.Lines = new string[0];
 			this.githubTextBox.Location = new System.Drawing.Point(56, 4);
 			this.githubTextBox.MaxLength = 32767;
@@ -510,10 +523,14 @@
 			this.githubTextBox.PasswordChar = '\0';
 			this.githubTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.githubTextBox.SelectedText = "";
+			this.githubTextBox.SelectionLength = 0;
+			this.githubTextBox.SelectionStart = 0;
 			this.githubTextBox.Size = new System.Drawing.Size(153, 23);
 			this.githubTextBox.TabIndex = 7;
 			this.githubTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.githubTextBox.UseSelectable = true;
+			this.githubTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+			this.githubTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
 			// 
 			// metroLink5
 			// 
@@ -782,10 +799,13 @@
 			// 
 			// versionLabel
 			// 
+			this.versionLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.versionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.versionLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
 			this.versionLabel.Location = new System.Drawing.Point(176, 28);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(52, 20);
+			this.versionLabel.Style = MetroFramework.MetroColorStyle.Teal;
 			this.versionLabel.TabIndex = 21;
 			this.versionLabel.Text = "v2.x.x.x";
 			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -809,6 +829,19 @@
 			this.donateBtn.UseSelectable = true;
 			this.donateBtn.UseStyleColors = true;
 			this.donateBtn.Click += new System.EventHandler(this.donateBtn_Click);
+			// 
+			// reportBugBtn
+			// 
+			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
+			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
+			this.reportBugBtn.Name = "reportBugBtn";
+			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
+			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.reportBugBtn.TabIndex = 31;
+			this.reportBugBtn.TabStop = false;
+			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
+			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
 			// 
 			// progressSpinner1
 			// 
@@ -840,24 +873,11 @@
 			this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroComboBox1.UseSelectable = true;
 			// 
-			// reportBugBtn
-			// 
-			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
-			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
-			this.reportBugBtn.Name = "reportBugBtn";
-			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
-			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.reportBugBtn.TabIndex = 31;
-			this.reportBugBtn.TabStop = false;
-			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
-			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(479, 278);
+			this.ClientSize = new System.Drawing.Size(478, 278);
 			this.Controls.Add(this.reportBugBtn);
 			this.Controls.Add(this.donateBtn);
 			this.Controls.Add(this.versionLabel);
