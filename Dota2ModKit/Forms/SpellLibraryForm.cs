@@ -78,7 +78,7 @@ namespace Dota2ModKit.Forms {
 				using (var repo = new Repository(spellLibPath)) {
 					try {
 						//var remote = repo.Network.Remotes["origin"];
-						MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"),
+						MergeResult mr = repo.Network.Pull(new Signature("myname", "myname@email.com",
 							new DateTimeOffset()),
 							new PullOptions());
 						MergeStatus ms = mr.Status;

@@ -121,7 +121,7 @@ namespace Dota2ModKit {
 				using (var repo = new Repository(barebonesPath)) {
 					try {
 						//var remote = repo.Network.Remotes["origin"];
-						MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"), new DateTimeOffset()), new PullOptions());
+						MergeResult mr = repo.Network.Pull(new Signature("myname", "myname@email.com", new DateTimeOffset()), new PullOptions());
 						MergeStatus ms = mr.Status;
 						Console.WriteLine("MergeStatus: " + ms.ToString());
 					} catch (Exception ex) {

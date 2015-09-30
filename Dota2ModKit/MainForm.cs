@@ -57,7 +57,7 @@ namespace Dota2ModKit {
 			Localizer localizer = new Localizer(this);
 			localizer.localize();
 
-			Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("cn-CN");
+			//Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("cn-CN");
 			Console.WriteLine(strings.Hello);
 
 			setupMainFormHooks();
