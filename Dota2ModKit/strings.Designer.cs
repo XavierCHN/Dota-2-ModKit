@@ -135,9 +135,7 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Combines KV files in the scripts/npc directory of this
-        ///addon. Prompts to break up the KV files if not done so
-        ///already..
+        ///   Looks up a localized string similar to Combines KV files in the scripts/npc directory of this addon.Prompts to break up the KV files if not done so already..
         /// </summary>
         internal static string CombineKVFilesBtnTooltip {
             get {
@@ -373,6 +371,15 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match the numbers above with the numbers below:.
+        /// </summary>
+        internal static string MatchTheNumbers {
+            get {
+                return ResourceManager.GetString("MatchTheNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to must be inside the content directory of.
         /// </summary>
         internal static string MustBeInsideTheContentDirOf {
@@ -396,6 +403,15 @@ namespace Dota2ModKit {
         internal static string NoDota2AddonsDetectedMsg {
             get {
                 return ResourceManager.GetString("NoDota2AddonsDetectedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No sound names found..
+        /// </summary>
+        internal static string NoSoundNamesFound {
+            get {
+                return ResourceManager.GetString("NoSoundNamesFound", resourceCulture);
             }
         }
         
@@ -631,24 +647,6 @@ namespace Dota2ModKit {
         internal static string String10 {
             get {
                 return ResourceManager.GetString("String10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to f.
-        /// </summary>
-        internal static string String12 {
-            get {
-                return ResourceManager.GetString("String12", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to f.
-        /// </summary>
-        internal static string String13 {
-            get {
-                return ResourceManager.GetString("String13", resourceCulture);
             }
         }
         

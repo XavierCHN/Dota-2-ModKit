@@ -28,7 +28,7 @@ namespace Dota2ModKit {
 
 			if (textBox.Text == null || textBox.Text == "") {
 				MetroMessageBox.Show(this,
-					"No text inputted!",
+					strings.NoTextInputted,
 					"",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);

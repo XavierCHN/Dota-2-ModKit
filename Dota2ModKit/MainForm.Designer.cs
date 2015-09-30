@@ -77,9 +77,9 @@
 			this.customTile5 = new MetroFramework.Controls.MetroTile();
 			this.versionLabel = new MetroFramework.Controls.MetroLink();
 			this.donateBtn = new MetroFramework.Controls.MetroLink();
-			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.addonTileContextMenu.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -810,19 +810,6 @@
 			this.donateBtn.UseStyleColors = true;
 			this.donateBtn.Click += new System.EventHandler(this.donateBtn_Click);
 			// 
-			// reportBugBtn
-			// 
-			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
-			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
-			this.reportBugBtn.Name = "reportBugBtn";
-			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
-			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.reportBugBtn.TabIndex = 31;
-			this.reportBugBtn.TabStop = false;
-			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
-			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
-			// 
 			// progressSpinner1
 			// 
 			this.progressSpinner1.Location = new System.Drawing.Point(452, 252);
@@ -852,6 +839,19 @@
 			this.metroComboBox1.TabIndex = 30;
 			this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroComboBox1.UseSelectable = true;
+			// 
+			// reportBugBtn
+			// 
+			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
+			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
+			this.reportBugBtn.Name = "reportBugBtn";
+			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
+			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.reportBugBtn.TabIndex = 31;
+			this.reportBugBtn.TabStop = false;
+			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
+			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
 			// 
 			// MainForm
 			// 

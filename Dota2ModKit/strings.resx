@@ -146,9 +146,7 @@ directory to JavaScript files in panorama/scripts</value>
     <value>Combine KV Files</value>
   </data>
   <data name="CombineKVFilesBtnTooltip" xml:space="preserve">
-    <value>Combines KV files in the scripts/npc directory of this
-addon. Prompts to break up the KV files if not done so
-already.</value>
+    <value>Combines KV files in the scripts/npc directory of this addon.Prompts to break up the KV files if not done so already.</value>
   </data>
   <data name="CombineKVSuccess" xml:space="preserve">
     <value>Combine success!</value>
@@ -229,6 +227,9 @@ files.</value>
   <data name="LuaScript" xml:space="preserve">
     <value>Lua Script</value>
   </data>
+  <data name="MatchTheNumbers" xml:space="preserve">
+    <value>Match the numbers above with the numbers below:</value>
+  </data>
   <data name="MustBeInsideTheContentDirOf" xml:space="preserve">
     <value>must be inside the content directory of</value>
   </data>
@@ -237,6 +238,9 @@ files.</value>
   </data>
   <data name="NoDota2AddonsDetectedMsg" xml:space="preserve">
     <value>No Dota 2 addons detected. There must be one addon for D2ModKit to function properly. Exiting.</value>
+  </data>
+  <data name="NoSoundNamesFound" xml:space="preserve">
+    <value>No sound names found.</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
@@ -315,12 +319,6 @@ selected particles.</value>
     <value>f</value>
   </data>
   <data name="String10" xml:space="preserve">
-    <value>f</value>
-  </data>
-  <data name="String12" xml:space="preserve">
-    <value>f</value>
-  </data>
-  <data name="String13" xml:space="preserve">
     <value>f</value>
   </data>
   <data name="String14" xml:space="preserve">

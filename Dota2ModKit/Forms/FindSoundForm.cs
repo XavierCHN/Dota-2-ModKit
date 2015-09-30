@@ -24,7 +24,7 @@ namespace Dota2ModKit.Forms {
 
 			soundNamesTextBox.Clear();
 			vsndTextBox.Clear();
-			soundNamesTextBox.Text = "No sound names found.";
+			soundNamesTextBox.Text = strings.NoSoundNamesFound;
 
 			vsndTextBox.TextChanged += VsndTextBox_TextChanged;
 
@@ -48,7 +48,7 @@ namespace Dota2ModKit.Forms {
 
 					text += vsndevtsPaths.Count + ". " + soundName + "\r\n";
 				}
-				text += "\r\nMatch the numbers above with the numbers below:\r\n\r\n";
+				text += "\r\n" + strings.MatchTheNumbers + "\r\n\r\n";
 
 				for (int i = 0; i < vsndevtsPaths.Count; i++) {
 					int ptr = i + 1;
@@ -56,7 +56,7 @@ namespace Dota2ModKit.Forms {
 				}
 				soundNamesTextBox.Text = text;
 			} else {
-				soundNamesTextBox.Text = "No sound names found.";
+				soundNamesTextBox.Text = strings.NoSoundNamesFound;
 				//Debug.WriteLine(vsndTextBox.Text + " key not found.");
 			}
 
