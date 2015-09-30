@@ -66,7 +66,7 @@ namespace Dota2ModKit
 				try {
 					Directory.CreateDirectory(contentPath);
 				} catch (Exception) {
-					Debug.WriteLine("Couldn't auto-create content path for " + name);
+					Debug.WriteLine(strings.CouldntAutoCreateContent + " " + name);
 					hasContentPath = false;
 				}
 			}
@@ -281,7 +281,7 @@ namespace Dota2ModKit
 				curr = "npc_heroes_custom.txt";
 				generateHeroTooltips();
 				writeTooltips();
-				mainForm.text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
+				mainForm.text_notification(strings.TooltipsSuccessfully, MetroColorStyle.Green, 2500);
 			} catch (Exception ex) {
 				string msg = ex.Message;
 				if (ex.InnerException != null) {
@@ -503,8 +503,8 @@ namespace Dota2ModKit
 
 		internal void delete() {
 			DialogResult dr = MetroMessageBox.Show(mainForm,
-				"Are you sure you want to delete the addon '" + name + "'? " + "This will permanently delete the 'content' and 'game' directories of this addon.",
-				"Warning",
+				strings.AreYouSure + " '" + name + "'? " + strings.PermanentlyDelete,
+				strings.Warning,
 				MessageBoxButtons.OKCancel,
 				MessageBoxIcon.Warning);
 
@@ -514,10 +514,10 @@ namespace Dota2ModKit
 					Directory.Delete(contentPath, true);
 				} catch (Exception ex) {
 					MetroMessageBox.Show(mainForm,
-						"Please close all programs that are using files related to this addon, " + "including all related Windows Explorer processes, and try again.",
-					"Could not fully delete addon",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
+						strings.PleaseClose,
+						strings.CouldNotFullyDelete,
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
 					return;
 				}
 
@@ -531,7 +531,7 @@ namespace Dota2ModKit
 					break;
 				}
 
-				mainForm.text_notification("The addon '" + removed + "' was successfully deleted.", MetroColorStyle.Green, 2500);
+				mainForm.text_notification(strings.TheAddon + " '" + removed + "' " + strings.WasSuccessfullyDeleted, MetroColorStyle.Green, 2500);
 			}
 		}
 

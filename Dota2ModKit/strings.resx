@@ -315,32 +315,35 @@ selected particles.</value>
   <data name="SteamTileTooltip" xml:space="preserve">
     <value>Opens the Steam Workshop page for this addon</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>f</value>
+  <data name="WasSuccessfullyDeleted" xml:space="preserve">
+    <value>was successfully deleted!</value>
+    <comment>part2</comment>
   </data>
-  <data name="String10" xml:space="preserve">
-    <value>f</value>
+  <data name="TheAddon" xml:space="preserve">
+    <value>The addon</value>
+    <comment>part1</comment>
   </data>
-  <data name="String14" xml:space="preserve">
-    <value>f</value>
+  <data name="PleaseClose" xml:space="preserve">
+    <value>Please close all programs that are using files related to this addon, including all related Windows Explorer processes, and try again.</value>
+    <comment>part1</comment>
   </data>
-  <data name="String3" xml:space="preserve">
-    <value>f</value>
+  <data name="CouldNotFullyDelete" xml:space="preserve">
+    <value>Could not fully delete addon</value>
   </data>
-  <data name="String4" xml:space="preserve">
-    <value>f</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure you want to delete the addon</value>
   </data>
-  <data name="String5" xml:space="preserve">
-    <value>f</value>
+  <data name="PermanentlyDelete" xml:space="preserve">
+    <value>This will permanently delete the 'content' and 'game' directories of this addon.</value>
   </data>
-  <data name="String6" xml:space="preserve">
-    <value>f</value>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
-  <data name="String7" xml:space="preserve">
-    <value>f</value>
+  <data name="TooltipsSuccessfully" xml:space="preserve">
+    <value>Tooltips successfully generated!</value>
   </data>
-  <data name="String8" xml:space="preserve">
-    <value>f</value>
+  <data name="CouldntAutoCreateContent" xml:space="preserve">
+    <value>Couldn't auto-create content path for</value>
   </data>
   <data name="String9" xml:space="preserve">
     <value>f</value>
@@ -366,5 +369,38 @@ selected particles.</value>
   </data>
   <data name="WorkshopID" xml:space="preserve">
     <value>Workshop ID</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String10" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String11" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String12" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String3" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String4" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String5" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String6" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String7" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String8" xml:space="preserve">
+    <value>f</value>
   </data>
 </root>

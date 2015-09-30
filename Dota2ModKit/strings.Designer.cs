@@ -71,6 +71,15 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the addon.
+        /// </summary>
+        internal static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to break up.
         /// </summary>
         internal static string AskToBreakUpMsg {
@@ -167,6 +176,24 @@ namespace Dota2ModKit {
         internal static string Copied {
             get {
                 return ResourceManager.GetString("Copied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not fully delete addon.
+        /// </summary>
+        internal static string CouldNotFullyDelete {
+            get {
+                return ResourceManager.GetString("CouldNotFullyDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t auto-create content path for.
+        /// </summary>
+        internal static string CouldntAutoCreateContent {
+            get {
+                return ResourceManager.GetString("CouldntAutoCreateContent", resourceCulture);
             }
         }
         
@@ -534,6 +561,24 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will permanently delete the &apos;content&apos; and &apos;game&apos; directories of this addon..
+        /// </summary>
+        internal static string PermanentlyDelete {
+            get {
+                return ResourceManager.GetString("PermanentlyDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please close all programs that are using files related to this addon, including all related Windows Explorer processes, and try again..
+        /// </summary>
+        internal static string PleaseClose {
+            get {
+                return ResourceManager.GetString("PleaseClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report a bug!.
         /// </summary>
         internal static string ReportBugTooltip {
@@ -653,9 +698,27 @@ namespace Dota2ModKit {
         /// <summary>
         ///   Looks up a localized string similar to f.
         /// </summary>
-        internal static string String14 {
+        internal static string String11 {
             get {
-                return ResourceManager.GetString("String14", resourceCulture);
+                return ResourceManager.GetString("String11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to f.
+        /// </summary>
+        internal static string String12 {
+            get {
+                return ResourceManager.GetString("String12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to f.
+        /// </summary>
+        internal static string String2 {
+            get {
+                return ResourceManager.GetString("String2", resourceCulture);
             }
         }
         
@@ -741,6 +804,24 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The addon.
+        /// </summary>
+        internal static string TheAddon {
+            get {
+                return ResourceManager.GetString("TheAddon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tooltips successfully generated!.
+        /// </summary>
+        internal static string TooltipsSuccessfully {
+            get {
+                return ResourceManager.GetString("TooltipsSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Available!.
         /// </summary>
         internal static string UpdateAvailable {
@@ -773,6 +854,24 @@ namespace Dota2ModKit {
         internal static string VTEXCFilesMustBePresentIn {
             get {
                 return ResourceManager.GetString("VTEXCFilesMustBePresentIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was successfully deleted!.
+        /// </summary>
+        internal static string WasSuccessfullyDeleted {
+            get {
+                return ResourceManager.GetString("WasSuccessfullyDeleted", resourceCulture);
             }
         }
         
