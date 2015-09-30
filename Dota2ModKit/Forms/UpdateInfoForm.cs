@@ -28,8 +28,8 @@ namespace Dota2ModKit.Forms {
 
             InitializeComponent();
 
-			this.Text = "Update Available! (v" + mainForm.newVers + ")";
-			changelogTextBox.Text = "CHANGELOG:\n" + changelog;
+			this.Text = strings.UpdateAvailable + " (v" + mainForm.newVers + ")";
+			changelogTextBox.Text = strings.CHANGELOG + ":\n" + changelog;
 
 		}
 
@@ -74,7 +74,7 @@ namespace Dota2ModKit.Forms {
 					File.Delete(Path.Combine(Environment.CurrentDirectory, "D2ModKit.zip"));
 				}
 
-				progressLabel.Text = "Downloading v" + mainForm.newVers + "...";
+				progressLabel.Text = strings.Downloading + " v" + mainForm.newVers + "...";
 				progressLabel.Visible = true;
 				metroProgressBar1.Visible = true;
 				updateBtn.Enabled = false;

@@ -27,12 +27,16 @@ namespace Dota2ModKit.Forms {
 
 			InitializeComponent();
 			notificationLabel.Text = "";
-			textBox1.KeyDown += TextBox1_KeyDown;
-			//luaKVBtn.Visible = false;
+
+			textBox1.KeyDown += (s, e) => {
+				if (e.Control && (e.KeyCode == Keys.A)) {
+					textBox1.SelectAll();
+				}
+			};
 
 			if (!Directory.Exists(spellLibPath)) {
-				DialogResult dr = MetroMessageBox.Show(mainForm, "SpellLibrary will now be cloned into " + spellLibPath,
-					"SpellLibrary not found",
+				DialogResult dr = MetroMessageBox.Show(mainForm, strings.SpellLibWillNowBeClonedMsg + " " + spellLibPath,
+					strings.SpellLibNotFoundCaption,
 					MessageBoxButtons.OKCancel,
 					MessageBoxIcon.Information);
 
@@ -41,9 +45,9 @@ namespace Dota2ModKit.Forms {
 				}
 			}
 			// user wants to continue, clone if necessary, and pull
-			mainForm.SpellLibBtn.Enabled = false;
-			mainForm.ProgressSpinner1.Value = 60;
-			mainForm.ProgressSpinner1.Visible = true;
+			mainForm.spellLibraryBtn.Enabled = false;
+			mainForm.progressSpinner1.Value = 60;
+			mainForm.progressSpinner1.Visible = true;
 
 			if (!Directory.Exists(spellLibPath)) {
 				mainForm.text_notification("Cloning SpellLibrary...", MetroColorStyle.Blue, 999999);
@@ -51,52 +55,37 @@ namespace Dota2ModKit.Forms {
 				mainForm.text_notification("Pulling SpellLibrary...", MetroColorStyle.Blue, 999999);
 			}
 
-			using (var cloneWorker = new BackgroundWorker()) {
-				cloneWorker.RunWorkerCompleted += CloneWorker_RunWorkerCompleted;
-				cloneWorker.DoWork += CloneWorker_DoWork;
-				cloneWorker.RunWorkerAsync();
-			}
-		}
+			var gitWorker = new BackgroundWorker();
+			gitWorker.RunWorkerCompleted += (s, e) => {
+				mainForm.text_notification("", MetroColorStyle.Blue, 500);
+				mainForm.progressSpinner1.Visible = false;
+				mainForm.spellLibraryBtn.Enabled = true;
 
-		private void TextBox1_KeyDown(object sender, KeyEventArgs e) {
-			if (e.Control && (e.KeyCode == Keys.A)) {
-				textBox1.SelectAll();
-			}
-		}
+				initTreeView();
+			};
+			gitWorker.DoWork += (s, e) => {
+				if (!Directory.Exists(spellLibPath)) {
+					try {
+						string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
+						Console.WriteLine("repo path:" + gitPath);
+					} catch (Exception ex) {
 
-		private void CloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			Console.WriteLine("Cloneworker completed.");
-			mainForm.text_notification("", MetroColorStyle.Blue, 500);
-			mainForm.ProgressSpinner1.Visible = false;
-			mainForm.SpellLibBtn.Enabled = true;
-
-			initTreeView();
-		}
-
-		private void CloneWorker_DoWork(object sender, DoWorkEventArgs e) {
-			if (!Directory.Exists(spellLibPath)) {
-				try {
-					string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
-					Console.WriteLine("repo path:" + gitPath);
-				} catch (Exception ex) {
-
+					}
+					return;
 				}
-				return;
-			}
 
-			// pull from the repo
-			using (var repo = new Repository(spellLibPath)) {
-				try {
-					//var remote = repo.Network.Remotes["origin"];
-					MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"),
-						new DateTimeOffset()),
-						new PullOptions());
-					MergeStatus ms = mr.Status;
-					Console.WriteLine("MergeStatus: " + ms.ToString());
-				} catch (Exception ex) {
-
+				// pull from the repo
+				using (var repo = new Repository(spellLibPath)) {
+					try {
+						//var remote = repo.Network.Remotes["origin"];
+						MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"),
+							new DateTimeOffset()),
+							new PullOptions());
+						MergeStatus ms = mr.Status;
+					} catch (Exception ex) {}
 				}
-			}
+			};
+			gitWorker.RunWorkerAsync();
 		}
 
 		private void initTreeView() {
@@ -104,72 +93,64 @@ namespace Dota2ModKit.Forms {
 			treeView1.Nodes[0].ExpandAll();
 			treeView1.Nodes[1].ExpandAll();
 			treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
-			//treeView1.Nodes[0].Nodes[0].Nodes[0].sele
 
-			treeView1.NodeMouseClick += TreeView1_NodeMouseClick;
-			treeView1.AfterSelect += TreeView1_AfterSelect;
-			treeView1.KeyDown += TreeView1_KeyDown;
+			treeView1.AfterSelect += (s, e) => {
+				TreeNode node = e.Node;
+
+				if (node.Parent != null && node.Parent.Parent != null && node.Parent.Parent.Text == "Abilities") {
+					string abilName = node.Name;
+					string heroName = node.Parent.Name;
+					string p = Path.Combine(npcPath, "abilities", abilName);
+					if (File.Exists(p)) {
+						changeToKV();
+						textBox1.Text = File.ReadAllText(p);
+						currKVPath = p;
+
+						string lua = Path.Combine(luaHeroesPath, "hero_" + heroName, abilName.Replace(heroName + "_", "").Replace("_datadriven.txt", ".lua"));
+						if (!File.Exists(lua)) {
+							luaKVBtn.Enabled = false;
+
+						} else {
+							luaKVBtn.Enabled = true;
+							luaKVBtn.Text = "Lua Script";
+							currLuaPath = lua;
+						}
+					} else {
+						//Console.WriteLine(abilName + " path wasn't found!");
+					}
+
+				} else if (node.Parent != null && node.Parent.Text == "Items") {
+					string itemName = node.Name;
+					string p = Path.Combine(npcPath, "items", itemName);
+					if (File.Exists(p)) {
+						changeToKV();
+						textBox1.Text = File.ReadAllText(p);
+						currKVPath = p;
+
+						string lua = Path.Combine(luaItemsPath, itemName.Replace("_datadriven.txt", ".lua"));
+						if (!File.Exists(lua)) {
+							luaKVBtn.Enabled = false;
+
+						} else {
+							luaKVBtn.Enabled = true;
+							luaKVBtn.Text = "Lua Script";
+							currLuaPath = lua;
+						}
+					} else {
+						//Console.WriteLine(itemName + " path wasn't found!");
+					}
+				}
+			};
+
+
+			treeView1.KeyDown += (s, e) => {
+				if (e.KeyCode == Keys.Enter && treeView1.SelectedNode != null) {
+					treeView1.SelectedNode.Expand();
+				}
+			};
 
 			//treeView1.ExpandAll();
 			this.Show();
-		}
-
-		private void TreeView1_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyCode == Keys.Enter && treeView1.SelectedNode != null) {
-				treeView1.SelectedNode.Expand();
-			}
-		}
-
-		private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e) {
-			TreeNode node = e.Node;
-
-			if (node.Parent != null && node.Parent.Parent != null && node.Parent.Parent.Text == "Abilities") {
-				string abilName = node.Name;
-				string heroName = node.Parent.Name;
-				string p = Path.Combine(npcPath, "abilities", abilName);
-                if (File.Exists(p)) {
-					changeToKV();
-					textBox1.Text = File.ReadAllText(p);
-					currKVPath = p;
-
-					string lua = Path.Combine(luaHeroesPath, "hero_" + heroName, abilName.Replace(heroName + "_", "").Replace("_datadriven.txt", ".lua"));
-					if (!File.Exists(lua)) {
-						luaKVBtn.Enabled = false;
-
-					} else {
-						luaKVBtn.Enabled = true;
-						luaKVBtn.Text = "Lua Script";
-						currLuaPath = lua;
-					}
-				} else {
-					Console.WriteLine(abilName + " path wasn't found!");
-				}
-				
-			} else if (node.Parent != null && node.Parent.Text == "Items") {
-				string itemName = node.Name;
-				string p = Path.Combine(npcPath, "items", itemName);
-				if (File.Exists(p)) {
-					changeToKV();
-					textBox1.Text = File.ReadAllText(p);
-					currKVPath = p;
-
-					string lua = Path.Combine(luaItemsPath, itemName.Replace("_datadriven.txt", ".lua"));
-					if (!File.Exists(lua)) {
-						luaKVBtn.Enabled = false;
-
-					} else {
-						luaKVBtn.Enabled = true;
-						luaKVBtn.Text = "Lua Script";
-						currLuaPath = lua;
-					}
-				} else {
-					Console.WriteLine(itemName + " path wasn't found!");
-				}
-            }
-		}
-
-		private void TreeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
-
 		}
 
 		private void populateTreeView() {
@@ -265,13 +246,13 @@ namespace Dota2ModKit.Forms {
 			metroRadioButton1.Select();
 
 			Clipboard.SetText(textBox1.Text);
-			text_notification("Copied!", MetroColorStyle.Blue, 500);
+			text_notification(strings.Copied, MetroColorStyle.Blue, 1000);
 		}
 
 		private void luaKVBtn_Click(object sender, EventArgs e) {
 			metroRadioButton1.Select();
 
-			if (luaKVBtn.Text == "Lua Script") {
+			if (luaKVBtn.Text == strings.LuaScript) {
 				// open lua
 				changeToLua();
 				textBox1.Text = File.ReadAllText(currLuaPath);
@@ -285,14 +266,14 @@ namespace Dota2ModKit.Forms {
 
 		void changeToKV() {
 			textBox1.Language = Language.JS;
-			luaKVBtn.Text = "Lua Script";
-			metroToolTip1.SetToolTip(luaKVBtn, "Opens the Lua script for this spell");
+			luaKVBtn.Text = strings.LuaScript;
+			metroToolTip1.SetToolTip(luaKVBtn, strings.OpensTheLuaScript);
 		}
 
 		void changeToLua() {
 			textBox1.Language = Language.Lua;
-			luaKVBtn.Text = "KeyValues";
-			metroToolTip1.SetToolTip(luaKVBtn, "Open the KV entry for this spell");
+			luaKVBtn.Text = strings.KeyValues;
+			metroToolTip1.SetToolTip(luaKVBtn, strings.OpensTheKVEntry);
 		}
 
 		private void metroScrollBar1_Scroll(object sender, ScrollEventArgs e) {
@@ -317,7 +298,7 @@ namespace Dota2ModKit.Forms {
 		private void openFileBtn_Click(object sender, EventArgs e) {
 			metroRadioButton1.Select();
 
-			if (luaKVBtn.Text == "Lua Script") {
+			if (luaKVBtn.Text == strings.LuaScript) {
 				Process.Start(currKVPath);
 			} else {
 				// open kv

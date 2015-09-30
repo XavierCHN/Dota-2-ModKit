@@ -96,9 +96,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Addon.cs" />
-    <Compile Include="AddonLangEntry.cs" />
-    <Compile Include="CustomTile.cs" />
+    <Compile Include="HelperClasses\Addon.cs" />
+    <Compile Include="HelperClasses\AddonLangEntry.cs" />
+    <Compile Include="HelperClasses\CustomTile.cs" />
     <Compile Include="Features\SoundFeatures.cs" />
     <Compile Include="Forms\AddonsForm.cs">
       <SubType>Form</SubType>
@@ -151,7 +151,8 @@
     <Compile Include="Forms\UpdateInfoForm.Designer.cs">
       <DependentUpon>UpdateInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Initializer.cs" />
+    <Compile Include="HelperClasses\Localizer.cs" />
+    <Compile Include="HelperClasses\Particle.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,7 +165,6 @@
     <Compile Include="Forms\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Particle.cs" />
     <Compile Include="Forms\ParticleDesignForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,8 +185,13 @@
     <Compile Include="Forms\SingleTextboxForm.Designer.cs">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Updater.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClasses\Updater.cs" />
+    <Compile Include="HelperClasses\Util.cs" />
     <Compile Include="VPKExtract\VpkFile.cs" />
     <Compile Include="VPKExtract\VpkNode.cs" />
     <Compile Include="VPKExtract\VPKProgram.cs" />
@@ -231,6 +236,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SingleTextboxForm.resx">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strings.cn.resx" />
+    <EmbeddedResource Include="strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>

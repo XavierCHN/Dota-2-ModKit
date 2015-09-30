@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dota2ModKit.Features {
-	class SoundFeatures {
+	public class SoundFeatures {
 		private MainForm mainForm;
 		private Dictionary<string, List<string>> vsndToName;
 		string vsnd_to_soundname_Path = Path.Combine(Environment.CurrentDirectory, "vsnd_to_soundname_v2.txt");
@@ -25,8 +25,8 @@ namespace Dota2ModKit.Features {
 		public void findSoundName() {
 			if (!File.Exists(vsnd_to_soundname_Path)) {
 				DialogResult dr = MetroMessageBox.Show(mainForm,
-					"Couldn't find required file: " + vsnd_to_soundname_Path + ". D2ModKit will download it now.",
-					"Couldn't find required file",
+					strings.CouldntFindRequiredFile + ": " + vsnd_to_soundname_Path + ". " + strings.D2ModKitWillDownloadItNow,
+					strings.CouldntFindRequiredFile,
 					MessageBoxButtons.OKCancel,
 					MessageBoxIcon.Error);
 
@@ -36,13 +36,13 @@ namespace Dota2ModKit.Features {
 
 				using (WebClient SoundMapFileWC = new WebClient()) {
 					SoundMapFileWC.DownloadFileCompleted += SoundMapFileWC_DownloadFileCompleted;
-					mainForm.ProgressSpinner1.Visible = true;
-					mainForm.FindSoundNameBtn.Enabled = false;
+					mainForm.progressSpinner1.Visible = true;
+					mainForm.findSoundNameBtn.Enabled = false;
 					try {
 						SoundMapFileWC.DownloadFileAsync(new Uri("https://github.com/stephenfournier/Dota-2-ModKit/raw/326ebd10a117c5f58c20b412a6e2f5e221800330/Dota2ModKit/Libs/vsnd_to_soundname_v2.txt"), "vsnd_to_soundname_v2.txt");
 					} catch (Exception) {
-						mainForm.ProgressSpinner1.Visible = false;
-						mainForm.FindSoundNameBtn.Enabled = true;
+						mainForm.progressSpinner1.Visible = false;
+						mainForm.findSoundNameBtn.Enabled = true;
 					}
                 }
 				return;
@@ -59,8 +59,8 @@ namespace Dota2ModKit.Features {
 		}
 
 		private void SoundMapFileWC_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-			mainForm.ProgressSpinner1.Visible = false;
-			mainForm.FindSoundNameBtn.Enabled = true;
+			mainForm.progressSpinner1.Visible = false;
+			mainForm.findSoundNameBtn.Enabled = true;
 			findSoundName();
 		}
 

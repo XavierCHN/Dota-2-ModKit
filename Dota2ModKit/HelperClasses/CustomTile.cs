@@ -20,7 +20,16 @@ namespace Dota2ModKit {
 			this.tile = tile;
 			this.tileNum = tileNum;
 			this.serializedTileInfo = serializedTileInfo;
-			tile.Click += Tile_Click;
+
+			tile.Click += (s, e) => {
+				if (path != "") {
+					Process.Start(path);
+				} else {
+					// no value defined for this custom tile.
+					CustomTileForm ctf = new CustomTileForm(mainForm, this);
+					ctf.ShowDialog();
+				}
+			};
 
 			if (serializedTileInfo == "") {
 				return;
@@ -42,21 +51,11 @@ namespace Dota2ModKit {
 
 		public void setPath(string path) {
 			this.path = path;
-			mainForm.MetroToolTip1.SetToolTip(tile, path + ". Right-click to edit tile.");
+			mainForm.mainFormToolTip.SetToolTip(tile, path + ". " + strings.RightClickToEditTile);
 		}
 
 		internal void serialize() {
 			serializedTileInfo = path + "," + tile.Text;
-		}
-
-		private void Tile_Click(object sender, EventArgs e) {
-			if (path != "") {
-				Process.Start(path);
-			} else {
-				// no value defined for this custom tile.
-				CustomTileForm ctf = new CustomTileForm(mainForm, this);
-				ctf.ShowDialog();
-			}
 		}
 
 		public void editTile() {

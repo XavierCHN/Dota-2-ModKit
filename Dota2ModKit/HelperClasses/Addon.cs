@@ -128,93 +128,89 @@ namespace Dota2ModKit
 			}
 
 			public void checkForUpdates() {
-				using (var libUpdateWorker = new BackgroundWorker()) {
-					libUpdateWorker.DoWork += LibUpdateWorker_DoWork;
-					libUpdateWorker.RunWorkerCompleted += LibUpdateWorker_RunWorkerCompleted;
-					libUpdateWorker.RunWorkerAsync();
-				}
-			}
+				var libUpdateWorker = new BackgroundWorker();
 
-			private void LibUpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-				if (!needsUpdate) {
-					return;
-				}
-				needsUpdate = false;
+				libUpdateWorker.DoWork += (s, e) => {
+					if (!File.Exists(local)) {
+						// this shouldn't even be a library
+						addon.libraries.Remove(local);
 
-				DialogResult dr = MetroMessageBox.Show(addon.mainForm,
-					name + " in " + addon.name +
-					" does not match the contents of " + LibFileName + " in " + LibName + ". " +
-					"Replace the contents now? Press 'Cancel' to never see this again.",
-					"Library Update",
-					MessageBoxButtons.YesNoCancel,
-					MessageBoxIcon.Information);
-
-				if (dr == DialogResult.Cancel) {
-					this.neverCheckForUpdates = true;
-					return;
-				} else if (dr == DialogResult.No) {
-					return;
-				}
-
-				try {
-					File.WriteAllText(local, File.ReadAllText(defaultLibPath));
-				} catch (Exception ex) {
-					this.exception = ex;
-				}
-
-				if (exception != null) {
-					MetroMessageBox.Show(addon.mainForm,
-						exception.Message,
-						exception.ToString(),
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-
-					exception = null;
-				} else {
-					addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1500);
-				}
-			}
-
-			private void LibUpdateWorker_DoWork(object sender, DoWorkEventArgs e) {
-				if (!File.Exists(local)) {
-					// this shouldn't even be a library
-					addon.libraries.Remove(local);
-
-					return;
-				}
-
-				// check for dummy lib
-				if (defaultLibPath == null && remote == null) {
-					isDummyLib = true;
-					return;
-				}
-
-				if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
-					string defaultLibTxt = File.ReadAllText(defaultLibPath);
-					string localTxt = File.ReadAllText(local);
-					if (localTxt != defaultLibTxt) {
-						needsUpdate = true;
+						return;
 					}
 
-					return;
-				}
-
-				// lib wasn't a local lib. do remote stuff
-				WebClient wc = new WebClient();
-
-				try {
-					tempFile = Path.Combine(Environment.CurrentDirectory, "temp", Util.DoUniqueString());
-                    wc.DownloadFile(remote, tempFile);
-					byte[] responseBytes = wc.DownloadData(remote);
-
-					if (new FileInfo(tempFile).Length != new FileInfo(local).Length) {
-						updateAvailable = true;
+					// check for dummy lib
+					if (defaultLibPath == null && remote == null) {
+						isDummyLib = true;
+						return;
 					}
 
-					//File.Delete(tempFile);
+					if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
+						string defaultLibTxt = File.ReadAllText(defaultLibPath);
+						string localTxt = File.ReadAllText(local);
+						if (localTxt != defaultLibTxt) {
+							needsUpdate = true;
+						}
 
-				} catch (Exception) { }
-				
+						return;
+					}
+
+					// lib wasn't a local lib. do remote stuff
+					WebClient wc = new WebClient();
+
+					try {
+						tempFile = Path.Combine(Environment.CurrentDirectory, "temp", Util.DoUniqueString());
+						wc.DownloadFile(remote, tempFile);
+						byte[] responseBytes = wc.DownloadData(remote);
+
+						if (new FileInfo(tempFile).Length != new FileInfo(local).Length) {
+							updateAvailable = true;
+						}
+
+						//File.Delete(tempFile);
+
+					} catch (Exception) { }
+				};
+
+				libUpdateWorker.RunWorkerCompleted += (s, e) => {
+					if (!needsUpdate) {
+						return;
+					}
+					needsUpdate = false;
+
+					DialogResult dr = MetroMessageBox.Show(addon.mainForm,
+						name + " in " + addon.name +
+						" does not match the contents of " + LibFileName + " in " + LibName + ". " +
+						"Replace the contents now? Press 'Cancel' to never see this again.",
+						"Library Update",
+						MessageBoxButtons.YesNoCancel,
+						MessageBoxIcon.Information);
+
+					if (dr == DialogResult.Cancel) {
+						this.neverCheckForUpdates = true;
+						return;
+					} else if (dr == DialogResult.No) {
+						return;
+					}
+
+					try {
+						File.WriteAllText(local, File.ReadAllText(defaultLibPath));
+					} catch (Exception ex) {
+						this.exception = ex;
+					}
+
+					if (exception != null) {
+						MetroMessageBox.Show(addon.mainForm,
+							exception.Message,
+							exception.ToString(),
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error);
+
+						exception = null;
+					} else {
+						addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1500);
+					}
+				};
+				libUpdateWorker.RunWorkerAsync();
 			}
 		}
 
@@ -505,6 +501,40 @@ namespace Dota2ModKit
 			}
 		}
 
+		internal void delete() {
+			DialogResult dr = MetroMessageBox.Show(mainForm,
+				"Are you sure you want to delete the addon '" + name + "'? " + "This will permanently delete the 'content' and 'game' directories of this addon.",
+				"Warning",
+				MessageBoxButtons.OKCancel,
+				MessageBoxIcon.Warning);
+
+			if (dr == DialogResult.OK) {
+				try {
+					Directory.Delete(gamePath, true);
+					Directory.Delete(contentPath, true);
+				} catch (Exception ex) {
+					MetroMessageBox.Show(mainForm,
+						"Please close all programs that are using files related to this addon, " + "including all related Windows Explorer processes, and try again.",
+					"Could not fully delete addon",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+					return;
+				}
+
+				string removed = name;
+				mainForm.addons.Remove(name);
+
+				// reset currAddon
+				foreach (KeyValuePair<string, Addon> a in mainForm.addons) {
+					// pick the first one and break
+					mainForm.changeCurrAddon(a.Value);
+					break;
+				}
+
+				mainForm.text_notification("The addon '" + removed + "' was successfully deleted.", MetroColorStyle.Green, 2500);
+			}
+		}
+
 		internal void deserializeSettings(KeyValue kv) {
 			foreach (KeyValue kv2 in kv.Children) {
 				if (kv2.Key == "workshopID") {
@@ -730,11 +760,23 @@ namespace Dota2ModKit
 				deleteBinFiles();
 			}
 
-			using (var addonSizeWorker = new BackgroundWorker()) {
-				addonSizeWorker.DoWork += AddonSizeWorker_DoWork;
-				addonSizeWorker.RunWorkerCompleted += AddonSizeWorker_RunWorkerCompleted;
-				addonSizeWorker.RunWorkerAsync();
-			}
+			var addonSizeWorker = new BackgroundWorker();
+            addonSizeWorker.DoWork += (s, e) => {
+				double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
+				gameSize = Math.Round(gameSize, 1);
+				gameSizeStr = gameSize.ToString();
+
+				double contentSize = (Util.GetDirectorySize(contentPath) / 1024.0) / 1024.0;
+				contentSize = Math.Round(contentSize, 1);
+				contentSizeStr = contentSize.ToString();
+			};
+
+			addonSizeWorker.RunWorkerCompleted += (s, e) => {
+				var tooltip = mainForm.mainFormToolTip;
+				tooltip.SetToolTip(mainForm.gameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
+				tooltip.SetToolTip(mainForm.contentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
+			};
+			addonSizeWorker.RunWorkerAsync();
 
 			if (barebonesLibUpdates) {
 				// we need to allot time to pull or clone barebones, before checking for lib updates.
@@ -746,40 +788,22 @@ namespace Dota2ModKit
 
 				Timer onChangedToTimer = new Timer();
 				onChangedToTimer.Interval = 500;
-				onChangedToTimer.Tick += OnChangedToTimer_Tick;
+				onChangedToTimer.Tick += (s, e) => {
+					// run it once
+					Timer t = (Timer)s;
+					t.Stop();
+
+					checkForDefaultLibs();
+
+					foreach (KeyValuePair<string, Library> libKV in libraries) {
+						Library lib = libKV.Value;
+						lib.checkForUpdates();
+
+					}
+					t.Dispose();
+				};
 				onChangedToTimer.Start();
 			}
-		}
-
-		private void OnChangedToTimer_Tick(object sender, EventArgs e) {
-			// run it once
-			Timer t = (Timer)sender;
-			t.Stop();
-
-			checkForDefaultLibs();
-
-			foreach (KeyValuePair<string, Library> libKV in libraries) {
-				Library lib = libKV.Value;
-				lib.checkForUpdates();
-
-			}
-
-			t.Dispose();
-		}
-
-		private void AddonSizeWorker_DoWork(object sender, DoWorkEventArgs e) {
-			double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
-			gameSize = Math.Round(gameSize, 1);
-			gameSizeStr = gameSize.ToString();
-
-			double contentSize = (Util.GetDirectorySize(contentPath) / 1024.0) / 1024.0;
-			contentSize = Math.Round(contentSize, 1);
-			contentSizeStr = contentSize.ToString();
-		}
-
-		private void AddonSizeWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
-			mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
 		}
 
 		#endregion

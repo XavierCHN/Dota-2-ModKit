@@ -93,7 +93,7 @@ namespace Dota2ModKit {
 					colorKeyFound = true;
 
 
-				// check for sizeKeys.
+					// check for sizeKeys.
 				} else if (l.Contains("Radius") && l.Contains("=") && changeSize) {
 					l = l.Trim();
 
@@ -110,7 +110,7 @@ namespace Dota2ModKit {
 							double newVal = currVal + (sizeValue / 100.0) * Math.Abs(currVal);
 							if (newVal < 0) {
 								// put it at 10% of the currVal
-								newVal = currVal*.1;
+								newVal = currVal * .1;
 							}
 							l = part1 + " = " + newVal.ToString();
 						}

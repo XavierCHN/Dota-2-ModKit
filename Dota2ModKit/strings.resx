@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddonTileTooltip" xml:space="preserve">
+    <value>Left-click to change current addon. Right-click for
+more options.</value>
+  </data>
+  <data name="AskToBreakUpMsg" xml:space="preserve">
+    <value>Do you want to break up</value>
+    <comment>ex. "Do you want to break up npc_items_custom.txt?"</comment>
+  </data>
+  <data name="BulkRecolor" xml:space="preserve">
+    <value>Bulk Re-Color</value>
+    <comment>particle designer</comment>
+  </data>
+  <data name="BulkResize" xml:space="preserve">
+    <value>Bulk Resize:</value>
+  </data>
+  <data name="CHANGELOG" xml:space="preserve">
+    <value>CHANGELOG</value>
+  </data>
+  <data name="CoffeeScriptCompileBtnTooltip" xml:space="preserve">
+    <value>Compiles CoffeeScript files in the panorama/scripts/coffeescript
+directory to JavaScript files in panorama/scripts</value>
+  </data>
+  <data name="CoffeeScriptFilesCompiled" xml:space="preserve">
+    <value>CoffeeScript files compiled!</value>
+  </data>
+  <data name="CombineKVFiles" xml:space="preserve">
+    <value>Combine KV Files</value>
+  </data>
+  <data name="CombineKVFilesBtnTooltip" xml:space="preserve">
+    <value>Combines KV files in the scripts/npc directory of this
+addon. Prompts to break up the KV files if not done so
+already.</value>
+  </data>
+  <data name="CombineKVSuccess" xml:space="preserve">
+    <value>Combine success!</value>
+  </data>
+  <data name="ContentTileTooltip" xml:space="preserve">
+    <value>Opens the content directory of this addon.</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>Copied!</value>
+    <comment>after copying text</comment>
+  </data>
+  <data name="CouldntFindRequiredFile" xml:space="preserve">
+    <value>Couldn't find required file</value>
+  </data>
+  <data name="CouldntParseID" xml:space="preserve">
+    <value>Couldn't parse ID!</value>
+  </data>
+  <data name="CustomTileTooltip" xml:space="preserve">
+    <value>Click to customize this tile!</value>
+  </data>
+  <data name="D2ModKitWillDownloadItNow" xml:space="preserve">
+    <value>D2ModKit will download it now.</value>
+  </data>
+  <data name="DirectoryDoesntExistCaption" xml:space="preserve">
+    <value>doesn't exist!</value>
+  </data>
+  <data name="DirectoryDoesntExistMsg" xml:space="preserve">
+    <value>Directory doesn't exist</value>
+  </data>
+  <data name="DonateBtnTooltip" xml:space="preserve">
+    <value>Consider a donation to the developer!</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="EnterWorkshopID" xml:space="preserve">
+    <value>Enter the workshop ID</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FindSoundName" xml:space="preserve">
+    <value>Find Sound.Name</value>
+  </data>
+  <data name="FindSoundNameBtnTooltip" xml:space="preserve">
+    <value>Search for Sound Names with a .vsnd path</value>
+  </data>
+  <data name="ForThisToWork_UseGCF" xml:space="preserve">
+    <value>for this to work. Use GCFScape to extract .vtex_c files into this folder.</value>
+    <comment>part2</comment>
+  </data>
+  <data name="GameTileTooltip" xml:space="preserve">
+    <value>Opens the game directory of this addon.</value>
+  </data>
+  <data name="GenerateTooltips" xml:space="preserve">
+    <value>Generate Tooltips</value>
+  </data>
+  <data name="GenerateTooltipsBtnTooltip" xml:space="preserve">
+    <value>Generates tooltips from the scripts/npc files of this addon,
+which you can easily transfer over to addon_language.txt
+files.</value>
+  </data>
+  <data name="GithubGoTooltip" xml:space="preserve">
+    <value>Perform a search on GitHub.com</value>
+  </data>
+  <data name="HasNotBeenBrokenUpCaption" xml:space="preserve">
+    <value>Break Up KV File</value>
+  </data>
+  <data name="HasNotBeenBrokenUpMsg" xml:space="preserve">
+    <value>has not been broken up. Break it up now?</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="KeyValues" xml:space="preserve">
+    <value>KeyValues</value>
+  </data>
+  <data name="LuaScript" xml:space="preserve">
+    <value>Lua Script</value>
+  </data>
+  <data name="MustBeInsideTheContentDirOf" xml:space="preserve">
+    <value>must be inside the content directory of</value>
+  </data>
+  <data name="NoDota2AddonsDetectedCaption" xml:space="preserve">
+    <value>No Dota 2 addons detected.</value>
+  </data>
+  <data name="NoDota2AddonsDetectedMsg" xml:space="preserve">
+    <value>No Dota 2 addons detected. There must be one addon for D2ModKit to function properly. Exiting.</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="NoTextInputted" xml:space="preserve">
+    <value>No text inputted!</value>
+  </data>
+  <data name="OpensTheKVEntry" xml:space="preserve">
+    <value>Opens the KV entry for this spell</value>
+  </data>
+  <data name="OpensTheLuaScript" xml:space="preserve">
+    <value>Opens the Lua script for this spell</value>
+  </data>
+  <data name="OptionsSaved" xml:space="preserve">
+    <value>Options saved!</value>
+  </data>
+  <data name="OptionsTooltip" xml:space="preserve">
+    <value>Opens the Options page</value>
+  </data>
+  <data name="ParticleDesigner" xml:space="preserve">
+    <value>Particle Designer</value>
+  </data>
+  <data name="ParticleDesignerBtnTooltip" xml:space="preserve">
+    <value>Provides options to bulk modify the color and size of
+selected particles.</value>
+  </data>
+  <data name="ParticleDesignFailed" xml:space="preserve">
+    <value>Particle design failed!</value>
+  </data>
+  <data name="ParticleFiles" xml:space="preserve">
+    <value>Particle Files</value>
+  </data>
+  <data name="ParticleSelected" xml:space="preserve">
+    <value>particle selected</value>
+  </data>
+  <data name="ParticlesSelected" xml:space="preserve">
+    <value>particles selected</value>
+  </data>
+  <data name="ParticlesSuccessfullyDesigned" xml:space="preserve">
+    <value>Particles successfully designed!</value>
+  </data>
+  <data name="ReportBugTooltip" xml:space="preserve">
+    <value>Report a bug!</value>
+  </data>
+  <data name="RightClickToEditTile" xml:space="preserve">
+    <value>Right-click to edit tile.</value>
+  </data>
+  <data name="SelectParticlesToDesign" xml:space="preserve">
+    <value>Select Particles To Design</value>
+  </data>
+  <data name="SelectTGAFilesToCompile" xml:space="preserve">
+    <value>Select .tga Files To Compile</value>
+  </data>
+  <data name="SelectVTEXCToDecompile" xml:space="preserve">
+    <value>Select vtex_c Files To Decompile</value>
+  </data>
+  <data name="SizeChange" xml:space="preserve">
+    <value>Size change</value>
+  </data>
+  <data name="SpellLibNotFoundCaption" xml:space="preserve">
+    <value>SpellLibrary not found</value>
+  </data>
+  <data name="SpellLibrary" xml:space="preserve">
+    <value>SpellLibrary</value>
+  </data>
+  <data name="SpellLibraryBtnTooltip" xml:space="preserve">
+    <value>Opens up a GUI browser for the Dota2 SpellLibrary project</value>
+  </data>
+  <data name="SpellLibWillNowBeClonedMsg" xml:space="preserve">
+    <value>SpellLibrary will now be cloned into</value>
+  </data>
+  <data name="SteamTileTooltip" xml:space="preserve">
+    <value>Opens the Steam Workshop page for this addon</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String10" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String12" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String13" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String14" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String3" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String4" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String5" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String6" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String7" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String8" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String9" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="TGAFilesSuccessfullyCompiled" xml:space="preserve">
+    <value>.tga files successfully compiled!</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update Available!</value>
+  </data>
+  <data name="VersionTooltip" xml:space="preserve">
+    <value>View version changelog</value>
+  </data>
+  <data name="VPKTooltip" xml:space="preserve">
+    <value>Opens the Dota 2 VPK (requires GCFScape)</value>
+  </data>
+  <data name="VTEXCFilesMustBePresentIn" xml:space="preserve">
+    <value>.vtex_c files must be present in</value>
+    <comment>part1: ".vtex_c files must be present in some/path"</comment>
+  </data>
+  <data name="WorkshopID" xml:space="preserve">
+    <value>Workshop ID</value>
+  </data>
+</root>

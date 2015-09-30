@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dota2ModKit.Features {
-	class KVFeatures {
+	public class KVFeatures {
 		MainForm mainForm;
 
 		public KVFeatures(MainForm mainForm) {
@@ -33,8 +33,8 @@ namespace Dota2ModKit.Features {
 				bool doBreakUp = false;
 				if (File.Exists(bigKVPath)) {
 					if (!Directory.Exists(foldPath)) {
-						DialogResult dr = MetroMessageBox.Show(mainForm, "npc_" + item + "_custom.txt has not been broken up. Break it up now?",
-							"Break Up KV File",
+						DialogResult dr = MetroMessageBox.Show(mainForm, "npc_" + item + "_custom.txt " + strings.HasNotBeenBrokenUpMsg,
+							strings.HasNotBeenBrokenUpCaption,
 							MessageBoxButtons.OKCancel,
 							MessageBoxIcon.Information);
 
@@ -46,8 +46,8 @@ namespace Dota2ModKit.Features {
 						}
 					} else {
 						if (mainForm.currAddon.askToBreakUp) {
-							DialogResult dr = MetroMessageBox.Show(mainForm, "Do you want to break up npc_" + item + "_custom.txt?",
-								"Break Up KV File",
+							DialogResult dr = MetroMessageBox.Show(mainForm, strings.AskToBreakUpMsg + " npc_" + item + "_custom.txt?",
+								strings.HasNotBeenBrokenUpCaption,
 								MessageBoxButtons.YesNo,
 								MessageBoxIcon.Information);
 							if (dr == DialogResult.Yes) {
@@ -100,7 +100,7 @@ namespace Dota2ModKit.Features {
 				}
 			}
 
-			mainForm.text_notification("Combine success", MetroColorStyle.Green, 1500);
+			mainForm.text_notification(strings.CombineKVSuccess, MetroColorStyle.Green, 1500);
 		}
 
 		public void breakUp(string itemStr) {

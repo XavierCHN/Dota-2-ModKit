@@ -1,4 +1,5 @@
-﻿using MetroFramework;
+﻿using Dota2ModKit.Features;
+using MetroFramework;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Dota2ModKit {
 			this.mainForm = mainForm;
 
 			InitializeComponent();
+			localize();
 
 			// setup hooks
 			metroTrackBar1.Maximum = 200;
@@ -29,9 +31,9 @@ namespace Dota2ModKit {
 			metroTrackBar1.Value = 0;
 			metroTrackBar1.ValueChanged += MetroTrackBar1_ValueChanged;
 
-			string suffix = " particles selected";
+			string suffix = " " + strings.ParticlesSelected + ".";
 			if (particlePaths.Length == 1) {
-				suffix = " particle selected";
+				suffix = " " + strings.ParticleSelected + ".";
 			}
 			particlesSelectedLabel.Text = particlePaths.Length + suffix;
 
@@ -44,9 +46,9 @@ namespace Dota2ModKit {
 			int val = metroTrackBar1.Value;
 
 			if (val < 0) {
-				sizeLabel.Text = "Size change: " + metroTrackBar1.Value.ToString() + "%";
+				sizeLabel.Text = strings.SizeChange + ": " + metroTrackBar1.Value.ToString() + "%";
 			} else {
-				sizeLabel.Text = "Size change: +" + metroTrackBar1.Value.ToString() + "%";
+				sizeLabel.Text = strings.SizeChange + ": +" + metroTrackBar1.Value.ToString() + "%";
 			}
 
 			//Debug.WriteLine(metroTrackBar1.Value);
@@ -62,9 +64,9 @@ namespace Dota2ModKit {
 				}
 			}
 			if (allSuccess) {
-				mainForm.text_notification("Particles successfully redesigned", MetroColorStyle.Green, 2500);
+				mainForm.text_notification(strings.ParticlesSuccessfullyDesigned, MetroColorStyle.Green, 2500);
 			} else {
-				mainForm.text_notification("Particle design failed", MetroColorStyle.Red, 2500);
+				mainForm.text_notification(strings.ParticleDesignFailed, MetroColorStyle.Red, 2500);
 			}
 
 			this.DialogResult = DialogResult.OK;
@@ -84,5 +86,12 @@ namespace Dota2ModKit {
 			gLabel.Text = "G: " + rgb[1];
 			bLabel.Text = "B: " + rgb[2];
 		}
+
+		void localize() {
+			bulkRecolorBtn.Text = strings.BulkRecolor;
+			submitBtn.Text = strings.Submit;
+			bulkResizeLabel.Text = strings.BulkResize;
+			this.Text = strings.ParticleDesigner;
+        }
 	}
 }

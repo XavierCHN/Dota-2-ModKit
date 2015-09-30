@@ -1,14 +1,9 @@
 ﻿using MetroFramework;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dota2ModKit.Features {
-	class ParticleFeatures {
+	public class ParticleFeatures {
 		MainForm mainForm;
 
 		public ParticleFeatures(MainForm mainForm) {
@@ -28,8 +23,8 @@ namespace Dota2ModKit.Features {
 			OpenFileDialog ofd = new OpenFileDialog();
 			ofd.InitialDirectory = particleDir;
 			ofd.Multiselect = true;
-			ofd.Title = "Select Particles To Design";
-			ofd.Filter = "Particle Files (*.vpcf)|*.vpcf";
+			ofd.Title = strings.SelectParticlesToDesign;
+			ofd.Filter = strings.ParticleFiles + " (*.vpcf)|*.vpcf";
 			DialogResult dr = ofd.ShowDialog();
 
 			if (dr != DialogResult.OK) {

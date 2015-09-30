@@ -55,7 +55,6 @@
 			this.createAddonBtn = new MetroFramework.Controls.MetroButton();
 			this.bmdRadioButton = new MetroFramework.Controls.MetroRadioButton();
 			this.dummyRadioBtn = new MetroFramework.Controls.MetroRadioButton();
-			this.installedAddonsTab = new MetroFramework.Controls.MetroTabPage();
 			this.tabControl.SuspendLayout();
 			this.myAddonsTab.SuspendLayout();
 			this.newAddonTab.SuspendLayout();
@@ -64,13 +63,12 @@
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.myAddonsTab);
-			this.tabControl.Controls.Add(this.installedAddonsTab);
 			this.tabControl.Controls.Add(this.newAddonTab);
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.Location = new System.Drawing.Point(23, 63);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 2;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(495, 521);
 			this.tabControl.TabIndex = 1;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -496,21 +494,6 @@
 			this.dummyRadioBtn.UseSelectable = true;
 			this.dummyRadioBtn.Visible = false;
 			// 
-			// installedAddonsTab
-			// 
-			this.installedAddonsTab.HorizontalScrollbarBarColor = true;
-			this.installedAddonsTab.HorizontalScrollbarHighlightOnWheel = false;
-			this.installedAddonsTab.HorizontalScrollbarSize = 10;
-			this.installedAddonsTab.Location = new System.Drawing.Point(4, 44);
-			this.installedAddonsTab.Name = "installedAddonsTab";
-			this.installedAddonsTab.Size = new System.Drawing.Size(487, 473);
-			this.installedAddonsTab.TabIndex = 2;
-			this.installedAddonsTab.Text = "Installed Addons";
-			this.installedAddonsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.installedAddonsTab.VerticalScrollbarBarColor = true;
-			this.installedAddonsTab.VerticalScrollbarHighlightOnWheel = false;
-			this.installedAddonsTab.VerticalScrollbarSize = 10;
-			// 
 			// AddonsForm
 			// 
 			this.AcceptButton = this.createAddonBtn;
@@ -570,6 +553,5 @@
 		private MetroFramework.Controls.MetroTextBox stringToReplaceTextbox;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroRadioButton existingAddonRadioButton1;
-		private MetroFramework.Controls.MetroTabPage installedAddonsTab;
 	}
 }
