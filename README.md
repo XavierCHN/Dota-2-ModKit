@@ -1,44 +1,50 @@
-# Dota 2 ModKit
+# Dota 2 ModKit Reborn
 
-A GUI comprised of useful tools to help with Dota 2 modding.
+### [Download the latest version here!](https://github.com/Myll/Dota-2-ModKit/releases)
 
-## Features:
-* **Particle Forker & Designer**. Allows easy copying of decompiled particles into your addons. This will automatically change the child references after the particles are copied over.
-  * Re-color, rename, and/or resize whole particle systems at just the click of a button!
-* **Tooltips Generator**. Parses all the files in the scripts\npc folder of your addon, and creates tooltips for abilities, items, modifiers, units, and heroes, which you can easily copy over to addon_english.txt or another language file.
-* **Templates**. Create templates for commonly used abilities, items, heroes, and units, which you can easily copy into your addon.
-* **Fork Addon From Barebones**. Create your own unique addon based off of BMD's Barebones (https://github.com/bmddota/barebones).
-* **Wiki Generator**. Generate wikis for your addon, for every language you've defined, based off the scripts/npc files. Currently incomplete.
-* **Copy Addon to another folder**. Copies the game and content directories of your addon to another folder.
+## Dota 2 ModKit is now...
 
-![Alt text](http://i.imgur.com/piVz19A.png)
-![Alt text](http://i.imgur.com/rjvUrDe.png)
+### Re-coded.
 
-## Installation
+D2ModKit has been almost completely recoded. When I first started the project, it was my first C# project ever. The code became pretty ugly fast, to the point where I had to ctrl+f through everything to find code that I needed. So, it's been recoded in a more smarter manner with better design in mind!
 
-1. [Download here](https://github.com/Myll/Dota-2-ModKit/releases), or you can build from the .sln.
+### Re-designed.
 
-2. If you already have the decompiled particles, move them over to the D2ModKit folder. **Rename the decompiled particles folder to decompiled_particles**. If you don't have the decompiled particles, [Click here to DL](https://mega.co.nz/#!cpgkSQbY!_xjYFGgkL2yhv0l8MPjEfESjN7B1S0cVP-QXsx3c-7M).
+D2ModKit now utilizes the open source [Metro WinForms](https://github.com/viperneo/winforms-modernui) framework for its UI. It's so beautiful, and it's the biggest motivation for me to do all this work on D2ModKit.
 
-3. Open D2ModKit.exe
+### Reborn compatible.
 
-## How-Tos
+D2ModKit has been updated to work with Reborn's new file structure.
 
-I hope you find every feature in D2ModKit intuitive and easy to use. I will outline how to use some of the features below.
+### Let's look at D2ModKit v2 in action:
 
-**Templates:** To edit templates just edit the .txt files in the D2ModKit\Templates folder. To add a new entry just preface the entry with //+Template as shown in the example entries.
+-------
 
-**Particles:** After you copy particles to an addon, you may have to restart the Workshop Tools to see them in the asset browser. I sometimes have to do this.
+#### Breaking up and combining KV files:
+
+![DEMO](http://zippy.gfycat.com/HomelyIncompatibleBangeltiger.gif)
+
+#### Forking a Barebones addon:
+
+![DEMO](http://giant.gfycat.com/SharpFelineAllosaurus.gif)
+
+#### Generating tooltips:
+
+![DEMO](http://giant.gfycat.com/LividSevereElk.gif)
 
 ## Credits
 
-* Thanks to [ToraxXx](https://github.com/toraxxx) for decompiling all of the particles.
-* Thanks to [RoyAwesome](https://github.com/RoyAwesome) for making KVLib, which allows easy parsing of Valve KV files.
-* Thanks to [Noya](https://github.com/MNoya) for giving me the idea of a Tooltips generator and helping a lot with testing.
-* Thanks to [penguinwizzard](https://github.com/Penguinwizzard) for doing the icon.
-* Thanks to [SebRut](https://github.com/sebrut) for ideas and C# tips.
-* Thanks to [XavierCHN](https://github.com/XavierCHN) for contributing.
+Thank you to these people who have contributed to D2ModKit in some way during its lifetime:
 
-## Notes
+* [Noya](https://github.com/MNoya): Feature ideas
+* [RoyAwesome](https://github.com/RoyAwesome): KVLib
+* [penguinwizzard](https://github.com/Penguinwizzard): Icon
+* [ToraxXx](https://github.com/toraxxx): Decompiled particles
+* [XavierCHN](https://github.com/XavierCHN): Helping with VTEX features
+* [SebRut](https://github.com/sebrut): Ideas and C# tips.
 
-Have ideas for new features? Let me know! Best way to contact me is through the Dota 2 modding IRC or by email: stephennf@gmail.com.
+## Donations
+
+If you feel that D2ModKit is worth some of your money, I'd gladly accept your donation!
+
+[![alt text](http://indigoprogram.org/wp-content/uploads/2012/01/Paypal-Donate-Button.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=stephenf%2ebme%40gmail%2ecom&lc=US&item_name=Myll%27s%20Dota%202%20Modding%20Contributions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
